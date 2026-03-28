@@ -1,46 +1,49 @@
-# --- DESIGN WEBSITE V-GUARD MOBILE RESPONSIVE ---
-st.markdown("""
-<style>
-    /* Mengatur latar belakang agar bersih */
-    .main {
-        background-color: #f0f2f6;
-    }
-    
-    /* Membuat tampilan kartu data lebih modern di HP */
-    [data-testid="stMetric"] {
-        background-color: #ffffff;
-        border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        border: 1px solid #e1e4e8;
-        margin-bottom: 10px;
-    }
+# --- LOGIKA TAMPILAN: PROMOSI vs DASHBOARD ---
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
 
-    /* Memperbesar tombol agar mudah ditekan jari (Touch Friendly) */
-    div.stButton > button {
-        background-color: #004a99;
-        color: white;
-        border-radius: 10px;
-        height: 3.5em;
-        width: 100%;
-        font-weight: bold;
-        border: none;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
+if not st.session_state['logged_in']:
+    # --- HALAMAN PROMOSI (BISA DILIHAT SEMUA ORANG) ---
+    st.image("https://cdn-icons-png.flaticon.com/512/1055/1055644.png", width=100)
+    st.title("🛡️ V-GUARD AI")
+    st.subheader("Solusi Anti-Bocor & Otomasi Management untuk SME")
     
-    /* Menghilangkan padding berlebih di HP agar layar lebih luas */
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+    # Bagian Iklan/Fitur
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        ### ✅ Fitur Utama:
+        - **Real-time Loss Detection:** Deteksi kebocoran uang kasir.
+        - **AI Audit CCTV:** Verifikasi struk belanja vs visual.
+        - **WhatsApp Automation:** Laporan harian langsung ke HP.
+        """)
+    with col2:
+        st.markdown("""
+        ### 📈 Manfaat:
+        - Menaikkan Profit hingga 15%.
+        - Mengurangi Kelalaian Karyawan.
+        - Pantau Toko dari Mana Saja.
+        """)
+    
+    st.divider()
+    
+    # Tombol Login (Hanya untuk Klien/Admin)
+    with st.expander("🔐 Area Klien (Klik di sini untuk Login)"):
+        user = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        if st.button("Masuk ke Dashboard"):
+            if user == "admin" and password == "vguard2026":
+                st.session_state['logged_in'] = True
+                st.session_state['role'] = "admin"
+                st.rerun()
+            elif user == "shandy" and password == "vertigo123":
+                st.session_state['logged_in'] = True
+                st.session_state['role'] = "client"
+                st.rerun()
+            else:
+                st.error("Akses Ditolak. Silakan hubungi Founder V-Guard.")
 
-    /* Tulisan Header yang lebih elegan */
-    h1 {
-        font-size: 1.8rem !important;
-        color: #1e3a8a;
-        text-align: center;
-    }
-</style>
-""", unsafe_allow_html=True)
+    st.info("💡 Tertarik menggunakan V-Guard? Hubungi Erwin Sinaga via WhatsApp.")
+    st.stop() # Berhenti di sini untuk orang luar (tidak bisa melihat data di bawahnya)
+
+# --- BAGIAN DI BAWAH INI HANYA TERBUKA JIKA SUDAH LOGIN ---
