@@ -1,17 +1,29 @@
 import streamlit as st
+import pandas as pd
 
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-GUARD AI SOLUTIONS", layout="wide", initial_sidebar_state="expanded")
 
-# --- 2. STYLE KONTRAS MAKSIMAL & MINIMALIS (CSS) ---
+# --- 2. STYLE KONTRAS MAKSIMAL & PERBAIKAN NAVIGASI (CSS) ---
 st.markdown("""
 <style>
     .stApp { background-color: #001529 !important; }
     [data-testid="stSidebar"] { background-color: #000c17 !important; border-right: 1px solid #002140; }
 
-    /* Memaksa Teks Sidebar Putih Terang */
+    /* MEMAKSA SEMUA TEKS SIDEBAR PUTIH & RAPI */
     [data-testid="stSidebar"] label, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] h3 {
-        color: #ffffff !important; font-weight: bold !important;
+        color: #ffffff !important; font-weight: bold !important; opacity: 1 !important;
+    }
+
+    /* PERBAIKAN TOMBOL RADIO (MENU NAVIGASI) */
+    div[data-testid="stMarkdownContainer"] p { color: white !important; }
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] { margin-bottom: -15px !important; }
+    
+    /* Gaya Khusus untuk Radio Button agar lebih Jelas */
+    div.row-widget.stRadio > div {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px;
+        border-radius: 10px;
     }
 
     /* Header Cyan Menyala */
@@ -25,17 +37,13 @@ st.markdown("""
     [data-testid="stMetricValue"] > div { color: #ffffff !important; font-weight: bold !important; }
     [data-testid="stMetricLabel"] > div { color: #f0c04a !important; font-weight: bold !important; }
 
-    /* Style Baris Invoice Minimalis */
-    .minimalis-invoice {
-        background-color: transparent !important;
-        padding: 10px 0 !important;
-        border-bottom: 1px solid #004a99 !important;
-    }
-    .minimalis-invoice-text { color: #ffffff !important; font-size: 1.05rem !important; }
+    /* Baris Invoice Minimalis */
+    .minimalis-invoice { border-bottom: 1px solid #004a99; padding: 10px 0; }
+    .minimalis-invoice-text { color: white !important; font-size: 1rem; }
 
-    /* Tombol Logout & Kirim WA Merah */
+    /* Tombol Logout & WA Merah */
     .stButton>button[kind="secondary"] { background-color: #ff4b4b !important; color: white !important; border: none !important; width: 100% !important; }
-    .stButton>button[kind="primary"] { background-color: #ff4b4b !important; color: white !important; font-weight: bold !important; }
+    .stButton>button[kind="primary"] { background-color: #ff4b4b !important; color: white !important; font-weight: bold !important; width: 100% !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -54,15 +62,15 @@ if not st.session_state['logged_in']:
                 st.rerun()
     st.stop()
 
-# --- 4. DASHBOARD UTAMA (SEMUA FITUR KEMBALI) ---
+# --- 4. DASHBOARD UTAMA ---
 if st.session_state['logged_in']:
     
     with st.sidebar:
-        # LOGO & NAMA
+        # LOGO
         st.markdown("<div style='text-align: center;'><img src='https://cdn-icons-png.flaticon.com/512/1055/1055644.png' width='80'><h2 style='color: white;'>V-GUARD AI</h2></div>", unsafe_allow_html=True)
         st.divider()
         
-        # FITUR YANG TADI HILANG: PENGATURAN AI
+        # PENGATURAN AI
         st.markdown("### ⚙️ Pengaturan AI")
         st.selectbox("Mulai Operasional", ["08:00", "09:00", "10:00"], index=2)
         st.selectbox("Selesai Operasional", ["20:00", "21:00", "22:00"], index=2)
@@ -70,9 +78,9 @@ if st.session_state['logged_in']:
         
         st.divider()
         
-        # FITUR YANG TADI HILANG: NAVIGASI LENGKAP
+        # MENU NAVIGASI (DIPERBAIKI)
         st.markdown("### Menu Navigasi")
-        menu = st.radio("Nav", [
+        menu = st.radio("Pilih Halaman:", [
             "🔴 Executive Dashboard", 
             "📊 Laporan Mingguan",
             "⚫ Audit Engine", 
@@ -82,13 +90,13 @@ if st.session_state['logged_in']:
         
         st.divider()
         
-        # INFO SESI & LOGOUT
+        # LOGOUT
         st.markdown(f"<p style='color: white;'>Sesi: {st.session_state['role'].upper()}</p>", unsafe_allow_html=True)
         if st.button("Logout", key="out", type="secondary"):
             st.session_state['logged_in'] = False
             st.rerun()
 
-    # --- LOGIKA ISI HALAMAN ---
+    # --- ISI KONTEN ---
     
     if menu == "🔴 Executive Dashboard":
         st.markdown("<h1 style='color: white;'>🔴 Executive Dashboard</h1>", unsafe_allow_html=True)
@@ -97,7 +105,6 @@ if st.session_state['logged_in']:
         with m2: st.metric("Anomali Terdeteksi", "42", "-5%", delta_color="inverse")
         with m3: st.metric("Revenue Terproteksi", "IDR 8.2B", "8%")
 
-        # MONITOR INVOICE (KEMBALI KE MINIMALIS)
         st.markdown("<div class='cyan-header'>🔔 Monitor Invoice & Tagihan</div>", unsafe_allow_html=True)
         
         def minimalis_row(nama, uang, tempo, key):
@@ -105,23 +112,28 @@ if st.session_state['logged_in']:
             with c1:
                 st.markdown(f"<div class='minimalis-invoice'><span class='minimalis-invoice-text'>👤 {nama} | 💰 {uang} | 📅 {tempo}</span></div>", unsafe_allow_html=True)
             with c2:
-                st.button("📩 Kirim WA", key=key, type="primary", use_container_width=True)
+                st.button("📩 Kirim WA", key=key, type="primary")
 
         minimalis_row("Ko Shandy Vertigo", "Rp 5.000.000", "30 Mar 2026", "wa1")
         minimalis_row("Client SME B", "Rp 1.250.000", "02 Apr 2026", "wa2")
 
         st.divider()
-        
-        # LIVE CCTV
         st.markdown("<div class='cyan-header'>📽️ Live CCTV Audit</div>", unsafe_allow_html=True)
-        st.text_input("Link RTSP:", "rtsp://admin:password@192.168.1.100:554/live")
         st.image("https://via.placeholder.com/1000x400.png?text=Live+Audit+Active+Stream", use_column_width=True)
 
     elif menu == "📊 Laporan Mingguan":
         st.markdown("<h1 style='color: white;'>📊 Laporan Mingguan</h1>", unsafe_allow_html=True)
-        st.info("Fitur simulasi pengiriman laporan mingguan ke klien.")
-        st.bar_chart({"Data": [10, 25, 15, 30]})
-    
+        st.info("Visualisasi kebocoran dana yang berhasil dicegah minggu ini.")
+        
+        # PERBAIKAN GRAFIK: Menggunakan Bar Chart dengan Dataframe agar warna otomatis menyesuaikan
+        chart_data = pd.DataFrame({
+            "Hari": ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"],
+            "Kebocoran Dicegah (Juta)": [12, 19, 3, 5, 2, 20, 15]
+        })
+        st.bar_chart(chart_data.set_index("Hari"), color="#00f2ff")
+        
+        st.success("Semua data sinkron dengan database cloud V-Guard.")
+
     else:
         st.markdown(f"<h1 style='color: white;'>{menu}</h1>", unsafe_allow_html=True)
-        st.warning("Halaman ini dalam tahap sinkronisasi data.")
+        st.warning("Halaman ini sedang dalam sinkronisasi data.")
