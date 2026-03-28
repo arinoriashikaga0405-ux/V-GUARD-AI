@@ -4,18 +4,18 @@ import pandas as pd
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-GUARD AI SOLUTIONS", layout="wide", initial_sidebar_state="expanded")
 
-# --- 2. CSS FIX: KONTRAST TINGGI (MEMPERJELAS TEKS) ---
+# --- 2. CSS MASTER: KONTRAST TINGGI & TATA LETAK ---
 st.markdown("""
 <style>
     .stApp { background-color: #001529 !important; }
     [data-testid="stSidebar"] { background-color: #000c17 !important; border-right: 1px solid #002140; }
 
-    /* MEMAKSA TEKS SIDEBAR PUTIH TERANG & TEBAL */
+    /* TEKS SIDEBAR PUTIH TERANG */
     [data-testid="stSidebar"] * { color: #ffffff !important; }
-    [data-testid="stSidebar"] label { font-weight: bold !important; padding-bottom: 15px !important; }
+    [data-testid="stSidebar"] label { font-weight: bold !important; padding-bottom: 10px !important; }
     
-    /* Perbaikan Menu Navigasi agar Tidak Berantakan */
-    div.row-widget.stRadio > div { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; }
+    /* Menu Navigasi Rapi */
+    div.row-widget.stRadio > div { background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 10px; }
     div[data-testid="stMarkdownContainer"] p { font-size: 1.1rem !important; font-weight: bold !important; }
 
     /* Header Cyan Menyala */
@@ -24,35 +24,32 @@ st.markdown("""
         margin-top: 25px !important; border-bottom: 2px solid #00f2ff; padding-bottom: 5px;
     }
 
-    /* KOTAK METRIK DENGAN LABEL DIPERJELAS (FINAL FIX) */
-    [data-testid="stMetric"] { background-color: #002140 !important; border: 2px solid #004a99 !important; border-radius: 12px !important; }
+    /* KOTAK METRIK DENGAN LABEL DIPERJELAS (TEBAL & PUTIH) */
+    [data-testid="stMetric"] { background-color: #002140 !important; border: 2px solid #004a99 !important; border-radius: 12px !important; padding: 15px !important; }
     [data-testid="stMetricValue"] > div { color: #ffffff !important; font-weight: bold !important; }
-    
-    /* INI ADALAH PERBAIKAN UNTUK MEMPERJELAS TEKS LABEL (Audit Bulan Ini, dst) */
     [data-testid="stMetricLabel"] > div {
-        color: #ffffff !important; /* Diubah menjadi Putih Terang */
-        font-weight: bold !important; /* Dibuat Tebal */
-        font-size: 1.1rem !important; /* Ukuran diperbesar sedikit */
-        opacity: 1 !important; /* Kontras maksimal */
+        color: #ffffff !important; 
+        font-weight: bold !important; 
+        font-size: 1.1rem !important; 
+        opacity: 1 !important; 
     }
 
     /* Baris Invoice Minimalis */
-    .minimalis-invoice { border-bottom: 1px solid #004a99; padding: 12px 0; }
+    .minimalis-invoice { 
+        background-color: rgba(0, 74, 153, 0.2); 
+        border: 1px solid #004a99; 
+        border-radius: 8px;
+        padding: 12px; 
+        margin-bottom: 10px;
+    }
     .minimalis-invoice-text { color: white !important; font-size: 1rem; font-weight: bold !important;}
 
-    /* Tombol Logout Merah Standar */
-    .stButton>button[kind="secondary"] { 
-        background-color: #ff4b4b !important; 
-        color: white !important; 
-        border: none !important; 
-        width: 100% !important;
-        font-weight: bold !important;
-    }
-    
-    /* Tombol WA Merah */
-    .stButton>button[kind="primary"] { background-color: #ff4b4b !important; color: white !important; font-weight: bold !important; }
+    /* Tombol Logout & Kirim WA Merah */
+    .stButton>button { border-radius: 8px !important; font-weight: bold !important; }
+    .stButton>button[kind="secondary"] { background-color: #ff4b4b !important; color: white !important; border: none !important; width: 100% !important; }
+    .stButton>button[kind="primary"] { background-color: #ff4b4b !important; color: white !important; }
 
-    /* Perbaikan Input Text CCTV */
+    /* Input Text CCTV */
     .stTextInput>div>div>input { background-color: #002140 !important; color: white !important; border: 1px solid #00f2ff !important; }
 </style>
 """, unsafe_allow_html=True)
@@ -72,23 +69,19 @@ if not st.session_state['logged_in']:
                 st.rerun()
     st.stop()
 
-# --- 4. DASHBOARD UTAMA (SEMUA FITUR DIKUNCI & DIPERTAHANKAN) ---
+# --- 4. DASHBOARD UTAMA ---
 if st.session_state['logged_in']:
     
     with st.sidebar:
-        # LOGO & IDENTITAS
         st.markdown("<div style='text-align: center;'><img src='https://cdn-icons-png.flaticon.com/512/1055/1055644.png' width='80'><h2 style='color: white;'>V-GUARD AI</h2></div>", unsafe_allow_html=True)
         st.divider()
         
-        # PENGATURAN AI (JAM OPERASIONAL)
         st.markdown("### ⚙️ Pengaturan AI")
         st.selectbox("Mulai Operasional", ["08:00", "09:00", "10:00"], index=2, key="start_time")
         st.selectbox("Selesai Operasional", ["20:00", "21:00", "22:00"], index=2, key="end_time")
         st.success("🟢 Monitoring Aktif")
         
         st.divider()
-        
-        # MENU NAVIGASI (LENGKAP & PUTIH TERANG)
         st.markdown("### Menu Navigasi")
         menu = st.radio("Pilih Halaman:", [
             "🔴 Executive Dashboard", 
@@ -99,8 +92,6 @@ if st.session_state['logged_in']:
         ], key="main_nav")
         
         st.divider()
-        
-        # INFO SESI & LOGOUT
         st.write(f"Sesi: **{st.session_state['role'].upper()}**")
         if st.button("Logout", type="secondary", key="logout_btn"):
             st.session_state['logged_in'] = False
@@ -110,10 +101,32 @@ if st.session_state['logged_in']:
     if menu == "🔴 Executive Dashboard":
         st.markdown("<h1 style='color: white;'>🔴 Executive Dashboard</h1>", unsafe_allow_html=True)
         
-        # Kolom Metrik dengan Label yang Diperjelas oleh CSS
+        # 1. Bagian Metrik (Sesuai image_490e90.png)
         col1, col2, col3 = st.columns(3)
         col1.metric("Audit Bulan Ini", "1,284", "12%")
         col2.metric("Anomali Terdeteksi", "42", "-5%", delta_color="inverse")
         col3.metric("Revenue Terproteksi", "IDR 8.2B", "8%")
 
-        # MONITOR INVOICE
+        # 2. MONITOR INVOICE (DIKEMBALIKAN)
+        st.markdown("<div class='cyan-header'>🔔 Monitor Invoice & Tagihan</div>", unsafe_allow_html=True)
+        def inv_row(nama, uang, tgl, k):
+            c1, c2 = st.columns([4, 1])
+            with c1: st.markdown(f"<div class='minimalis-invoice'><span class='minimalis-invoice-text'>👤 {nama} | 💰 {uang} | 📅 {tgl}</span></div>", unsafe_allow_html=True)
+            with c2: st.button("🚀 Kirim WA", key=k, type="primary", use_container_width=True)
+
+        inv_row("Ko Shandy Vertigo", "Rp 5.000.000", "30 Mar 2026", "wa1")
+        inv_row("Client SME B", "Rp 1.250.000", "02 Apr 2026", "wa2")
+
+        # 3. LIVE CCTV (DIKEMBALIKAN)
+        st.markdown("<div class='cyan-header'>📽️ Live CCTV Audit</div>", unsafe_allow_html=True)
+        st.text_input("Link RTSP Cam:", "rtsp://admin:password@192.168.1.100:554/live", key="cctv_url")
+        st.image("https://via.placeholder.com/1000x400.png?text=V-Guard+Live+Audit+Active", use_column_width=True)
+
+    elif menu == "📊 Laporan Mingguan":
+        st.markdown("<h1 style='color: white;'>📊 Laporan Mingguan</h1>", unsafe_allow_html=True)
+        chart_data = pd.DataFrame({"Hari": ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"], "Kebocoran": [12, 18, 5, 8, 4, 22, 15]})
+        st.bar_chart(chart_data.set_index("Hari"), color="#00f2ff")
+
+    else:
+        st.markdown(f"<h1 style='color: white;'>{menu}</h1>", unsafe_allow_html=True)
+        st.warning("Halaman sedang dalam tahap sinkronisasi data.")
