@@ -66,3 +66,52 @@ if st.session_state['logged_in']:
         st.session_state['logged_in'] = False
         st.rerun()
     # (Masukkan kode fitur dashboard Bapak di sini)
+import streamlit as st
+
+# --- 1. SETTING HALAMAN & CSS (Biarkan seperti yang tadi) ---
+st.set_page_config(page_title="V-GUARD AI", layout="wide")
+
+# --- 2. LOGIKA LOGIN & LANDING PAGE (Sama seperti yang tadi) ---
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
+
+if not st.session_state['logged_in']:
+    # (Kode Landing Page Bapak yang ada gambar & kartu promosi di sini)
+    # ... bagian ini sudah benar ...
+    st.stop()
+
+# --- 3. DASHBOARD UTAMA (DI SINI KITA KEMBALIKAN FITUR BAPAK) ---
+if st.session_state['logged_in']:
+    
+    # KITA BUAT SIDEBAR KEMBALI
+    with st.sidebar:
+        st.title("🛡️ V-GUARD AI")
+        st.write(f"User: **{st.session_state['role'].upper()}**")
+        st.divider()
+        
+        # Munculkan fitur sesuai Role
+        if st.session_state['role'] == "admin":
+            st.success("✅ Gemini 2.0 Flash Active")
+            st.success("✅ WA Gateway Connected")
+            st.info("🔵 Computer Vision Ready")
+        else:
+            st.info("🏢 Partner: Vertigo (Ko Shandy)")
+            
+        if st.button("Log Out"):
+            st.session_state['logged_in'] = False
+            st.rerun()
+
+    # KITA BUAT ISI DASHBOARD (METRICS & GRAFIK)
+    st.title(f"Dashboard {st.session_state['role'].capitalize()}")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric(label="Total Turnover", value="Rp 12.5M", delta="5%")
+    with col2:
+        st.metric(label="Loss Detected", value="Rp 450rb", delta="-2%", delta_color="inverse")
+    with col3:
+        st.metric(label="Accuracy", value="99.2%", delta="Sangat Baik")
+
+    # Tambahkan kembali area CCTV atau Laporan di bawah sini
+    st.subheader("📹 Live Monitoring & Audit")
+    st.image("https://via.placeholder.com/800x400.png?text=Live+CCTV+Feed+V-Guard", use_column_width=True)
