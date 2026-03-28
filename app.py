@@ -3,82 +3,72 @@ import streamlit as st
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-GUARD AI SOLUTIONS", layout="wide", initial_sidebar_state="expanded")
 
-# --- 2. STYLE DARK BLUE PREMIUM (CSS) ---
+# --- 2. STYLE DARK BLUE HIGH CONTRAST (CSS) ---
 st.markdown("""
 <style>
-    /* Latar Belakang Utama Dark Blue */
-    .main { 
-        background-color: #001f3f; 
-    }
-    
-    /* Perbaikan Sidebar agar Senada */
-    [data-testid="stSidebar"] {
+    /* Latar Belakang Utama Dark Blue Gelap */
+    .stApp {
         background-color: #001529 !important;
-        border-right: 1px solid #003366;
+    }
+    
+    /* Perbaikan Sidebar agar Terintegrasi */
+    [data-testid="stSidebar"] {
+        background-color: #000c17 !important;
+        border-right: 1px solid #002140;
     }
 
-    /* Perbaikan Kotak Metrik (Card) */
+    /* Perbaikan Kotak Metrik (Card Biru Tua) */
     [data-testid="stMetric"] {
-        background-color: #002b55 !important;
-        border: 1px solid #004080 !important;
-        border-radius: 15px !important;
+        background-color: #002140 !important;
+        border: 1px solid #004a99 !important;
+        border-radius: 12px !important;
         padding: 20px !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-        border-left: 6px solid #f0c04a !important; /* Garis Kuning Khas V-Guard */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+        border-left: 6px solid #f0c04a !important;
     }
     
-    /* Warna Teks Metrik (Putih Terang) */
+    /* Paksa Teks Metrik Menjadi Putih Terang */
     [data-testid="stMetricValue"] > div { color: #ffffff !important; font-weight: bold !important; }
-    [data-testid="stMetricLabel"] > div { color: #ced4da !important; }
+    [data-testid="stMetricLabel"] > div { color: #ffffff !important; opacity: 1 !important; }
 
-    /* Judul & Teks Utama (Putih & Terang) */
-    h1, h2, h3, p, span, label { 
-        color: #ffffff !important; 
+    /* Gaya Khusus untuk Baris Invoice agar Sangat Jelas */
+    .invoice-container {
+        background-color: #002140;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #004a99;
     }
-    
-    /* Khusus untuk teks Invoice agar terbaca jelas */
     .invoice-text {
         color: #ffffff !important;
+        font-weight: bold !important;
         font-size: 1.1rem;
-        font-weight: 500;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 10px;
-        border-radius: 8px;
     }
 
-    /* Tombol Kirim WA (Hijau WhatsApp) */
+    /* Judul & Semua Teks Standar Menjadi Putih */
+    h1, h2, h3, p, span, label, div { 
+        color: #ffffff !important; 
+    }
+
+    /* Tombol Kirim WA (Hijau Menyala) */
     div.stButton > button {
-        background-color: #25D366; 
-        color: white; 
-        border-radius: 8px; 
-        border: none;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    div.stButton > button:hover {
-        background-color: #128C7E;
-        transform: scale(1.02);
-    }
-
-    /* Input Box & Selectbox */
-    .stTextInput>div>div>input, .stSelectbox>div>div>div {
-        background-color: #003366 !important;
-        color: white !important;
-        border: 1px solid #004a99 !important;
+        background-color: #25D366 !important; 
+        color: white !important; 
+        border-radius: 8px !important; 
+        font-weight: bold !important;
+        border: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. LOGIKA AKSES ---
+# --- 3. LOGIKA LOGIN ---
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
-# --- 4. TAMPILAN DEPAN (PROMOSI) ---
 if not st.session_state['logged_in']:
-    st.markdown("<h1 style='text-align: center;'>🛡️ V-GUARD AI SOLUTIONS</h1>", unsafe_allow_html=True)
-    st.image("https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1000&q=80", use_column_width=True)
-    st.divider()
-    with st.expander("🔐 MASUK KE DASHBOARD"):
+    # Tampilan Login dengan Background Navy
+    st.markdown("<h1 style='text-align: center;'>🛡️ V-GUARD AI LOGIN</h1>", unsafe_allow_html=True)
+    with st.container():
         user = st.text_input("Username")
         pwd = st.text_input("Password", type="password")
         if st.button("Masuk Sekarang"):
@@ -92,35 +82,24 @@ if not st.session_state['logged_in']:
                 st.rerun()
     st.stop()
 
-# --- 5. DASHBOARD UTAMA (DARK BLUE THEME) ---
+# --- 4. DASHBOARD UTAMA (SETELAH LOGIN) ---
 if st.session_state['logged_in']:
     
-    # --- SIDEBAR ---
+    # SIDEBAR
     with st.sidebar:
-        # Gunakan logo V-Guard Bapak
-        st.image("https://cdn-icons-png.flaticon.com/512/1055/1055644.png", width=120) 
-        st.markdown("<h2 style='text-align: center;'>V-GUARD AI</h2>", unsafe_allow_html=True)
+        # Menampilkan logo agar lebih jelas di background gelap
+        st.image("https://cdn-icons-png.flaticon.com/512/1055/1055644.png", width=100)
+        st.markdown("<h3>V-GUARD AI SOLUTIONS</h3>", unsafe_allow_html=True)
         st.divider()
-        
-        st.subheader("⚙️ Pengaturan AI")
-        st.selectbox("Jam Mulai Operasional", ["08:00", "09:00", "10:00"], index=2)
-        st.selectbox("Jam Selesai Operasional", ["20:00", "21:00", "22:00"], index=2)
-        st.success("🟢 Monitoring Aktif")
-        
-        st.divider()
-        st.subheader("Navigation")
-        st.markdown("🔴 **Executive Dashboard**")
-        st.markdown("⚪ **Audit Engine**")
-        st.markdown("⚪ **Finance & Payment**")
-        
-        if st.button("Logout", key="logout_btn"):
+        st.write(f"Sesi: **{st.session_state['role'].upper()}**")
+        if st.button("Logout"):
             st.session_state['logged_in'] = False
             st.rerun()
 
-    # --- ISI DASHBOARD ---
+    # KONTEN UTAMA
     st.markdown("<h2>🔴 Executive Dashboard</h2>", unsafe_allow_html=True)
     
-    # Kolom Metrik
+    # Row 1: Metrics
     m1, m2, m3 = st.columns(3)
     with m1:
         st.metric(label="Audit Bulan Ini", value="1,284", delta="12%")
@@ -131,23 +110,24 @@ if st.session_state['logged_in']:
 
     st.divider()
     
-    # Monitor Invoice (Sekarang Teks Putih & Terbaca Jelas)
+    # Row 2: Monitor Invoice (TEKS PUTIH TERANG)
     st.markdown("<h3>🔔 Monitor Invoice Klien</h3>", unsafe_allow_html=True)
     
-    def invoice_item(nama, total, tempo, key):
-        col_txt, col_btn = st.columns([4, 1])
-        with col_txt:
-            st.markdown(f"<div class='invoice-text'><b>{nama}</b> | Total: {total} | Tempo: {tempo}</div>", unsafe_allow_html=True)
-        with col_btn:
-            st.button("📩 Kirim WA", key=key)
+    def display_invoice(nama, total, tempo, key):
+        st.markdown(f"""
+        <div class="invoice-container">
+            <span class="invoice-text">👤 {nama} | 💰 {total} | 📅 {tempo}</span>
+        </div>
+        """, unsafe_allow_html=True)
+        st.button("📩 Kirim WA Sekarang", key=key)
+        st.write("")
 
-    invoice_item("Ko Shandy Vertigo", "Rp 5,000,000", "30 Maret 2026", "wa1")
-    invoice_item("Client SME B", "Rp 1,250,000", "02 April 2026", "wa2")
+    display_invoice("Ko Shandy Vertigo", "Rp 5,000,000", "30 Maret 2026", "wa_1")
+    display_invoice("Client SME B", "Rp 1,250,000", "02 April 2026", "wa_2")
 
     st.divider()
     
-    # CCTV Section
+    # Row 3: CCTV
     st.markdown("<h3>📽️ Live CCTV Monitoring</h3>", unsafe_allow_html=True)
     st.text_input("URL CCTV (RTSP/IP Camera):", "rtsp://admin:password@192.168.1.100:554/live")
-    # Placeholder Video/Image
     st.image("https://via.placeholder.com/1000x400.png?text=V-Guard+Live+Stream+Security+Active", use_column_width=True)
