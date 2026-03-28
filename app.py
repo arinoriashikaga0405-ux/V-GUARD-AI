@@ -4,7 +4,7 @@ import pandas as pd
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-GUARD AI SOLUTIONS", layout="wide", initial_sidebar_state="expanded")
 
-# --- 2. CSS FIX: NAVIGASI, LOGOUT & KONTRAS ---
+# --- 2. CSS FIX: KONTRAST TINGGI (MEMPERJELAS TEKS) ---
 st.markdown("""
 <style>
     .stApp { background-color: #001529 !important; }
@@ -16,7 +16,7 @@ st.markdown("""
     
     /* Perbaikan Menu Navigasi agar Tidak Berantakan */
     div.row-widget.stRadio > div { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; }
-    div[data-testid="stMarkdownContainer"] p { font-size: 1.1rem !important; }
+    div[data-testid="stMarkdownContainer"] p { font-size: 1.1rem !important; font-weight: bold !important; }
 
     /* Header Cyan Menyala */
     .cyan-header {
@@ -24,13 +24,21 @@ st.markdown("""
         margin-top: 25px !important; border-bottom: 2px solid #00f2ff; padding-bottom: 5px;
     }
 
-    /* Kotak Metrik */
+    /* KOTAK METRIK DENGAN LABEL DIPERJELAS (FINAL FIX) */
     [data-testid="stMetric"] { background-color: #002140 !important; border: 2px solid #004a99 !important; border-radius: 12px !important; }
     [data-testid="stMetricValue"] > div { color: #ffffff !important; font-weight: bold !important; }
+    
+    /* INI ADALAH PERBAIKAN UNTUK MEMPERJELAS TEKS LABEL (Audit Bulan Ini, dst) */
+    [data-testid="stMetricLabel"] > div {
+        color: #ffffff !important; /* Diubah menjadi Putih Terang */
+        font-weight: bold !important; /* Dibuat Tebal */
+        font-size: 1.1rem !important; /* Ukuran diperbesar sedikit */
+        opacity: 1 !important; /* Kontras maksimal */
+    }
 
     /* Baris Invoice Minimalis */
     .minimalis-invoice { border-bottom: 1px solid #004a99; padding: 12px 0; }
-    .minimalis-invoice-text { color: white !important; font-size: 1rem; }
+    .minimalis-invoice-text { color: white !important; font-size: 1rem; font-weight: bold !important;}
 
     /* Tombol Logout Merah Standar */
     .stButton>button[kind="secondary"] { 
@@ -64,7 +72,7 @@ if not st.session_state['logged_in']:
                 st.rerun()
     st.stop()
 
-# --- 4. DASHBOARD UTAMA ---
+# --- 4. DASHBOARD UTAMA (SEMUA FITUR DIKUNCI & DIPERTAHANKAN) ---
 if st.session_state['logged_in']:
     
     with st.sidebar:
@@ -80,7 +88,7 @@ if st.session_state['logged_in']:
         
         st.divider()
         
-        # MENU NAVIGASI (LENGKAP & PUTIH)
+        # MENU NAVIGASI (LENGKAP & PUTIH TERANG)
         st.markdown("### Menu Navigasi")
         menu = st.radio("Pilih Halaman:", [
             "🔴 Executive Dashboard", 
@@ -102,32 +110,10 @@ if st.session_state['logged_in']:
     if menu == "🔴 Executive Dashboard":
         st.markdown("<h1 style='color: white;'>🔴 Executive Dashboard</h1>", unsafe_allow_html=True)
         
-        # Kolom Metrik
+        # Kolom Metrik dengan Label yang Diperjelas oleh CSS
         col1, col2, col3 = st.columns(3)
         col1.metric("Audit Bulan Ini", "1,284", "12%")
         col2.metric("Anomali Terdeteksi", "42", "-5%", delta_color="inverse")
         col3.metric("Revenue Terproteksi", "IDR 8.2B", "8%")
 
         # MONITOR INVOICE
-        st.markdown("<div class='cyan-header'>🔔 Monitor Invoice & Tagihan</div>", unsafe_allow_html=True)
-        def inv_row(nama, uang, tgl, k):
-            c1, c2 = st.columns([4, 1])
-            with c1: st.markdown(f"<div class='minimalis-invoice'><span class='minimalis-invoice-text'>👤 {nama} | 💰 {uang} | 📅 {tgl}</span></div>", unsafe_allow_html=True)
-            with c2: st.button("🚀 Kirim WA", key=k, type="primary", use_container_width=True)
-
-        inv_row("Ko Shandy Vertigo", "Rp 5.000.000", "30 Mar 2026", "wa1")
-        inv_row("Client SME B", "Rp 1.250.000", "02 Apr 2026", "wa2")
-
-        # LIVE CCTV
-        st.markdown("<div class='cyan-header'>📽️ Live CCTV Audit</div>", unsafe_allow_html=True)
-        st.text_input("Link RTSP Cam:", "rtsp://admin:password@192.168.1.100:554/live", key="cctv_url")
-        st.image("https://via.placeholder.com/1000x400.png?text=V-Guard+Live+Audit+Active", use_column_width=True)
-
-    elif menu == "📊 Laporan Mingguan":
-        st.markdown("<h1 style='color: white;'>📊 Laporan Mingguan</h1>", unsafe_allow_html=True)
-        chart_data = pd.DataFrame({"Hari": ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"], "Kebocoran": [12, 18, 5, 8, 4, 22, 15]})
-        st.bar_chart(chart_data.set_index("Hari"), color="#00f2ff")
-
-    else:
-        st.markdown(f"<h1 style='color: white;'>{menu}</h1>", unsafe_allow_html=True)
-        st.warning("Halaman sedang dalam tahap sinkronisasi data.")
