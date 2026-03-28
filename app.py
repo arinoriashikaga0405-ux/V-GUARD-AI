@@ -24,16 +24,32 @@ st.markdown("""
         margin-top: 20px;
     }
     
-    .promo-title { color: #00f2ff; font-size: 3rem; font-weight: 800; margin-bottom: 15px; text-shadow: 0 0 10px rgba(0,242,255,0.5); }
-    .promo-sub { color: #ffffff; font-size: 1.2rem; line-height: 1.7; margin-bottom: 30px; opacity: 0.9; }
+    /* KOLOM JUDUL & HEADER */
+    .title-column {
+        background: rgba(0, 242, 255, 0.05);
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 5px solid #00f2ff;
+        margin-bottom: 20px;
+    }
+    .promo-title { color: #00f2ff; font-size: 2.5rem; font-weight: 800; margin: 0; text-shadow: 0 0 10px rgba(0,242,255,0.5); }
+    .promo-sub { color: #ffffff; font-size: 1.1rem; line-height: 1.7; margin-top: 15px; opacity: 0.9; }
 
-    /* LOGIN BOX DENGAN EFEK KEREN */
+    /* LOGIN BOX DENGAN HEADER DALAM KOLOM */
     .login-container {
         background-color: #001c36;
-        padding: 35px;
+        padding: 30px;
         border-radius: 20px;
         border: 2px solid #00f2ff;
         box-shadow: 0 0 30px rgba(0, 242, 255, 0.15);
+    }
+    .login-header-col {
+        background: #002b52;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 1px solid #00f2ff;
     }
 
     /* TOMBOL LOGIN GLOW */
@@ -65,7 +81,7 @@ if 'page' not in st.session_state:
 # --- 4. TAMPILAN LANDING PAGE ---
 if st.session_state['page'] == 'promo':
     
-    # Menampilkan Banner (Lebar PC Proporsional)
+    # Menampilkan Banner
     try:
         st.image("VGUARD-AI-BANNER.png", use_container_width=True)
     except:
@@ -76,7 +92,13 @@ if st.session_state['page'] == 'promo':
     col_desc, col_log = st.columns([1.8, 1], gap="large")
     
     with col_desc:
-        st.markdown("<div class='promo-title'>🛡️ V-GUARD AI SOLUTIONS</div>", unsafe_allow_html=True)
+        # Teks "VGUARD AI SOLUTIONS" dimasukkan ke dalam kolom/container
+        st.markdown("""
+            <div class='title-column'>
+                <h1 class='promo-title'>🛡️ V-GUARD AI SOLUTIONS</h1>
+            </div>
+        """, unsafe_allow_html=True)
+        
         st.markdown("""
         <div class='promo-sub'>
         <b>Evolusi Keamanan Bisnis Anda Dimulai di Sini.</b><br>
@@ -90,7 +112,13 @@ if st.session_state['page'] == 'promo':
 
     with col_log:
         st.markdown("<div class='login-container'>", unsafe_allow_html=True)
-        st.markdown("<h3 style='color: white; text-align: center; margin-bottom: 20px;'>🔑 Portal Klien</h3>", unsafe_allow_html=True)
+        # Teks "Portal Klien" dimasukkan ke dalam kolom/container kecil
+        st.markdown("""
+            <div class='login-header-col'>
+                <h3 style='color: white; margin: 0;'>🔑 Portal Klien</h3>
+            </div>
+        """, unsafe_allow_html=True)
+        
         uid = st.text_input("Username", placeholder="admin", key="l_user")
         pwd = st.text_input("Password", type="password", placeholder="vguard2026", key="l_pass")
         
@@ -105,7 +133,7 @@ if st.session_state['page'] == 'promo':
     
     st.markdown("</div>", unsafe_allow_html=True)
 
-# --- 5. TAMPILAN DASHBOARD (DIKUNCI - JANGAN RUBAH) ---
+# --- 5. TAMPILAN DASHBOARD (DIKUNCI - TIDAK BERUBAH) ---
 elif st.session_state['page'] == 'dashboard':
     with st.sidebar:
         st.markdown("<div style='text-align: center;'><img src='https://cdn-icons-png.flaticon.com/512/1055/1055644.png' width='80'><h2 style='color: #FFD700;'>V-GUARD AI</h2></div>", unsafe_allow_html=True)
