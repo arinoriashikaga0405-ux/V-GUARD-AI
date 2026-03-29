@@ -48,24 +48,35 @@ def login_vguard():
             else:
                 st.sidebar.error("Username/Password Salah")
 
-# 3. CSS DESIGN (UKURAN TULISAN DIPERBESAR)
-st.markdown("""<style>
+# 3. CSS DESIGN (UKURAN TULISAN BESAR & PENUTUP STRING BENAR)
+st.markdown("""
+<style>
     .stApp { background-color: #f4f6f9; }
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
     .hero-bg { background: linear-gradient(135deg, #0e1117 0%, #1c1f26 100%); padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 20px; }
     
     .card-service { 
         background: white; 
-        padding: 20px; 
-        border-radius: 12px; 
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-        border-top: 5px solid #FFD700; 
+        padding: 25px; 
+        border-radius: 15px; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        border-top: 6px solid #FFD700; 
         text-align: center; 
-        height: 280px; 
+        height: 320px; 
         display: flex; 
         flex-direction: column; 
         justify-content: space-between;
     }
-    .card-service h4 { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: #1a1a1a; }
-    .card-service h3 { font-size: 24px; margin: 8px 0; color: #d42f2f; font-weight: bold; }
-    .card-service p { font-size
+    .card-service h4 { font-size: 22px; font-weight: bold; margin-bottom: 5px; color: #1a1a1a; }
+    .card-service h3 { font-size: 28px; margin: 10px 0; color: #d42f2f; font-weight: bold; }
+    .card-service p { font-size: 16px; line-height: 1.5; color: #333; margin-bottom: 15px; }
+    .stLinkButton button { width: 100%; height: 45px; font-size: 16px !important; font-weight: bold; }
+</style>
+""", unsafe_allow_html=True)
+
+# 4. SIDEBAR & NAVIGASI
+with st.sidebar:
+    st.markdown("<h2 style='text-align: center; color: #FFD700;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
+    col_f, col_n = st.columns([1, 2])
+    with col_f: get_foto(60)
+    with col_n: st.markdown("<b style='color:white;'>Er
