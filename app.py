@@ -89,36 +89,4 @@ else:
     with c_txt:
         st.markdown("### FOUNDER PROFILE & FILOSOFI")
         st.write("""
-        Saya **Erwin**, Founder VGUARD AI Systems, mengintegrasikan standar keamanan **10 tahun pengalaman profesional di industri perbankan** ke dalam operasional bisnis Anda. Filosofi kami, **Perisai Digital**, memastikan integritas aset Anda melalui teknologi **V-Guard Fire Alarm** yang bekerja tanpa henti mendeteksi setiap indikasi kecurangan.
-        """)
-
-    # Navigasi Ekosistem
-    st.write("---")
-    st.markdown("### 🌐 AKSES EKOSISTEM")
-    col_adm, col_cli = st.columns(2)
-    with col_adm:
-        st.markdown('<div class="feature-card"><b>ADMIN PORTAL</b><br>Gunakan alat audit untuk mendeteksi api kecurangan.</div>', unsafe_allow_html=True)
-        if st.button("Masuk Admin Portal"):
-            st.session_state.page = "Admin"
-            st.rerun()
-    with col_cli:
-        st.markdown('<div class="feature-card"><b>OWNER PORTAL</b><br>Pantau kesehatan bisnis dan terima notifikasi Fire Alarm.</div>', unsafe_allow_html=True)
-        if st.button("Masuk Client Portal"):
-            st.session_state.page = "Klien"
-            st.rerun()
-
-    # LAYANAN PRODUK & PAKET
-    st.write("---")
-    st.markdown("### 🏷️ LAYANAN PRODUK & PAKET")
-    p1, p2, p3, p4 = st.columns(4)
-    
-    with p1:
-        st.markdown("""<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr>
-        <p style="text-align:left; font-size:0.9rem;">
-        • Audit Harian Retail<br>
-        • Notifikasi WA Aktif<br>
-        • Laporan Mingguan Dasar<br>
-        <span class="alarm-tag">🔥 V-Guard Fire Alarm</span></p></div>""", unsafe_allow_html=True)
-    
-    with p2:
-        st.markdown("""<div class="card-paket"><b>V-GROW</b><h3 style="color:#
+        Saya **
