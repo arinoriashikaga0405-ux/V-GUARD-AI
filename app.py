@@ -4,10 +4,8 @@ import google.generativeai as genai
 import os
 from PIL import Image
 
-# 1. KONFIGURASI UTAMA
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# API KEY BAPAK
 GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 
 if GOOGLE_API_KEY:
@@ -26,7 +24,6 @@ def get_foto(lebar):
     except:
         st.write("📸")
 
-# 2. SISTEM LOGIN
 if 'role' not in st.session_state:
     st.session_state.role = None
 
@@ -47,7 +44,6 @@ def login_vguard():
             else:
                 st.sidebar.error("Username/Password Salah")
 
-# 3. CSS DESIGN (UKURAN BESAR & ELEGAN)
 st.markdown("""<style>
     .stApp { background-color: #f4f6f9; }
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
@@ -65,4 +61,49 @@ st.markdown("""<style>
         justify-content: space-between;
     }
     .card-service h4 { font-size: 24px; font-weight: bold; color: #1a1a1a; margin-bottom: 10px; }
-    .card-service
+    .card-service h3 { font-size: 32px; color: #d42f2f; font-weight: bold; margin: 15px 0; }
+    .card-service p { font-size: 18px; line-height: 1.6; color: #444; }
+    .stLinkButton button { width: 100%; height: 55px; font-size: 18px !important; font-weight: bold; background-color: #FFD700 !important; color: #0e1117 !important; border-radius: 10px; }
+</style>""", unsafe_allow_html=True)
+
+with st.sidebar:
+    st.markdown("<h2 style='text-align: center; color: #FFD700;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
+    col_f, col_n = st.columns([1, 2])
+    with col_f: 
+        get_foto(60)
+    with col_n: 
+        st.markdown("<b style='color:white; font-size:18px;'>Erwin Sinaga</b><br><span style='color:#FFD700;'>Founder & CEO</span>", unsafe_allow_html=True)
+    st.divider()
+
+    opsi = ["🌐 Beranda", "📝 Meeting Lab"]
+    if st.session_state.role == "admin":
+        opsi.insert(1, "🤖 AI Auditor (Admin)")
+    elif st.session_state.role == "klien":
+        opsi.insert(1, "📊 Dashboard Klien")
+    
+    menu = st.radio("NAVIGASI UTAMA:", opsi)
+
+    if st.session_state.role:
+        st.success(f"Mode: {st.session_state.role.upper()}")
+        if st.button("🚪 Logout"):
+            st.session_state.role = None
+            st.rerun()
+    else:
+        login_vguard()
+
+if menu == "🌐 Beranda":
+    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p style="font-size:20px;">Revenue Protection Intelligence</p></div>', unsafe_allow_html=True)
+    
+    c_roi1, c_roi2 = st.columns([1, 2])
+    with c_roi1: 
+        get_foto(350)
+    with c_roi2:
+        st.subheader("🛡️ Proteksi Aset & Deteksi Fraud")
+        st.write("Gunakan teknologi AI V-GUARD untuk amankan profit dan deteksi kebocoran bisnis.")
+        omset = st.number_input("Omset Bulanan (Rp):", value=100000000)
+        leak = st.slider("Estimasi Kebocoran (%):", 0, 15, 3)
+        st.markdown(f"### Potensi Penyelamatan: :red[Rp {omset*(leak/100):,.0f}]")
+
+    st.divider()
+    
+    st.markdown("<h2 style='text-align:center; margin-bottom:30px;'>Layanan Strategis V-GUARD</h2>", unsafe_allow_html=True)
