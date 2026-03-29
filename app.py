@@ -56,4 +56,68 @@ def draw_paket(title, price, desc):
 if st.session_state.page == "Admin":
     if not st.session_state.authenticated:
         st.title("🔐 Akses Terbatas Admin")
-        # Password default Bapak: VGUARD2
+        # Password default Bapak: VGUARD2026
+        pwd = st.text_input("Masukkan Password Executive:", type="password")
+        if st.button("Masuk ke Command Center"):
+            if pwd == "VGUARD2026":
+                st.session_state.authenticated = True
+                st.rerun()
+            else:
+                st.error("Password Salah.")
+    else:
+        st.title("💻 Command Center - Erwin Sinaga")
+        st.subheader("🛡️ Audit Data & Alarm Piutang")
+        
+        # Fitur Audit Data
+        up = st.file_uploader("Unggah Laporan Transaksi Klien", type=['csv', 'xlsx'])
+        if up: st.success("Data Siap di-Audit.")
+        
+        # Fitur Alarm Piutang
+        st.write("---")
+        st.warning("⚠️ Terdeteksi Piutang Jatuh Tempo")
+        if st.button("🚨 KIRIM ALARM PIUTANG (WA)"):
+            st.success("WhatsApp Alert Terkirim!")
+
+else:
+    # --- HALAMAN BERANDA ---
+    st.markdown('<div class="header-box"><h1 style="color:#1e3a8a;">🛡️ VGUARD AI SYSTEMS</h1></div>', unsafe_allow_html=True)
+
+    # Profil
+    c1, c2 = st.columns([1, 2.8])
+    with c1:
+        try: st.image("erwin.jpg", use_container_width=True)
+        except: st.info("CEO Image")
+    with c2:
+        st.markdown(f"""
+        <div class="profile-card">
+            <h2 style="color:#1e3a8a;">👤 Profil & Filosofi: Erwin Sinaga</h2>
+            <p style="font-size:1.1rem; line-height:1.8; text-align:justify;">
+                Erwin Sinaga memadukan pengalaman eksekutif perbankan 10+ tahun dengan teknologi AI untuk mewujudkan visi <b>'Digitizing Trust, Eliminating Leakage'</b>.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.write("")
+        if st.button("🚀 BUKA COMMAND CENTER"):
+            st.session_state.page = "Admin"
+            st.rerun()
+
+    # ROI
+    st.write("---")
+    st.subheader("📈 Kalkulator ROI Penyelamatan Profit")
+    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
+    o = st.number_input("Omzet (Rp)", value=100000000)
+    b = st.slider("Estimasi Kebocoran (%)", 1, 10, 3)
+    st.success(f"Potensi Penyelamatan: **Rp {(o * b/100) * 0.95:,.0f}** / bln")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Paket Layanan
+    st.write("---")
+    st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
+    p1, p2, p3, p4 = st.columns(4)
+    with p1: draw_paket("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif")
+    with p2: draw_paket("V-GROW", "5 JT", "• AI Fraud Detection<br>• Sinkron Stok Otomatis")
+    with p3: draw_paket("V-PRIME", "10 JT", "• Multi-Cabang Control<br>• Predictive Analytics")
+    with p4: draw_paket("V-CUSTOM", "NEGO", "• Solusi Enterprise<br>• Integrasi ERP/SAP")
+
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
