@@ -10,7 +10,7 @@ st.set_page_config(page_title="VGUARD AI Systems - Executive Platform", page_ico
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# --- 2. CSS CUSTOM EKSEKUTIF (DENGAN EFEK ALARM) ---
+# --- 2. CSS CUSTOM EKSEKUTIF ---
 st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
@@ -27,7 +27,10 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: center;
     }
     .card-paket:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); border-color: #ef4444; }
-    .alarm-text { color: #ef4444; font-weight: bold; font-size: 0.9rem; }
+    .alarm-tag { 
+        background-color: #fee2e2; color: #ef4444; padding: 5px 10px; 
+        border-radius: 20px; font-size: 0.75rem; font-weight: bold; border: 1px solid #fecaca;
+    }
     .feature-card {
         background-color: #ffffff; padding: 15px; border-radius: 10px;
         border-top: 4px solid #1e3a8a; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -56,31 +59,53 @@ with st.sidebar:
 
 # --- 4. LOGIKA NAVIGASI ---
 
-# A. PORTAL ADMIN (DENGAN FITUR ALARM)
 if st.session_state.page == "Admin":
     st.title("💻 Command Center - Admin Audit")
     pwd = st.text_input("Kode Otoritas Admin", type="password")
-    
     if pwd == "vguard2026":
         st.success("Akses Otoritas Diterima.")
-        col_1, col_2 = st.columns([2, 1])
-        with col_1:
-            st.subheader("🔍 Scan Temuan")
-            st.warning("🚨 [ALARM] Terdeteksi Selisih Kasir di Cabang Tangerang!")
-            st.table(pd.DataFrame({'ID': ['TX-88'], 'Tipe': ['Void Massal'], 'Risiko': ['KRITIS']}))
-        with col_2:
-            st.subheader("🛠️ Quick Action")
-            if st.button("🔔 Bunyikan Alarm Owner"):
-                st.error("Notifikasi Darurat Terkirim!")
+        st.subheader("🔍 Scan Temuan Mencurigakan")
+        st.warning("🚨 [ALARM] Deteksi Void Massal di Cabang Tangerang!")
+        if st.button("🔔 Bunyikan Alarm Owner"):
+            st.error("Notifikasi Fire Alarm Terkirim ke WhatsApp Owner!")
+    elif pwd != "":
+        st.error("Kode Salah!")
 
-# B. PORTAL KLIEN
 elif st.session_state.page == "Klien":
     st.title("📱 Owner Dashboard")
-    st.metric("Total Profit Aman", "Rp 125M", "Protected by V-Guard")
-    st.subheader("🔥 Log Fire Alarm (Temuan Mencurigakan)")
-    st.info("Pesan Terakhir: [02:15 AM] Alarm Berbunyi - Void Manual Tanpa Otorisasi di Store 02.")
+    st.metric("Total Profit Aman", "Rp 125M", "Protected")
+    st.subheader("🔥 Log V-Guard Fire Alarm")
+    st.info("Pesan: [02:15 AM] Alarm Berbunyi - Percobaan Manipulasi Stok di Store 01.")
 
-# C. BERANDA UTAMA
 else:
     st.markdown('<div class="header-box"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
-    st.
+    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">"Digitizing Trust, Eliminating Leakage"</p></div>', unsafe_allow_html=True)
+
+    # Profil (10 Tahun Bank)
+    st.write("---")
+    c_img, c_txt = st.columns([1, 4])
+    with c_img:
+        try: st.image("erwin.jpg", width=140)
+        except: st.info("CEO Photo")
+    with c_txt:
+        st.markdown("### FOUNDER PROFILE & FILOSOFI")
+        st.write("""
+        Saya **Erwin**, Founder VGUARD AI Systems, mengintegrasikan standar keamanan **10 tahun pengalaman profesional di industri perbankan** ke dalam operasional bisnis Anda. Filosofi kami, **Perisai Digital**, dirancang untuk memberikan perlindungan aset mutlak melalui sistem **V-Guard Fire Alarm** yang mendeteksi setiap titik kebocoran secara instan.
+        """)
+
+    # Navigasi Ekosistem
+    st.write("---")
+    col_adm, col_cli = st.columns(2)
+    with col_adm:
+        st.markdown('<div class="feature-card"><b>ADMIN PORTAL</b><br>Audit & Monitoring Kebocoran.</div>', unsafe_allow_html=True)
+        if st.button("Masuk Admin"): st.session_state.page = "Admin"; st.rerun()
+    with col_cli:
+        st.markdown('<div class="feature-card"><b>OWNER PORTAL</b><br>Terima Notifikasi Fire Alarm.</div>', unsafe_allow_html=True)
+        if st.button("Masuk Klien"): st.session_state.page = "Klien"; st.rerun()
+
+    # LAYANAN PRODUK & PAKET (UPDATE: FIRE ALARM INCLUDED)
+    st.write("---")
+    st.markdown("### 🏷️ LAYANAN PRODUK & PAKET")
+    p1, p2, p3, p4 = st.columns(4)
+    
+    with p1:
