@@ -12,22 +12,20 @@ st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
     .header-box { text-align: center; padding: 35px; background: white; border-bottom: 5px solid #1e3a8a; margin-bottom: 30px; }
-    .main-title { font-size: 3.5rem !important; font-weight: 800; color: #1e3a8a; }
+    .main-title { font-size: 3rem !important; font-weight: 800; color: #1e3a8a; }
     .profile-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 10px solid #1e3a8a; }
     .roi-container { background: #eff6ff; padding: 30px; border-radius: 20px; border: 2px dashed #1e3a8a; margin: 30px 0; }
-    .card-paket { background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; height: 550px; text-align: center; }
-    .price-tag { font-size: 2.2rem; font-weight: bold; color: #1e3a8a; margin: 15px 0; }
-    .alarm-tag { background: #fee2e2; color: #ef4444; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-top: 20px; display: inline-block; }
-    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 12px; height: 50px; font-weight: bold; width: 100%; }
+    .card-paket { background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; height: 500px; text-align: center; }
+    .price-tag { font-size: 2rem; font-weight: bold; color: #1e3a8a; margin: 15px 0; }
+    .alarm-tag { background: #fee2e2; color: #ef4444; padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-top: 15px; display: inline-block; }
+    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 10px; height: 45px; font-weight: bold; width: 100%; }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 3. SIDEBAR ---
 with st.sidebar:
-    try:
-        st.image("erwin.jpg", width=120)
-    except:
-        st.info("👤 CEO: ERWIN SINAGA")
+    try: st.image("erwin.jpg", width=120)
+    except: st.info("👤 CEO: ERWIN SINAGA")
     st.markdown("### ERWIN SINAGA")
     st.caption("Founder & CEO VGUARD AI")
     st.write("---")
@@ -36,20 +34,16 @@ with st.sidebar:
         st.rerun()
     st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
 
-# --- 4. LOGIKA NAVIGASI ---
+# --- 4. NAVIGASI ---
 if st.session_state.page == "Admin":
-    st.title("💻 Command Center - Alat Kerja Strategis")
-    t1, t2 = st.tabs(["🛡️ Deteksi Fraud", "💰 Kontrol Piutang (AR)"])
+    st.title("💻 Command Center - Erwin Sinaga")
+    t1, t2 = st.tabs(["🛡️ Deteksi Fraud", "💰 Kontrol Piutang"])
     with t1:
-        st.subheader("Investigasi Kecurangan Real-Time")
-        st.error("🚨 [ALARM] Anomali Transaksi Terdeteksi")
-        if st.button("🔔 Kirim Fire Alarm"):
-            st.success("Notifikasi Berhasil Dikirim!")
+        st.error("🚨 Anomali Transaksi Terdeteksi")
+        if st.button("🔔 Kirim Fire Alarm"): st.success("Notifikasi Terkirim!")
     with t2:
-        st.subheader("Manajemen Piutang")
-        st.info("PT. Niaga Sakti | Nilai: Rp 75.000.000 | Tempo: Besok")
-        if st.button("📲 Kirim Reminder Penagihan"):
-            st.success("WhatsApp Reminder Terkirim!")
+        st.info("PT. Niaga Sakti | Rp 75.000.000 | Tempo: Besok")
+        if st.button("📲 Kirim Reminder"): st.success("Reminder Terkirim!")
 
 else:
     # --- HALAMAN BERANDA ---
@@ -58,36 +52,44 @@ else:
     # SEKSI PROFIL & FILOSOFI
     c_img, c_txt = st.columns([1, 2.5])
     with c_img:
-        try:
-            st.image("erwin.jpg", use_container_width=True)
-        except:
-            st.info("CEO Image")
+        try: st.image("erwin.jpg", use_container_width=True)
+        except: st.info("CEO Image")
     with c_txt:
         st.markdown('<div class="profile-card">', unsafe_allow_html=True)
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
-        
-        # Menggunakan petik satu sederhana untuk menghindari SyntaxError
-        profil_teks = (
-            "Erwin Sinaga adalah pemimpin strategis dengan rekam jejak lebih dari sepuluh tahun "
-            "sebagai eksekutif senior di industri perbankan. Keahliannya dalam manajemen risiko "
-            "dan optimasi pendapatan menjadi fondasi utama lahirnya VGUARD AI Systems. "
-            "Filosofi beliau, 'Digitizing Trust, Eliminating Leakage', menekankan bahwa integritas "
-            "bisnis harus dijaga melalui sistem digital yang transparan. Melalui teknologi "
-            "V-Guard Fire Alarm, Pak Erwin berkomitmen menciptakan perisai pertahanan yang "
-            "mendeteksi setiap indikasi fraud dan kebocoran transaksi secara real-time demi "
-            "pertumbuhan usaha yang berkelanjutan."
-        )
-        st.write(profil_teks)
-        
+        st.write("Erwin Sinaga adalah pemimpin strategis dengan rekam jejak lebih dari sepuluh tahun sebagai eksekutif senior di industri perbankan. Keahliannya dalam manajemen risiko dan optimasi pendapatan menjadi fondasi utama lahirnya VGUARD AI Systems. Filosofi beliau, 'Digitizing Trust, Eliminating Leakage', menekankan bahwa integritas bisnis harus dijaga melalui sistem digital yang transparan. Melalui teknologi V-Guard Fire Alarm, Pak Erwin berkomitmen menciptakan perisai pertahanan yang mendeteksi setiap indikasi fraud secara real-time demi pertumbuhan usaha yang berkelanjutan.")
         if st.button("🚀 BUKA ALAT KERJA ADMIN"):
             st.session_state.page = "Admin"
             st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # SEKSI ROI
+    # SEKSI ROI (DIPASTIKAN AMAN)
     st.write("---")
     st.subheader("📈 Kalkulator Penyelamatan Profit (ROI)")
     st.markdown('<div class="roi-container">', unsafe_allow_html=True)
     col_in, col_out = st.columns(2)
     with col_in:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000
+        val_omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        val_bocor = st.slider("Estimasi Kebocoran (%)", 1, 10, 3)
+    with col_out:
+        kerugian = val_omzet * (val_bocor / 100)
+        diselamatkan = kerugian * 0.95
+        st.write(f"### Potensi Kerugian: Rp {kerugian:,.0f}")
+        st.success(f"### Diselamatkan V-Guard: Rp {diselamatkan:,.0f} / bln")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # SEKSI LAYANAN
+    st.write("---")
+    st.subheader("🏷️ LAYANAN PRODUK & PAKET")
+    p1, p2, p3, p4 = st.columns(4)
+
+    def show_paket(title, price, desc):
+        st.markdown(f"""<div class="card-paket"><h3>{title}</h3><div class="price-tag">{price}</div><hr><p style='text-align:left;'>{desc}</p><div class="alarm-tag">🔥 V-Guard Fire Alarm</div></div>""", unsafe_allow_html=True)
+
+    with p1: show_paket("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif")
+    with p2: show_paket("V-GROW", "5 JT", "• AI Fraud Detection<br>• Sinkron Stok Otomatis")
+    with p3: show_paket("V-PRIME", "10 JT", "• Multi-Cabang Control<br>• Predictive Analytics")
+    with p4: show_paket("V-CUSTOM", "NEGO", "• Solusi Enterprise<br>• Integrasi ERP/SAP")
+
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
