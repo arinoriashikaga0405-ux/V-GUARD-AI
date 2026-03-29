@@ -20,7 +20,7 @@ st.markdown("""
     }
     .card-paket {
         background-color: #ffffff; padding: 20px; border-radius: 15px; 
-        border: 1px solid #e2e8f0; height: 320px; transition: 0.3s;
+        border: 1px solid #e2e8f0; height: 350px; transition: 0.3s;
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .card-paket:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
@@ -31,7 +31,7 @@ st.markdown("""
 # --- 3. SIDEBAR (Foto Diperkecil) ---
 with st.sidebar:
     try:
-        # Foto diperkecil ke 120px agar proporsional
+        # Foto diperkecil ke 120px sesuai instruksi agar proporsional
         st.image("erwin.jpg", width=120)
     except:
         st.write("👤 PROFILE CEO")
@@ -73,16 +73,16 @@ if menu == "Beranda Eksekutif":
         st.write("- **Break Even Point**: Estimasi kembali modal dalam 3-6 bulan.")
         st.write("- **Efisiensi**: Memotong hingga 90% potensi fraud transaksi.")
 
-    # LAYANAN PRODUK (4 Paket)
+    # LAYANAN PRODUK (4 Paket dengan Detail Fitur)
     st.write("---")
     st.write("### LAYANAN PRODUK & FITUR")
     p1, p2, p3, p4 = st.columns(4)
     
     with p1:
-        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan Dasar</p></div>', unsafe_allow_html=True)
     with p2:
-        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-START<br>• <b>AI Fraud Detection</b><br>• Integrasi Stok</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-START<br>• <b>AI Fraud Detection</b><br>• Integrasi Stok Otomatis</p></div>', unsafe_allow_html=True)
     with p3:
         st.markdown('<div class="card-paket"><b>V-PRIME</b><h3 style="color:#1e3a8a">10 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-GROW<br>• Audit Multi-Cabang<br>• <b>Prediksi Kerugian AI</b></p></div>', unsafe_allow_html=True)
     with p4:
-        st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a
+        st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a8a">NE
