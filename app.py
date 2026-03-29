@@ -10,16 +10,48 @@ if 'page' not in st.session_state:
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
-# --- 2. CSS (DIBERSIHKAN DARI KARAKTER BERMASALAH) ---
+# --- 2. CSS (DIBERSIHKAN TOTAL) ---
 st.markdown("""
 <style>
     .main { background-color: #f1f5f9; }
-    .header-box { text-align: center; padding: 40px; background: white; border-bottom: 5px solid #1e3a8a; margin-bottom: 30px; }
-    .profile-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 10px solid #1e3a8a; }
-    .roi-container { background: #eff6ff; padding: 30px; border-radius: 20px; border: 2px dashed #1e3a8a; margin: 30px 0; }
-    .card-paket { background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0; height: 460px; text-align: center; }
+    .header-box { 
+        text-align: center; 
+        padding: 40px; 
+        background: white; 
+        border-bottom: 5px solid #1e3a8a; 
+        margin-bottom: 30px; 
+    }
+    .profile-card { 
+        background: white; 
+        padding: 40px; 
+        border-radius: 20px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        border-left: 10px solid #1e3a8a; 
+    }
+    .roi-container { 
+        background: #eff6ff; 
+        padding: 30px; 
+        border-radius: 20px; 
+        border: 2px dashed #1e3a8a; 
+        margin: 30px 0; 
+    }
+    .card-paket { 
+        background: white; 
+        padding: 25px; 
+        border-radius: 20px; 
+        border: 1px solid #e2e8f0; 
+        height: 480px; 
+        text-align: center; 
+    }
     .price-tag { font-size: 1.8rem; font-weight: bold; color: #1e3a8a; margin: 10px 0; }
-    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 12px; height: 50px; font-weight: bold; width: 100%; }
+    .stButton>button { 
+        background: #1e3a8a !important; 
+        color: white !important; 
+        border-radius: 12px; 
+        height: 50px; 
+        font-weight: bold; 
+        width: 100%; 
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -58,7 +90,7 @@ def draw_paket(title, price, desc):
 if st.session_state.page == "Admin":
     if not st.session_state.authenticated:
         st.title("🔐 Akses Terbatas Admin")
-        # Password Bapak: VGUARD2026
+        # Password Anda: VGUARD2026
         pwd = st.text_input("Masukkan Password Executive:", type="password")
         if st.button("Masuk ke Command Center"):
             if pwd == "VGUARD2026":
@@ -68,17 +100,18 @@ if st.session_state.page == "Admin":
                 st.error("Password Salah. Akses Ditolak.")
     else:
         st.title("💻 Command Center - Erwin Sinaga")
-        st.subheader("🛡️ Audit Data & Alarm Piutang")
         
-        # Fitur Audit Data
+        # FITUR UNGGAH & AUDIT
+        st.subheader("🛡️ Audit Data & Fraud Detection")
         up = st.file_uploader("Unggah Laporan Transaksi Klien", type=['csv', 'xlsx'])
-        if up: st.success("Data Siap di-Audit melalui V-Guard AI.")
+        if up: st.success("Data diterima. V-Guard AI siap melakukan audit.")
         
-        # Fitur Alarm Piutang
+        # ALARM PIUTANG
         st.write("---")
-        st.warning("⚠️ Terdeteksi Piutang Jatuh Tempo pada 3 Mitra")
+        st.subheader("💰 Alarm Monitoring Piutang (AR)")
+        st.warning("⚠️ Terdeteksi 3 Piutang Mendekati Jatuh Tempo")
         if st.button("🚨 KIRIM ALARM PIUTANG (WA)"):
-            st.success("WhatsApp Alert Terkirim secara Otomatis!")
+            st.success("WhatsApp Alert Terkirim Otomatis!")
 
 else:
     # --- HALAMAN BERANDA ---
@@ -101,4 +134,10 @@ else:
         st.write("")
         if st.button("🚀 BUKA COMMAND CENTER"):
             st.session_state.page = "Admin"
-            st.rer
+            st.rerun()
+
+    # SEKSI ROI
+    st.write("---")
+    st.subheader("📈 Kalkulator ROI Penyelamatan Profit")
+    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
+    o = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10
