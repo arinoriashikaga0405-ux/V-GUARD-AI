@@ -7,7 +7,7 @@ st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# --- 2. CSS PERMANEN (DIBERSIHKAN TOTAL) ---
+# --- 2. CSS CUSTOM (STABIL & BERSIH) ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
@@ -40,13 +40,11 @@ with st.sidebar:
 if st.session_state.page == "Admin":
     st.title("💻 Command Center - Alat Kerja Strategis")
     t1, t2 = st.tabs(["🛡️ Deteksi Fraud", "💰 Kontrol Piutang (AR)"])
-    
     with t1:
         st.subheader("Investigasi Kecurangan Real-Time")
         st.error("🚨 [ALARM] Anomali Transaksi Terdeteksi")
         if st.button("🔔 Kirim Fire Alarm"):
             st.success("Notifikasi Berhasil Dikirim!")
-
     with t2:
         st.subheader("Manajemen Piutang")
         st.info("PT. Niaga Sakti | Nilai: Rp 75.000.000 | Tempo: Besok")
@@ -68,29 +66,4 @@ else:
         st.markdown('<div class="profile-card">', unsafe_allow_html=True)
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
         st.write("""
-        **Erwin Sinaga** adalah pemimpin strategis dengan rekam jejak lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan**. Keahliannya dalam manajemen risiko dan optimasi pendapatan menjadi fondasi utama lahirnya **VGUARD AI Systems**. 
-        
-        Filosofi beliau, **"Digitizing Trust, Eliminating Leakage"**, menekankan bahwa integritas bisnis harus dijaga melalui sistem digital yang transparan. Melalui teknologi **V-Guard Fire Alarm**, Pak Erwin berkomitmen menciptakan perisai pertahanan yang mendeteksi setiap indikasi fraud dan kebocoran transaksi secara real-time.
-        """)
-        if st.button("🚀 BUKA ALAT KERJA ADMIN"):
-            st.session_state.page = "Admin"
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    # SEKSI ROI
-    st.write("---")
-    st.subheader("📈 Kalkulator Penyelamatan Profit (ROI)")
-    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
-    col_in, col_out = st.columns(2)
-    with col_in:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10000000)
-        bocor = st.slider("Estimasi Kebocoran (%)", 1, 10, 3)
-    with col_out:
-        kerugian = omzet * (bocor/100)
-        hasil_saved = kerugian * 0.95
-        st.write(f"### Potensi Kerugian: Rp {kerugian:,.0f}")
-        st.success(f"### Diselamatkan V-Guard: Rp {hasil_saved:,.0f} / bln")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # SEKSI LAYANAN
-    st.write("
+        **Erwin Sinaga** adalah pemimpin strategis dengan rekam jejak lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan** [cite: User
