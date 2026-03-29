@@ -7,7 +7,33 @@ st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout=
 
 # INITIAL DATABASE (Pastikan data paket ada di sini)
 if 'role' not in st.session_state: st.session_state.role = None
-if 'user_name' not in st.session_state: st.session_state.user_name = "Visitor"
+if 'user_name' not in st.session# DATABASE PAKET (Sudah disesuaikan dengan instruksi Bapak)
+if 'db_klien' not in st.session_state:
+    st.session_state.db_klien = {
+        "klien_demo": {
+            "paket": "V-GROW", 
+            "tagihan": 5500000, 
+            "due": "2026-04-05",
+            "market": "Retail & F&B"
+        }
+    }
+
+# BAGIAN DISPLAY ABOUT (Tampilan Tetap Rapi & Bagus)
+# [Bagian ini tetap mempertahankan foto Bapak di kiri dan About di kanan]
+with col_teks:
+    st.markdown(f"""
+    <div class="vguard-card">
+        <h2 style="color:#FFD700;">🛡️ About V-GUARD</h2>
+        <p>Platform deteksi fraud sistemik yang dibangun oleh <b>Erwin Sinaga</b> (Senior Business Executive).</p>
+        <p>Pengalaman perbankan 10+ tahun kami gunakan untuk memproteksi aset bisnis Anda dari kebocoran hingga 90%.</p>
+        <hr style="border-color: #444;">
+        <h3 style="color:#FFD700;">Filosofi</h3>
+        <p>Kami memastikan setiap rupiah aset Anda terlindungi dengan standar keamanan tinggi dan audit AI proaktif.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# BAGIAN DISPLAY PAKET (Saat Klien Login)
+# [Menampilkan Detail Layanan, Harga, dan Market secara otomatis]_state: st.session_state.user_name = "Visitor"
 if 'user_id' not in st.session_state: st.session_state.user_id = None
 if 'db_klien' not in st.session_state:
     st.session_state.db_klien = {
