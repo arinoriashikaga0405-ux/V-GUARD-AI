@@ -3,8 +3,9 @@ import pandas as pd
 import google.generativeai as genai
 from PIL import Image
 import os
+from datetime import datetime
 
-# 1. KONFIGURASI SISTEM (Anti-Error Baris 4 & 8)
+# 1. KONFIGURASI SISTEM (Anti-Error)
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
 # Masukkan kembali API Key Bapak di sini
@@ -15,9 +16,7 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 # 2. CSS TAMPILAN MEWAH (Warna Biru Navy & Emas)
 st.markdown("""
     <style>
-    .main { background-color: #f8f9fa; }
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; color: white !important; }
-    section[data-testid="stSidebar"] .stMarkdown, section[data-testid="stSidebar"] p { color: white !important; }
     .hero-bg { 
         background-color: #0e1117; padding: 50px; border-radius: 20px; color: white; 
         text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 30px;
@@ -26,35 +25,35 @@ st.markdown("""
         background-color: white; padding: 25px; border-radius: 15px; 
         box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; height: 100%; color: #0e1117;
     }
-    .package-pro { border: 2px solid #FFD700; transform: scale(1.02); }
+    .invoice-box { border: 2px solid #e0e0e0; padding: 20px; border-radius: 10px; background-color: #fff; color: #000; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. SIDEBAR NAVIGATION
+# 3. FUNGSI AMBIL FOTO (Penyelamat Error)
+def tampilkan_foto(lebar):
+    # Mencari file bapak_erwin.jpg sesuai yang ada di GitHub Bapak
+    if os.path.exists('bapak_erwin.jpg'):
+        st.image(Image.open('bapak_erwin.jpg'), width=lebar)
+    else:
+        # Ikon cadangan jika file tidak ditemukan agar web tidak crash
+        st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
+
+# 4. SIDEBAR NAVIGATION
 with st.sidebar:
     st.markdown("### 🛡️ V-GUARD NAVIGASI")
-    
-    # Grid untuk foto & nama Founder
     col_f1, col_f2 = st.columns([1, 2])
     with col_f1:
-        # Menggunakan foto profesional Bapak
-        img = Image.open('image_9.png')
-        st.image(img, use_container_width=True)
+        tampilkan_foto(80)
     with col_f2:
-        st.markdown("""
-            <div style='padding-top: 10px;'>
-                <p style='color: white; font-weight: bold; margin-bottom: 0px;'>Erwin Sinaga</p>
-                <p style='color: #FFD700; font-size: 12px;'>Founder V-GUARD</p>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown("<p style='font-weight: bold; margin-top: 10px;'>Erwin Sinaga</p><p style='color: #FFD700; font-size: 12px;'>Founder V-GUARD</p>", unsafe_allow_html=True)
         
     st.divider()
-    halaman = st.radio("Pilih Halaman:", ["🌐 Promosi & Umum", "👥 Area Layanan Klien", "🔐 Panel Admin"])
+    halaman = st.radio("Pilih Halaman:", ["🌐 Promosi & Umum", "👥 Monitoring Klien", "🔐 Admin & Invoice"])
     st.divider()
-    st.write("📍 Tangerang, Banten, Indonesia")
+    st.write("📍 Tangerang, Indonesia")
 
 # ==========================================
-# HALAMAN 1: PROMOSI & UMUM (Fitur Kembali!)
+# HALAMAN 1: PROMOSI (LANDING PAGE)
 # ==========================================
 if halaman == "🌐 Promosi & Umum":
     st.markdown("""
@@ -65,88 +64,59 @@ if halaman == "🌐 Promosi & Umum":
         </div>
         """, unsafe_allow_html=True)
 
-    col_w1, col_w2, col_w3 = st.columns([1,1,1])
-    with col_w2:
-        st.link_button("🟢 KONSULTASI AUDIT VIA WHATSAPP", "https://wa.me/6281234567890", use_container_width=True)
-
-    st.write("###")
     c1, c2 = st.columns([1, 2])
     with c1:
-        st.image(Image.open('image_9.png'), width=300)
+        tampilkan_foto(350)
     with c2:
-        st.markdown("## FILOSOFI & PROFIL FOUNDER")
-        st.write("""
-        V-GUARD AI Systems hadir sebagai solusi audit masa depan yang transparan dan akurat. 
-        Dibawah kepemimpinan Erwin Sinaga, kami berkomitmen menjaga integritas aset bisnis Anda 
-        dengan teknologi AI tercanggih.
-        """)
-        st.info("📍 Senior Business Leader (Tangerang)")
-
-    st.write("### Daftar Layanan Investasi")
-    p1, p2, p3 = st.columns(3)
-    p1.markdown('<div class="card-service"><h3>📦 LITE</h3><h2>7,5 Jt</h2><p>Audit Angka Dasar</p></div>', unsafe_allow_html=True)
-    p2.markdown('<div class="card-service package-pro"><h3>🚀 PRO</h3><h2 style="color: #FFD700;">15 Jt</h2><p><b>Fitur LITE +</b><br>Investigasi Fraud AI</p></div>', unsafe_allow_html=True)
-    p3.markdown('<div class="card-service"><h3>🏢 ENTERPRISE</h3><h2>25 Jt</h2><p><b>Fitur PRO +</b><br>Konsultasi Strategis</p></div>', unsafe_allow_html=True)
+        st.markdown("## FILOSOFI & PROFIL")
+        st.write("V-GUARD hadir sebagai solusi audit transparan di bawah kepemimpinan Erwin Sinaga.")
+        st.info("Senior Leader dengan pengalaman 10+ tahun dalam manajemen strategis.")
+        st.write("### Daftar Layanan")
+        p1, p2, p3 = st.columns(3)
+        p1.markdown('<div class="card-service"><b>📦 LITE</b><br>7,5 Jt</div>', unsafe_allow_html=True)
+        p2.markdown('<div class="card-service" style="border:1px solid #FFD700"><b>🚀 PRO</b><br>15 Jt</div>', unsafe_allow_html=True)
+        p3.markdown('<div class="card-service"><b>🏢 ENTERPRISE</b><br>25 Jt</div>', unsafe_allow_html=True)
 
 # ==========================================
-# HALAMAN 2: AREA LAYANAN KLIEN (Fitur Kembali!)
+# HALAMAN 2: MONITORING KLIEN
 # ==========================================
-elif halaman == "👥 Area Layanan Klien":
-    st.title("👥 Dashboard Monitor Klien V-GUARD")
-    st.info("Sistem AI memantau data bisnis Bapak secara real-time.")
-    
-    data_klien = {
-        "Nama Bisnis": ["Resto BSD Utama", "Retail Tangerang Central", "Cafe Serpong", "Gudang Logistik"],
-        "Paket": ["V-GUARD PRO", "V-GUARD LITE", "V-GUARD PRO", "ENTERPRISE"],
-        "Status": ["🛡️ Aman", "⚠️ Cek Selisih", "🛡️ Aman", "🛡️ Aman"]
-    }
-    st.table(pd.DataFrame(data_klien))
+elif halaman == "👥 Monitoring Klien":
+    st.title("👥 Dashboard Monitor Klien")
+    df = pd.DataFrame({
+        "Nama Bisnis": ["Resto BSD", "Retail Tangerang", "Cafe Serpong"],
+        "Paket": ["PRO", "LITE", "ENTERPRISE"],
+        "Status AI": ["🛡️ Aman", "⚠️ Cek Selisih", "🛡️ Aman"]
+    })
+    st.table(df)
 
 # ==========================================
-# HALAMAN 3: PANEL ADMIN (Fitur Audit AI & Invoice Kembali!)
+# HALAMAN 3: ADMIN & INVOICE
 # ==========================================
 else:
-    st.title("🔐 Panel Kendali Admin V-GUARD")
+    st.title("🔐 Panel Admin & Penagihan")
     pw = st.text_input("Password Admin:", type="password")
     
     if pw == "vguard2026":
-        st.success("Akses Diterima.")
-        tab_audit, tab_invoice = st.tabs(["📊 Jalankan Audit AI", "🧾 Buat Invoice"])
+        tab_audit, tab_invoice = st.tabs(["📊 Audit AI", "🧾 Buat Invoice"])
         
         with tab_audit:
-            st.subheader("🛠️ Sistem Audit AI Otonom")
-            data_audit = st.text_area("Tempel Data Transaksi Klien di sini:")
+            data_input = st.text_area("Tempel Data Transaksi Klien:")
             if st.button("JALANKAN AUDIT AI"):
-                with st.spinner("AI sedang memproses..."):
-                    try:
-                        res = model.generate_content("Analisis data ini untuk mencari fraud atau selisih: " + data_audit)
-                        st.markdown(res.text)
-                        st.balloons()
-                    except:
-                        st.error("Gagal terhubung ke AI. Cek API Key Anda.")
+                res = model.generate_content("Analisis data ini: " + data_input)
+                st.markdown(res.text)
         
         with tab_invoice:
-            st.subheader("🧾 Generator Invoice V-GUARD")
-            with st.form("invoice_form"):
-                col_i1, col_i2 = st.columns(2)
-                with col_i1:
-                    nama_klien_inv = st.text_input("Nama Klien:")
-                    paket_inv = st.selectbox("Pilih Paket:", ["LITE", "PRO", "ENTERPRISE"])
-                with col_i2:
-                    tgl_inv = st.date_today()
-                submit_inv = st.form_submit_button("Generate Tampilan Invoice")
-                
-                if submit_inv:
+            with st.form("inv"):
+                klien = st.text_input("Nama Klien:")
+                pkt = st.selectbox("Paket:", ["LITE", "PRO", "ENTERPRISE"])
+                if st.form_submit_button("Generate Invoice"):
                     st.markdown(f"""
-                    <div style='border: 1px solid #ccc; padding: 20px; border-radius: 10px; background-color: #fff;'>
-                        <h3 style='text-align: center; color: #0e1117;'>INVOICE V-GUARD</h3>
-                        <hr>
-                        <p><b>Kepada:</b> {nama_klien_inv}</p>
-                        <p><b>Tanggal:</b> {tgl_inv}</p>
-                        <p><b>Deskripsi:</b> Langganan Sistem Audit V-GUARD (Paket {paket_inv})</p>
+                    <div class='invoice-box'>
+                        <h3 style='text-align: center;'>INVOICE V-GUARD</h3>
+                        <p><b>Kepada:</b> {klien}</p>
+                        <p><b>Layanan:</b> Paket {pkt}</p>
+                        <p><b>Tanggal:</b> {datetime.now().strftime('%d/%m/%Y')}</p>
                     </div>
                     """, unsafe_allow_html=True)
-                    st.warning("Screenshot bagian ini untuk dikirim ke klien.")
-                    
     elif pw != "":
-        st.error("Akses Ditolak!")
+        st.error("Password Salah!")
