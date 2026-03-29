@@ -1,11 +1,6 @@
 import streamlit as st
 import pandas as pd
-import google.generativeai as genai
-from PIL import Image
-import os
-from datetime import datetime
-import urllib.parse
-import io
+# Tambahkan library lain yang Anda gunakan di sini
 
 # 1. KONFIGURASI SISTEM
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
