@@ -43,16 +43,9 @@ def login_vguard():
                 st.session_state.role = "klien"
                 st.rerun()
 
-# 3. CSS DESIGN (UKURAN KOTAK PROPORSIONAL)
-st.markdown("""
-<style>
-    .stApp { background-color: #f8f9fa; }
-    .hero-bg { background: #0e1117; padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }
-    .card-v { 
-        background: white; padding: 20px; border-radius: 12px; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid #FFD700; 
-        height: 520px; display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .card-v h4 { font-size: 20px; color: #1a1a1a; font-weight: 800; text-align: center; }
-    .card-v .price { font-size: 26px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 10px; }
-    .card-v .section-title { font-size: 13px; font-weight: bold; color: #888; text-transform: uppercase; margin-top: 8px; border-bottom:
+# 3. CSS DESIGN (UKURAN PROPORSIONAL)
+st.markdown('<style>.stApp { background-color: #f8f9fa; }.hero-bg { background: #0e1117; padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }.card-v { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid #FFD700; height: 530px; display: flex; flex-direction: column; justify-content: space-between; }.card-v h4 { font-size: 20px; color: #1a1a1a; font-weight: 800; text-align: center; margin-bottom: 5px; }.card-v .price { font-size: 24px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 10px; }.card-v .section-title { font-size: 12px; font-weight: bold; color: #888; text-transform: uppercase; margin-top: 8px; border-bottom: 1px solid #eee; }.card-v p { font-size: 13px; color: #444; margin: 5px 0; line-height: 1.4; }.card-v ul { font-size: 12px; color: #555; padding-left: 15px; margin: 5px 0; }.stLinkButton button { width: 100%; height: 40px; font-size: 14px !important; font-weight: bold; background-color: #FFD700 !important; color: #000 !important; border-radius: 8px; }</style>', unsafe_allow_html=True)
+
+# 4. SIDEBAR
+with st.sidebar:
+    st.markdown
