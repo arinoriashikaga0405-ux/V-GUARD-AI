@@ -14,7 +14,87 @@ st.markdown("""
     .main { background-color: #f8fafc; }
     .header-container { text-align: center; padding: 30px 0; }
     .main-title { font-size: 3.2rem !important; font-weight: 800; color: #1e3a8a; margin-bottom: 10px; }
-    .mission-statement { 
+    .mission-statement { import streamlit as st
+import pandas as pd
+from datetime import datetime
+
+# --- 1. KONFIGURASI HALAMAN ---
+st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
+
+# Inisialisasi State Navigasi
+if 'page' not in st.session_state:
+    st.session_state.page = "Home"
+
+# --- 2. CSS CUSTOM (ESTETIKA EKSEKUTIF) ---
+st.markdown("""
+    <style>
+    .main { background-color: #f8fafc; }
+    .header-container { text-align: center; padding: 40px 0; }
+    .main-title { font-size: 3.5rem !important; font-weight: 800; color: #1e3a8a; margin-bottom: 10px; }
+    .mission-box { 
+        background-color: #ffffff; padding: 25px; border-radius: 15px; 
+        border-left: 10px solid #1e3a8a; box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+        text-align: center; margin: 20px auto; max-width: 900px;
+        font-size: 1.5rem; font-style: italic; color: #1e3a8a;
+    }
+    .card-paket {
+        background-color: #ffffff; padding: 35px; border-radius: 20px; 
+        border: 1px solid #e2e8f0; height: 500px; transition: 0.4s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center;
+    }
+    .card-paket:hover { transform: translateY(-15px); box-shadow: 0 25px 35px rgba(0,0,0,0.1); border-color: #ef4444; }
+    .price-tag { font-size: 2.2rem; font-weight: bold; color: #1e3a8a; margin: 20px 0; }
+    .feature-list { text-align: left; font-size: 1rem; line-height: 2; color: #475569; min-height: 160px; }
+    .alarm-tag { 
+        background-color: #fee2e2; color: #ef4444; padding: 8px 18px; 
+        border-radius: 25px; font-size: 0.9rem; font-weight: bold; border: 1px solid #fecaca;
+        display: inline-block; margin-top: 25px;
+    }
+    .stButton>button { 
+        background-color: #1e3a8a; color: white; border-radius: 12px; 
+        font-weight: bold; height: 55px; font-size: 1.1rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- 3. SIDEBAR (RESTORASI FOTO & PROFIL) ---
+with st.sidebar:
+    try:
+        # Mengarahkan kembali ke file foto Bapak
+        st.image("erwin.jpg", width=120) 
+    except:
+        st.info("👤 Foto Profil (erwin.jpg)")
+    
+    st.markdown("### ERWIN")
+    st.caption("Founder & CEO VGUARD AI")
+    st.write("---")
+    
+    # Navigasi Cepat
+    if st.button("🏠 Kembali ke Beranda"):
+        st.session_state.page = "Home"
+        st.rerun()
+        
+    st.write("---")
+    st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
+
+# --- 4. LOGIKA NAVIGASI (RESTORASI FITUR ADMIN) ---
+if st.session_state.page == "Admin":
+    st.title("💻 Command Center - Admin Audit")
+    st.write("Otoritas penuh untuk memantau kebocoran aset.")
+    pwd = st.text_input("Kode Otoritas Eksekutif", type="password")
+    
+    if pwd == "vguard2026":
+        st.success("Akses Otoritas Diterima.")
+        st.subheader("🔍 Scan Temuan Mencurigakan")
+        st.warning("🚨 [ALARM] Deteksi Anomali Transaksi di Store Cabang Tangerang!")
+        if st.button("🔔 Kirim Fire Alarm ke WhatsApp Owner"):
+            st.error("Alarm Berhasil Dikirim!")
+    elif pwd != "":
+        st.error("Kode Otoritas Tidak Valid!")
+
+elif st.session_state.page == "Klien":
+    st.title("📱 Owner Dashboard")
+    st.metric("Total Profit Aman", "Rp
         background-color: #ffffff; padding: 20px; border-radius: 12px; 
         border-left: 8px solid #1e3a8a; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
         text-align: center; margin: 20px auto; max-width: 900px;
