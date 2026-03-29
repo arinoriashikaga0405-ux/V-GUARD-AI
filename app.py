@@ -1,199 +1,129 @@
 import streamlit as st
+import pandas as pd
+import google.generativeai as genai
 
-# ==========================================
-# 1. KONFIGURASI HALAMAN & TEMA WARNA (CSS KEREN)
-# ==========================================
+# 1. KONFIGURASI SISTEM & TEMA
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
+# API KEY & MODEL (Ganti dengan API Key Bapak)
+API_KEY = "PASTE_API_KEY_BAPAK_DI_SINI"
+genai.configure(api_key=API_KEY)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+# CSS TAMPILAN MEWAH (BIRU NAVY & EMAS)
 st.markdown("""
     <style>
-    /* Mengubah Background Halaman Menjadi Abu-abu Sangat Terang */
-    .main { background-color: #F4F7F6; color: #102A43; }
-    
-    /* Mengubah Sidebar Menjadi Biru Navy */
-    section[data-testid="stSidebar"] {
-        background-color: #102A43 !important;
-        color: white !important;
+    .main { background-color: #f8f9fa; }
+    section[data-testid="stSidebar"] { background-color: #0e1117 !important; color: white; }
+    .hero-bg { 
+        background-color: #0e1117; padding: 50px; border-radius: 20px; color: white; 
+        text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 30px;
     }
-    
-    /* Warna teks dan radio button di sidebar */
-    section[data-testid="stSidebar"] .stMarkdown, 
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] .stRadio {
-        color: white !important;
-    }
-
-    /* Mengubah Header (Bagian Hitam di image_1.png) menjadi Biru Navy Mewah */
-    .hero-bg {
-        background-color: #102A43;
-        padding: 60px;
-        border-radius: 20px;
-        color: white;
-        text-align: center;
-        margin-bottom: 40px;
-        border-bottom: 5px solid #FFD700; /* Garis Bawah Emas */
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    .hero-bg h1 { color: #FFD700 !important; font-size: 50px !important; }
-    .hero-bg h3 { opacity: 0.9; }
-
-    /* Gaya untuk Kotak Layanan (Card) - Menjadi Putih Bersih dengan Bayangan Lembut */
     .card-service {
-        background-color: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        text-align: center;
-        transition: transform 0.2s; /* Efek Hover */
-        height: 100%;
-        color: #102A43;
+        background-color: white; padding: 25px; border-radius: 15px; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; height: 100%;
     }
-    .card-service:hover {
-        transform: translateY(-5px); /* Sedikit terangkat saat hover */
-        box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-    }
-    .card-service h3 { color: #102A43; border-bottom: 2px solid #FFD700; display: inline-block; padding-bottom: 10px; }
-    .card-service .price { font-size: 30px; font-weight: bold; color: #102A43; margin-top: 20px; }
-    
-    /* Warna Khusus untuk Paket PRO agar menonjol */
-    .card-service-pro {
-        border: 3px solid #FFD700;
-        transform: scale(1.03); /* Sedikit lebih besar */
-    }
-
-    /* Tombol WhatsApp Hijau */
-    .stLinkButton > a {
-        background-color: #25D366 !important;
-        color: white !important;
-        border-radius: 10px !important;
-        font-weight: bold !important;
-        padding: 10px 20px !important;
-    }
+    .package-pro { border: 2px solid #FFD700; transform: scale(1.02); }
     </style>
     """, unsafe_allow_html=True)
 
-# ==========================================
-# 2. MENU UTAMA DI SIDEBAR
-# ==========================================
+# 2. MENU NAVIGASI (SIDEBAR)
 with st.sidebar:
-    st.markdown("## 🛡️ V-GUARD MENU")
-    
-    # PERBAIKAN: Menambahkan Foto Bapak di Sidebar agar selalu muncul
-    # Masukkan link foto Bapak di sini
-    url_foto_bapak = "LINK_FOTO_PRESIDEN_DIREKSI_BAPAK" 
-    # Placeholder jika link Bapak belum ada
-    if url_foto_bapak == "LINK_FOTO_PRESIDEN_DIREKSI_BAPAK":
-        url_foto_bapak = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-
-    col_side_1, col_side_2, col_side_3 = st.columns([1,2,1])
-    with col_side_2:
-        st.image(url_foto_bapak, width=100)
-    st.markdown("<center>Erwin Sinaga, Founder V-GUARD</center>", unsafe_allow_html=True)
+    st.markdown("### 🛡️ V-GUARD NAVIGASI")
+    # Link Foto Bapak (Ganti dengan link foto baru Bapak jika sudah ada)
+    st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=120)
+    st.markdown("<center><b>Erwin Sinaga</b><br>Founder & Senior Leader</center>", unsafe_allow_html=True)
     st.divider()
-
-    halaman = st.radio("Pilih Tampilan:", ["🌐 Landing Page (Klien)", "🔐 Admin Dashboard"])
+    halaman = st.radio("Pilih Halaman:", ["🌐 Promosi & Umum", "👥 Area Layanan Klien", "🔐 Panel Admin"])
     st.divider()
-    st.write("📍 Tangerang, Banten, Indonesia")
+    st.write("📍 Tangerang, Banten")
 
 # ==========================================
-# 3. HALAMAN 1: LANDING PAGE (UNTUK KLIEN)
+# HALAMAN 1: PROMOSI & UMUM (LANDING PAGE)
 # ==========================================
-if halaman == "🌐 Landing Page (Klien)":
-    # Hero Section - Mewah (image_1.png -> Update)
+if halaman == "🌐 Promosi & Umum":
     st.markdown("""
         <div class="hero-bg">
-            <h1>V-GUARD AI SYSTEMS</h1>
-            <h3>Hentikan Kebocoran Finansial Bisnis Anda Hari Ini.</h3>
-            <p>Sistem Audit Otonom Berbasis AI untuk Transparansi Mutlak 24/7.</p>
+            <h1 style='color: #FFD700;'>V-GUARD AI SYSTEMS</h1>
+            <h3>Hentikan Kebocoran Finansial Bisnis Anda.</h3>
+            <p>Sistem Audit Otonom Berbasis AI | Standar POJK No. 56/2016.</p>
         </div>
         """, unsafe_allow_html=True)
-    
-    # Tombol WhatsApp
-    st.link_button("🟢 KONSULTASI AUDIT GRATIS (WA)", "https://wa.me/6281234567890", use_container_width=True)
+
+    col_wa1, col_wa2, col_wa3 = st.columns([1,1,1])
+    with col_wa2:
+        st.link_button("🟢 KONSULTASI AUDIT GRATIS", "https://wa.me/6281234567890", use_container_width=True)
 
     st.write("###")
-
-    # Bagian Profil & Filosofi (Sesuai keinginan Bapak)
     c1, c2 = st.columns([1, 2])
     with c1:
-        # Menampilkan foto Bapak lagi, lebih besar di halaman utama
-        st.image(url_foto_bapak, width=280)
+        st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=300)
     with c2:
-        st.markdown("<h2 style='color:#102A43;'>FILOSOFI KAMI</h2>", unsafe_allow_html=True)
+        st.markdown("## FILOSOFI & PROFIL")
         st.write("""
-        V-GUARD AI Systems lahir dari pengalaman kepemimpinan strategis selama lebih dari satu dekade. 
-        Kami memahami bahwa musuh terbesar pertumbuhan bisnis adalah kebocoran yang tidak terdeteksi.
-        
-        Mengacu pada standar **POJK No. 56/2016**, kami hadir sebagai mitra audit mandiri yang 
-        menjaga integritas aset Anda dengan kecerdasan AI tingkat tinggi. Kami memberikan 
-        ketenangan pikiran (peace of mind) bagi para pemilik bisnis.
+        V-GUARD AI Systems lahir dari pengalaman kepemimpinan strategis selama lebih dari satu dekade 
+        dalam manajemen operasional dan optimasi pendapatan. Kami hadir untuk memberikan 
+        transparansi mutlak bagi pemilik bisnis melalui teknologi Audit AI.
         """)
-        # Menambahkan data profil singkat Bapak
-        st.markdown("**Profil Founder:** Erwin Sinaga (10+ Tahun Pengalaman Strategis, Tangerang)")
+        st.info("📍 Berdomisili di Tangerang, melayani klien nasional.")
 
-    st.write("---")
-
-    # Bagian Layanan - Sangat Keren (image_2.png -> Update)
-    st.markdown("<h2 style='text-align: center; color:#102A43;'>DAFTAR LAYANAN V-GUARD AI</h2>", unsafe_allow_html=True)
+    st.write("### Daftar Layanan Investasi")
     p1, p2, p3 = st.columns(3)
+    p1.markdown('<div class="card-service"><h3>📦 LITE</h3><h2>7,5 Jt</h2><p>Audit Harian<br>Laporan WhatsApp</p></div>', unsafe_allow_html=True)
+    p2.markdown('<div class="card-service package-pro"><h3>🚀 PRO</h3><h2 style="color: #FFD700;">15 Jt</h2><p><b>Fitur LITE +</b><br>Investigasi Fraud AI</p></div>', unsafe_allow_html=True)
+    p3.markdown('<div class="card-service"><h3>🏢 ENTERPRISE</h3><h2>25 Jt</h2><p><b>Fitur PRO +</b><br>Konsultasi Senior Strategis</p></div>', unsafe_allow_html=True)
+
+# ==========================================
+# HALAMAN 2: AREA LAYANAN KLIEN (TABEL)
+# ==========================================
+elif halaman == "👥 Area Layanan Klien":
+    st.title("👥 Dashboard Monitor Klien")
+    st.info("Data ini diperbarui setiap 1 jam untuk akurasi audit.")
     
-    with p1:
-        st.markdown("""
-            <div class="card-service">
-                <h3>V-GUARD LITE</h3>
-                <p class="price">7,5 Jt / thn</p>
-                <ul style='text-align: left;'>
-                    <li>Audit Transaksi Harian</li>
-                    <li>Laporan WhatsApp Otomatis</li>
-                    <li>Deteksi Selisih Kas</li>
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
-            
-    with p2:
-        st.markdown("""
-            <div class="card-service card-service-pro">
-                <h3 style='border-bottom: 2px solid #FFD700;'>V-GUARD PRO</h3>
-                <p class="price">15 Jt / thn</p>
-                <ul style='text-align: left;'>
-                    <li><b>Semua Fitur LITE</b></li>
-                    <li>Predictive Risk Alarm</li>
-                    <li>Analisis Tren Mingguan</li>
-                </ul>
-                <p style='color: #FFD700; font-weight:bold; margin-top:10px;'>Paling Populer!</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-    with p3:
-        st.markdown("""
-            <div class="card-service">
-                <h3>ENTERPRISE</h3>
-                <p class="price">25 Jt / thn</p>
-                <ul style='text-align: left;'>
-                    <li><b>Semua Fitur PRO</b></li>
-                    <li>Visual Guard Monitoring</li>
-                    <li>Konsultasi Strategis Senior</li>
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
-
-    st.write("---")
-    st.markdown("<center>© 2026 V-GUARD AI Systems | Tangerang, Banten</center>", unsafe_allow_html=True)
+    data_klien = {
+        "Nama Bisnis": ["Resto BSD Utama", "Retail Tangerang Central", "Cafe Serpong", "Gudang Logistik"],
+        "Paket": ["V-GUARD PRO", "V-GUARD LITE", "V-GUARD PRO", "ENTERPRISE"],
+        "Status": ["🛡️ Aman", "⚠️ Cek Selisih", "🛡️ Aman", "🛡️ Aman"],
+        "Update": ["10:30 WIB", "09:15 WIB", "11:00 WIB", "Real-time"]
+    }
+    st.table(pd.DataFrame(data_klien))
+    st.success("Sistem AI V-GUARD sedang memantau 4 bisnis Anda di atas.")
 
 # ==========================================
-# 4. HALAMAN 2: ADMIN DASHBOARD (Proteksi Password)
+# HALAMAN 3: PANEL ADMIN (SISTEM AUDIT AI)
 # ==========================================
-elif halaman == "🔐 Admin Dashboard":
+else:
     st.title("🔐 Panel Kendali Admin V-GUARD")
-    st.info("Masukkan password untuk mengakses fitur audit AI.")
-    pw = st.text_input("Password:", type="password")
+    pw = st.text_input("Password Admin:", type="password")
     
-    if pw == "vguard2026": # Ganti password sesuai keinginan Bapak
-        st.success("Selamat bekerja, Pak Erwin.")
+    if pw == "vguard2026":
         st.divider()
-        st.subheader("Jalankan Audit AI Profesional")
-        data_audit = st.text_area("Masukkan data audit:")
-        if st.button("Proses Audit Sekarang"):
-            st.write("Menganalisis data...")
+        st.subheader("🛠️ Konfigurasi Audit Klien")
+        
+        col_adm1, col_adm2 = st.columns(2)
+        with col_adm1:
+            nama_klien = st.text_input("Nama Klien:")
+        with col_adm2:
+            paket = st.selectbox("Pilih Paket Layanan:", ["LITE", "PRO", "ENTERPRISE"])
+            
+        data_input = st.text_area("Masukkan Data Transaksi/Log Masalah:", height=200)
+        
+        if st.button("JALANKAN AUDIT V-GUARD AI"):
+            # LOGIKA INSTRUKSI RAHASIA BERDASARKAN PAKET
+            if paket == "LITE":
+                prompt_sys = "Anda adalah Auditor Dasar V-GUARD. Tugas Anda mencocokkan angka. Fokus pada selisih saja."
+            elif paket == "PRO":
+                prompt_sys = "Anda adalah Investigator V-GUARD. Cari pola fraud, curigai void transaksi, sarankan cek CCTV."
+            else:
+                prompt_sys = "Anda adalah Konsultan Senior V-GUARD. Berikan analisis strategis, manajemen risiko, dan optimasi profit."
+            
+            with st.spinner(f"Memproses Audit Mode {paket}..."):
+                try:
+                    res = model.generate_content(prompt_sys + data_input)
+                    st.markdown("### 📊 HASIL ANALISIS INVESTIGASI")
+                    st.markdown(res.text)
+                    st.balloons()
+                except Exception as e:
+                    st.error(f"Error: {e}")
     elif pw != "":
-        st.error("Password Salah!")
+        st.error("Akses Ditolak!")
