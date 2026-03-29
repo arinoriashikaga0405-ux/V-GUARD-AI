@@ -42,31 +42,30 @@ def login_vguard():
                 st.session_state.role = "admin"
                 st.rerun()
             elif u == "klien" and p == "User2026":
-                st.session_state.role = "klien"
-                st.rerun()
-            else:
-                st.sidebar.error("Username/Password Salah")
-
-# 3. CSS DESIGN (Executive Style)
-# GANTI CSS INI (Pada Bagian Konfigurasi CSS di atas kode Navigasi)
+                # 3. CSS DESIGN (Executive & Compact Style)
+st.markdown("""<style>
+    .stApp { background-color: #f4f6f9; }
+    section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
+    .hero-bg { background: linear-gradient(135deg, #0e1117 0%, #1c1f26 100%); padding: 30px; border-radius: 20px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 25px; }
+    
+    /* KOTAK LAYANAN VERSI KECIL */
     .card-service { 
         background: white; 
-        padding: 15px; # padding diperkecil
-        border-radius: 12px; # radius lebih lancip
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08); # shadow lebih halus
-        border-top: 4px solid #FFD700; # border diperkecil
+        padding: 12px; 
+        border-radius: 10px; 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
+        border-top: 4px solid #FFD700; 
         text-align: center; 
-        height: 250px; # TINGGI DIPERKECIL DRASTIS (Sebelumnya ~400px)
+        height: 240px; 
         display: flex; 
         flex-direction: column; 
         justify-content: space-between;
-        font-size: 13px; # UKURAN TULISAN DESKRIPSI DIPERKECIL
     }
-    .card-service h4 { font-size: 16px; margin-bottom: 5px; } # Judul diperkecil
-    .card-service h3 { font-size: 20px; color: #0e1117; margin: 10px 0; } # Harga diperkecil
-    .card-service hr { margin: 10px 0; border: 0; border-top: 1px solid #eee; }
-    .stLinkButton button { width: 100%; padding: 5px; font-size: 12px; } # Tombol diperkecil
-
+    .card-service h4 { font-size: 14px; margin-bottom: 2px; color: #333; }
+    .card-service h3 { font-size: 18px; margin: 5px 0; color: #0e1117; }
+    .card-service p { font-size: 11px; line-height: 1.3; color: #666; }
+    .stLinkButton button { width: 100%; padding: 2px; font-size: 11px; height: 30px; }
+</style>""", unsafe_allow_html=True)
 # 4. SIDEBAR & NAVIGASI
 with st.sidebar:
     st.markdown("<h1 style='text-align: center; color: #FFD700;'>🛡️ V-GUARD</h1>", unsafe_allow_html=True)
