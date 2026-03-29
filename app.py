@@ -3,6 +3,7 @@ import google.generativeai as genai
 import os
 import pandas as pd
 import numpy as np
+from PIL import Image
 from datetime import datetime, timedelta
 
 # 1. KONFIGURASI HALAMAN
@@ -19,123 +20,50 @@ except:
 if 'role' not in st.session_state:
     st.session_state.role = None
 
-# Simulasi Data Invoice untuk Notifikasi
-if 'invoices' not in st.session_state:
-    st.session_state.invoices = [
-        {"Klien": "PT Sumber Rejeki", "Nominal": "Rp 45.000.000", "Jatuh Tempo": (datetime.now() + timedelta(days=3)).strftime('%Y-%m-%d')},
-        {"Klien": "UD Lancar Jaya", "Nominal": "Rp 12.500.000", "Jatuh Tempo": (datetime.now() + timedelta(days=12)).strftime('%Y-%m-%d')},
-    ]
+def get_foto(lebar):
+    url_default = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+    if os.path.exists('erwin.jpg'):
+        try: return st.image(Image.open('erwin.jpg'), width=lebar)
+        except: return st.image(url_default, width=lebar)
+    return st.image(url_default, width=lebar)
 
-# 2. CSS CUSTOM UNTUK ALARM & NOTIFIKASI
+# 2. CSS STYLING (KEMBALI KE DESAIN AWAL + FITUR ALARM)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
     [data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 2px solid #FFD700; }
     .hero-bg { background: #0e1117; padding: 35px; border-radius: 12px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }
-    .red-alert-box { 
-        background-color: #ff4b4b; 
-        color: white; 
-        padding: 25px; 
-        border-radius: 10px; 
-        border: 4px solid black; 
-        text-align: center;
-        font-weight: bold;
-        animation: blinker 1.2s linear infinite;
-        margin-bottom: 20px;
-    }
+    .card-v { background: white !important; padding: 22px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; }
+    .bio-section { background: #0e1117; color: white; padding: 25px; border-radius: 15px; border-left: 6px solid #FFD700; }
+    .price { font-size: 1.2em; color: #FFD700; font-weight: bold; margin: 10px 0; }
+    .red-alert-box { background-color: #ff4b4b; color: white; padding: 20px; border-radius: 10px; border: 3px solid black; text-align: center; font-weight: bold; animation: blinker 1.2s linear infinite; margin-top: 20px; }
     @keyframes blinker { 50% { opacity: 0.3; } }
-    .invoice-warning { 
-        background-color: #fff3cd; 
-        color: #856404; 
-        padding: 15px; 
-        border-radius: 8px; 
-        border-left: 8px solid #ffcc00;
-        margin-bottom: 15px;
-        font-weight: bold;
-    }
+    .invoice-warning { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-left: 8px solid #ffcc00; margin-bottom: 15px; font-weight: bold; }
 </style>
 """, unsafe_allow_html=True)
 
 # 3. SIDEBAR NAVIGATION
 with st.sidebar:
     st.markdown("<h2 style='color: #FFD700; text-align:center;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align:center; color:white;'><b>Erwin Sinaga</b><br><small>Founder & CEO</small></div>", unsafe_allow_html=True)
+    f_col, n_col = st.columns([1, 2])
+    with f_col: get_foto(65)
+    with n_col: st.markdown("<b style='color:white;'>Erwin Sinaga</b><br><small style='color:#FFD700;'>Founder & CEO</small>", unsafe_allow_html=True)
     st.divider()
-    menu = st.radio("MENU UTAMA:", ["🌐 Beranda", "🤖 Panel Admin (Fraud Scan)", "📊 Monitoring Invoice", "🔑 Masuk Ke Sistem"])
+    nav_options = ["🌐 Beranda", "🤖 Panel Admin (Fraud Scan)", "📊 Monitoring Invoice", "📝 Meeting Lab"]
+    if not st.session_state.role: nav_options.append("🔑 Masuk Ke Sistem")
+    menu = st.radio("MENU UTAMA:", nav_options)
+    if st.session_state.role:
+        if st.button("🚪 Logout"):
+            st.session_state.role = None
+            st.rerun()
 
-# 4. HALAMAN BERANDA
+# 4. HALAMAN BERANDA (KEMBALI KE DESAIN AWAL)
 if menu == "🌐 Beranda":
-    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Mencegah Kerugian Owner Melalui Deteksi Proaktif</p></div>', unsafe_allow_html=True)
-    st.markdown("""
-    <div style="background: #0e1117; color: white; padding: 25px; border-radius: 15px; border-left: 6px solid #FFD700;">
-        <h3 style='color:#FFD700;'>🛡️ Filosofi V-GUARD</h3>
-        <p>Dengan pengalaman perbankan lebih dari 10 tahun, kami memastikan setiap rupiah aset Anda terlindungi. 
-        Sistem dirancang untuk memberikan <b>Alarm Merah</b> seketika saat kecurangan terdeteksi.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# 5. PANEL ADMIN: FITUR ALARM MERAH
-elif menu == "🤖 Panel Admin (Fraud Scan)":
-    if st.session_state.role != "admin":
-        st.warning("Halaman ini hanya untuk akses Founder (Erwin Sinaga).")
-    else:
-        st.markdown('<div class="hero-bg"><h1>FRAUD COMMAND CENTER</h1></div>', unsafe_allow_html=True)
-        up_file = st.file_uploader("Upload Data Transaksi untuk Analisis Keamanan", type=['csv', 'xlsx'])
-        
-        if up_file:
-            st.info("File berhasil diterima. Menyiapkan pemindaian anomali...")
-            if st.button("🚀 JALANKAN SCAN DETEKSI KERUGIAN"):
-                with st.spinner("AI sedang memproses data..."):
-                    # TRIGGER ALARM MERAH
-                    st.markdown("""
-                    <div class="red-alert-box">
-                        🚨 ALARM MERAH: TERDETEKSI POTENSI KEBOCORAN DANA / FRAUD SISTEMIK! 🚨
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    # Analisis dari AI
-                    res = model.generate_content("Analisis singkat risiko fraud dan langkah mitigasi untuk Bapak Erwin Sinaga.")
-                    st.error("Laporan Analisis AI:")
-                    st.write(res.text)
-
-# 6. MONITORING INVOICE: FITUR NOTIFIKASI JATUH TEMPO
-elif menu == "📊 Monitoring Invoice":
-    if not st.session_state.role:
-        st.warning("Silakan Login terlebih dahulu.")
-    else:
-        st.title("📅 Dashboard Monitoring Pembayaran")
-        
-        # Logika Deteksi Jatuh Tempo Otomatis
-        st.subheader("🔔 Notifikasi Sistem")
-        ada_peringatan = False
-        for inv in st.session_state.invoices:
-            due = datetime.strptime(inv['Jatuh Tempo'], '%Y-%m-%d')
-            # Cek jika jatuh tempo dalam 7 hari atau sudah lewat
-            if due <= datetime.now() + timedelta(days=7):
-                ada_peringatan = True
-                st.markdown(f"""
-                <div class="invoice-warning">
-                    ⚠️ PERINGATAN: Invoice {inv['Klien']} ({inv['Nominal']}) 
-                    akan jatuh tempo pada {inv['Jatuh Tempo']}!
-                </div>
-                """, unsafe_allow_html=True)
-        
-        if not ada_peringatan:
-            st.success("Tidak ada invoice yang mendekati jatuh tempo saat ini.")
-            
-        st.divider()
-        st.subheader("Detail Tagihan Aktif")
-        st.table(st.session_state.invoices)
-
-# 7. LOGIN SYSTEM
-elif menu == "🔑 Masuk Ke Sistem":
-    with st.form("login_vguard"):
-        u = st.text_input("User ID").strip()
-        p = st.text_input("Access Key", type="password")
-        if st.form_submit_button("LOGIN"):
-            if u.lower() == "admin" and p == "Vguard2026":
-                st.session_state.role = "admin"
-                st.success("Akses Founder Diterima.")
-                st.rerun()
-            else:
-                st.error("Kredensial salah.")
+    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>The Future of Responsible AI Security & Fraud Detection</p></div>', unsafe_allow_html=True)
+    c_img, c_txt = st.columns([1, 2])
+    with c_img: get_foto(350)
+    with c_txt:
+        st.markdown("""
+        <div class="bio-section">
+            <h3 style='color:#FFD700;'>🛡️ About V-GUARD</h3>
+            <p>Didirikan pada 2026, <b>V-GUARD</b> adalah platform yang berfokus pada det
