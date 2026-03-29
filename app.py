@@ -8,7 +8,7 @@ st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# --- 2. CSS CUSTOM EKSEKUTIF (STABIL) ---
+# --- 2. CSS CUSTOM EKSEKUTIF (DIKUNCI) ---
 st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
@@ -18,21 +18,21 @@ st.markdown("""
         background: white; padding: 30px; border-radius: 20px; 
         box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 10px solid #1e3a8a;
     }
+    .roi-section {
+        background: #eff6ff; padding: 30px; border-radius: 20px;
+        border: 2px dashed #1e3a8a; margin: 30px 0;
+    }
     .card-paket {
         background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0;
         height: 550px; text-align: center; transition: 0.3s;
     }
-    .card-paket:hover { transform: translateY(-10px); border-color: #ef4444; box-shadow: 0 20px 25px rgba(0,0,0,0.1); }
+    .card-paket:hover { transform: translateY(-10px); border-color: #ef4444; }
     .price-tag { font-size: 2.2rem; font-weight: bold; color: #1e3a8a; margin: 15px 0; }
     .alarm-tag { 
         background: #fee2e2; color: #ef4444; padding: 6px 15px; border-radius: 20px; 
         font-size: 0.85rem; font-weight: bold; margin-top: 20px; display: inline-block;
     }
-    .work-card {
-        background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-        border-left: 5px solid #1e3a8a; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-    .stButton>button { background: #1e3a8a; color: white; border-radius: 12px; height: 55px; font-weight: bold; width: 100%; }
+    .stButton>button { background: #1e3a8a; color: white; border-radius: 12px; height: 55px; font-weight: bold; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -55,42 +55,55 @@ if st.session_state.page == "Admin":
     
     with t1:
         st.subheader("Deteksi Kecurangan Real-Time")
-        st.error("🚨 [ALARM] Anomali Transaksi Terdeteksi: Store 01 - Tangerang")
-        if st.button("🔔 Investigasi & Kirim Fire Alarm"):
+        st.error("🚨 [ALARM] Anomali Transaksi Terdeteksi: Store 01")
+        if st.button("🔔 Kirim Fire Alarm"):
             st.success("Laporan Fraud dikirim ke WhatsApp Owner!")
 
     with t2:
         st.subheader("Alat Kontrol Piutang Jatuh Tempo")
-        col_a, col_b = st.columns(2)
-        with col_a:
-            st.markdown('<div class="work-card"><b>PT. Niaga Jaya</b><br>Nilai: Rp 75.000.000<br><span style="color:red;">Tempo: Besok</span></div>', unsafe_allow_html=True)
-            if st.button("📲 Tagih PT. Niaga"): st.success("Reminder Terkirim!")
-        with col_b:
-            st.markdown('<div class="work-card"><b>Toko Berkah</b><br>Nilai: Rp 12.500.000<br><span style="color:orange;">Tempo: 3 Hari</span></div>', unsafe_allow_html=True)
-            if st.button("📲 Tagih Toko Berkah"): st.success("Reminder Terkirim!")
+        st.markdown("""
+            <div style="background:white; padding:20px; border-radius:10px; border-left:5px solid #f59e0b;">
+                <b>PT. Niaga Jaya</b><br>Nilai: Rp 75.000.000<br><span style="color:red;">Jatuh Tempo: Besok</span>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("📲 Kirim Reminder Tagihan"): st.success("WhatsApp Terkirim!")
 
 else:
     # --- HALAMAN BERANDA ---
     st.markdown('<div class="header-container"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
 
-    # SEKSI PROFIL & FILOSOFI (100+ KATA)
-    with st.container():
-        c_img, c_txt = st.columns([1, 2.5])
-        with c_img:
-            try: st.image("erwin.jpg", use_container_width=True)
-            except: st.info("CEO Image")
-        with c_txt:
-            st.markdown('<div class="profile-card">', unsafe_allow_html=True)
-            st.subheader("👤 Profil & Filosofi Founder")
-            st.write("""
-            **Erwin** adalah seorang pemimpin strategis dengan rekam jejak lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan** dan manajemen pendapatan. Keahliannya dalam mengelola portofolio skala besar menjadi fondasi utama lahirnya **VGUARD AI Systems**. 
-            
-            Filosofi kami, **"Digitizing Trust, Eliminating Leakage"**, berakar pada prinsip Integritas Tanpa Celah. Di era digital, kepercayaan harus dimanifestasikan melalui sistem yang presisi. Melalui teknologi **V-Guard Fire Alarm**, Erwin berkomitmen menciptakan perisai pertahanan yang mendeteksi setiap indikasi fraud dan kebocoran transaksi secara real-time, memastikan setiap rupiah hak pemilik bisnis terjaga demi pertumbuhan yang berkelanjutan.
-            """)
-            if st.button("🚀 BUKA ALAT KERJA ADMIN"):
-                st.session_state.page = "Admin"
-                st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
+    # SEKSI PROFIL & FILOSOFI
+    c_img, c_txt = st.columns([1, 2.5])
+    with c_img:
+        try: st.image("erwin.jpg", use_container_width=True)
+        except: st.info("CEO Image")
+    with c_txt:
+        st.markdown('<div class="profile-card">', unsafe_allow_html=True)
+        st.subheader("👤 Profil & Filosofi Founder")
+        st.write("""
+        **Erwin** adalah pemimpin strategis dengan rekam jejak lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan**. Keahliannya menjadi fondasi lahirnya **VGUARD AI Systems**. 
+        
+        Filosofi kami, **"Digitizing Trust, Eliminating Leakage"**, berakar pada prinsip Integritas Tanpa Celah. Melalui teknologi **V-Guard Fire Alarm**, Erwin berkomitmen menciptakan perisai pertahanan yang mendeteksi setiap indikasi fraud dan kebocoran transaksi secara real-time, memastikan setiap rupiah hak pemilik bisnis terjaga demi pertumbuhan yang berkelanjutan.
+        """)
+        if st.button("🚀 BUKA ALAT KERJA ADMIN"):
+            st.session_state.page = "Admin"
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # --- SEKSI ROI (KEMBALI DIRESTURASI) ---
+    st.write("---")
+    st.subheader("📊 KALKULATOR POTENSI ROI (PENYELAMATAN PROFIT)")
+    st.markdown('<div class="roi-section">', unsafe_allow_html=True)
+    col_input, col_res = st.columns(2)
+    with col_input:
+        omzet = st.number_input("Omzet Bulanan Bisnis (Rp)", min_value=0, value=100000000, step=10000000)
+        leakage_pct = st.slider("Estimasi Kebocoran Tradisional (%)", 1, 10, 3)
+    with col_res:
+        loss_val = omzet * (leakage_pct/100)
+        saved_val = loss_val * 0.95 # V-Guard AI efisiensi 95%
+        st.write(f"### Potensi Bocor: Rp {loss_val:,.0f}")
+        st.success(f"### Diselamatkan V-Guard: Rp {saved_val:,.0f} / bln")
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # SEKSI PAKET LAYANAN
     st.write("---")
@@ -108,9 +121,9 @@ else:
         </div>
         """
 
-    with p1: st.markdown(card("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan Dasar"), unsafe_allow_html=True)
-    with p2: st.markdown(card("V-GROW", "5 JT", "• Fitur V-START<br>• AI Fraud Detection<br>• Sinkron Stok Otomatis"), unsafe_allow_html=True)
-    with p3: st.markdown(card("V-PRIME", "10 JT", "• Fitur V-GROW<br>• Audit Multi-Cabang<br>• Predictive AI Analytics"), unsafe_allow_html=True)
+    with p1: st.markdown(card("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Monitor Piutang Dasar"), unsafe_allow_html=True)
+    with p2: st.markdown(card("V-GROW", "5 JT", "• AI Fraud Detection<br>• Sinkron Stok Otomatis<br>• AR Auto-Reminder"), unsafe_allow_html=True)
+    with p3: st.markdown(card("V-PRIME", "10 JT", "• Multi-Cabang Control<br>• Predictive AI Analytics<br>• Full AR Control"), unsafe_allow_html=True)
     with p4: st.markdown(card("V-CUSTOM", "NEGO", "• Solusi Enterprise<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7"), unsafe_allow_html=True)
 
 st.write("---")
