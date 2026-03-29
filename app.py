@@ -82,20 +82,34 @@ if halaman == "🌐 Beranda & Layanan":
 # ==========================================
 # HALAMAN 3: AI MEETING SUMMARIZER
 # ==========================================
-elif halaman == "🛠️ AI Meeting Summarizer":
-    st.title("📝 AI Meeting Summarizer")
-    st.write("Ubah transkrip atau catatan rapat menjadi poin tindakan (Action Plan) otomatis.")
+if halaman == "🛠️ AI Meeting Summarizer":
+    st.title("📝 V-GUARD AI Business Assistant")
+    st.write("Ubah transkrip rapat menjadi **Action Plan** yang siap eksekusi.")
     
-    catatan_rapat = st.text_area("Tempel hasil transkrip rapat di sini:", height=250)
-    if st.button("RANGKUM DENGAN AI"):
+    catatan_rapat = st.text_area("Tempel hasil transkrip rapat di sini:", height=300, help="Gunakan transkrip dari rekaman suara rapat Anda.")
+    
+    if st.button("PROSES ACTION PLAN"):
         if catatan_rapat:
-            with st.spinner("V-GUARD AI sedang menganalisis poin rapat..."):
-                prompt = f"Rangkum teks rapat ini menjadi poin-poin tindakan yang jelas, sebutkan siapa melakukan apa dan deadline jika ada: {catatan_rapat}"
+            with st.spinner("AI sedang merangkum poin strategis..."):
+                # Instruksi khusus ke AI agar hasilnya rapi
+                prompt = (
+                    "Buatkan notulensi rapat yang sangat rapi dari teks berikut. "
+                    "Gunakan format: 1. Ringkasan Utama, 2. Daftar Tugas (Action Plan) beserta PIC (siapa yang mengerjakan), "
+                    "3. Deadline (jika ada). Gunakan bahasa profesional dan tegas. Teks: " + catatan_rapat
+                )
                 response = model.generate_content(prompt)
-                st.markdown("### 📋 Hasil Rangkuman & Action Plan:")
-                st.write(response.text)
-                st.download_button("Simpan Notulensi", response.text, file_name=f"Notulensi_{datetime.now().strftime('%Y%m%d')}.txt")
+                
+                st.success("Analisis AI Selesai!")
+                st.markdown("---")
+                st.markdown(response.text)
+                st.markdown("---")
+                
+                # Fitur Download untuk Klien
+                st.download_button(
+                    label="📥 Download Notulensi (TXT)",
+                    data=response.text,
+                    file_name=f"VGUARD_Meeting_{datetime.now().strftime('%d_%m_%Y')}.txt",
+                    mime="text/plain"
+                )
         else:
-            st.warning("Silakan tempel teks rapat terlebih dahulu.")
-
-# (Fitur AI Auditor & WA Panel tetap terpasang seperti sebelumnya)
+            st.warning("Mohon masukkan teks transkrip rapat terlebih dahulu.")
