@@ -8,7 +8,7 @@ st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# --- 2. CSS CUSTOM (DIPERBAIKI DARI INVALID DECIMAL) ---
+# --- 2. CSS CUSTOM ---
 st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
@@ -22,7 +22,7 @@ st.markdown("""
     }
     .card-paket {
         background-color: #ffffff; padding: 35px; border-radius: 20px; 
-        border: 1px solid #e2e8f0; height: 500px; transition: 0.4s;
+        border: 1px solid #e2e8f0; height: 520px; transition: 0.4s;
         box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center;
     }
     .card-paket:hover { transform: translateY(-15px); box-shadow: 0 25px 35px rgba(0,0,0,0.1); border-color: #ef4444; }
@@ -32,6 +32,10 @@ st.markdown("""
         background-color: #fee2e2; color: #ef4444; padding: 8px 18px; 
         border-radius: 25px; font-size: 0.9rem; font-weight: bold; border: 1px solid #fecaca;
         display: inline-block; margin-top: 25px;
+    }
+    .roi-box {
+        background-color: #eff6ff; padding: 30px; border-radius: 15px;
+        border: 1px dashed #1e3a8a; margin-top: 40px;
     }
     .stButton>button { 
         background-color: #1e3a8a; color: white; border-radius: 12px; 
@@ -45,13 +49,13 @@ with st.sidebar:
     try:
         st.image("erwin.jpg", width=120) 
     except:
-        st.info("👤 Foto: erwin.jpg")
+        st.info("👤 CEO: ERWIN")
     
     st.markdown("### ERWIN")
     st.caption("Founder & CEO VGUARD AI")
     st.write("---")
     
-    if st.button("🏠 Kembali ke Beranda"):
+    if st.button("🏠 Beranda Utama"):
         st.session_state.page = "Home"
         st.rerun()
         
@@ -66,15 +70,17 @@ if st.session_state.page == "Admin":
     if pwd == "vguard2026":
         st.success("Akses Otoritas Diterima.")
         st.subheader("🔍 Scan Temuan Mencurigakan")
-        st.warning("🚨 [ALARM] Deteksi Anomali Transaksi di Store Tangerang!")
-        if st.button("🔔 Kirim Fire Alarm ke WhatsApp Owner"):
+        st.warning("🚨 [ALARM] Deteksi Anomali Transaksi!")
+        if st.button("🔔 Kirim Fire Alarm ke Owner"):
             st.error("Alarm Berhasil Dikirim!")
-    elif pwd != "":
-        st.error("Kode Otoritas Tidak Valid!")
 
 elif st.session_state.page == "Klien":
     st.title("📱 Owner Dashboard")
-    st.metric("Total Profit Aman", "Rp 125.000.000", "Protected by V-Guard")
+    col_roi1, col_roi2 = st.columns(2)
+    with col_roi1:
+        st.metric("Total Profit Dilindungi", "Rp 125.000.000", "V-Guard AI")
+    with col_roi2:
+        st.metric("ROI Ekspektasi (Annual)", "320%", "+45% Efisiensi")
     st.subheader("🔥 Log V-Guard Fire Alarm")
     st.info("Log: [02:15 AM] Alarm Berbunyi - Upaya Manipulasi Void Terdeteksi.")
 
@@ -91,7 +97,7 @@ else:
         except: st.info("CEO Photo")
     with c_txt:
         st.markdown("### FOUNDER PROFILE & FILOSOFI")
-        st.write("Saya **Erwin**, Founder VGUARD AI Systems, mengintegrasikan standar keamanan **10 tahun pengalaman profesional di industri perbankan** ke dalam operasional bisnis Anda. Filosofi kami, **Perisai Digital**, memastikan integritas aset Anda melalui teknologi **V-Guard Fire Alarm**.")
+        st.write("Saya **Erwin**, Founder VGUARD AI Systems, membawa **10 tahun pengalaman perbankan** untuk mengamankan aset bisnis Anda melalui teknologi **V-Guard Fire Alarm**.")
 
     # Tombol Akses
     st.write("---")
@@ -104,6 +110,22 @@ else:
         if st.button("📊 MASUK CLIENT PORTAL"):
             st.session_state.page = "Klien"
             st.rerun()
+
+    # --- SIMULATOR ROI (FITUR BARU) ---
+    st.write("---")
+    st.subheader("📊 KALKULATOR POTENSI ROI")
+    with st.container():
+        st.markdown('<div class="roi-box">', unsafe_allow_html=True)
+        c_input, c_result = st.columns(2)
+        with c_input:
+            omzet = st.number_input("Omzet Bulanan (Rp)", min_value=0, value=100000000, step=10000000)
+            leakage = st.slider("Estimasi Kebocoran Tradisional (%)", 1, 10, 3)
+        with c_result:
+            loss = omzet * (leakage/100)
+            saved = loss * 0.9  # Asumsi V-Guard menangkap 90% kebocoran
+            st.write(f"### Potensi Kerugian: Rp {loss:,.0f}")
+            st.success(f"### Profit Diselamatkan V-Guard: Rp {saved:,.0f} / bln")
+        st.markdown('</div>', unsafe_allow_html=True)
 
     # --- LAYANAN PRODUK & PAKET ---
     st.write("---")
@@ -122,11 +144,11 @@ else:
         """
 
     with p1:
-        st.markdown(render_card("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan Dasar"), unsafe_allow_html=True)
+        st.markdown(render_card("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan"), unsafe_allow_html=True)
     with p2:
         st.markdown(render_card("V-GROW", "5 JT", "• Fitur V-START<br>• AI Fraud Detection<br>• Sinkron Stok Otomatis"), unsafe_allow_html=True)
     with p3:
-        st.markdown(render_card("V-PRIME", "10 JT", "• Fitur V-GROW<br>• Audit Multi-Cabang<br>• Predictive AI Analytics"), unsafe_allow_html=True)
+        st.markdown(render_card("V-PRIME", "10 JT", "• Fitur V-GROW<br>• Audit Multi-Cabang<br>• Predictive AI"), unsafe_allow_html=True)
     with p4:
         st.markdown(render_card("V-CUSTOM", "NEGO", "• Solusi Enterprise<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7"), unsafe_allow_html=True)
 
