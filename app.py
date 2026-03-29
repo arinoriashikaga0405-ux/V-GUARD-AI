@@ -3,40 +3,31 @@ import pandas as pd
 import google.generativeai as genai
 import urllib.parse
 import os
-from PIL import Image # Library untuk memproses foto
+from PIL import Image
 
-# 1. KONFIGURASI SISTEM & API
-st.set_page_config(page_title="V-GUARD AI - Revenue Protection", page_icon="🛡️", layout="wide")
+# 1. KONFIGURASI SISTEM
+st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# Masukkan API Key asli Anda di bawah ini
-API_KEY = "ISI_KODE_AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA" 
+# Konfigurasi AI - Ganti dengan API Key Bapak
+API_KEY = "ISI_KODE_API_BAPAK_DI_SINI" 
 try:
     genai.configure(api_key=API_KEY)
     model = genai.GenerativeModel('gemini-1.5-flash')
-except:
-    st.error("API Key AI belum terkonfigurasi dengan benar di server.")
+except Exception as e:
+    st.error(f"Gagal konfigurasi AI: {e}")
 
 # DATA KONTAK
 WA_NOMOR = "6282122190885" 
 
-# 2. FUNGSI FOTO (Wajah Bapak Kembali)
-def get_foto(lebar):
-    if os.path.exists('erwin.jpg'):
-        # Membuka dan menampilkan foto asli
-        return st.image(Image.open('erwin.jpg'), width=lebar)
-    else:
-        # Ikon cadangan korporat jika file erwin.jpg belum diunggah ke GitHub
-        return st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
-
-# 3. LOGIKA LOGIN SESSION STATE
+# 2. LOGIKA LOGIN
 if 'role' not in st.session_state:
     st.session_state.role = None
 
 def login():
     st.sidebar.markdown("---")
-    st.sidebar.markdown("### 🔐 Akses Klien/Admin")
-    user = st.sidebar.text_input("Username")
-    pw = st.sidebar.text_input("Password", type="password")
+    st.sidebar.markdown("### 🔐 Akses Sistem")
+    user = st.sidebar.text_input("Username", key="user_in")
+    pw = st.sidebar.text_input("Password", type="password", key="pw_in")
     if st.sidebar.button("Masuk"):
         if user == "admin" and pw == "admin123":
             st.session_state.role = "admin"
@@ -45,9 +36,17 @@ def login():
             st.session_state.role = "klien"
             st.rerun()
         else:
-            st.sidebar.error("Akses Ditolak: Kredensial Salah")
+            st.sidebar.error("Username/Password Salah")
 
-# 4. CSS EXECUTIVE DESIGN (Landing Page Promosi Korporat)
+# 3. FUNGSI FOTO (Wajah Bapak)
+def tampilkan_foto(lebar):
+    if os.path.exists('erwin.jpg'):
+        return st.image(Image.open('erwin.jpg'), width=lebar)
+    else:
+        # Ikon cadangan jika file di GitHub belum ada
+        return st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
+
+# 4. CSS EXECUTIVE DESIGN (Tanda kutip sudah diperbaiki total)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -77,11 +76,6 @@ st.markdown("""
         background-color: #fffde6; padding: 25px; border-radius: 15px;
         border: 2px solid #FFD700; text-align: center;
     }
-    .sidebar-user {
-        background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;
-        color: white; border: 1px solid rgba(255,215,0,0.3);
-    }
-    /* Styling khusus profil halaman */
     .profile-box {
         background-color: #ffffff; padding: 20px; border-radius: 12px;
         border-left: 5px solid #FFD700; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -92,85 +86,94 @@ st.markdown("""
 # 5. SIDEBAR NAVIGATION
 with st.sidebar:
     st.markdown("<h1 style='text-align: center; color: #FFD700; margin-bottom:0px;'>🛡️ V-GUARD</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: white; font-size:12px; margin-top:0px;'>Revenue Protection Intelligence</p>", unsafe_allow_html=True)
     st.divider()
 
-    # Bagian Profil dengan Foto (60px)
+    # Foto di Sidebar
     col_f, col_n = st.columns([1, 2])
     with col_f:
-        get_foto(60) # Foto Bapak muncul di sini
+        tampilkan_foto(60)
     with col_n:
-        st.markdown(f"<p style='color: white; font-weight: bold; margin-bottom: 0px;'>Erwin Sinaga</p><p style='color: #FFD700; font-size: 11px;'>Founder & CEO</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: white; font-weight: bold; margin-bottom: 0px;'>Erwin Sinaga</p><p style='color: #FFD700; font-size: 11px;'>Founder & CEO</p>", unsafe_allow_html=True)
     st.divider()
 
     if st.session_state.role:
-        st.markdown(f"""<div class='sidebar-user'><b>Active Session:</b> {st.session_state.role.upper()}</div>""", unsafe_allow_html=True)
+        st.markdown(f"<p style='color:white;'>Mode: {st.session_state.role.upper()}</p>", unsafe_allow_html=True)
         if st.button("🚪 Logout"):
             st.session_state.role = None
             st.rerun()
-        st.divider()
-
-    # Menu Utama
+    
     halaman = st.radio("MENU UTAMA:", ["🌐 Beranda & Layanan", "🤖 AI Auditor", "📝 AI Meeting Lab"])
     
-    # Menampilkan Form Login jika belum masuk
-    if st.session_state.role is None:
+    if not st.session_state.role:
         login()
-            
-    st.divider()
-    st.info("📍 Tangerang, Indonesia")
 
 # ==========================================
-# HALAMAN 1: BERANDA & PROFIL (Foto Besar di Beranda)
+# HALAMAN 1: BERANDA
 # ==========================================
 if halaman == "🌐 Beranda & Layanan":
-    # 1. Hero Banner
-    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Solusi Cerdas Mencegah Kebocoran Omset & Memaksimalkan Keuntungan Bisnis.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Revenue Protection & Fraud Detection Intelligence.</p></div>', unsafe_allow_html=True)
     
-    # 2. Nilai Bisnis & Filosofi (Menampilkan Foto Profil 320px)
     col_img, col_txt = st.columns([1, 2])
     with col_img:
-        # Foto Bapak muncul besar di Landing Page
-        get_foto(320)
+        tampilkan_foto(350)
     with col_txt:
-        st.markdown("### 🛡️ Filosofi V-GUARD")
+        st.markdown("### 🛡️ Mengapa Bisnis Anda Membutuhkan V-GUARD?")
         st.markdown("""
         <div class="profile-box">
-            <p style="font-size:16px; color:#444; line-height:1.7;"><b>V-Guard</b> lahir dari visi manajemen strategis untuk optimasi pendapatan Anda. 
-            Kebocoran internal (fraud) adalah musuh terbesar pertumbuhan. Kami memahami celah ini.</p>
-            <p style="font-size:16px; color:#444; line-height:1.7;">Sistem ini mengintegrasikan kecerdasan buatan (AI) untuk menjadi 'Mata Elektronik' yang menjaga aset Anda 24/7 tanpa kompromi.</p>
+            <p>V-Guard adalah sistem berbasis AI untuk optimasi pendapatan. 
+            Kami mendeteksi <b>kebocoran internal (fraud)</b> yang tidak terlihat oleh sistem biasa.</p>
+            <p>Mulai amankan omset Anda hari ini dengan teknologi Audit Otonom.</p>
         </div>
         """, unsafe_allow_html=True)
-        st.write("✅ Real-Time Fraud Detection | ✅ AI Autonomous Audit")
-    st.divider()
-
-    # 3. KALKULATOR ROI (Kunci Promosi)
-    st.markdown("<h3 style='text-align: center;'>🧮 Kalkulator Penyelamatan Aset</h3>", unsafe_allow_html=True)
-    c_roi1, c_roi2 = st.columns(2)
-    with c_roi1:
-        omset = st.number_input("Omset Bulanan (Rp):", min_value=0, value=100000000, step=10000000)
-        leakage = st.slider("Estimasi Kebocoran/Fraud (%):", 0, 15, 3)
-    with c_roi2:
-        potensi_rugi = omset * (leakage / 100)
-        st.markdown(f"""
-            <div class="roi-box">
-                <p style="margin:0; font-size:16px; color:#555;">Potensi Kerugian yang Dapat Dicegah per Bulan:</p>
-                <h1 style="color: #d42f2f; margin:10px 0;">Rp {potensi_rugi:,.0f}</h1>
-                <p style="font-size: 13px; color: #777;">Tingkatkan ROI Anda dengan menutup celah kebocoran internal otomatis.</p>
-            </div>
-        """, unsafe_allow_html=True)
-
-    # 4. PAKET LAYANAN STRATEGIS
-    st.divider()
-    st.markdown("<h3 style='text-align: center;'>Pilih Layanan V-GUARD</h3>", unsafe_allow_html=True)
-    p1, p2, p3 = st.columns(3)
     
-    def wa_link(paket):
-        pesan = f"Halo Pak Erwin, saya ingin konsultasi paket V-GUARD {paket}."
-        return f"https://wa.me/{WA_NOMOR}?text={urllib.parse.quote(pesan)}"
+    st.divider()
+    
+    # Kalkulator
+    st.markdown("<h3 style='text-align: center;'>🧮 Kalkulator Penyelamatan Aset</h3>", unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        omset = st.number_input("Omset Bulanan (Rp):", min_value=0, value=100000000, step=10000000)
+        leak = st.slider("Estimasi Kebocoran (%):", 0, 15, 3)
+    with c2:
+        rugi = omset * (leak / 100)
+        st.markdown(f'<div class="roi-box"><p>Potensi Kerugian yang Dapat Dicegah:</p><h1 style="color:#d42f2f;">Rp {rugi:,.0f}</h1></div>', unsafe_allow_html=True)
+
+    st.divider()
+    
+    # Layanan
+    p1, p2, p3 = st.columns(3)
+    def wa_link(pkt):
+        msg = f"Halo Pak Erwin, saya tertarik paket {pkt}."
+        return f"https://wa.me/{WA_NOMOR}?text={urllib.parse.quote(msg)}"
 
     with p1:
-        st.markdown('<div class="card-service"><div><h4>📦 V-LITE</h4><h3 style="color:#d4af37">7,5 Jt</h3><hr><p style="font-size:13px;">• 1 Outlet/Toko<br>• Daily Alarm via WA<br>• Summary Laporan Mingguan</p></div></div>', unsafe_allow_html=True)
-        st.link_button("HUBUNGI SAYA", wa_link("V-LITE"))
+        st.markdown('<div class="card-service"><h4>📦 V-LITE</h4><h3>7,5 Jt</h3><hr><p>1 Outlet<br>Daily Alarm WA</p></div>', unsafe_allow_html=True)
+        st.link_button("KONSULTASI", wa_link("V-LITE"))
     with p2:
-        st.markdown('<div class="card-service" style="border: 3px solid #FFD700;"><div><h4>🚀 V-PRO</h4><h3 style="color:#d4af37">15 Jt</h3><hr><p style="font-size:13px;">• 5 Outlet/Toko<br>• **AI Deep Audit**
+        st.markdown('<div class="card-service" style="border:3px solid #FFD700"><h4>🚀 V-PRO</h4><h3>15 Jt</h3><hr><p>5 Outlet<br>AI Deep Audit</p></div>', unsafe_allow_html=True)
+        st.link_button("KONSULTASI", wa_link("V-PRO"))
+    with p3:
+        st.markdown('<div class="card-service"><h4>🏢 CORPORATE</h4><h3>25 Jt</h3><hr><p>Unlimited<br>Priority Support</p></div>', unsafe_allow_html=True)
+        st.link_button("KONSULTASI", wa_link("CORPORATE"))
+
+# ==========================================
+# HALAMAN 2: AI AUDITOR (Admin Only)
+# ==========================================
+elif halaman == "🤖 AI Auditor":
+    st.title("🤖 AI Auditor Engine")
+    if st.session_state.role != "admin":
+        st.warning("Silakan login sebagai ADMIN di sidebar.")
+    else:
+        file = st.file_uploader("Unggah Transaksi", type=["csv", "xlsx"])
+        if file:
+            df = pd.read_csv(file) if file.name.endswith('.csv') else pd.read_excel(file)
+            st.dataframe(df.head())
+            if st.button("Audit Data"):
+                if 'nominal' in df.columns:
+                    anomali = df[df['nominal'] > (df['nominal'].mean() * 3)]
+                    st.success(f"Ditemukan {len(anomali)} kecurigaan fraud.")
+                    st.table(anomali)
+
+elif halaman == "📝 AI Meeting Lab":
+    st.title("📝 AI Meeting Lab")
+    st.info("Fitur Summary Rapat Segera Hadir.")
