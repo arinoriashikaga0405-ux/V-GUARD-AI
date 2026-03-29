@@ -27,13 +27,12 @@ if 'db_klien' not in st.session_state:
 
 def get_foto(lebar):
     url_default = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-    # Mengutamakan foto Bapak jika ada di folder
     if os.path.exists('erwin.jpg'):
         try: return st.image(Image.open('erwin.jpg'), width=lebar)
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS STYLING EXECUTIVE (BLACK & GOLD)
+# 2. CSS STYLING EXECUTIVE
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -54,7 +53,6 @@ with st.sidebar:
         st.markdown(f"<b style='color:white;'>{st.session_state.user_name}</b><br><small style='color:#FFD700;'>V-GUARD Ecosystem</small>", unsafe_allow_html=True)
     st.divider()
     
-    # Navigasi Dinamis
     if st.session_state.role == "admin":
         menu = st.radio("FOUNDER MENU:", ["🌐 Beranda", "👥 Management Klien", "🤖 AI Fraud Scanner"])
     elif st.session_state.role == "klien":
@@ -70,38 +68,12 @@ with st.sidebar:
 
 # 4. HALAMAN BERANDA (PROFIL & FILOSOFI)
 if menu == "🌐 Beranda":
-    # Header Utama
     st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p style="font-size: 1.2em; color: #FFD700;">Mencegah Kerugian Owner Melalui Deteksi Proaktif</p></div>', unsafe_allow_html=True)
     
-    # Section Profil & About
     c_img, c_txt = st.columns([1, 2])
     with c_img:
-        # Menampilkan foto Bapak yang ada di screenshot
         get_foto(380)
     with c_txt:
         st.markdown(f"""
         <div class="bio-section">
-            <h2 style="color:#FFD700;">🛡️ About V-GUARD</h2>
-            <p style="font-size: 1.1em; line-height: 1.6;">
-                <b>V-GUARD</b> adalah platform deteksi fraud dan tata kelola AI bertanggung jawab. 
-                Dibangun oleh <b>Erwin Sinaga</b> dengan pengalaman perbankan 10+ tahun untuk mencegah kerugian owner hingga 90%.
-            </p>
-            <hr style="border-color: #444;">
-            <h3 style="color:#FFD700;">Filosofi V-GUARD</h3>
-            <p>
-                Dengan pengalaman perbankan lebih dari 10 tahun, kami memastikan setiap rupiah aset Anda terlindungi. 
-                Sistem kami dirancang untuk memberikan <b>Alarm Merah</b> seketika saat kecurangan terdeteksi.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.divider()
-    
-    # Kalkulator ROI
-    st.subheader("📈 Kalkulator ROI Fraud")
-    col_1, col_2 = st.columns(2)
-    with col_1:
-        omset = st.number_input("Omset Bulanan Bisnis (Rp):", value=100000000, step=10000000)
-    with col_2:
-        saved = omset * 0.027 # Estimasi 2.7%
-        st.metric("Pot
+            <h2 style="color:#
