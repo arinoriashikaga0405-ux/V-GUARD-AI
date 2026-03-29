@@ -52,7 +52,6 @@ st.markdown("""<style>
     .stApp { background-color: #f4f6f9; }
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
     .hero-bg { background: linear-gradient(135deg, #0e1117 0%, #1c1f26 100%); padding: 30px; border-radius: 20px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 25px; }
-    
     .card-service { 
         background: white; 
         padding: 30px; 
@@ -60,11 +59,10 @@ st.markdown("""<style>
         box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
         border-top: 8px solid #FFD700; 
         text-align: center; 
-        height: 350px; 
+        height: 380px; 
         display: flex; 
         flex-direction: column; 
         justify-content: space-between;
     }
     .card-service h4 { font-size: 24px; font-weight: bold; color: #1a1a1a; margin-bottom: 10px; }
-    .card-service h3 { font-size: 32px; color: #d42f2f; font-weight: bold; margin: 15px 0; }
-    .card-service p { font-size:
+    .card-service
