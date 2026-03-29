@@ -77,4 +77,47 @@ if menu == "Beranda Eksekutif":
         c1, c2 = st.columns(2)
         with c1:
             omzet = st.number_input("Masukkan Omzet Bulanan Bisnis Anda (Rp)", min_value=0, value=100000000, step=1000000)
-            leakage_rate = st.slider("Estimasi Persentase Kebocoran (%)", 1.0, 20.
+            leakage_rate = st.slider("Estimasi Persentase Kebocoran (%)", 1.0, 20.0, 5.0)
+        
+        with c2:
+            total_loss = omzet * (leakage_rate / 100)
+            saved_by_ai = total_loss * 0.90
+            st.write("#### Hasil Analisis Strategis:")
+            st.error(f"Potensi Kerugian/Bocor: Rp {total_loss:,.0f}")
+            st.success(f"Dana Diselamatkan VGUARD AI: Rp {saved_by_ai:,.0f}")
+            
+            # Perbaikan: Pembagi disatukan dalam satu baris agar tidak error
+            roi_times = saved_by_ai / 5000000 if saved_by_ai > 0 else 0
+            st.info(f"Efisiensi Investasi: {roi_times:.1f}x lipat dari biaya sistem")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # FITUR TETAP: LAYANAN PRODUK & FITUR
+    st.write("---")
+    st.write("### LAYANAN PRODUK & FITUR")
+    p1, p2, p3, p4 = st.columns(4)
+    
+    with p1:
+        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan Dasar</p></div>', unsafe_allow_html=True)
+    with p2:
+        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-START<br>• <b>AI Fraud Detection</b><br>• Integrasi Stok Otomatis</p></div>', unsafe_allow_html=True)
+    with p3:
+        st.markdown('<div class="card-paket"><b>V-PRIME</b><h3 style="color:#1e3a8a">10 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-GROW<br>• Audit Multi-Cabang<br>• <b>Prediksi Kerugian AI</b></p></div>', unsafe_allow_html=True)
+    with p4:
+        st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a8a">NEGO</h3><hr><p style="font-size:0.85rem; text-align:left;">• Solusi Tailor-made<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7</p></div>', unsafe_allow_html=True)
+
+    # FITUR TETAP: KONSULTASI SEKARANG
+    st.write("---")
+    if st.button("🛡️ KONSULTASI STRATEGIS SEKARANG"):
+        st.success("Admin VGUARD AI akan segera menghubungi Bapak Erwin.")
+
+elif menu == "Dashboard Performa":
+    st.title("📊 Dashboard Performa")
+    st.line_chart(np.random.randn(20, 2))
+
+elif menu == "AI Scanner":
+    st.title("🔍 AI Scanner Audit")
+    st.button("Jalankan Analisis Engine")
+
+# --- 5. FOOTER ---
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Tangerang, Indonesia")
