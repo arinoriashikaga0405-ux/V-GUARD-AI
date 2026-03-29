@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems - Strategic Security", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - ROI Calculator", page_icon="🛡️", layout="wide")
 
 # --- 2. CSS CUSTOM EKSEKUTIF ---
 st.markdown("""
@@ -24,17 +24,21 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .card-paket:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+    .roi-calc-box {
+        background-color: #f1f5f9; padding: 25px; border-radius: 15px;
+        border: 2px solid #1e3a8a; margin-top: 20px;
+    }
     .stButton>button { background-color: #1e3a8a; color: white; border-radius: 8px; width: 100%; font-weight: bold; height: 3.5em; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (Foto Diperkecil) ---
+# --- 3. SIDEBAR (Foto Diperkecil Maksimal) ---
 with st.sidebar:
     try:
-        # Foto diperkecil ke 120px agar proporsional
-        st.image("erwin.jpg", width=120)
+        # Foto diperkecil ke 100px agar sangat rapi di navigasi
+        st.image("erwin.jpg", width=100)
     except:
-        st.write("👤 PROFILE CEO")
+        st.write("👤 CEO PROFILE")
     st.markdown("### ERWIN")
     st.caption("Founder & CEO VGUARD AI Systems")
     st.write("---")
@@ -58,22 +62,34 @@ if menu == "Beranda Eksekutif":
         st.markdown("### STRATEGI PEMIMPIN")
         st.write("Saya Erwin, memimpin VGUARD AI untuk menghapus kebocoran operasional di Indonesia melalui integrasi kecerdasan buatan.")
         st.markdown("### FILOSOFI PERISAI")
-        st.write("VGUARD AI adalah Audit Officer pribadi Anda yang bekerja 24 jam untuk mengamankan aset dan mencegah kerugian sistemik.")
+        st.write("VGUARD AI adalah perisai digital yang bekerja 24 jam untuk mengamankan aset dan mencegah kerugian sistemik bagi bisnis UMKM maupun korporasi.")
 
-    # FITUR BARU: ANALISIS ROI & ESTIMASI KERUGIAN
+    # --- FITUR BARU: KALKULATOR ROI INTERAKTIF ---
     st.write("---")
-    st.markdown("### 🛡️ ANALISIS STRATEGIS & ROI")
-    r1, r2 = st.columns(2)
-    with r1:
-        st.error("#### Estimasi Kerugian Tanpa AI")
-        st.write("- **Kebocoran Transaksi**: 5-8% revenue hilang karena error manual.")
-        st.write("- **Mismatch Stok**: 10-15% margin hilang akibat data tidak real-time.")
-    with r2:
-        st.success("#### Jaminan ROI VGUARD AI")
-        st.write("- **Break Even Point**: Modal kembali dalam estimasi 3-6 bulan.")
-        st.write("- **Efisiensi**: Memotong hingga 90% potensi fraud transaksi.")
+    st.markdown("### 📊 KALKULATOR ESTIMASI KERUGIAN & ROI")
+    st.write("Gunakan alat ini untuk melihat potensi dana yang dapat diselamatkan oleh VGUARD AI setiap bulannya.")
+    
+    with st.container():
+        st.markdown('<div class="roi-calc-box">', unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            omzet = st.number_input("Masukkan Omzet Bulanan Bisnis Anda (Rp)", min_value=0, value=100000000, step=1000000)
+            leakage_rate = st.slider("Estimasi Persentase Kebocoran (%)", 1.0, 20.0, 5.0)
+        
+        with c2:
+            # Hitung estimasi
+            total_loss = omzet * (leakage_rate / 100)
+            saved_by_ai = total_loss * 0.90 # AI mengasumsikan efisiensi 90%
+            
+            st.write("#### Hasil Analisis Strategis:")
+            st.error(f"Potensi Kerugian/Bocor: Rp {total_loss:,.0f}")
+            st.success(f"Dana Diselamatkan VGUARD AI: Rp {saved_by_ai:,.0f}")
+            
+            roi_times = saved_by_ai / 5000000 # Asumsi ambil paket V-GROW (5jt)
+            st.info(f"Efisiensi Investasi: {roi_times:.1f}x lipat dari biaya sistem")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # LAYANAN PRODUK (4 Paket dengan Detail Fitur)
+    # LAYANAN PRODUK
     st.write("---")
     st.write("### LAYANAN PRODUK & FITUR")
     p1, p2, p3, p4 = st.columns(4)
