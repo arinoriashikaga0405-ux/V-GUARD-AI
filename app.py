@@ -27,7 +27,7 @@ st.markdown("""
     .eco-box {
         background-color: #ffffff; padding: 20px; border-radius: 12px;
         border-top: 5px solid #1e3a8a; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        height: 100%;
+        min-height: 250px;
     }
     .roi-calc-box {
         background-color: #f1f5f9; padding: 25px; border-radius: 15px;
@@ -37,7 +37,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (Foto Tetap Kecil 70px) ---
+# --- 3. SIDEBAR (FOTO TETAP KECIL 70PX) ---
 with st.sidebar:
     try:
         st.image("erwin.jpg", width=70) 
@@ -62,4 +62,89 @@ if menu == "Beranda Eksekutif":
             st.image("erwin.jpg", width=130) 
         except:
             st.info("Upload foto erwin.jpg")
-    with col
+    with col_txt:
+        st.markdown("### PROFIL & VISI STRATEGIS")
+        st.write("Saya **Erwin**, Founder dan CEO VGUARD AI Systems, membawa lebih dari **10 tahun pengalaman profesional di industri perbankan** dalam membangun fondasi sistem keamanan ini. Dedikasi satu dekade di sektor finansial telah membentuk keahlian saya dalam manajemen risiko, kepatuhan, dan pengawasan aset yang ketat. Kini, visi saya adalah mentransformasikan standar keamanan perbankan tersebut ke dalam ekosistem bisnis Anda. Melalui integrasi teknologi AI masa depan, kami memastikan setiap transaksi terpantau dan setiap potensi kebocoran dapat dimitigasi secara instan sebelum berdampak pada profitabilitas Anda.")
+        st.markdown("### FILOSOFI PERISAI DIGITAL")
+        st.write("Filosofi VGUARD AI berakar pada prinsip integritas mutlak dan perlindungan aset total. Kami percaya bahwa kepercayaan bisnis dibangun di atas transparansi data. Terinspirasi dari ketatnya standar audit perbankan, kami hadir sebagai 'Perisai Digital' yang bekerja 24/7 tanpa henti untuk mengawal integritas operasional bisnis Anda.")
+
+    # FITUR TETAP: EKOSISTEM UNTUK ADMIN & KLIEN
+    st.write("---")
+    st.markdown("### 🌐 EKOSISTEM OPERASIONAL VGUARD AI")
+    st.write("Sistem kami dirancang untuk menjembatani transparansi antara tim operasional dan pemilik bisnis.")
+    
+    col_admin, col_client = st.columns(2)
+    with col_admin:
+        st.markdown("""
+        <div class="eco-box">
+        <h4 style="color:#1e3a8a">💻 Portal Dashboard Admin</h4>
+        <ul>
+            <li><b>AI Audit Engine</b>: Scanning otomatis ribuan data transaksi per detik.</li>
+            <li><b>Anomali Flagging</b>: Penandaan otomatis transaksi mencurigakan.</li>
+            <li><b>Inventory Reconciliation</b>: Sinkronisasi data stok fisik vs digital.</li>
+            <li><b>Log Aktivitas</b>: Pantau riwayat input dan perubahan data.</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_client:
+        st.markdown("""
+        <div class="eco-box">
+        <h4 style="color:#1e3a8a">📱 Portal Dashboard Klien (Owner)</h4>
+        <ul>
+            <li><b>Executive Summary</b>: Laporan kesehatan bisnis dalam satu layar.</li>
+            <li><b>Leakage Alert</b>: Notifikasi instan via WhatsApp jika terdeteksi fraud.</li>
+            <li><b>ROI Tracking</b>: Pantau dana yang berhasil diselamatkan sistem.</li>
+            <li><b>Multi-Branch View</b>: Pantau semua cabang dari mana saja.</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # FITUR TETAP: KALKULATOR ROI INTERAKTIF
+    st.write("---")
+    st.markdown("### 📊 KALKULATOR ESTIMASI KERUGIAN & ROI")
+    with st.container():
+        st.markdown('<div class="roi-calc-box">', unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            omzet = st.number_input("Masukkan Omzet Bulanan Bisnis Anda (Rp)", min_value=0, value=100000000, step=1000000)
+            leakage_rate = st.slider("Estimasi Persentase Kebocoran (%)", 1.0, 20.0, 5.0)
+        with c2:
+            total_loss = omzet * (leakage_rate / 100)
+            saved_by_ai = total_loss * 0.90
+            st.write("#### Hasil Analisis Strategis:")
+            st.error(f"Potensi Kerugian/Bocor: Rp {total_loss:,.0f}")
+            st.success(f"Dana Diselamatkan VGUARD AI: Rp {saved_by_ai:,.0f}")
+            roi_times = saved_by_ai / 5000000 if saved_by_ai > 0 else 0
+            st.info(f"Efisiensi Investasi: {roi_times:.1f}x lipat dari biaya sistem")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # FITUR TETAP: LAYANAN PRODUK & FITUR
+    st.write("---")
+    st.write("### LAYANAN PRODUK & FITUR")
+    p1, p2, p3, p4 = st.columns(4)
+    with p1:
+        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan Dasar</p></div>', unsafe_allow_html=True)
+    with p2:
+        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-START<br>• <b>AI Fraud Detection</b><br>• Integrasi Stok Otomatis</p></div>', unsafe_allow_html=True)
+    with p3:
+        st.markdown('<div class="card-paket"><b>V-PRIME</b><h3 style="color:#1e3a8a">10 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-GROW<br>• Audit Multi-Cabang<br>• <b>Prediksi Kerugian AI</b></p></div>', unsafe_allow_html=True)
+    with p4:
+        st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a8a">NEGO</h3><hr><p style="font-size:0.85rem; text-align:left;">• Solusi Tailor-made<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7</p></div>', unsafe_allow_html=True)
+
+    # FITUR TETAP: KONSULTASI SEKARANG
+    st.write("---")
+    if st.button("🛡️ KONSULTASI STRATEGIS SEKARANG"):
+        st.success("Admin VGUARD AI akan segera menghubungi Bapak Erwin.")
+
+elif menu == "Dashboard Performa":
+    st.title("📊 Dashboard Performa")
+    st.line_chart(np.random.randn(20, 2))
+
+elif menu == "AI Scanner":
+    st.title("🔍 AI Scanner Audit")
+    st.button("Jalankan Analisis Engine")
+
+# --- 5. FOOTER ---
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Tangerang, Indonesia")
