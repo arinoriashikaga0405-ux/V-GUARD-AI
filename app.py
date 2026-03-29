@@ -4,10 +4,10 @@ import google.generativeai as genai
 from PIL import Image
 import os
 
-# 1. KONFIGURASI SISTEM
+# 1. KONFIGURASI DASAR
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# Konfigurasi AI (Masukkan kembali API Key Bapak di sini)
+# Konfigurasi AI (Pastikan API Key Bapak benar)
 API_KEY = "PASTE_API_KEY_BAPAK_DI_SINI"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
@@ -29,19 +29,22 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# FUNGSI UNTUK CEK FOTO
-def ambil_foto(lebar):
-    nama_file = 'foto_erwin.jpg'
-    if os.path.exists(nama_file):
-        img = Image.open(nama_file)
-        st.image(img, width=lebar)
-    else:
-        st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
+# FUNGSI AMBIL FOTO (Anti-Error)
+def tampilkan_foto(lebar):
+    try:
+        if os.path.exists('foto_erwin.jpg'):
+            img = Image.open('foto_erwin.jpg')
+            st.image(img, width=lebar)
+        else:
+            # Jika file tidak ketemu, pakai ikon standar
+            st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
+    except:
+        st.write("📸 [Foto V-GUARD]")
 
-# 2. SIDEBAR NAVIGATION
+# 2. SIDEBAR (NAVIGASI)
 with st.sidebar:
-    st.markdown("### 🛡️ V-GUARD NAVIGASI")
-    ambil_foto(120)
+    st.markdown("### 🛡️ V-GUARD SYSTEMS")
+    tampilkan_foto(120)
     st.markdown("<center><b>Erwin Sinaga</b><br>Founder V-GUARD</center>", unsafe_allow_html=True)
     st.divider()
     halaman = st.radio("Pilih Halaman:", ["🌐 Promosi & Umum", "👥 Area Layanan Klien", "🔐 Panel Admin"])
@@ -49,7 +52,7 @@ with st.sidebar:
     st.write("📍 Tangerang, Indonesia")
 
 # ==========================================
-# HALAMAN 1: PROMOSI & UMUM
+# HALAMAN 1: PROMOSI & UMUM (LANDING PAGE)
 # ==========================================
 if halaman == "🌐 Promosi & Umum":
     st.markdown("""
@@ -62,23 +65,25 @@ if halaman == "🌐 Promosi & Umum":
 
     c1, c2 = st.columns([1, 2])
     with c1:
-        ambil_foto(300)
+        tampilkan_foto(300)
     with c2:
         st.markdown("## FILOSOFI & PROFIL")
         st.write("""
         V-GUARD AI Systems hadir sebagai solusi audit masa depan yang transparan dan akurat. 
-        Dipimpin oleh Erwin Sinaga, kami berkomitmen menjaga integritas aset bisnis Anda.
+        Dipimpin oleh Erwin Sinaga, kami berkomitmen menjaga integritas aset bisnis Anda 
+        dengan teknologi AI tercanggih.
         """)
-        st.link_button("🟢 KONSULTASI VIA WHATSAPP", "https://wa.me/6281234567890")
+        st.info("Senior Leader dengan pengalaman 10+ tahun dalam manajemen strategis.")
 
-    st.write("### Daftar Layanan")
+    st.write("---")
+    st.markdown("<h3 style='text-align: center;'>Daftar Layanan</h3>", unsafe_allow_html=True)
     p1, p2, p3 = st.columns(3)
     p1.markdown('<div class="card-service"><h3>📦 LITE</h3><h2>7,5 Jt</h2><p>Audit Angka Dasar</p></div>', unsafe_allow_html=True)
     p2.markdown('<div class="card-service" style="border: 2px solid #FFD700;"><h3>🚀 PRO</h3><h2 style="color: #FFD700;">15 Jt</h2><p>Investigasi Fraud AI</p></div>', unsafe_allow_html=True)
     p3.markdown('<div class="card-service"><h3>🏢 ENTERPRISE</h3><h2>25 Jt</h2><p>Strategis & Profit</p></div>', unsafe_allow_html=True)
 
 # ==========================================
-# HALAMAN 2: AREA KLIEN
+# HALAMAN 2: AREA LAYANAN KLIEN
 # ==========================================
 elif halaman == "👥 Area Layanan Klien":
     st.title("👥 Dashboard Monitor Klien")
@@ -88,21 +93,29 @@ elif halaman == "👥 Area Layanan Klien":
         "Status": ["🛡️ Aman", "⚠️ Cek Selisih", "🛡️ Aman", "🛡️ Aman"]
     }
     st.table(pd.DataFrame(data_klien))
+    st.success("Sistem Monitoring AI Aktif 24/7.")
 
 # ==========================================
-# HALAMAN 3: PANEL ADMIN (SISTEM AI)
+# HALAMAN 3: PANEL ADMIN (SISTEM AUDIT)
 # ==========================================
 else:
-    st.title("🔐 Panel Kendali Admin V-GUARD")
-    pw = st.text_input("Password Admin:", type="password")
+    st.title("🔐 Panel Admin V-GUARD")
+    pw = st.text_input("Masukkan Password Admin:", type="password")
     if pw == "vguard2026":
         paket = st.selectbox("Pilih Paket Audit:", ["LITE", "PRO", "ENTERPRISE"])
-        data_input = st.text_area("Masukkan Data Transaksi:")
-        if st.button("JALANKAN AUDIT"):
-            # Prompt AI berdasarkan paket
-            if paket == "LITE": prompt = "Audit selisih angka: "
-            elif paket == "PRO": prompt = "Cari pola kecurangan/fraud: "
-            else: prompt = "Berikan analisis strategis profit: "
+        data_input = st.text_area("Tempel Data Transaksi di Sini:")
+        if st.button("JALANKAN AUDIT AI"):
+            # Prompt sesuai paket
+            if paket == "LITE": pr = "Audit selisih angka: "
+            elif paket == "PRO": pr = "Investigasi pola kecurangan: "
+            else: pr = "Berikan strategi profit senior: "
             
-            res = model.generate_content(prompt + data_input)
-            st.markdown(res.text)
+            with st.spinner("AI Sedang Menganalisis..."):
+                try:
+                    res = model.generate_content(pr + data_input)
+                    st.markdown("### 📊 Hasil Analisis")
+                    st.write(res.text)
+                except:
+                    st.error("Gagal terhubung ke AI. Cek API Key Anda.")
+    elif pw != "":
+        st.error("Akses Ditolak!")
