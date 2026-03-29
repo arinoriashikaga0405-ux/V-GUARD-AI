@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import google.generativeai as genai
 import os
 from PIL import Image
@@ -7,9 +6,8 @@ from PIL import Image
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# API KEY BAPAK
+# API KEY
 GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
-
 if GOOGLE_API_KEY:
     try:
         genai.configure(api_key=GOOGLE_API_KEY)
@@ -17,6 +15,7 @@ if GOOGLE_API_KEY:
     except:
         st.error("Koneksi AI Terputus.")
 
+# FUNGSI FOTO
 def get_foto(lebar):
     try:
         if os.path.exists('erwin.jpg'):
@@ -26,7 +25,7 @@ def get_foto(lebar):
     except:
         st.write("📸")
 
-# 2. STATUS LOGIN
+# 2. LOGIN
 if 'role' not in st.session_state:
     st.session_state.role = None
 
@@ -43,9 +42,21 @@ def login_vguard():
                 st.session_state.role = "klien"
                 st.rerun()
 
-# 3. CSS DESIGN (UKURAN PROPORSIONAL)
-st.markdown('<style>.stApp { background-color: #f8f9fa; }.hero-bg { background: #0e1117; padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }.card-v { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid #FFD700; height: 530px; display: flex; flex-direction: column; justify-content: space-between; }.card-v h4 { font-size: 20px; color: #1a1a1a; font-weight: 800; text-align: center; margin-bottom: 5px; }.card-v .price { font-size: 24px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 10px; }.card-v .section-title { font-size: 12px; font-weight: bold; color: #888; text-transform: uppercase; margin-top: 8px; border-bottom: 1px solid #eee; }.card-v p { font-size: 13px; color: #444; margin: 5px 0; line-height: 1.4; }.card-v ul { font-size: 12px; color: #555; padding-left: 15px; margin: 5px 0; }.stLinkButton button { width: 100%; height: 40px; font-size: 14px !important; font-weight: bold; background-color: #FFD700 !important; color: #000 !important; border-radius: 8px; }</style>', unsafe_allow_html=True)
+# 3. CSS DESIGN (UKURAN KOTAK PAS & ISI LENGKAP)
+st.markdown('<style>.stApp { background-color: #f8f9fa; }.hero-bg { background: #0e1117; padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }.card-v { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid #FFD700; height: 560px; display: flex; flex-direction: column; justify-content: space-between; }.card-v h4 { font-size: 18px; color: #1a1a1a; font-weight: 800; text-align: center; margin-bottom: 5px; }.card-v .price { font-size: 22px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 10px; }.card-v .section-title { font-size: 11px; font-weight: bold; color: #888; text-transform: uppercase; margin-top: 8px; border-bottom: 1px solid #eee; }.card-v p { font-size: 13px; color: #444; margin: 4px 0; line-height: 1.4; }.card-v ul { font-size: 12px; color: #555; padding-left: 15px; margin: 4px 0; }.stLinkButton button { width: 100%; height: 38px; font-size: 13px !important; font-weight: bold; background-color: #FFD700 !important; color: #000 !important; border-radius: 6px; }</style>', unsafe_allow_html=True)
 
 # 4. SIDEBAR
 with st.sidebar:
-    st.markdown
+    st.markdown("<h2 style='color: #FFD700; text-align:center;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
+    col_x, col_y = st.columns([1, 2])
+    with col_x: get_foto(65)
+    with col_y: st.markdown("<b>Erwin Sinaga</b><br><small>Founder & CEO</small>", unsafe_allow_html=True)
+    st.divider()
+    menu = st.radio("NAVIGASI:", ["🌐 Beranda", "📝 Meeting Lab", "📊 Dashboard", "🤖 Admin"])
+    if not st.session_state.role: login_vguard()
+    else:
+        if st.button("🚪 Keluar"):
+            st.session_state.role = None
+            st.rerun()
+
+#
