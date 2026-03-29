@@ -104,4 +104,38 @@ if halaman == "🌐 Beranda & Profil":
         potensi_rugi = omset * (leakage / 100)
         st.markdown(f"""
             <div class="roi-box">
-                <p style="margin
+                <p style="margin:0; font-size:14px;">Potensi Kerugian yang Dapat Dicegah:</p>
+                <h2 style="color: #d42f2f; margin:0;">Rp {potensi_rugi:,.0f}</h2>
+                <p style="font-size: 12px; color: #555;">V-Guard didesain untuk menutup celah kebocoran ini secara otomatis.</p>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # PAKET LAYANAN
+    st.divider()
+    st.markdown("<h3 style='text-align: center;'>Layanan Strategis</h3>", unsafe_allow_html=True)
+    p1, p2, p3 = st.columns(3)
+    
+    def wa_link(paket):
+        pesan = f"Halo Pak Erwin, saya ingin konsultasi paket V-GUARD *{paket}*."
+        return f"https://wa.me/{WA_NOMOR}?text={urllib.parse.quote(pesan)}"
+
+    with p1:
+        st.markdown('<div class="card-service"><div><h4>📦 V-LITE</h4><h3 style="color:#d4af37">7,5 Jt</h3><hr><p style="font-size:13px;">1 Outlet<br>Daily Alarm WA</p></div></div>', unsafe_allow_html=True)
+        st.link_button("HUBUNGI SAYA", wa_link("V-LITE"))
+    with p2:
+        st.markdown('<div class="card-service" style="border: 3px solid #FFD700"><div><h4>🚀 V-PRO</h4><h3 style="color:#d4af37">15 Jt</h3><hr><p style="font-size:13px;">5 Outlet<br><b>AI Deep Audit</b></p></div></div>', unsafe_allow_html=True)
+        st.link_button("HUBUNGI SAYA", wa_link("V-PRO"))
+    with p3:
+        st.markdown('<div class="card-service"><div><h4>🏢 CORPORATE</h4><h3 style="color:#d4af37">25 Jt</h3><hr><p style="font-size:13px;">Unlimited Outlet<br>Priority Support</p></div></div>', unsafe_allow_html=True)
+        st.link_button("HUBUNGI SAYA", wa_link("CORPORATE"))
+
+# ==========================================
+# HALAMAN LAIN
+# ==========================================
+elif halaman == "🤖 AI Auditor":
+    st.title("🤖 AI Auditor Engine")
+    st.info("Halaman analisis data transaksi massal untuk deteksi anomali.")
+
+elif halaman == "📝 AI Meeting Lab":
+    st.title("📝 AI Meeting Summarizer")
+    st.info("Fitur rangkuman rapat otomatis untuk manajemen strategis.")
