@@ -1,6 +1,5 @@
 import streamlit as st
 import google.generativeai as genai
-import pandas as pd
 import os
 from PIL import Image
 
@@ -25,13 +24,14 @@ def get_foto(lebar):
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS BERSIH (MENCEGAH SYNTAX ERROR)
+# 2. CSS EXECUTIVE (BERSIH & STABIL)
 st.markdown('<style>.stApp { background-color: #f4f6f9; }</style>', unsafe_allow_html=True)
 st.markdown('<style>[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 2px solid #FFD700; }</style>', unsafe_allow_html=True)
-st.markdown('<style>.hero-bg { background: #0e1117; padding: 30px; border-radius: 12px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }</style>', unsafe_allow_html=True)
-st.markdown('<style>.card-v { background: white !important; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; min-height: 520px; display: flex; flex-direction: column; justify-content: space-between; }</style>', unsafe_allow_html=True)
-st.markdown('<style>.card-v h4 { color: #111; text-align: center; font-weight: 800; margin-bottom: 5px; } .card-v .price { color: #d42f2f; font-weight: bold; text-align: center; font-size: 20px; }</style>', unsafe_allow_html=True)
-st.markdown('<style>.stLinkButton button { width: 100%; background-color: #FFD700 !important; color: #000 !important; font-weight: bold; }</style>', unsafe_allow_html=True)
+st.markdown('<style>.hero-bg { background: #0e1117; padding: 35px; border-radius: 12px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }</style>', unsafe_allow_html=True)
+st.markdown('<style>.card-v { background: white !important; padding: 22px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; min-height: 520px; display: flex; flex-direction: column; justify-content: space-between; }</style>', unsafe_allow_html=True)
+st.markdown('<style>.card-v h4 { color: #111; text-align: center; font-weight: 800; } .card-v .price { color: #d42f2f; font-weight: bold; text-align: center; font-size: 20px; }</style>', unsafe_allow_html=True)
+st.markdown('<style>.stLinkButton button { width: 100%; background-color: #FFD700 !important; color: #000 !important; font-weight: bold; border-radius: 8px; }</style>', unsafe_allow_html=True)
+st.markdown('<style>.bio-section { background: #0e1117; color: white; padding: 25px; border-radius: 15px; border-left: 6px solid #FFD700; }</style>', unsafe_allow_html=True)
 
 # 3. SIDEBAR
 with st.sidebar:
@@ -44,68 +44,95 @@ with st.sidebar:
     if st.session_state.role == "admin": nav.append("🤖 Panel Admin")
     elif st.session_state.role == "klien": nav.append("📊 Laporan Klien")
     else: nav.append("🔑 Masuk Ke Sistem")
-    menu = st.radio("MENU UTAMA:", nav)
+    menu = st.radio("NAVIGASI:", nav)
     if st.session_state.role:
+        st.divider()
         if st.button("🚪 Keluar"):
             st.session_state.role = None
             st.rerun()
 
 # 4. HALAMAN BERANDA
 if menu == "🌐 Beranda":
-    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Revenue Protection Intelligence</p></div>', unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2])
-    with c1: get_foto(300)
-    with c2:
-        st.subheader("📊 Analisis Potensi Penyelamatan")
+    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>The Future of Responsible AI Security & Fraud Detection</p></div>', unsafe_allow_html=True)
+    
+    # PROFIL & FILOSOFI (NARASI BARU)
+    col_img, col_text = st.columns([1, 2])
+    with col_img:
+        get_foto(350)
+    with col_text:
+        st.markdown(f"""
+        <div class="bio-section">
+            <h3 style='color: #FFD700; margin-top:0;'>🛡️ About V-GUARD</h3>
+            <p>Didirikan pada tahun 2026, <b>V-GUARD</b> hadir sebagai garda terdepan AI Security yang berfokus pada deteksi fraud, privasi data, dan tata kelola AI yang bertanggung jawab. Kami adalah mitra strategis UKM/SME di Indonesia melalui solusi cerdas seperti <i>Surveillance AI</i> dan <i>Risk Assessment</i>.</p>
+            <p><b>Visi:</b> Menjadi global leader AI Security yang membangun kepercayaan melalui teknologi proaktif.<br>
+            <b>Misi:</b> Mengembangkan guardrails etis untuk melindungi aset digital secara komprehensif.</p>
+            <hr style='border: 0.5px solid #444;'>
+            <h4 style='color: #FFD700;'>💡 Founder & Philosophy</h4>
+            <p>Membawa <b>10 tahun pengalaman di industri perbankan</b> dalam pengelolaan risiko fraud, portofolio, dan compliance, Founder mengaplikasikan standar ketat finansial ke dalam sistem V-GUARD. Kami percaya AI adalah partner keamanan yang harus menyeimbangkan antara perlindungan ketat dan privasi pengguna.</p>
+            <p style='background: #1a1e26; padding: 10px; border-radius: 8px; border: 1px dashed #FFD700;'>
+            <i>"Di era 2026, V-GUARD berkomitmen mencegah kerugian hingga 90%, mewujudkan transformasi finansial yang aman bagi setiap pemilik bisnis."</i>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.divider()
+    
+    # KALKULATOR
+    st.subheader("📊 Kalkulator Penyelamatan Aset")
+    c_c1, c_c2 = st.columns(2)
+    with c_c1:
         omset = st.number_input("Omset Bulanan (Rp):", value=100000000, step=10000000)
-        leak = st.slider("Kebocoran (%):", 1, 15, 3)
-        hasil_save = omset * (leak / 100)
-        st.success(f"V-GUARD dapat menyelamatkan: **Rp {hasil_save:,.0f} / Bulan**")
+    with c_c2:
+        leak = st.slider("Potensi Kebocoran Tanpa AI (%):", 1, 15, 3)
+    
+    hasil_save = omset * (leak / 100)
+    st.success(f"Potensi dana yang dapat diselamatkan V-GUARD: **Rp {hasil_save:,.0f} / Bulan**")
     
     st.divider()
-    st.markdown("<h3 style='text-align:center;'>Layanan V-GUARD</h3>", unsafe_allow_html=True)
     
+    # PAKET LAYANAN
+    st.markdown("<h3 style='text-align:center; margin-bottom:25px;'>Pilihan Paket Proteksi 2026</h3>", unsafe_allow_html=True)
     WA = "https://wa.me/6282122190885"
     p1, p2, p3, p4 = st.columns(4)
     
     with p1:
-        st.markdown('<div class="card-v"><div><h4>🌱 V-START</h4><div class="price">3,5 Jt /Bln</div><hr><p><b>Deskripsi:</b> Audit otomatis mingguan UMKM Mikro.</p><p><b>Fitur:</b> Stok, Kas, WA Report.</p><p><b>Market:</b> Kedai/SME.</p></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-v"><div><h4>🌱 V-START</h4><div class="price">3,5 Jt /Bln</div><hr><p><b>SME Basic:</b> Audit otomatis mingguan untuk validasi operasional harian.</p><ul><li>Cek Stok & Kas</li><li>Laporan via WA</li><li>1 Outlet</li></ul></div></div>', unsafe_allow_html=True)
         st.link_button("AMBIL PAKET", WA)
     with p2:
-        st.markdown('<div class="card-v"><div><h4>📦 V-LITE</h4><div class="price">7,5 Jt /Bln</div><hr><p><b>Deskripsi:</b> Monitoring harian aktif jarak jauh.</p><p><b>Fitur:</b> Real-time, POS Integration.</p><p><b>Market:</b> Retail/Cafe.</p></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-v"><div><h4>📦 V-LITE</h4><div class="price">7,5 Jt /Bln</div><hr><p><b>Active Guard:</b> Monitoring harian aktif untuk pemilik bisnis jarak jauh.</p><ul><li>Real-time Alert</li><li>Integrasi POS</li><li>1 Outlet</li></ul></div></div>', unsafe_allow_html=True)
         st.link_button("AMBIL PAKET", WA)
     with p3:
-        st.markdown('<div class="card-v" style="border: 2px solid #FFD700"><div><h4>🚀 V-PRO</h4><div class="price">15 Jt /Bln</div><hr><p><b>Deskripsi:</b> Deep AI Fraud Audit sistemik.</p><p><b>Fitur:</b> Analisis Kasir, AI Alert.</p><p><b>Market:</b> Franchise.</p></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-v" style="border: 2px solid #FFD700"><div><h4>🚀 V-PRO</h4><div class="price">15 Jt /Bln</div><hr><p><b>Advanced AI:</b> Deep Fraud Audit dengan analisis perilaku sistemik.</p><ul><li>AI Risk Scoring</li><li>Prioritas Support</li><li>Hingga 5 Outlet</li></ul></div></div>', unsafe_allow_html=True)
         st.link_button("AMBIL PAKET", WA)
     with p4:
-        st.markdown('<div class="card-v"><div><h4>🏢 CORPORATE</h4><div class="price">Custom</div><hr><p><b>Deskripsi:</b> Proteksi skala nasional Enterprise.</p><p><b>Fitur:</b> Unlimited, Dedicated Support.</p><p><b>Market:</b> Holding/Nasional.</p></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-v"><div><h4>🏢 CORPORATE</h4><div class="price">Custom</div><hr><p><b>Enterprise:</b> Proteksi skala nasional dengan dukungan tim dedicated.</p><ul><li>Unlimited Outlet</li><li>Governance Audit</li><li>Strategic Review</li></ul></div></div>', unsafe_allow_html=True)
         st.link_button("AMBIL PAKET", WA)
 
 elif menu == "🔑 Masuk Ke Sistem":
-    st.markdown('<div class="hero-bg"><h1>LOGIN</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero-bg"><h1>SECURITY LOGIN</h1></div>', unsafe_allow_html=True)
     with st.form("login"):
-        u = st.text_input("Username").strip().lower()
-        p = st.text_input("Password", type="password")
-        if st.form_submit_button("Masuk"):
+        u = st.text_input("User ID").strip().lower()
+        p = st.text_input("Access Key", type="password")
+        if st.form_submit_button("Authenticate"):
             if u == "admin" and p == "Vguard2026":
                 st.session_state.role = "admin"
                 st.rerun()
             elif u == "klien" and p == "User2026":
                 st.session_state.role = "klien"
                 st.rerun()
-            else: st.error("Gagal Login!")
+            else: st.error("Access Denied!")
 
 elif menu == "🤖 Panel Admin":
-    st.markdown('<div class="hero-bg"><h1>PANEL ADMIN</h1></div>', unsafe_allow_html=True)
-    st.write("Selamat datang, Pak Erwin.")
+    st.markdown('<div class="hero-bg"><h1>ADMIN COMMAND CENTER</h1></div>', unsafe_allow_html=True)
+    st.info("Sistem pengawasan AI V-GUARD berjalan normal.")
 
 elif menu == "📊 Laporan Klien":
-    st.markdown('<div class="hero-bg"><h1>DASHBOARD KLIEN</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero-bg"><h1>CLIENT DASHBOARD</h1></div>', unsafe_allow_html=True)
 
 elif menu == "📝 Meeting Lab":
     st.title("📝 Meeting Lab")
-    txt = st.text_area("Input Teks:")
-    if st.button("Proses"):
+    txt = st.text_area("Input Notulensi Rapat:")
+    if st.button("Generate Summary"):
         if txt:
-            res = model.generate_content(f"Rangkum: {txt}")
-            st.write(res.text)
+            res = model.generate_content(f"Rangkum poin penting dan rencana aksi dari rapat ini: {txt}")
+            st.info(res.text)
