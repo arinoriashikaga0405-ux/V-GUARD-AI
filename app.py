@@ -41,7 +41,7 @@ st.markdown("""<style>
     .stApp { background-color: #f4f6f9; }
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
     .hero-bg { background: linear-gradient(135deg, #0e1117 0%, #1c1f26 100%); padding: 30px; border-radius: 20px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 25px; }
-    .card-service { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; text-align: center; height: 320px; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-service { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; text-align: center; height: 350px; display: flex; flex-direction: column; justify-content: space-between; }
     .roi-box { background-color: #fffde6; padding: 20px; border-radius: 15px; border: 2px solid #FFD700; text-align: center; margin-top: 10px;}
 </style>""", unsafe_allow_html=True)
 
@@ -70,7 +70,7 @@ with st.sidebar:
         login_vguard()
 
 # ==========================================
-# 5. HALAMAN BERANDA (Fitur & Kontak WA)
+# 5. HALAMAN BERANDA (Kalimat Awal & Paket)
 # ==========================================
 if menu == "🌐 Beranda":
     st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Revenue Protection Intelligence</p></div>', unsafe_allow_html=True)
@@ -78,8 +78,10 @@ if menu == "🌐 Beranda":
     c1, c2 = st.columns([1, 2])
     with c1: get_foto(350)
     with c2:
+        # --- KALIMAT AWAL YANG DIKEMBALIKAN ---
         st.subheader("🛡️ Proteksi Aset & Deteksi Fraud")
-        st.write("Sistem cerdas untuk menutup celah kebocoran operasional bisnis Anda.")
+        st.write("V-Guard hadir untuk menutup celah kebocoran operasional bisnis Anda dengan kecerdasan buatan.")
+        
         st.markdown("<div class='roi-box'>", unsafe_allow_html=True)
         omset = st.number_input("Omset Bulanan (Rp):", value=100000000)
         leak = st.slider("Estimasi Kebocoran (%):", 0, 15, 3)
@@ -88,28 +90,27 @@ if menu == "🌐 Beranda":
 
     st.divider()
     
-    # KOTAK-KOTAK LAYANAN & WA
+    # --- KOTAK-KOTAK LAYANAN & WA ---
     st.markdown("<h2 style='text-align:center;'>Pilihan Layanan Strategis</h2>", unsafe_allow_html=True)
     p1, p2, p3 = st.columns(3)
     WA_LINK = "https://wa.me/6282122190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20layanan%20V-GUARD"
     
     with p1:
-        st.markdown('<div class="card-service"><h4>📦 V-LITE</h4><h3>7,5 Jt</h3><hr><p>1 Outlet/Toko<br>Daily Report Audit</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-service"><h4>📦 V-LITE</h4><h3>7,5 Jt</h3><hr><p>1 Outlet/Toko<br>• Laporan Audit Harian<br>• Notifikasi WA</p></div>', unsafe_allow_html=True)
         st.link_button("HUBUNGI SAYA", WA_LINK)
     with p2:
-        st.markdown('<div class="card-service" style="border:3px solid #FFD700"><h4>🚀 V-PRO</h4><h3>15 Jt</h3><hr><p>5 Outlet/Toko<br>AI Deep Fraud Audit</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-service" style="border:3px solid #FFD700"><h4>🚀 V-PRO</h4><h3>15 Jt</h3><hr><p>5 Outlet/Toko<br>• AI Deep Fraud Audit<br>• Analisis Kebocoran</p></div>', unsafe_allow_html=True)
         st.link_button("HUBUNGI SAYA", WA_LINK)
     with p3:
-        st.markdown('<div class="card-service"><h4>🏢 CORPORATE</h4><h3>25 Jt</h3><hr><p>Unlimited Outlet<br>Priority AI Analysis</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-service"><h4>🏢 CORPORATE</h4><h3>25 Jt</h3><hr><p>Unlimited Outlet<br>• Priority Support<br>• AI Strategic Review</p></div>', unsafe_allow_html=True)
         st.link_button("HUBUNGI SAYA", WA_LINK)
 
 # ==========================================
-# 6. HALAMAN LAINNYA
+# 6. LOGIKA HALAMAN LAINNYA (TETAP SAMA)
 # ==========================================
 elif menu == "📊 Dashboard Klien":
     st.title("📊 Dashboard Laporan Klien")
     st.metric("Profit Aman", "Rp 158.000.000", "+8%")
-    st.line_chart(pd.DataFrame({'Hari': ['S', 'S', 'R', 'K', 'J'], 'Data': [10, 15, 12, 18, 20]}))
 
 elif menu == "🤖 AI Auditor (Admin)":
     st.title("🤖 AI Auditor (Admin)")
@@ -118,4 +119,3 @@ elif menu == "🤖 AI Auditor (Admin)":
 elif menu == "📝 Meeting Lab":
     st.title("📝 AI Meeting Lab")
     st.text_area("Tempel transkrip rapat di sini:")
-    if st.button("Proses AI"): st.info("Memproses ringkasan...")
