@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems - Ecosystem & ROI", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - Executive Platform", page_icon="🛡️", layout="wide")
 
 # --- 2. CSS CUSTOM EKSEKUTIF ---
 st.markdown("""
@@ -27,6 +27,7 @@ st.markdown("""
     .eco-box {
         background-color: #ffffff; padding: 20px; border-radius: 12px;
         border-top: 5px solid #1e3a8a; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        height: 100%;
     }
     .roi-calc-box {
         background-color: #f1f5f9; padding: 25px; border-radius: 15px;
@@ -45,7 +46,7 @@ with st.sidebar:
     st.markdown("### ERWIN")
     st.caption("Founder & CEO VGUARD AI Systems")
     st.write("---")
-    menu = st.sidebar.radio("NAVIGASI", ["Beranda Eksekutif", "Dashboard Performa", "AI Scanner"])
+    menu = st.radio("NAVIGASI", ["Beranda Eksekutif", "Dashboard Performa", "AI Scanner"])
 
 # --- 4. LOGIKA MENU ---
 if menu == "Beranda Eksekutif":
@@ -61,17 +62,4 @@ if menu == "Beranda Eksekutif":
             st.image("erwin.jpg", width=130) 
         except:
             st.info("Upload foto erwin.jpg")
-    with col_txt:
-        st.markdown("### PROFIL & VISI STRATEGIS")
-        st.write("""
-        Saya **Erwin**, Founder dan CEO VGUARD AI Systems, membawa lebih dari **10 tahun pengalaman profesional di industri perbankan** dalam membangun fondasi sistem keamanan ini. Dedikasi satu dekade di sektor finansial telah membentuk keahlian saya dalam manajemen risiko, kepatuhan, dan pengawasan aset yang ketat. Kini, visi saya adalah mentransformasikan standar keamanan perbankan tersebut ke dalam ekosistem bisnis Anda. Melalui integrasi teknologi AI masa depan, kami memastikan setiap transaksi terpantau dan setiap potensi kebocoran dapat dimitigasi secara instan sebelum berdampak pada profitabilitas Anda.
-        """)
-        st.markdown("### FILOSOFI PERISAI DIGITAL")
-        st.write("""
-        Filosofi VGUARD AI berakar pada prinsip integritas mutlak dan perlindungan aset total. Kami percaya bahwa kepercayaan bisnis dibangun di atas transparansi data. Terinspirasi dari ketatnya standar audit perbankan, kami hadir sebagai "Perisai Digital" yang bekerja 24/7 tanpa henti untuk mengawal integritas operasional bisnis Anda. Misi kami bukan sekadar menyediakan perangkat lunak, melainkan memberikan ketenangan pikiran (*peace of mind*) bagi para pimpinan perusahaan.
-        """)
-
-    # BARU: EKOSISTEM UNTUK ADMIN & KLIEN
-    st.write("---")
-    st.markdown("### 🌐 EKOSISTEM OPERASIONAL VGUARD AI")
-    st.write("Bagaimana sistem kami bekerja untuk tim
+    with col
