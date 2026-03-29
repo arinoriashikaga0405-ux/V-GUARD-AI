@@ -134,7 +134,34 @@ if halaman == "🌐 Beranda & Profil":
 # ==========================================
 elif halaman == "🤖 AI Auditor":
     st.title("🤖 AI Auditor Engine")
-    st.info("Halaman analisis data transaksi massal untuk deteksi anomali.")
+    # --- Mulai Tempel di Sini ---
+uploaded_file = st.file_uploader("Unggah file transaksi (CSV atau Excel)", type=["csv", "xlsx"])
+
+if uploaded_file is not None:
+    try:
+        if uploaded_file.name.endswith('.csv'):
+            df = pd.read_csv(uploaded_file)
+        else:
+            df = pd.read_excel(uploaded_file)
+        
+        st.subheader("Pratinjau Data")
+        st.dataframe(df.head())
+
+        if st.button("Jalankan Analisis Anomali"):
+            with st.spinner('Menganalisis data...'):
+                # Logika sederhana: cari nominal di atas rata-rata x 3
+                if 'nominal' in df.columns:
+                    mean_val = df['nominal'].mean()
+                    anomalies = df[df['nominal'] > (mean_val * 3)]
+                    
+                    st.success(f"Analisis Selesai! Ditemukan {len(anomalies)} anomali.")
+                    st.metric("Total Anomali", len(anomalies))
+                    st.table(anomalies)
+                else:
+                    st.warning("Kolom 'nominal' tidak ditemukan dalam file Anda.")
+    except Exception as e:
+        st.error(f"Eror: {e}")
+# --- Selesai Tempel ---)
 
 elif halaman == "📝 AI Meeting Lab":
     st.title("📝 AI Meeting Summarizer")
