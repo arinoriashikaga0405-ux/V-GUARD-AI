@@ -4,19 +4,16 @@ import google.generativeai as genai
 import os
 from PIL import Image
 
-# 1. KONFIGURASI UTAMA & AI
+# 1. KONFIGURASI UTAMA & SLOT API
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# MASUKKAN API KEY BAPAK DI SINI
-GOOGLE_API_KEY = "PASTE_API_KEY_BAPAK_DI_SINI"
+# --- TEMPELKAN API KEY BAPAK DI SINI ---
+GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 
-try:
+if GOOGLE_API_KEY != "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA":
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-1.5-flash')
-except:
-    st.error("⚠️ API Key belum terpasang dengan benar.")
 
-# Fungsi Foto (Baris 20-an)
 def get_foto(lebar):
     try:
         if os.path.exists('erwin.jpg'):
@@ -47,12 +44,13 @@ def login_vguard():
             else:
                 st.sidebar.error("Username/Password Salah")
 
-# 3. CSS DESIGN
+# 3. CSS DESIGN (Executive Style)
 st.markdown("""<style>
     .stApp { background-color: #f4f6f9; }
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
     .hero-bg { background: linear-gradient(135deg, #0e1117 0%, #1c1f26 100%); padding: 30px; border-radius: 20px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 25px; }
-    .card-service { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; text-align: center; height: 350px; }
+    .card-service { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; }
+    .roi-box { background-color: #fffde6; padding: 20px; border-radius: 15px; border: 2px solid #FFD700; text-align: center; margin-top: 10px;}
 </style>""", unsafe_allow_html=True)
 
 # 4. SIDEBAR & NAVIGASI
@@ -80,34 +78,52 @@ with st.sidebar:
         login_vguard()
 
 # ==========================================
-# 5. HALAMAN BERANDA
+# 5. HALAMAN BERANDA (PENJELASAN PAKET)
 # ==========================================
 if menu == "🌐 Beranda":
     st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Revenue Protection Intelligence</p></div>', unsafe_allow_html=True)
+    
     c1, c2 = st.columns([1, 2])
     with c1: get_foto(350)
     with c2:
         st.subheader("🛡️ Proteksi Aset & Deteksi Fraud")
         st.write("V-Guard hadir untuk menutup celah kebocoran operasional bisnis Anda dengan kecerdasan buatan.")
+        st.markdown("<div class='roi-box'>", unsafe_allow_html=True)
         omset = st.number_input("Omset Bulanan (Rp):", value=100000000)
         leak = st.slider("Estimasi Kebocoran (%):", 0, 15, 3)
-        st.markdown(f"### Potensi Penyelamatan: :red[Rp {omset*(leak/100):,.0f}]")
+        st.markdown(f"<h4>Potensi Penyelamatan:</h4><h2 style='color:#d42f2f;'>Rp {omset*(leak/100):,.0f}</h2>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     st.divider()
-    p1, p2, p3 = st.columns(3)
+    
+    st.markdown("<h2 style='text-align:center;'>Pilihan Layanan Strategis</h2>", unsafe_allow_html=True)
     WA_LINK = "https://wa.me/6282122190885"
+    
+    # Baris 1
+    p1, p2, p3 = st.columns(3)
     with p1:
-        st.markdown('<div class="card-service"><h4>📦 V-LITE</h4><h3>7,5 Jt</h3><hr><p>1 Outlet/Toko<br>• Laporan Harian</p></div>', unsafe_allow_html=True)
-        st.link_button("HUBUNGI SAYA", WA_LINK)
+        st.markdown('<div class="card-service"><h4>🌱 V-START</h4><h3>3,5 Jt</h3><hr><p align="left"><b>UMKM Mandiri</b><br>Audit mingguan otomatis untuk deteksi stok & kas secara general. Cocok untuk pemula.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL PAKET", WA_LINK)
     with p2:
-        st.markdown('<div class="card-service" style="border:3px solid #FFD700"><h4>🚀 V-PRO</h4><h3>15 Jt</h3><hr><p>5 Outlet/Toko<br>• Deep Fraud Audit</p></div>', unsafe_allow_html=True)
-        st.link_button("HUBUNGI SAYA", WA_LINK)
+        st.markdown('<div class="card-service"><h4>📦 V-LITE</h4><h3>7,5 Jt</h3><hr><p align="left"><b>1 Outlet/Toko</b><br>Kontrol penuh harian tanpa harus di lokasi. Laporan audit harian via notifikasi WhatsApp.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL PAKET", WA_LINK)
     with p3:
-        st.markdown('<div class="card-service"><h4>🏢 CORPORATE</h4><h3>25 Jt</h3><hr><p>Unlimited Outlet<br>• Priority Support</p></div>', unsafe_allow_html=True)
-        st.link_button("HUBUNGI SAYA", WA_LINK)
+        st.markdown('<div class="card-service" style="border:3px solid #FFD700"><h4>🚀 V-PRO</h4><h3>15 Jt</h3><hr><p align="left"><b>Hingga 5 Outlet</b><br>AI Deep Fraud Audit untuk menganalisis perilaku kasir dan pola kebocoran antar cabang.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL PAKET", WA_LINK)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Baris 2
+    p4, p5 = st.columns(2)
+    with p4:
+        st.markdown('<div class="card-service"><h4>🏢 CORPORATE</h4><h3>25 Jt</h3><hr><p align="left"><b>Unlimited Outlet</b><br>Skalabilitas tanpa batas dengan review strategis bulanan dan dukungan prioritas teknis.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL PAKET", WA_LINK)
+    with p5:
+        st.markdown('<div class="card-service" style="background-color: #0e1117; color: white;"><h4>💎 V-ENTERPRISE</h4><h3>Custom</h3><hr><p align="left"><b>Tailor-made Solution</b><br>Integrasi on-site, model AI khusus, dan pendampingan dedicated Data Scientist.</p></div>', unsafe_allow_html=True)
+        st.link_button("HUBUNGI CEO", WA_LINK)
 
 # ==========================================
-# 6. HALAMAN MEETING LAB (DENGAN AI ASLI)
+# 6. HALAMAN MEETING LAB (AI AKTIF)
 # ==========================================
 elif menu == "📝 Meeting Lab":
     st.title("📝 AI Meeting Lab")
@@ -118,16 +134,19 @@ elif menu == "📝 Meeting Lab":
     if st.button("🚀 JALANKAN PROSES AI"):
         if not transkrip:
             st.warning("Masukkan teks terlebih dahulu.")
-        elif GOOGLE_API_KEY == "PASTE_API_KEY_BAPAK_DI_SINI":
-            st.error("API Key belum diisi!")
+        elif GOOGLE_API_KEY == "ISI_API_KEY_BAPAK_DI_SINI":
+            st.error("⚠️ API Key belum diisi di kode app.py!")
         else:
-            with st.spinner("Sedang berpikir..."):
-                prompt = f"Rangkumlah transkrip rapat berikut menjadi poin-poin strategis, rencana tindakan (action plan), dan mitigasi risiko fraud: {transkrip}"
-                response = model.generate_content(prompt)
-                st.subheader("💡 Hasil Analisis Strategis V-GUARD")
-                st.info(response.text)
+            with st.spinner("Sedang menganalisis strategis..."):
+                try:
+                    prompt = f"Rangkumlah transkrip rapat berikut menjadi poin strategis, action plan, dan mitigasi risiko: {transkrip}"
+                    response = model.generate_content(prompt)
+                    st.subheader("💡 Hasil Analisis Strategis V-GUARD")
+                    st.info(response.text)
+                except Exception as e:
+                    st.error(f"Terjadi kesalahan pada API: {e}")
 
-# HALAMAN ADMIN & KLIEN (Placeholder)
+# HALAMAN LAIN (Dashboard Klien & Admin)
 elif menu == "📊 Dashboard Klien":
     st.title("📊 Dashboard Laporan Klien")
     st.metric("Profit Aman", "Rp 158.000.000", "+8%")
