@@ -13,7 +13,10 @@ GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 if GOOGLE_API_KEY != "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA":
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-1.5-flash')
-
+# Cek apakah API Key sudah diisi (tidak kosong)
+if GOOGLE_API_KEY and GOOGLE_API_KEY != "ISI_API_KEY_BAPAK_DI_SINI":
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('gemini-1.5-flash')
 def get_foto(lebar):
     try:
         if os.path.exists('erwin.jpg'):
