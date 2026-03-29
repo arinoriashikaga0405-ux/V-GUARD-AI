@@ -7,7 +7,7 @@ from PIL import Image
 # 1. KONFIGURASI HALAMAN UTAMA
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# API KEY
+# API KEY GEMINI
 GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 try:
     genai.configure(api_key=GOOGLE_API_KEY)
@@ -18,7 +18,7 @@ except:
 if 'role' not in st.session_state:
     st.session_state.role = None
 
-# Fungsi Foto
+# Fungsi Foto Profil
 def get_foto(lebar):
     url_default = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
     if os.path.exists('erwin.jpg'):
@@ -26,7 +26,7 @@ def get_foto(lebar):
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. DESIGN CSS (PERBAIKAN KOTAK: WARNA PUTIH, UKURAN PAS, ISI LENGKAP)
+# 2. DESIGN CSS (SEMUA KOTAK PUTIH & PROPORSIONAL)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -35,14 +35,14 @@ st.markdown("""
     
     .hero-bg { background: #0e1117; padding: 25px; border-radius: 12px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 25px; }
     
-    /* DESAIN KOTAK LAYANAN BARU (KECIL & PUTIH) */
+    /* DESAIN KOTAK LAYANAN (WARNA PUTIH & UKURAN PAS) */
     .card-v { 
-        background: white; /* SEMUA JADI PUTIH */
+        background: white; 
         padding: 18px; 
         border-radius: 12px; 
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
         border-top: 5px solid #FFD700; 
-        height: 520px; /* TINGGI DIATUR AGAR PAS UNTUK ISI LENGKAP */
+        height: 550px; 
         display: flex; 
         flex-direction: column; 
         justify-content: space-between;
@@ -54,12 +54,12 @@ st.markdown("""
     .card-v p { font-size: 13px; color: #444; margin: 4px 0; line-height: 1.4; text-align: left; }
     .card-v ul { font-size: 13px; color: #444; margin: 4px 0; padding-left: 15px; text-align: left; }
     
-    /* Tombol Dalam Kotak */
     .stLinkButton button { width: 100%; background-color: #FFD700 !important; color: #000 !important; font-weight: bold; border-radius: 8px; border: none; height: 38px; font-size: 13px !important; }
+    .fraud-card { background: #fff5f5; border-left: 5px solid #d42f2f; padding: 15px; border-radius: 8px; margin-bottom: 10px; color: #111; }
 </style>
 """, unsafe_allow_html=True)
 
-# 3. SIDEBAR (NAVIGASI)
+# 3. SIDEBAR (PROFIL & NAVIGASI)
 with st.sidebar:
     st.markdown("<h2 style='color: #FFD700; text-align:center;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
     col_f, col_n = st.columns([1, 2])
@@ -84,36 +84,3 @@ if menu == "🌐 Beranda":
     with c2:
         st.subheader("📊 Kalkulator Potensi Kerugian Operasional")
         omset = st.number_input("Omset Bulanan Bisnis (Rp):", value=100000000, step=10000000)
-        kebocoran = st.slider("Estimasi Kebocoran (%) (Standar SME: 3%):", 1, 15, 3)
-        st.info(f"V-GUARD dapat menyelamatkan: **Rp {omset*(kebocoran/100):,.0f} /Bulan**")
-    
-    st.divider()
-    st.markdown("<h3 style='text-align:center;'>Layanan Strategis V-GUARD</h3>", unsafe_allow_html=True)
-    
-    # 4 KOTAK LAYANAN (SEJAJAR, PUTIH, COMPACT)
-    WA = "https://wa.me/6282122190885"
-    p1, p2, p3, p4 = st.columns(4)
-    
-    with p1: 
-        st.markdown(f'<div class="card-v"><h4>🌱 V-START</h4><div class="price">3,5 Jt /Bln</div><div class="section-label">Deskripsi</div><p>Audit otomatis mingguan untuk validasi operasional UMKM.</p><div class="section-label">Fitur Utama</div><ul><li>Cek Stok & Kas</li><li>Laporan basic via WA</li><li>1 Outlet</li></ul><div class="section-label">Target Market</div><p>UMKM Mandiri / Kedai</p></div>', unsafe_allow_html=True)
-        st.link_button("AMBIL PAKET", WA)
-    with p2:
-        st.markdown(f'<div class="card-v"><h4>📦 V-LITE</h4><div class="price">7,5 Jt /Bln</div><div class="section-label">Deskripsi</div><p>Monitoring aktif pemilik tidak berada di lokasi bisnis.</p><div class="section-label">Fitur Utama</div><ul><li>Laporan Real-time</li><li>Integrasi POS</li><li>1 Outlet Premium</li></ul><div class="section-label">Target Market</div><p>Retailer & Cafe</p></div>', unsafe_allow_html=True)
-        st.link_button("AMBIL PAKET", WA)
-    with p3:
-        # V-PRO DIBERIKAN BINGKAI EMAS
-        st.markdown(f'<div class="card-v" style="border: 2px solid #FFD700"><h4>🚀 V-PRO</h4><div class="price">15 Jt /Bln</div><div class="section-label">Deskripsi</div><p>Deep AI Fraud Audit untuk mendeteksi pola kecurangan sistemik.</p><div class="section-label">Fitur Utama</div><ul><li>Analisis Perilaku Kasir</li><li>Prioritas Alert</li><li>Hingga 5 Outlet</li></ul><div class="section-label">Target Market</div><p>Franchise & Multi-cabang</p></div>', unsafe_allow_html=True)
-        st.link_button("AMBIL PAKET", WA)
-    with p4:
-        # CORPORATE SEKARANG WARNA PUTIH SAMA DENGAN YANG LAIN
-        st.markdown(f'<div class="card-v"><h4>🏢 CORPORATE</h4><div class="price">Custom</div><div class="section-label">Deskripsi</div><p>Proteksi skala nasional untuk skalabilitas bisnis tanpa batas.</p><div class="section-label">Fitur Utama</div><ul><li>Unlimited Outlet</li><li>Dedicated Support</li><li>Review Strategis</li></ul><div class="section-label">Target Market</div><p>Holding Enterprise / Nasional</p></div>', unsafe_allow_html=True)
-        st.link_button("HUBUNGI CEO", WA)
-
-# Halaman Login, Admin, Klien, Meeting Lab tetap sama
-elif menu == "🔑 Masuk Ke Sistem":
-    st.markdown('<div class="hero-bg"><h1>LOGIN V-GUARD</h1></div>', unsafe_allow_html=True)
-    with st.form("login"):
-        u = st.text_input("Username").strip().lower()
-        p = st.text_input("Password", type="password")
-        if st.form_submit_button("Masuk"):
-            if u == "admin" and p == "V
