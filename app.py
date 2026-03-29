@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems - ROI Calculator", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - Executive Profile", page_icon="🛡️", layout="wide")
 
 # --- 2. CSS CUSTOM EKSEKUTIF ---
 st.markdown("""
@@ -32,13 +32,12 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (Foto Diperkecil Maksimal) ---
+# --- 3. SIDEBAR (Foto Tetap Kecil 70px) ---
 with st.sidebar:
     try:
-        # Foto diperkecil ke 100px agar sangat rapi di navigasi
-        st.image("erwin.jpg", width=100)
+        st.image("erwin.jpg", width=70) 
     except:
-        st.write("👤 CEO PROFILE")
+        st.write("👤 PROFILE CEO")
     st.markdown("### ERWIN")
     st.caption("Founder & CEO VGUARD AI Systems")
     st.write("---")
@@ -48,26 +47,30 @@ with st.sidebar:
 if menu == "Beranda Eksekutif":
     # Header & Misi
     st.markdown('<div class="header-box"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
-    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">Digitizing Trust, Eliminating Leakage</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">"Digitizing Trust, Eliminating Leakage"</p></div>', unsafe_allow_html=True)
 
-    # Profil & Strategi
+    # Profil & Filosofi (Narasi Ekspansif dengan Pengalaman Perbankan)
     st.write("---")
-    col_img, col_txt = st.columns([1, 2.5])
+    col_img, col_txt = st.columns([1, 4])
     with col_img:
         try:
-            st.image("erwin.jpg", use_container_width=True)
+            st.image("erwin.jpg", width=130) # Tetap Kecil & Rapi
         except:
             st.info("Upload foto erwin.jpg")
     with col_txt:
-        st.markdown("### STRATEGI PEMIMPIN")
-        st.write("Saya Erwin, memimpin VGUARD AI untuk menghapus kebocoran operasional di Indonesia melalui integrasi kecerdasan buatan.")
-        st.markdown("### FILOSOFI PERISAI")
-        st.write("VGUARD AI adalah perisai digital yang bekerja 24 jam untuk mengamankan aset dan mencegah kerugian sistemik bagi bisnis UMKM maupun korporasi.")
+        st.markdown("### PROFIL & VISI STRATEGIS")
+        st.write("""
+        Saya **Erwin**, Founder dan CEO VGUARD AI Systems, membawa lebih dari **10 tahun pengalaman profesional di industri perbankan** dalam membangun fondasi sistem keamanan ini. Dedikasi satu dekade di sektor finansial telah membentuk keahlian saya dalam manajemen risiko, kepatuhan, dan pengawasan aset yang ketat. Kini, visi saya adalah mentransformasikan standar keamanan perbankan tersebut ke dalam ekosistem bisnis Anda. Melalui integrasi teknologi AI masa depan, kami memastikan setiap transaksi terpantau dan setiap potensi kebocoran dapat dimitigasi secara instan sebelum berdampak pada profitabilitas Anda.
+        """)
+        st.markdown("### FILOSOFI PERISAI DIGITAL")
+        st.write("""
+        Filosofi VGUARD AI berakar pada prinsip integritas mutlak dan perlindungan aset total. Kami percaya bahwa kepercayaan bisnis dibangun di atas transparansi data. Terinspirasi dari ketatnya standar audit perbankan, kami hadir sebagai "Perisai Digital" yang bekerja 24/7 tanpa henti untuk mengawal integritas operasional bisnis Anda. Misi kami bukan sekadar menyediakan perangkat lunak, melainkan memberikan ketenangan pikiran (*peace of mind*) bagi para pimpinan perusahaan dalam mengelola ekspansi tanpa harus khawatir akan kebocoran finansial yang tersembunyi.
+        """)
 
-    # --- FITUR BARU: KALKULATOR ROI INTERAKTIF ---
+    # FITUR TETAP: KALKULATOR ROI INTERAKTIF
     st.write("---")
     st.markdown("### 📊 KALKULATOR ESTIMASI KERUGIAN & ROI")
-    st.write("Gunakan alat ini untuk melihat potensi dana yang dapat diselamatkan oleh VGUARD AI setiap bulannya.")
+    st.write("Gunakan alat analisis ini untuk melihat potensi dana yang dapat diselamatkan oleh VGUARD AI.")
     
     with st.container():
         st.markdown('<div class="roi-calc-box">', unsafe_allow_html=True)
@@ -77,44 +80,9 @@ if menu == "Beranda Eksekutif":
             leakage_rate = st.slider("Estimasi Persentase Kebocoran (%)", 1.0, 20.0, 5.0)
         
         with c2:
-            # Hitung estimasi
             total_loss = omzet * (leakage_rate / 100)
-            saved_by_ai = total_loss * 0.90 # AI mengasumsikan efisiensi 90%
-            
+            saved_by_ai = total_loss * 0.90
             st.write("#### Hasil Analisis Strategis:")
             st.error(f"Potensi Kerugian/Bocor: Rp {total_loss:,.0f}")
             st.success(f"Dana Diselamatkan VGUARD AI: Rp {saved_by_ai:,.0f}")
-            
-            roi_times = saved_by_ai / 5000000 # Asumsi ambil paket V-GROW (5jt)
-            st.info(f"Efisiensi Investasi: {roi_times:.1f}x lipat dari biaya sistem")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    # LAYANAN PRODUK
-    st.write("---")
-    st.write("### LAYANAN PRODUK & FITUR")
-    p1, p2, p3, p4 = st.columns(4)
-    
-    with p1:
-        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan Dasar</p></div>', unsafe_allow_html=True)
-    with p2:
-        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-START<br>• <b>AI Fraud Detection</b><br>• Integrasi Stok Otomatis</p></div>', unsafe_allow_html=True)
-    with p3:
-        st.markdown('<div class="card-paket"><b>V-PRIME</b><h3 style="color:#1e3a8a">10 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-GROW<br>• Audit Multi-Cabang<br>• <b>Prediksi Kerugian AI</b></p></div>', unsafe_allow_html=True)
-    with p4:
-        st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a8a">NEGO</h3><hr><p style="font-size:0.85rem; text-align:left;">• Solusi Tailor-made<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7</p></div>', unsafe_allow_html=True)
-
-    st.write("---")
-    if st.button("🛡️ KONSULTASI STRATEGIS SEKARANG"):
-        st.success("Permintaan telah diterima. Admin VGUARD AI akan segera menghubungi Bapak Erwin.")
-
-elif menu == "Dashboard Performa":
-    st.title("📊 Dashboard Performa")
-    st.line_chart(np.random.randn(20, 2))
-
-elif menu == "AI Scanner":
-    st.title("🔍 AI Scanner Audit")
-    st.button("Jalankan Analisis Engine")
-
-# --- 5. FOOTER ---
-st.write("---")
-st.caption(f"© {datetime.now().year} VGUARD AI Systems | Tangerang, Indonesia")
+            roi_times = saved_by_ai /
