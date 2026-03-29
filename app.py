@@ -25,31 +25,28 @@ def get_foto(lebar):
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS EXECUTIVE (PASTIKAN TERUTUP SEMPURNA)
+# 2. CSS CUSTOM (WARNA PUTIH & UKURAN SERAGAM)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
     [data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 2px solid #FFD700; }
     [data-testid="stSidebar"] .stMarkdown b { color: white !important; }
-    
     .hero-bg { 
         background: #0e1117; padding: 30px; border-radius: 12px; 
         color: white; text-align: center; border-bottom: 4px solid #FFD700; 
         margin-bottom: 30px; 
     }
-    
     .card-v { 
         background: white !important; 
         padding: 20px; 
         border-radius: 12px; 
         box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
         border-top: 5px solid #FFD700; 
-        min-height: 550px;
+        min-height: 520px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
-    .card-v h4 { font-size: 18px; font-weight: 800; color: #111; text-align: center; margin-bottom: 10px; }
-    .card-v .price { font-size: 20px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 15
+    .card-v h4 { font-size: 18px; font-weight: 800; color: #111; text-align: center; margin-bottom: 5px; }
+    .card-
