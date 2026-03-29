@@ -30,9 +30,8 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. FUNGSI AMBIL FOTO (Kunci ke erwin.jpg)
+# 3. FUNGSI AMBIL FOTO (Tetap erwin.jpg)
 def get_foto(lebar):
-    # Menggunakan nama file yang Bapak informasikan
     if os.path.exists('erwin.jpg'):
         return st.image(Image.open('erwin.jpg'), width=lebar)
     else:
@@ -52,7 +51,7 @@ with st.sidebar:
             </div>
         """, unsafe_allow_html=True)
     st.divider()
-    halaman = st.radio("Navigasi:", ["🌐 Promosi & Umum", "👥 Monitoring Klien", "🔐 Panel Admin (WhatsApp)"])
+    halaman = st.radio("Navigasi Utama:", ["🌐 Promosi & Umum", "🔐 Panel Admin (WhatsApp)", "👥 Status Audit Klien"])
     st.divider()
     st.write("📍 Tangerang, Indonesia")
 
@@ -78,33 +77,48 @@ if halaman == "🌐 Promosi & Umum":
         ke Klien setiap minggu. 
         """)
         st.info("📍 Berdomisili di Tangerang, melayani audit digital seluruh Indonesia.")
-        st.write("### Paket Layanan")
+        st.write("### Paket Layanan V-GUARD")
         p1, p2, p3 = st.columns(3)
         p1.markdown('<div class="card-service"><b>📦 LITE</b><br>7,5 Jt</div>', unsafe_allow_html=True)
         p2.markdown('<div class="card-service" style="border: 2px solid #FFD700"><b>🚀 PRO</b><br>15 Jt</div>', unsafe_allow_html=True)
         p3.markdown('<div class="card-service"><b>🏢 ENTERPRISE</b><br>25 Jt</div>', unsafe_allow_html=True)
 
 # ==========================================
-# HALAMAN 3: PANEL ADMIN (WhatsApp Feature)
+# HALAMAN 2: PANEL ADMIN (Full Features)
 # ==========================================
 elif halaman == "🔐 Panel Admin (WhatsApp)":
-    st.title("🔐 Panel Kendali WhatsApp")
+    st.title("🔐 Panel Kendali AI Auditor")
     pw = st.text_input("Password Admin:", type="password")
+    
     if pw == "vguard2026":
         st.success("Akses Diterima.")
-        t1, t2 = st.tabs(["🚨 Alarm Merah", "🧾 Penagihan Invoice"])
+        t1, t2, t3 = st.tabs(["🚨 Alarm Merah", "🧾 Penagihan Invoice", "📊 Laporan Mingguan"])
+        
         with t1:
             wa_num = st.text_input("No WA Owner (628...):")
             owner = st.text_input("Nama Owner:")
-            txt_alarm = f"[🚨 V-GUARD ALARM MERAH]\n\nYth. {owner},\nSistem mendeteksi selisih transaksi (Kebocoran Dana).\nSegera cek laporan terbaru di sistem.\n\nSalam,\nErwin Sinaga"
+            txt_alarm = f"[🚨 V-GUARD ALARM MERAH]\n\nYth. {owner},\n\nSistem AI V-GUARD mendeteksi Anomali Transaksi (Alarm Merah) pada bisnis Anda.\n🔍 Temuan: Terdeteksi selisih indikasi kebocoran dana.\n\nSegera cek sistem atau CCTV Anda.\n\nSalam,\nErwin Sinaga"
             if st.button("Kirim Alarm Merah"):
                 st.link_button("🚀 Buka WhatsApp", f"https://wa.me/{wa_num}?text={urllib.parse.quote(txt_alarm)}")
+        
         with t2:
             wa_num2 = st.text_input("No WA Klien:", key="wa2")
             nominal = st.text_input("Total Tagihan (Rp):")
-            txt_inv = f"[🛡️ V-GUARD INVOICE]\n\nHalo,\nTagihan V-Guard Anda sebesar Rp {nominal} telah jatuh tempo.\nMohon segera diselesaikan.\n\nTerima kasih,\nErwin Sinaga"
+            txt_inv = f"[🛡️ V-GUARD INVOICE]\n\nHalo,\nTagihan V-Guard Anda sebesar Rp {nominal} telah jatuh tempo.\nMohon segera diselesaikan agar proteksi AI tetap berjalan.\n\nTerima kasih,\nErwin Sinaga"
             if st.button("Kirim Invoice"):
                 st.link_button("🧾 Buka WhatsApp", f"https://wa.me/{wa_num2}?text={urllib.parse.quote(txt_inv)}")
+                
+        with t3:
+            st.subheader("Buat Ringkasan Laporan Mingguan")
+            wa_num3 = st.text_input("No WA Klien:", key="wa3")
+            nama_b = st.text_input("Nama Bisnis Klien:")
+            status_a = st.selectbox("Status Audit Minggu Ini:", ["🛡️ SANGAT AMAN", "⚠️ TERDETEKSI SELISIH", "✅ NORMAL"])
+            catatan = st.text_area("Catatan Tambahan AI:")
+            
+            txt_laporan = f"*[🛡️ LAPORAN MINGGUAN V-GUARD AI]*\n\nBisnis: {nama_b}\nPeriode: {datetime.now().strftime('%d %b %Y')}\n\nStatus: {status_a}\nRingkasan AI: {catatan}\n\nTerima kasih telah mempercayakan keamanan finansial Anda pada V-GUARD AI Systems.\n\nSalam,\nErwin Sinaga"
+            if st.button("Kirim Laporan Mingguan"):
+                st.link_button("📊 Kirim Laporan via WA", f"https://wa.me/{wa_num3}?text={urllib.parse.quote(txt_laporan)}")
+
 else:
-    st.title("👥 Monitoring Klien")
-    st.info("Sistem AI V-Guard sedang memantau data.")
+    st.title("👥 Status Audit Klien")
+    st.info("Fitur monitoring otomatis sedang berjalan di latar belakang.")
