@@ -3,3 +3,4 @@ fpdf
 google-generativeai
 opencv-python-headless
 qrcode
+Pillow
