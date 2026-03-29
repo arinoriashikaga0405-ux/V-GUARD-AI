@@ -48,13 +48,24 @@ def login_vguard():
                 st.sidebar.error("Username/Password Salah")
 
 # 3. CSS DESIGN (Executive Style)
-st.markdown("""<style>
-    .stApp { background-color: #f4f6f9; }
-    section[data-testid="stSidebar"] { background-color: #0e1117 !important; border-right: 3px solid #FFD700; }
-    .hero-bg { background: linear-gradient(135deg, #0e1117 0%, #1c1f26 100%); padding: 30px; border-radius: 20px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 25px; }
-    .card-service { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; }
-    .roi-box { background-color: #fffde6; padding: 20px; border-radius: 15px; border: 2px solid #FFD700; text-align: center; margin-top: 10px;}
-</style>""", unsafe_allow_html=True)
+# GANTI CSS INI (Pada Bagian Konfigurasi CSS di atas kode Navigasi)
+    .card-service { 
+        background: white; 
+        padding: 15px; # padding diperkecil
+        border-radius: 12px; # radius lebih lancip
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08); # shadow lebih halus
+        border-top: 4px solid #FFD700; # border diperkecil
+        text-align: center; 
+        height: 250px; # TINGGI DIPERKECIL DRASTIS (Sebelumnya ~400px)
+        display: flex; 
+        flex-direction: column; 
+        justify-content: space-between;
+        font-size: 13px; # UKURAN TULISAN DESKRIPSI DIPERKECIL
+    }
+    .card-service h4 { font-size: 16px; margin-bottom: 5px; } # Judul diperkecil
+    .card-service h3 { font-size: 20px; color: #0e1117; margin: 10px 0; } # Harga diperkecil
+    .card-service hr { margin: 10px 0; border: 0; border-top: 1px solid #eee; }
+    .stLinkButton button { width: 100%; padding: 5px; font-size: 12px; } # Tombol diperkecil
 
 # 4. SIDEBAR & NAVIGASI
 with st.sidebar:
