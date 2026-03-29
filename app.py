@@ -25,7 +25,7 @@ def get_foto(lebar):
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS EXECUTIVE (SERAGAM & PROPORSIONAL)
+# 2. CSS EXECUTIVE (PASTIKAN TERUTUP SEMPURNA)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -52,6 +52,4 @@ st.markdown("""
     }
     
     .card-v h4 { font-size: 18px; font-weight: 800; color: #111; text-align: center; margin-bottom: 10px; }
-    .card-v .price { font-size: 20px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 15px; }
-    .card-v .label { font-size: 11px; font-weight: bold; color: #888; text-transform: uppercase; margin-top: 10px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
-    .card-v p, .card-v ul { font-size: 13px; color: #333; line-height: 1.5; margin: 5px 0; padding-left:
+    .card-v .price { font-size: 20px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 15
