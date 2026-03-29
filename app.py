@@ -8,7 +8,7 @@ from PIL import Image
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# API KEY GEMINI (Mesin Utama Deteksi Fraud)
+# API KEY GEMINI
 GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 try:
     genai.configure(api_key=GOOGLE_API_KEY)
@@ -26,7 +26,7 @@ def get_foto(lebar):
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS STYLING EXECUTIVE
+# 2. CSS STYLING (VERSI STABIL)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -43,7 +43,7 @@ with st.sidebar:
     st.markdown("<h2 style='color: #FFD700; text-align:center;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
     f_col, n_col = st.columns([1, 2])
     with f_col: get_foto(65)
-    with n_col: st.markdown(f"<b style='color:white;'>Erwin Sinaga</b><br><small style='color:#FFD700;'>Founder & CEO</small>", unsafe_allow_html=True)
+    with n_col: st.markdown("<b style='color:white;'>Erwin Sinaga</b><br><small style='color:#FFD700;'>Founder & CEO</small>", unsafe_allow_html=True)
     st.divider()
     nav = ["🌐 Beranda", "🤖 Panel Admin (Fraud Detection)", "📊 Laporan Klien", "📝 Meeting Lab"]
     if not st.session_state.role: nav.append("🔑 Masuk Ke Sistem")
@@ -54,12 +54,4 @@ with st.sidebar:
             st.rerun()
 
 # 4. HALAMAN BERANDA
-if menu == "🌐 Beranda":
-    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>The Future of Responsible AI Security & Fraud Detection</p></div>', unsafe_allow_html=True)
-    c_img, c_txt = st.columns([1, 2])
-    with c_img: get_foto(350)
-    with c_txt:
-        st.markdown(f"""
-        <div class="bio-section">
-            <h3 style='color:#FFD700;'>🛡️ About V-GUARD</h3>
-            <p>Didirikan 2026, <b>V-GUARD</b> fokus pada
+if menu == "
