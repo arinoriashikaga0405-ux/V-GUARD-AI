@@ -27,11 +27,11 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (Foto Perkecil) ---
+# --- 3. SIDEBAR (Foto Diperkecil) ---
 with st.sidebar:
     try:
-        # Foto diperkecil ke 150px sesuai instruksi
-        st.image("erwin.jpg", width=150)
+        # Foto diperkecil menjadi 120px agar lebih proporsional
+        st.image("erwin.jpg", width=120)
     except:
         st.write("👤 PROFILE CEO")
     st.markdown("### ERWIN")
@@ -43,9 +43,9 @@ with st.sidebar:
 if menu == "Beranda Eksekutif":
     # Header & Misi
     st.markdown('<div class="header-box"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
-    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">Digitizing Trust, Eliminating Leakage</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">"Digitizing Trust, Eliminating Leakage"</p></div>', unsafe_allow_html=True)
 
-    # Profil (Ukuran Foto Lebih Proporsional)
+    # Profil & Strategi
     st.write("---")
     col_img, col_txt = st.columns([1, 2.5])
     with col_img:
@@ -58,3 +58,28 @@ if menu == "Beranda Eksekutif":
         st.write("Saya **Erwin**, memimpin VGUARD AI untuk menghapus kebocoran operasional di Indonesia melalui integrasi kecerdasan buatan.")
         st.markdown("### FILOSOFI PERISAI")
         st.write("VGUARD AI adalah Audit Officer pribadi Anda yang bekerja 24 jam untuk mengamankan aset dan mencegah kerugian sistemik.")
+
+    # FITUR BARU: ROI & ESTIMASI KERUGIAN
+    st.write("---")
+    st.markdown("### 🛡️ ANALISIS STRATEGIS & ROI")
+    r1, r2 = st.columns(2)
+    with r1:
+        st.error("#### Estimasi Kerugian Tanpa AI")
+        st.write("- **Kebocoran Transaksi**: 5-8% revenue hilang karena error manual.")
+        st.write("- **Mismatch Stok**: 10-15% margin hilang akibat data tidak real-time.")
+        st.write("- **Fraud Tak Terdeteksi**: Potensi kerugian sistemik yang tidak terpantau.")
+    with r2:
+        st.success("#### Jaminan ROI VGUARD AI")
+        st.write("- **Break Even Point**: Estimasi kembali modal dalam 3-6 bulan.")
+        st.write("- **Efisiensi**: Memotong hingga 90% potensi fraud transaksi.")
+        st.write("- **Data Presisi**: Keputusan strategis berbasis data AI yang akurat.")
+
+    # LAYANAN PRODUK (4 Paket dengan Detail)
+    st.write("---")
+    st.write("### LAYANAN PRODUK & FITUR")
+    p1, p2, p3, p4 = st.columns(4)
+    
+    with p1:
+        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Real-time<br>• Laporan Mingguan Dasar</p></div>', unsafe_allow_html=True)
+    with p2:
+        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:
