@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# API KEY GEMINI (Tetap menggunakan key Bapak)
+# API KEY GEMINI
 GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 try:
     genai.configure(api_key=GOOGLE_API_KEY)
@@ -19,7 +19,9 @@ except:
 # INITIAL DATABASE (Penyimpanan Sementara)
 if 'role' not in st.session_state: st.session_state.role = None
 if 'user_name' not in st.session_state: st.session_state.user_name = "Visitor"
+if 'user_id' not in st.session_state: st.session_state.user_id = None
 if 'db_klien' not in st.session_state:
+    # Data dummy awal agar halaman tidak putih
     st.session_state.db_klien = {
         "klien": {"paket": "V-LITE", "tagihan": 7500000, "due": "2026-04-05"}
     }
@@ -52,7 +54,6 @@ with st.sidebar:
         st.markdown(f"<b style='color:white;'>{st.session_state.user_name}</b><br><small style='color:#FFD700;'>V-GUARD Ecosystem</small>", unsafe_allow_html=True)
     st.divider()
     
-    # Menu Berdasarkan Login
     if st.session_state.role == "admin":
         menu = st.radio("FOUNDER MENU:", ["🌐 Beranda", "👥 Management Klien", "🤖 AI Fraud Scanner"])
     elif st.session_state.role == "klien":
@@ -63,9 +64,10 @@ with st.sidebar:
     if st.session_state.role and st.button("🚪 Logout"):
         st.session_state.role = None
         st.session_state.user_name = "Visitor"
+        st.session_state.user_id = None
         st.rerun()
 
-# 4. LOGIKA HALAMAN
+# 4. LOGIKA HALAMAN UTAMA
 if menu == "🌐 Beranda":
     st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Mencegah Kerugian Owner Melalui Deteksi Proaktif</p></div>', unsafe_allow_html=True)
     c_img, c_txt = st.columns([1, 2])
@@ -84,10 +86,34 @@ elif menu == "🔑 Masuk Ke Sistem":
         p = st.text_input("Access Key", type="password")
         if st.form_submit_button("AUTHENTICATE"):
             if u == "admin" and p == "Vguard2026":
-                st.session_state.role = "admin"
-                st.session_state.user_name = "Erwin Sinaga"
+                st.session_state.role, st.session_state.user_name = "admin", "Erwin Sinaga"
                 st.rerun()
             elif u in st.session_state.db_klien and p == "User2026":
-                st.session_state.role = "klien"
-                st.session_state.user_id = u
-                st
+                st.session_state.role, st.session_state.user_id, st.session_state.user_name = "klien", u, u.upper()
+                st.rerun()
+            else:
+                st.error("Akses Ditolak. Periksa kembali ID dan Key Bapak.")
+
+elif menu == "👥 Management Klien":
+    st.title("👥 Management Klien")
+    with st.form("add_klien"):
+        new_u = st.text_input("User ID Klien Baru:")
+        new_v = st.number_input("Tagihan:", value=3500000)
+        if st.form_submit_button("Daftarkan Klien"):
+            st.session_state.db_klien[new_u] = {"paket": "V-START", "tagihan": new_v, "due": "2026-05-01"}
+            st.success(f"Klien {new_u} berhasil didaftarkan!")
+
+elif menu == "🤖 AI Fraud Scanner":
+    st.markdown('<div class="hero-bg"><h1>AI COMMAND CENTER</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class="red-alert">🚨 ALARM MERAH: SISTEM SIAP ANALISIS 🚨</div>', unsafe_allow_html=True)
+    st.file_uploader("Upload Data Transaksi untuk Scan")
+
+elif menu == "📅 Invoice & Payment":
+    st.title("📅 Dashboard Tagihan Klien")
+    u_id = st.session_state.user_id
+    if u_id in st.session_state.db_klien:
+        data = st.session_state.db_klien[u_id]
+        st.metric("Total Tagihan Aktif", f"Rp {data['tagihan']:,}")
+        st.write(f"Paket: {data['paket']} | Jatuh Tempo: {data['due']}")
+    else:
+        st.warning("Data tagihan tidak ditemukan. Silakan hubungi Admin.")
