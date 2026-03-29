@@ -2,142 +2,107 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- 1. KONFIGURASI HALAMAN ---
+# --- 1. KONFIGURASI ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
-if 'page' not in st.session_state:
-    st.session_state.page = "Home"
-if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = False
+if 'page' not in st.session_state: st.session_state.page = "Home"
+if 'auth' not in st.session_state: st.session_state.auth = False
 
-# --- 2. CSS (DIBERSIHKAN TOTAL) ---
+# --- 2. CSS ANTI-ERROR ---
 st.markdown("""
 <style>
-    .main { background-color: #f1f5f9; }
-    .header-box { 
-        text-align: center; 
-        padding: 40px; 
-        background: white; 
-        border-bottom: 5px solid #1e3a8a; 
-        margin-bottom: 30px; 
-    }
-    .profile-card { 
-        background: white; 
-        padding: 40px; 
-        border-radius: 20px; 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-        border-left: 10px solid #1e3a8a; 
-    }
-    .roi-container { 
-        background: #eff6ff; 
-        padding: 30px; 
-        border-radius: 20px; 
-        border: 2px dashed #1e3a8a; 
-        margin: 30px 0; 
-    }
-    .card-paket { 
-        background: white; 
-        padding: 25px; 
-        border-radius: 20px; 
-        border: 1px solid #e2e8f0; 
-        height: 480px; 
-        text-align: center; 
-    }
-    .price-tag { font-size: 1.8rem; font-weight: bold; color: #1e3a8a; margin: 10px 0; }
-    .stButton>button { 
-        background: #1e3a8a !important; 
-        color: white !important; 
-        border-radius: 12px; 
-        height: 50px; 
-        font-weight: bold; 
-        width: 100%; 
-    }
+    .main { background-color: #f8fafc; }
+    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; width: 100%; }
+    .card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; height: 100%; }
+    .roi-box { background: #eff6ff; padding: 25px; border-radius: 15px; border: 2px dashed #1e3a8a; }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 3. SIDEBAR ---
 with st.sidebar:
-    try:
-        st.image("erwin.jpg", width=120)
-    except:
-        st.info("👤 CEO: ERWIN SINAGA")
-    st.markdown("### ERWIN SINAGA")
-    st.caption("Founder & CEO VGUARD AI")
-    st.write("---")
-    if st.button("🏠 Beranda Utama"):
+    st.title("🛡️ VGUARD AI")
+    st.write("**CEO: ERWIN SINAGA**")
+    if st.button("🏠 Beranda Utama"): 
         st.session_state.page = "Home"
         st.rerun()
-    if st.session_state.authenticated:
-        if st.button("🔓 Log Out Admin"):
-            st.session_state.authenticated = False
+    if st.session_state.auth:
+        if st.button("🔓 Log Out"):
+            st.session_state.auth = False
             st.session_state.page = "Home"
             st.rerun()
-    st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
+    st.error("🚨 FIRE ALARM: ACTIVE")
 
-# --- 4. FUNGSI PAKET ---
-def draw_paket(title, price, desc):
-    st.markdown(f"""
-    <div class="card-paket">
-        <h3 style="color:#1e3a8a;">{title}</h3>
-        <div class="price-tag">{price}</div>
-        <hr>
-        <div style="text-align:left; font-size:0.9rem; min-height:160px;">{desc}</div>
-        <div style="background:#fee2e2; color:#ef4444; padding:5px; border-radius:10px; font-size:0.75rem; font-weight:bold; margin-top:20px;">🔥 Fire Alarm Ready</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# --- 5. LOGIKA NAVIGASI ---
+# --- 4. LOGIKA HALAMAN ---
 if st.session_state.page == "Admin":
-    if not st.session_state.authenticated:
-        st.title("🔐 Akses Terbatas Admin")
-        # Password Anda: VGUARD2026
-        pwd = st.text_input("Masukkan Password Executive:", type="password")
-        if st.button("Masuk ke Command Center"):
+    if not st.session_state.auth:
+        st.header("🔐 Executive Access")
+        pwd = st.text_input("Password Admin:", type="password")
+        if st.button("Buka Command Center"):
             if pwd == "VGUARD2026":
-                st.session_state.authenticated = True
+                st.session_state.auth = True
                 st.rerun()
-            else:
-                st.error("Password Salah. Akses Ditolak.")
+            else: st.error("Akses Ditolak!")
     else:
-        st.title("💻 Command Center - Erwin Sinaga")
+        st.header("💻 Command Center - Erwin Sinaga")
+        st.info("Status: Monitoring Fraud & Invoice Terintegrasi")
         
-        # FITUR UNGGAH & AUDIT
-        st.subheader("🛡️ Audit Data & Fraud Detection")
-        up = st.file_uploader("Unggah Laporan Transaksi Klien", type=['csv', 'xlsx'])
-        if up: st.success("Data diterima. V-Guard AI siap melakukan audit.")
+        col_adm1, col_adm2 = st.columns(2)
+        with col_adm1:
+            st.subheader("🛡️ Fraud Detection")
+            if st.button("🚨 AKTIFKAN FIRE ALARM"):
+                st.error("ALARM AKTIF! Notifikasi kebocoran dikirim ke Owner.")
         
-        # ALARM PIUTANG
+        with col_adm2:
+            st.subheader("📑 Invoice & AR")
+            if st.button("🔔 KIRIM NOTIFIKASI INVOICE"):
+                st.success("Notifikasi WhatsApp Piutang Berhasil Dikirim!")
+        
         st.write("---")
-        st.subheader("💰 Alarm Monitoring Piutang (AR)")
-        st.warning("⚠️ Terdeteksi 3 Piutang Mendekati Jatuh Tempo")
-        if st.button("🚨 KIRIM ALARM PIUTANG (WA)"):
-            st.success("WhatsApp Alert Terkirim Otomatis!")
+        st.file_uploader("Unggah Data Transaksi Klien untuk Audit AI", type=['csv', 'xlsx'])
 
 else:
     # --- HALAMAN BERANDA ---
-    st.markdown('<div class="header-box"><h1 style="color:#1e3a8a;">🛡️ VGUARD AI SYSTEMS</h1></div>', unsafe_allow_html=True)
-
-    # SEKSI PROFIL
-    c1, c2 = st.columns([1, 2.8])
-    with c1:
-        try: st.image("erwin.jpg", use_container_width=True)
-        except: st.info("CEO Image")
-    with c2:
-        st.markdown(f"""
-        <div class="profile-card">
-            <h2 style="color:#1e3a8a;">👤 Profil & Filosofi: Erwin Sinaga</h2>
-            <p style="font-size:1.1rem; line-height:1.8; text-align:justify;">
-                Erwin Sinaga memadukan pengalaman eksekutif perbankan selama lebih dari 10 tahun dengan teknologi AI untuk mewujudkan visi <b>'Digitizing Trust, Eliminating Leakage'</b>. VGUARD AI hadir sebagai perisai pertahanan bisnis Anda terhadap kebocoran profit dan fraud.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.write("")
-        if st.button("🚀 BUKA COMMAND CENTER"):
+    st.title("🛡️ VGUARD AI SYSTEMS")
+    
+    # SEKSI PROFIL (WAJIB MINIMAL 100 KATA)
+    st.write("---")
+    col_p1, col_p2 = st.columns([1, 3])
+    with col_p1:
+        st.info("👤 **CEO PROFILE**\n\nErwin Sinaga\n\nFounder VGUARD AI")
+    with col_p2:
+        st.subheader("Filosofi: Digitizing Trust, Eliminating Leakage")
+        st.write("""
+        Erwin Sinaga adalah seorang pemimpin strategis dengan rekam jejak profesional selama lebih dari sepuluh tahun sebagai eksekutif senior di industri perbankan nasional. Berbekal pengalaman mendalam dalam manajemen risiko, optimasi pendapatan, dan kepemimpinan tim berskala besar, beliau mendirikan VGUARD AI Systems sebagai solusi mutakhir bagi tantangan integritas bisnis di era digital. 
+        
+        Visi utama beliau adalah membantu para pemilik usaha kecil, menengah (UMKM), hingga perusahaan korporasi dalam mengatasi kebocoran profit yang sering kali tidak terdeteksi oleh sistem konvensional. Melalui filosofi 'Digitizing Trust, Eliminating Leakage', Bapak Erwin memastikan bahwa setiap transaksi di dalam bisnis klien memiliki tingkat keamanan dan transparansi yang setara dengan standar perbankan. VGUARD AI bukan sekadar alat audit, melainkan perisai pertahanan strategis (V-Guard Fire Alarm) yang dirancang untuk melindungi setiap rupiah aset berharga Anda dari tindakan fraud dan inefisiensi operasional.
+        """)
+        if st.button("🚀 MASUK KE ADMIN COMMAND CENTER"):
             st.session_state.page = "Admin"
             st.rerun()
 
-    # SEKSI ROI
+    # SEKSI ROI (PENGHITUNG KERUGIAN)
     st.write("---")
-    st.subheader("📈 Kalkulator ROI Penyelamatan Profit")
-    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
-    o = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10
+    st.subheader("📈 Kalkulator ROI (Penghitung Potensi Kerugian)")
+    with st.container():
+        st.markdown('<div class="roi-box">', unsafe_allow_html=True)
+        c_r1, c_r2 = st.columns(2)
+        with c_r1:
+            omzet = st.number_input("Total Omzet Bulanan Klien (Rp)", value=100000000, step=10000000)
+            bocor = st.slider("Estimasi Kebocoran / Fraud (%)", 1, 10, 3)
+        with c_r2:
+            loss = omzet * (bocor/100)
+            st.metric("Potensi Kerugian Klien", f"Rp {loss:,.0f}")
+            st.success(f"Dapat Diselamatkan V-Guard: Rp {loss*0.95:,.0f}")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # SEKSI PAKET (WAJIB ADA)
+    st.write("---")
+    st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
+    pk1, pk2, pk3, pk4 = st.columns(4)
+    with pk1: st.markdown('<div class="card"><b>V-START</b><br>2.5 JT<hr>Audit Harian & WA Alert Dasar</div>', unsafe_allow_html=True)
+    with pk2: st.markdown('<div class="card"><b>V-GROW</b><br>5 JT<hr>AI Fraud & Sinkron Stok Otomatis</div>', unsafe_allow_html=True)
+    with pk3: st.markdown('<div class="card"><b>V-PRIME</b><br>10 JT<hr>Multi-Cabang & Predictive Analytics</div>', unsafe_allow_html=True)
+    with pk4: st.markdown('<div class="card"><b>V-CUSTOM</b><br>NEGO<hr>Integrasi ERP & Support Strategis 24/7</div>', unsafe_allow_html=True)
+
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
