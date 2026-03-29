@@ -7,11 +7,11 @@ st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# --- 2. CSS CUSTOM (STABIL & BERSIH) ---
+# --- 2. CSS PERMANEN (DIBERSIHKAN TOTAL) ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
-    .header-box { text-align: center; padding: 40px; background: white; border-bottom: 5px solid #1e3a8a; margin-bottom: 30px; }
+    .header-box { text-align: center; padding: 35px; background: white; border-bottom: 5px solid #1e3a8a; margin-bottom: 30px; }
     .main-title { font-size: 3.5rem !important; font-weight: 800; color: #1e3a8a; }
     .profile-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 10px solid #1e3a8a; }
     .roi-container { background: #eff6ff; padding: 30px; border-radius: 20px; border: 2px dashed #1e3a8a; margin: 30px 0; }
@@ -65,5 +65,29 @@ else:
     with c_txt:
         st.markdown('<div class="profile-card">', unsafe_allow_html=True)
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
-        st.write("""
-        **Erwin Sinaga** adalah pemimpin strategis dengan rekam jejak lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan** [cite: User
+        
+        # Menggunakan petik satu sederhana untuk menghindari SyntaxError
+        profil_teks = (
+            "Erwin Sinaga adalah pemimpin strategis dengan rekam jejak lebih dari sepuluh tahun "
+            "sebagai eksekutif senior di industri perbankan. Keahliannya dalam manajemen risiko "
+            "dan optimasi pendapatan menjadi fondasi utama lahirnya VGUARD AI Systems. "
+            "Filosofi beliau, 'Digitizing Trust, Eliminating Leakage', menekankan bahwa integritas "
+            "bisnis harus dijaga melalui sistem digital yang transparan. Melalui teknologi "
+            "V-Guard Fire Alarm, Pak Erwin berkomitmen menciptakan perisai pertahanan yang "
+            "mendeteksi setiap indikasi fraud dan kebocoran transaksi secara real-time demi "
+            "pertumbuhan usaha yang berkelanjutan."
+        )
+        st.write(profil_teks)
+        
+        if st.button("🚀 BUKA ALAT KERJA ADMIN"):
+            st.session_state.page = "Admin"
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # SEKSI ROI
+    st.write("---")
+    st.subheader("📈 Kalkulator Penyelamatan Profit (ROI)")
+    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
+    col_in, col_out = st.columns(2)
+    with col_in:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000
