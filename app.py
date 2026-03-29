@@ -1,104 +1,123 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - Corporate", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS PREMIUM (DARK MODE LUXURY) ---
+# --- 2. CSS CUSTOM UNTUK TAMPILAN EKSEKUTIF & SANGAT RAPI ---
 st.markdown("""
     <style>
+    /* Menggunakan Light Theme yang Bersih dan Profesional */
     .stApp {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        color: #f8fafc;
+        background-color: #fcfcfc;
+        color: #1a1a1a;
     }
-    .header-box {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 30px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Header Container yang Rapi */
+    .header-container {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
+        padding: 20px 0;
     }
-    .big-title {
+    .main-title {
         font-size: 3.5rem !important;
         font-weight: 800;
-        background: -webkit-linear-gradient(#38bdf8, #818cf8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #1a237e; /* Biru Safir */
+        margin-bottom: 0px;
     }
-    .mission-container {
-        border-top: 1px solid #38bdf8;
-        border-bottom: 1px solid #38bdf8;
-        padding: 15px 0;
-        margin: 20px 0;
+    .sub-title {
+        font-size: 1.2rem;
+        color: #5c6bc0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 5px;
+    }
+
+    /* Kotak Misi yang Menjadi Fokus */
+    .mission-box {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        border-left: 5px solid #1a237e;
         text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        margin: 30px auto;
+        max-width: 800px;
     }
-    .price-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    .mission-text {
+        font-size: 1.6rem;
+        font-weight: 300;
+        font-style: italic;
+        color: #1a237e;
+        margin-bottom: 0px;
+    }
+
+    /* Penyesuaian Profil untuk Kerapian */
+    .block-container { padding-top: 2rem; }
+    
+    /* Grid Kartu Paket yang Sangat Rapi */
+    div[data-testid="stVerticalBlock"] > div:has(div.stCol):nth-child(even) {
+        gap: 2rem;
+    }
+
+    /* Desain Kartu Paket Keren (Light Mode) */
+    .pricing-card {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease-in-out;
         text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
-    section[data-testid="stSidebar"] {
-        background-color: #0f172a !important;
+    .pricing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(26, 35, 126, 0.1);
+        border: 1px solid #1a237e;
+    }
+    .pricing-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1a237e;
+        margin-bottom: 10px;
+    }
+    .pricing-price {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #3f51b5; /* Biru sedikit lebih terang */
+        margin-bottom: 20px;
+    }
+    .pricing-features {
+        font-size: 1rem;
+        color: #555555;
+        text-align: left;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    /* Tombol Kontak Kami yang Elegan */
+    .stButton>button {
+        background-color: #1a237e;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: 0.3s;
+        width: 100%;
+    }
+    .stButton>button:hover {
+        background-color: #3f51b5;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        color: white;
+        border: none;
     }
     </style>
-    """, unsafe_allow_html=True)
-
-# --- 3. SIDEBAR ---
-with st.sidebar:
-    try:
-        st.image("erwin.jpg", width=200)
-    except:
-        st.write("👤 CEO PROFILE")
-    st.markdown("### ERWIN")
-    st.caption("Founder & CEO VGUARD AI Systems")
-    st.write("---")
-    menu = st.sidebar.radio("NAVIGASI", ["BERANDA", "DASHBOARD", "AI SCANNER"])
-
-# --- 4. LOGIKA MENU ---
-if menu == "BERANDA":
-    st.markdown('<div class="header-box">', unsafe_allow_html=True)
-    st.markdown('<p class="big-title">VGUARD AI SYSTEMS</p>', unsafe_allow_html=True)
-    st.write("NEXT GENERATION OPERATIONAL SECURITY")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    st.markdown('<div class="mission-container"><h3>DIGITIZING TRUST, ELIMINATING LEAKAGE</h3></div>', unsafe_allow_html=True)
-
-    col1, col2 = st.columns([1, 1.5])
-    with col1:
-        try:
-            st.image("erwin.jpg", use_container_width=True)
-        except:
-            st.info("Foto Erwin")
-    with col2:
-        st.write("### VISI PEMIMPIN")
-        st.write("Saya Erwin, memimpin VGUARD AI Systems untuk menghapus kebocoran operasional di Indonesia melalui integrasi teknologi kecerdasan buatan.")
-        st.write("### FILOSOFI")
-        st.write("VGUARD AI adalah perisai digital yang bekerja tanpa henti untuk mengamankan aset bisnis Anda.")
-
-    st.write("---")
-    st.write("### SOLUSI STRATEGIS")
-    p1, p2, p3, p4 = st.columns(4)
-    with p1:
-        st.markdown('<div class="price-card"><h4>V-START</h4><h3 style="color:#38bdf8">2.5 JT</h3><p>Audit Harian</p></div>', unsafe_allow_html=True)
-    with p2:
-        st.markdown('<div class="price-card"><h4>V-GROW</h4><h3 style="color:#38bdf8">5 JT</h3><p>Fraud Detection</p></div>', unsafe_allow_html=True)
-    with p3:
-        st.markdown('<div class="price-card"><h4>V-PRIME</h4><h3 style="color:#38bdf8">10 JT</h3><p>Multi Cabang</p></div>', unsafe_allow_html=True)
-    with p4:
-        st.markdown('<div class="price-card"><h4>V-CUSTOM</h4><h3 style="color:#38bdf8">NEGO</h3><p>Tailor Made</p></div>', unsafe_allow_html=True)
-
-elif menu == "DASHBOARD":
-    st.title("📊 Dashboard Performa")
-    st.line_chart(np.random.randn(20, 2))
-
-elif menu == "AI SCANNER":
-    st.title("🔍 AI Scanner Audit")
-    st.button("Jalankan Audit AI")
-
-# --- 5. FOOTER ---
-st.write("---")
-st.caption("2026 VGUARD AI Systems | Tangerang")
+    """, unsafe_allow
