@@ -3,60 +3,77 @@ import google.generativeai as genai
 import os
 from PIL import Image
 
-# 1. KONFIGURASI HALAMAN
+# 1. SETUP DASAR
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# API KEY
+# API KEY (Pastikan tidak ada spasi di awal/akhir)
 GOOGLE_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
-if GOOGLE_API_KEY:
-    try:
-        genai.configure(api_key=GOOGLE_API_KEY)
-        model = genai.GenerativeModel('gemini-1.5-flash')
-    except:
-        st.error("Koneksi AI Terputus.")
+try:
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('gemini-1.5-flash')
+except:
+    st.error("AI Belum Siap.")
 
-# FUNGSI FOTO
-def get_foto(lebar):
-    try:
-        if os.path.exists('erwin.jpg'):
-            return st.image(Image.open('erwin.jpg'), width=lebar)
-        else:
-            return st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
-    except:
-        st.write("📸")
-
-# 2. LOGIN
+# LOGIN STATE
 if 'role' not in st.session_state:
     st.session_state.role = None
 
-def login_vguard():
-    st.sidebar.markdown("---")
-    with st.sidebar.form("login_form"):
-        u = st.text_input("Username").strip().lower()
-        p = st.text_input("Password", type="password").strip()
-        if st.form_submit_button("Masuk"):
-            if u == "admin" and p == "Vguard2026":
-                st.session_state.role = "admin"
-                st.rerun()
-            elif u == "klien" and p == "User2026":
-                st.session_state.role = "klien"
-                st.rerun()
+# 2. DESIGN (Format Satu Baris Agar Tidak Eror Tanda Petik)
+st.markdown('<style>.hero-bg { background: #0e1117; padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }.card-v { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 5px solid #FFD700; height: 500px; display: flex; flex-direction: column; justify-content: space-between; }.card-v h4 { font-size: 18px; color: #111; font-weight: bold; text-align: center; }.card-v .price { font-size: 20px; color: #d42f2f; font-weight: bold; text-align: center; }.card-v .label { font-size: 11px; font-weight: bold; color: #999; text-transform: uppercase; margin-top: 5px; }.card-v p, .card-v ul { font-size: 13px; color: #333; margin: 2px 0; }.stLinkButton button { width: 100%; background-color: #FFD700 !important; color: #000 !important; }</style>', unsafe_allow_html=True)
 
-# 3. CSS DESIGN (UKURAN KOTAK PAS & ISI LENGKAP)
-st.markdown('<style>.stApp { background-color: #f8f9fa; }.hero-bg { background: #0e1117; padding: 25px; border-radius: 15px; color: white; text-align: center; border-bottom: 4px solid #FFD700; margin-bottom: 30px; }.card-v { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid #FFD700; height: 560px; display: flex; flex-direction: column; justify-content: space-between; }.card-v h4 { font-size: 18px; color: #1a1a1a; font-weight: 800; text-align: center; margin-bottom: 5px; }.card-v .price { font-size: 22px; color: #d42f2f; font-weight: bold; text-align: center; margin-bottom: 10px; }.card-v .section-title { font-size: 11px; font-weight: bold; color: #888; text-transform: uppercase; margin-top: 8px; border-bottom: 1px solid #eee; }.card-v p { font-size: 13px; color: #444; margin: 4px 0; line-height: 1.4; }.card-v ul { font-size: 12px; color: #555; padding-left: 15px; margin: 4px 0; }.stLinkButton button { width: 100%; height: 38px; font-size: 13px !important; font-weight: bold; background-color: #FFD700 !important; color: #000 !important; border-radius: 6px; }</style>', unsafe_allow_html=True)
-
-# 4. SIDEBAR
+# 3. SIDEBAR & NAVIGASI
 with st.sidebar:
-    st.markdown("<h2 style='color: #FFD700; text-align:center;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
-    col_x, col_y = st.columns([1, 2])
-    with col_x: get_foto(65)
-    with col_y: st.markdown("<b>Erwin Sinaga</b><br><small>Founder & CEO</small>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #FFD700;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
+    if os.path.exists('erwin.jpg'):
+        st.image('erwin.jpg', width=80)
+    st.markdown("<b>Erwin Sinaga</b><br><small>Founder & CEO</small>", unsafe_allow_html=True)
     st.divider()
-    menu = st.radio("NAVIGASI:", ["🌐 Beranda", "📝 Meeting Lab", "📊 Dashboard", "🤖 Admin"])
-    if not st.session_state.role: login_vguard()
+    menu = st.radio("Navigasi:", ["🌐 Beranda", "📝 Meeting Lab", "📊 Dashboard"])
+    
+    if not st.session_state.role:
+        with st.form("login"):
+            u = st.text_input("User").lower()
+            p = st.text_input("Pass", type="password")
+            if st.form_submit_button("Masuk"):
+                if u == "admin" and p == "Vguard2026":
+                    st.session_state.role = "admin"
+                    st.rerun()
     else:
-        if st.button("🚪 Keluar"):
+        if st.button("Logout"):
             st.session_state.role = None
             st.rerun()
 
-#
+# 4. ISI HALAMAN BERANDA
+if menu == "🌐 Beranda":
+    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Revenue Protection Intelligence</p></div>', unsafe_allow_html=True)
+    
+    WA = "https://wa.me/6282122190885"
+    c1, c2, c3, c4 = st.columns(4)
+    
+    with c1:
+        st.markdown('<div class="card-v"><h4>🌱 V-START</h4><div class="price">3,5 Jt /Bln</div><div class="label">Deskripsi</div><p>Audit otomatis mandiri.</p><div class="label">Fitur</div><ul><li>Cek Stok</li><li>Laporan Mingguan</li></ul><div class="label">Target</div><p>UMKM Mikro / Kedai.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL", WA)
+
+    with c2:
+        st.markdown('<div class="card-v"><h4>📦 V-LITE</h4><div class="price">7,5 Jt /Bln</div><div class="label">Deskripsi</div><p>Monitoring jarak jauh aktif.</p><div class="label">Fitur</div><ul><li>Laporan WA Real-time</li><li>Integrasi POS</li></ul><div class="label">Target</div><p>Retailer & Cafe.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL", WA)
+
+    with c3:
+        st.markdown('<div class="card-v" style="border: 2px solid #FFD700;"><h4>🚀 V-PRO</h4><div class="price">15 Jt /Bln</div><div class="label">Deskripsi</div><p>Deep AI Fraud Audit.</p><div class="label">Fitur</div><ul><li>Analisis Perilaku</li><li>Hingga 5 Outlet</li></ul><div class="label">Target</div><p>Franchise & Cabang.</p></div>', unsafe_allow_html=True)
+        st.link_button("AMBIL", WA)
+
+    with c4:
+        st.markdown('<div class="card-v" style="background-color:#0e1117; color:white;"><h4 style="color:white;">🏢 CORPORATE</h4><div class="price" style="color:#FFD700;">Custom</div><div class="label">Deskripsi</div><p style="color:#ccc">Proteksi skala nasional.</p><div class="label">Fitur</div><ul style="color:#ccc"><li>Unlimited Outlet</li><li>Dedicated Support</li></ul><div class="label">Target</div><p style="color:#ccc">Holding & Enterprise.</p></div>', unsafe_allow_html=True)
+        st.link_button("HUBUNGI CEO", WA)
+
+elif menu == "📝 Meeting Lab":
+    st.title("📝 Meeting Lab")
+    txt = st.text_area("Tempel transkrip rapat:")
+    if st.button("Analisis AI"):
+        if txt:
+            res = model.generate_content(f"Rangkum: {txt}")
+            st.write(res.text)
+
+else:
+    st.title("📊 Dashboard")
+    st.info("Silakan login untuk melihat data.")
