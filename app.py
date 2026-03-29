@@ -29,13 +29,13 @@ st.markdown("""
         background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0;
         height: 550px; text-align: center; transition: 0.3s;
     }
-    .card-paket:hover { transform: translateY(-10px); border-color: #ef4444; }
+    .card-paket:hover { border-color: #ef4444; }
     .price-tag { font-size: 2.2rem; font-weight: bold; color: #1e3a8a; margin: 15px 0; }
     .alarm-tag { 
         background: #fee2e2; color: #ef4444; padding: 6px 15px; border-radius: 20px; 
         font-size: 0.85rem; font-weight: bold; margin-top: 20px; display: inline-block;
     }
-    .stButton>button { background: #1e3a8a; color: white; border-radius: 12px; height: 50px; font-weight: bold; width: 100%; }
+    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 12px; height: 50px; font-weight: bold; width: 100%; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -53,20 +53,7 @@ with st.sidebar:
         st.rerun()
     st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
 
-# --- 4. FUNGSI HELPER (DIPERBAIKI) ---
-def draw_card(title, price, desc):
-    # Memastikan f-string tertutup dengan sempurna agar tidak SyntaxError
-    return f"""
-    <div class="card-paket">
-        <div style="font-weight:bold; font-size:1.3rem; color:#1e3a8a;">{title}</div>
-        <div class="price-tag">{price}</div>
-        <hr>
-        <div style="text-align:left; font-size:0.95rem; min-height:180px;">{desc}</div>
-        <div class="alarm-tag">🔥 V-Guard Fire Alarm</div>
-    </div>
-    """
-
-# --- 5. LOGIKA NAVIGASI ---
+# --- 4. LOGIKA NAVIGASI ---
 if st.session_state.page == "Admin":
     st.title("💻 Command Center - Alat Kerja Strategis")
     t1, t2 = st.tabs(["🛡️ Deteksi Fraud", "💰 Kontrol Piutang (AR)"])
@@ -109,27 +96,4 @@ else:
 
     # SEKSI ROI
     st.write("---")
-    st.subheader("📈 Kalkulator Penyelamatan Profit (ROI)")
-    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
-    col_in, col_out = st.columns(2)
-    with col_in:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10000000)
-        bocor = st.slider("Estimasi Kebocoran (%)", 1, 10, 3)
-    with col_out:
-        hasil = (omzet * (bocor/100)) * 0.95
-        st.write(f"### Potensi Kerugian: Rp {omzet*(bocor/100):,.0f}")
-        st.success(f"### Diselamatkan V-Guard: Rp {hasil:,.0f} / bln")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # SEKSI LAYANAN
-    st.write("---")
-    st.subheader("🏷️ LAYANAN PRODUK & PAKET")
-    p1, p2, p3, p4 = st.columns(4)
-
-    with p1: st.markdown(draw_card("V-START", "2.5 JT", "• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Monitor Piutang Dasar"), unsafe_allow_html=True)
-    with p2: st.markdown(draw_card("V-GROW", "5 JT", "• AI Fraud Detection<br>• Sinkron Stok Otomatis<br>• AR Auto-Reminder"), unsafe_allow_html=True)
-    with p3: st.markdown(draw_card("V-PRIME", "10 JT", "• Multi-Cabang Control<br>• Predictive AI Analytics<br>• Full AR Control"), unsafe_allow_html=True)
-    with p4: st.markdown(draw_card("V-CUSTOM", "NEGO", "• Solusi Enterprise<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7"), unsafe_allow_html=True)
-
-st.write("---")
-st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
+    st.subheader("📈 Kalkulator Pen
