@@ -10,15 +10,15 @@ import io
 # 1. KONFIGURASI SISTEM
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# Konfigurasi AI (Ganti dengan API Key Bapak)
+# Konfigurasi AI (Ganti dengan API Key Bapak jika diperlukan)
 API_KEY = "PASTE_API_KEY_BAPAK_DI_SINI"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# DATA KONTAK ASLI PAK ERWIN
+# DATA KONTAK PAK ERWIN (Nomor Asli)
 WA_NOMOR = "6282122190885" 
 
-# 2. CSS EXECUTIVE DESIGN (Compact & Professional)
+# 2. CSS EXECUTIVE DESIGN
 st.markdown("""
     <style>
     .stApp { background-color: #f8f9fa; }
@@ -29,6 +29,7 @@ st.markdown("""
         border-bottom: 6px solid #FFD700; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         margin-bottom: 25px;
     }
+    .hero-bg h1 { font-size: 30px; color: #FFD700; }
     .card-service { 
         background: white; padding: 15px; border-radius: 15px; 
         box-shadow: 0 8px 20px rgba(0,0,0,0.08); color: #0e1117; 
@@ -38,7 +39,7 @@ st.markdown("""
     .stButton>button { 
         width: 100%; border-radius: 10px; height: 3em; 
         background: linear-gradient(45deg, #FFD700, #b8860b) !important; 
-        color: #0e1117 !important; font-weight: bold; border: none;
+        color: #0e1117 !important; font-weight: bold; border: none; font-size: 14px;
     }
     .profile-box {
         background-color: #ffffff; padding: 20px; border-radius: 12px;
@@ -56,9 +57,10 @@ def get_foto(lebar):
     if os.path.exists('erwin.jpg'):
         return st.image(Image.open('erwin.jpg'), width=lebar)
     else:
+        # Placeholder jika file erwin.jpg belum ada
         return st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
 
-# 4. SIDEBAR
+# 4. SIDEBAR NAVIGATION
 with st.sidebar:
     st.markdown("<h2 style='text-align: center; color: #FFD700;'>🛡️ V-GUARD</h2>", unsafe_allow_html=True)
     col_f, col_n = st.columns([1, 2])
@@ -67,6 +69,8 @@ with st.sidebar:
         st.markdown(f"<div style='padding-top:5px;'><p style='color: white; font-weight: bold; margin-bottom: 0px;'>Erwin Sinaga</p><p style='color: #FFD700; font-size: 11px;'>Founder & CEO</p></div>", unsafe_allow_html=True)
     st.divider()
     halaman = st.radio("MENU UTAMA:", ["🌐 Beranda & Profil", "🤖 AI Auditor", "📝 AI Meeting Lab"])
+    st.divider()
+    st.info("📍 Tangerang, Indonesia")
 
 # ==========================================
 # HALAMAN 1: BERANDA & PROFIL
@@ -76,7 +80,7 @@ if halaman == "🌐 Beranda & Profil":
     
     col_img, col_txt = st.columns([1, 2])
     with col_img:
-        get_foto(320)
+        get_foto(320) # Ukuran foto compact sesuai permintaan Bapak
     with col_txt:
         st.markdown("### 🛡️ FILOSOFI & PROFIL")
         st.markdown("""
@@ -87,8 +91,9 @@ if halaman == "🌐 Beranda & Profil":
             yang menjaga aset Anda 24/7 tanpa kompromi.</p>
         </div>
         """, unsafe_allow_html=True)
+        st.write("✅ **Real-Time Fraud Detection** | ✅ **AI Autonomous Audit**")
 
-    # KALKULATOR ROI (TAMBAHAN BARU)
+    # KALKULATOR PENYELAMATAN ASSET
     st.divider()
     st.markdown("<h3 style='text-align: center;'>🧮 Kalkulator Penyelamatan Aset</h3>", unsafe_allow_html=True)
     c_roi1, c_roi2 = st.columns(2)
@@ -99,12 +104,4 @@ if halaman == "🌐 Beranda & Profil":
         potensi_rugi = omset * (leakage / 100)
         st.markdown(f"""
             <div class="roi-box">
-                <p style="margin:0; font-size:14px;">Estimasi Kerugian Anda:</p>
-                <h2 style="color: #d42f2f; margin:0;">Rp {potensi_rugi:,.0f}</h2>
-                <p style="font-size: 12px; color: #555;">V-Guard didesain untuk menutup celah kebocoran ini secara otomatis.</p>
-            </div>
-        """, unsafe_allow_html=True)
-
-    st.divider()
-    st.markdown("<h3 style='text-align: center;'>Layanan Strategis</h3>", unsafe_allow_html=True)
-    p1, p2, p3 = st.columns(
+                <p style="margin
