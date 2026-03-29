@@ -5,12 +5,12 @@ from PIL import Image
 # 1. KONFIGURASI HALAMAN UTAMA (TERKUNCI)
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# INITIAL DATABASE & PAKET (SESUAI INSTRUKSI HARGA & MARKET)
+# INITIAL DATABASE & PAKET (HARGA & MARKET TETAP)
 if 'role' not in st.session_state: st.session_state.role = None
 if 'user_name' not in st.session_state: st.session_state.user_name = "Visitor"
 if 'user_id' not in st.session_state: st.session_state.user_id = None
 
-# Definisi Paket V-Guard
+# Definisi Paket V-Guard (Sesuai Instruksi Bapak)
 if 'daftar_paket' not in st.session_state:
     st.session_state.daftar_paket = {
         "V-START": {"harga": 2500000, "fitur": "AI Scanner Dasar, Laporan Mingguan, 1 User Admin", "market": "UMKM / Toko Retail Kecil"},
@@ -49,39 +49,8 @@ with st.sidebar:
     with c2: st.markdown(f"<b style='color:white;'>{st.session_state.user_name}</b>", unsafe_allow_html=True)
     st.divider()
     
+    # Navigasi Menu
     if st.session_state.role == "admin":
         menu = st.radio("NAVIGASI:", ["🌐 Beranda", "👥 Management Klien", "🤖 AI Fraud Scanner"])
     elif st.session_state.role == "klien":
         menu = st.radio("NAVIGASI:", ["🌐 Beranda", "📅 Invoice & Payment"])
-    else:
-        menu = st.radio("NAVIGASI:", ["🌐 Beranda", "🔑 Masuk Ke Sistem"])
-
-    if st.session_state.role and st.button("🚪 Logout"):
-        st.session_state.role, st.session_state.user_name = None, "Visitor"
-        st.rerun()
-
-# 4. HALAMAN BERANDA (TAMPILAN PROFIL TETAP GAGAH)
-if menu == "🌐 Beranda":
-    st.markdown('<div class="vguard-header"><h1>V-GUARD AI SYSTEMS</h1><p style="color:#FFD700;">Mencegah Kerugian Owner Melalui Deteksi Proaktif</p></div>', unsafe_allow_html=True)
-    
-    col_foto, col_teks = st.columns([1.2, 1.8])
-    with col_foto: get_foto(400)
-    with col_teks:
-        st.markdown(f"""
-        <div class="vguard-card">
-            <h2 style="color:#FFD700;">🛡️ About V-GUARD</h2>
-            <p>Platform deteksi fraud sistemik yang dibangun oleh <b>Erwin Sinaga</b> (Senior Business Executive).</p>
-            <p>Pengalaman perbankan 10+ tahun kami gunakan untuk memproteksi aset bisnis Anda dari kebocoran hingga 90%.</p>
-            <hr style="border-color: #444;">
-            <h3 style="color:#FFD700;">Filosofi</h3>
-            <p>Kami memastikan setiap rupiah aset Anda terlindungi dengan standar keamanan tinggi dan audit AI proaktif.</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.divider()
-    st.subheader("📦 Pilihan Paket Layanan")
-    cols = st.columns(3)
-    for i, (nama, d) in enumerate(st.session_state.daftar_paket.items()):
-        with cols[i]:
-            st.markdown(f"""
-            <div style="background:#0e1117; color:white; padding:20px; border-radius:10px; border-top:4px solid #FFD700; height:2
