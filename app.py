@@ -11,26 +11,27 @@ st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
     .stApp { color: #1e293b; }
-    .header-box { text-align: center; padding: 20px 0; }
+    .header-box { text-align: center; padding: 15px 0; }
     .main-title { font-size: 3rem !important; font-weight: 800; color: #1e3a8a; margin-bottom: 0; }
     .mission-box { 
         background-color: #ffffff; padding: 20px; border-radius: 12px; 
         border-left: 8px solid #1e3a8a; box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
-        margin: 20px auto; max-width: 900px; text-align: center;
+        text-align: center; margin: 20px auto; max-width: 900px;
     }
     .card-paket {
         background-color: #ffffff; padding: 20px; border-radius: 15px; 
-        border: 1px solid #e2e8f0; height: 100%; transition: 0.3s;
+        border: 1px solid #e2e8f0; height: 320px; transition: 0.3s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .card-paket:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-    .stButton>button { background-color: #1e3a8a; color: white; border-radius: 8px; width: 100%; font-weight: bold; }
+    .stButton>button { background-color: #1e3a8a; color: white; border-radius: 8px; width: 100%; font-weight: bold; height: 3.5em; }
     </style>
     """, unsafe_allow_html=True)
 
 # --- 3. SIDEBAR (Foto Diperkecil) ---
 with st.sidebar:
     try:
-        # Foto diperkecil menjadi 120px agar lebih proporsional
+        # Foto diperkecil ke 120px agar proporsional
         st.image("erwin.jpg", width=120)
     except:
         st.write("👤 PROFILE CEO")
@@ -43,9 +44,9 @@ with st.sidebar:
 if menu == "Beranda Eksekutif":
     # Header & Misi
     st.markdown('<div class="header-box"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
-    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">"Digitizing Trust, Eliminating Leakage"</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">Digitizing Trust, Eliminating Leakage</p></div>', unsafe_allow_html=True)
 
-    # Profil & Strategi
+    # Profil & Strategi (2 Kolom Rapi)
     st.write("---")
     col_img, col_txt = st.columns([1, 2.5])
     with col_img:
@@ -55,11 +56,11 @@ if menu == "Beranda Eksekutif":
             st.info("Upload foto erwin.jpg")
     with col_txt:
         st.markdown("### STRATEGI PEMIMPIN")
-        st.write("Saya **Erwin**, memimpin VGUARD AI untuk menghapus kebocoran operasional di Indonesia melalui integrasi kecerdasan buatan.")
+        st.write("Saya Erwin, memimpin VGUARD AI untuk menghapus kebocoran operasional di Indonesia melalui integrasi kecerdasan buatan.")
         st.markdown("### FILOSOFI PERISAI")
         st.write("VGUARD AI adalah Audit Officer pribadi Anda yang bekerja 24 jam untuk mengamankan aset dan mencegah kerugian sistemik.")
 
-    # FITUR BARU: ROI & ESTIMASI KERUGIAN
+    # ANALISIS ROI & ESTIMASI KERUGIAN
     st.write("---")
     st.markdown("### 🛡️ ANALISIS STRATEGIS & ROI")
     r1, r2 = st.columns(2)
@@ -67,19 +68,21 @@ if menu == "Beranda Eksekutif":
         st.error("#### Estimasi Kerugian Tanpa AI")
         st.write("- **Kebocoran Transaksi**: 5-8% revenue hilang karena error manual.")
         st.write("- **Mismatch Stok**: 10-15% margin hilang akibat data tidak real-time.")
-        st.write("- **Fraud Tak Terdeteksi**: Potensi kerugian sistemik yang tidak terpantau.")
     with r2:
         st.success("#### Jaminan ROI VGUARD AI")
         st.write("- **Break Even Point**: Estimasi kembali modal dalam 3-6 bulan.")
         st.write("- **Efisiensi**: Memotong hingga 90% potensi fraud transaksi.")
-        st.write("- **Data Presisi**: Keputusan strategis berbasis data AI yang akurat.")
 
-    # LAYANAN PRODUK (4 Paket dengan Detail)
+    # LAYANAN PRODUK (4 Paket)
     st.write("---")
     st.write("### LAYANAN PRODUK & FITUR")
     p1, p2, p3, p4 = st.columns(4)
     
     with p1:
-        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Real-time<br>• Laporan Mingguan Dasar</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-paket"><b>V-START</b><h3 style="color:#1e3a8a">2.5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Audit Harian Retail<br>• Notifikasi WA Aktif<br>• Laporan Mingguan</p></div>', unsafe_allow_html=True)
     with p2:
-        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:
+        st.markdown('<div class="card-paket"><b>V-GROW</b><h3 style="color:#1e3a8a">5 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-START<br>• <b>AI Fraud Detection</b><br>• Integrasi Stok</p></div>', unsafe_allow_html=True)
+    with p3:
+        st.markdown('<div class="card-paket"><b>V-PRIME</b><h3 style="color:#1e3a8a">10 JT</h3><hr><p style="font-size:0.85rem; text-align:left;">• Semua Fitur V-GROW<br>• Audit Multi-Cabang<br>• <b>Prediksi Kerugian AI</b></p></div>', unsafe_allow_html=True)
+    with p4:
+        st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a
