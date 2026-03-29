@@ -1,12 +1,20 @@
 import streamlit as st
 import pandas as pd
-# Tambahkan library lain yang Anda gunakan di sini
+import google.generativeai as genai  # <-- Pastikan ini ada
 
+# Masukkan API Key Anda di sini
+API_KEY = "AIzaSy..." # Ganti dengan kunci API asli Anda
+genai.configure(api_key=API_KEY)
+
+# --- Logika Login yang kita bahas tadi bisa ditaruh di bawah sini ---
+if 'role' not in st.session_state:
+    st.session_state.role = None
 # 1. KONFIGURASI SISTEM
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
 # Konfigurasi AI (Ganti dengan API Key Bapak jika diperlukan)
-API_KEY = "PASTE_API_KEY_BAPAK_DI_SINI"
+API_KEY = "ISI_KODE_AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
+genai.configure(api_key=API_KEY)
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
