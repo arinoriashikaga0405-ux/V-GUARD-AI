@@ -26,7 +26,7 @@ def get_foto(lebar):
             return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS STYLING (BLACK & GOLD)
+# 2. CSS STYLING (MENGIKUTI SCREENSHOT)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -48,19 +48,5 @@ with st.sidebar:
         st.markdown("<small style='color:#FFD700;'>V-GUARD Ecosystem</small>", unsafe_allow_html=True)
     st.divider()
     
-    # Navigasi Menu
     if st.session_state.role == "admin":
-        menu = st.radio("FOUNDER MENU:", ["🌐 Beranda", "👥 Management Klien", "🤖 AI Fraud Scanner"])
-    elif st.session_state.role == "klien":
-        menu = st.radio("CLIENT DASHBOARD:", ["🌐 Beranda", "📅 Invoice & Payment"])
-    else:
-        menu = st.radio("VISITOR MENU:", ["🌐 Beranda", "🔑 Masuk Ke Sistem"])
-
-    if st.session_state.role and st.button("🚪 Logout"):
-        st.session_state.role = None
-        st.session_state.user_name = "Visitor"
-        st.rerun()
-
-# 4. HALAMAN BERANDA (MENGEMBALIKAN PROFIL & FILOSOFI)
-if menu == "🌐 Beranda":
-    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p style="color:#FFD700;">Mencegah Kerugian Owner Melalui Deteksi Proaktif</
+        menu = st.radio("FOUNDER MENU:",
