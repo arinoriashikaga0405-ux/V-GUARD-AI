@@ -10,12 +10,12 @@ import io
 # 1. KONFIGURASI SISTEM
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# Konfigurasi AI (Pastikan API Key Bapak sudah benar)
+# Konfigurasi AI (Masukkan kembali API Key Bapak di sini)
 API_KEY = "PASTE_API_KEY_BAPAK_DI_SINI"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# 2. CSS TAMPILAN PREMIUM
+# 2. CSS TAMPILAN PREMIUM (Navy, Gold, White)
 st.markdown("""
     <style>
     section[data-testid="stSidebar"] { background-color: #0e1117 !important; color: white !important; }
@@ -39,12 +39,17 @@ def get_foto(lebar):
     else:
         return st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
 
-# 4. SIDEBAR NAVIGATION
+# 4. SIDEBAR NAVIGATION (With Logo, Foto, Name in Column)
 with st.sidebar:
+    # --- MENAMBAHKAN LOGO DI ATAS FOTO ---
     st.markdown("### 🛡️ V-GUARD SYSTEMS")
+    
+    # Grid Kolom agar Foto & Nama Sejajar Ke Samping
     col_f, col_n = st.columns([1, 2])
+    
     with col_f:
-        get_foto(80)
+        get_foto(80) # Foto Erwin Sinaga
+        
     with col_n:
         st.markdown(f"""
             <div class='founder-text'>
@@ -52,26 +57,27 @@ with st.sidebar:
                 <p style='color: #FFD700; font-size: 11px;'>Founder V-GUARD</p>
             </div>
         """, unsafe_allow_html=True)
+        
     st.divider()
     halaman = st.radio("Navigasi:", ["🌐 Beranda & Filosofi", "🤖 AI Auditor (Upload Data)", "🔐 Panel Kontrol WA"])
     st.divider()
     st.write("📍 Tangerang, Indonesia")
 
 # ==========================================
-# HALAMAN 1: BERANDA
+# HALAMAN 1: BERANDA (DESAIN DIKUNCI MATI)
 # ==========================================
 if halaman == "🌐 Beranda & Filosofi":
     st.markdown("""
         <div class="hero-bg">
             <h1 style='color: #FFD700;'>V-GUARD AI SYSTEMS</h1>
-            <h3>Hentikan Kebocoran Finansial Bisnis Anda Sekarang.</h3>
-            <p>Sistem Audit Otonom | Deteksi Fraud Real-time | Standar POJK No. 56/2016.</p>
+            <h3>Hentikan Kebocoran Finansial Bisnis Anda.</h3>
+            <p>Sistem Audit Otonom Berbasis AI | Standar POJK No. 56/2016.</p>
         </div>
         """, unsafe_allow_html=True)
     
     c1, c2 = st.columns([1, 2])
     with c1:
-        get_foto(350) 
+        get_foto(350) # Foto Besar Bapak di Landing Page
     with c2:
         st.markdown("## V-GUARD: BUKAN SEKADAR SOFTWARE")
         st.write("""
@@ -88,7 +94,7 @@ if halaman == "🌐 Beranda & Filosofi":
         p3.markdown('<div class="card-service"><b>🏢 ENTERPRISE</b><br>25 Jt/bln</div>', unsafe_allow_html=True)
 
 # ==========================================
-# HALAMAN 2: AI AUDITOR (INTEGRASI BARU)
+# HALAMAN 2: AI AUDITOR (INTEGRASI PENUH)
 # ==========================================
 elif halaman == "🤖 AI Auditor (Upload Data)":
     st.title("🤖 Analisis Data AI Auditor")
@@ -119,7 +125,7 @@ elif halaman == "🤖 AI Auditor (Upload Data)":
             st.error(f"Gagal memproses file: {e}")
 
 # ==========================================
-# HALAMAN 3: PANEL KONTROL WA
+# HALAMAN 3: PANEL KONTROL WA (FULL SUPPORT)
 # ==========================================
 elif halaman == "🔐 Panel Kontrol WA":
     st.title("🔐 Panel Komunikasi V-GUARD")
@@ -129,22 +135,31 @@ elif halaman == "🔐 Panel Kontrol WA":
         t1, t2, t3 = st.tabs(["🚨 Alarm Merah", "🧾 Penagihan WA", "📊 Laporan Mingguan"])
         
         with t1:
+            st.subheader("Kirim Alarm Merah (Fraud Deteksi)")
             wa1 = st.text_input("No WA Owner (628...):")
             txt1 = st.text_area("Detail Temuan Kecurangan:")
-            msg1 = f"*[🚨 V-GUARD ALARM MERAH]*\n\nSistem mendeteksi anomali: {txt1}\nSegera lakukan investigasi internal.\n\n- Erwin Sinaga"
-            if st.button("Kirim Alarm Merah"):
-                st.link_button("🚀 Kirim ke WhatsApp", f"https://wa.me/{wa1}?text={urllib.parse.quote(msg1)}")
+            msg1 = f"*[🚨 V-GUARD ALARM MERAH]*\n\nSistem mendeteksi anomali serius: {txt1}\nMohon segera lakukan investigasi internal.\n\n- Erwin Sinaga"
+            if st.button("Generate Link WA Alarm"):
+                st.link_button("🚀 Buka WhatsApp Sekarang", f"https://wa.me/{wa1}?text={urllib.parse.quote(msg1)}")
         
         with t2:
+            st.subheader("Penagihan WA Jatuh Tempo")
             wa2 = st.text_input("No WA Klien (Invoice):")
-            nom = st.text_input("Nominal Tagihan:")
-            msg2 = f"*[🛡️ V-GUARD BILLING]*\n\nTagihan Anda sebesar Rp {nom} telah jatuh tempo.\nMohon diselesaikan hari ini.\n\n- Erwin Sinaga"
-            if st.button("Kirim Invoice"):
-                st.link_button("🧾 Kirim Penagihan", f"https://wa.me/{wa2}?text={urllib.parse.quote(msg2)}")
+            nom = st.text_input("Nominal Tagihan V-GUARD:")
+            msg2 = f"*[🛡️ V-GUARD BILLING]*\n\nHalo,\nTagihan layanan V-GUARD sebesar Rp {nom} telah jatuh tempo.\nMohon diselesaikan hari ini agar proteksi AI tetap berjalan.\n\n- Erwin Sinaga"
+            if st.button("Generate Link WA Billing"):
+                st.link_button("🧾 Buka WhatsApp Tagihan", f"https://wa.me/{wa2}?text={urllib.parse.quote(msg2)}")
                 
         with t3:
+            st.subheader("Kirim Laporan Mingguan Klien")
             wa3 = st.text_input("No WA Klien (Laporan):")
-            cat = st.text_area("Ringkasan Audit Minggu Ini:")
-            msg3 = f"*[🛡️ LAPORAN MINGGUAN V-GUARD]*\n\nRingkasan: {cat}\nAset Anda dalam pengawasan penuh.\n\n- Erwin Sinaga"
-            if st.button("Kirim Laporan"):
-                st.link_button("📊 Kirim Laporan Mingguan", f"https://wa.me/{wa3}?text={urllib.parse.quote(msg3)}")
+            b_n = st.text_input("Nama Bisnis Klien:")
+            p_n = st.text_input("Periode Audit (Contoh: 23-29 Mar):")
+            s_a = st.selectbox("Status Minggu Ini:", ["🛡️ AMAN", "⚠️ NORMAL", "🚨 TERDETEKSI SELISIH"])
+            c_a = st.text_area("Ringkasan AI V-GUARD:")
+            msg3 = f"*[🛡️ LAPORAN MINGGUAN V-GUARD]*\n\nBisnis: {b_n}\nPeriode: {p_n}\n\nStatus: {s_a}\nRingkasan Audit AI: {c_a}\nAset Anda dalam pengawasan penuh.\n\n- Erwin Sinaga"
+            if st.button("Generate Link WA Laporan"):
+                st.link_button("📊 Buka WhatsApp Laporan", f"https://wa.me/{wa3}?text={urllib.parse.quote(msg3)}")
+else:
+    st.title("👥 Monitoring Klien")
+    st.info("Sistem AI memantau anomali secara real-time.")
