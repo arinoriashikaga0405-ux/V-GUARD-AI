@@ -123,11 +123,24 @@ elif menu == "📊 Monitoring Invoice":
                 st.markdown(f'<div class="invoice-warning">⚠️ Invoice {inv["Klien"]} ({inv["Nominal"]}) segera jatuh tempo!</div>', unsafe_allow_html=True)
         st.table(invoices)
 
-# 7. LOGIN SYSTEM
+# 7. LOGIN SYSTEM (FIXED)
 elif menu == "🔑 Masuk Ke Sistem":
     st.markdown('<div class="hero-bg"><h1>SECURITY LOGIN</h1></div>', unsafe_allow_html=True)
-    with st.form("l"):
-        u, p = st.text_input("User ID"), st.text_input("Access Key", type="password")
-        if st.form_submit_button("Authenticate"):
-            if u.lower() == "admin" and p == "Vguard2026": st.session_state.role = "admin"; st.rerun()
-            else: st.error("Akses Ditolak!")
+    with st.form("login_vguard"):
+        u = st.text_input("User ID (Gunakan 'admin' atau 'klien')").strip().lower()
+        p = st.text_input("Access Key", type="password")
+        submit = st.form_submit_button("AUTHENTICATE")
+        
+        if submit:
+            # Login Admin/Founder
+            if u == "admin" and p == "Vguard2026":
+                st.session_state.role = "admin"
+                st.success("Akses Founder Diterima. Selamat Datang Pak Erwin.")
+                st.rerun()
+            # Login Klien (Perbaikan di sini)
+            elif u == "klien" and p == "User2026":
+                st.session_state.role = "klien"
+                st.success("Akses Klien Diterima.")
+                st.rerun()
+            else:
+                st.error("User ID atau Access Key Salah. Silakan hubungi Administrator.")
