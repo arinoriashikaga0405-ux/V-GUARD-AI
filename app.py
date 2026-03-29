@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems - Executive Platform", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - Strategic Platform", page_icon="🛡️", layout="wide")
 
 # --- 2. CSS CUSTOM EKSEKUTIF ---
 st.markdown("""
@@ -24,10 +24,9 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .card-paket:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-    .eco-box {
-        background-color: #ffffff; padding: 20px; border-radius: 12px;
-        border-top: 5px solid #1e3a8a; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        min-height: 250px;
+    .feature-box {
+        background-color: #ffffff; padding: 15px; border-radius: 10px;
+        border: 1px solid #cbd5e1; margin-bottom: 10px;
     }
     .roi-calc-box {
         background-color: #f1f5f9; padding: 25px; border-radius: 15px;
@@ -46,7 +45,7 @@ with st.sidebar:
     st.markdown("### ERWIN")
     st.caption("Founder & CEO VGUARD AI Systems")
     st.write("---")
-    menu = st.radio("NAVIGASI", ["Beranda Eksekutif", "Dashboard Performa", "AI Scanner"])
+    menu = st.radio("NAVIGASI", ["Beranda Eksekutif", "Fitur Admin & Klien", "Dashboard Performa"])
 
 # --- 4. LOGIKA MENU ---
 if menu == "Beranda Eksekutif":
@@ -54,7 +53,7 @@ if menu == "Beranda Eksekutif":
     st.markdown('<div class="header-box"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
     st.markdown('<div class="mission-box"><p style="font-size:1.4rem; font-style:italic; color:#1e3a8a; margin:0;">"Digitizing Trust, Eliminating Leakage"</p></div>', unsafe_allow_html=True)
 
-    # Profil & Filosofi (Tetap Terkunci: 10 Tahun Perbankan)
+    # Profil & Filosofi (Terkunci: 10 Tahun Perbankan)
     st.write("---")
     col_img, col_txt = st.columns([1, 4])
     with col_img:
@@ -64,41 +63,9 @@ if menu == "Beranda Eksekutif":
             st.info("Upload foto erwin.jpg")
     with col_txt:
         st.markdown("### PROFIL & VISI STRATEGIS")
-        st.write("Saya **Erwin**, Founder dan CEO VGUARD AI Systems, membawa lebih dari **10 tahun pengalaman profesional di industri perbankan** dalam membangun fondasi sistem keamanan ini. Dedikasi satu dekade di sektor finansial telah membentuk keahlian saya dalam manajemen risiko, kepatuhan, dan pengawasan aset yang ketat. Kini, visi saya adalah mentransformasikan standar keamanan perbankan tersebut ke dalam ekosistem bisnis Anda. Melalui integrasi teknologi AI masa depan, kami memastikan setiap transaksi terpantau dan setiap potensi kebocoran dapat dimitigasi secara instan sebelum berdampak pada profitabilitas Anda.")
+        st.write("Saya **Erwin**, Founder dan CEO VGUARD AI Systems, membawa lebih dari **10 tahun pengalaman profesional di industri perbankan** dalam membangun fondasi sistem keamanan ini. Dedikasi satu dekade di sektor finansial telah membentuk keahlian saya dalam manajemen risiko, kepatuhan, dan pengawasan aset yang ketat. Kini, visi saya adalah mentransformasikan standar keamanan perbankan tersebut ke dalam ekosistem bisnis Anda.")
         st.markdown("### FILOSOFI PERISAI DIGITAL")
-        st.write("Filosofi VGUARD AI berakar pada prinsip integritas mutlak dan perlindungan aset total. Kami percaya bahwa kepercayaan bisnis dibangun di atas transparansi data. Terinspirasi dari ketatnya standar audit perbankan, kami hadir sebagai 'Perisai Digital' yang bekerja 24/7 tanpa henti untuk mengawal integritas operasional bisnis Anda.")
-
-    # FITUR TETAP: EKOSISTEM UNTUK ADMIN & KLIEN
-    st.write("---")
-    st.markdown("### 🌐 EKOSISTEM OPERASIONAL VGUARD AI")
-    st.write("Sistem kami dirancang untuk menjembatani transparansi antara tim operasional dan pemilik bisnis.")
-    
-    col_admin, col_client = st.columns(2)
-    with col_admin:
-        st.markdown("""
-        <div class="eco-box">
-        <h4 style="color:#1e3a8a">💻 Portal Dashboard Admin</h4>
-        <ul>
-            <li><b>AI Audit Engine</b>: Scanning otomatis ribuan data transaksi per detik.</li>
-            <li><b>Anomali Flagging</b>: Penandaan otomatis transaksi mencurigakan.</li>
-            <li><b>Inventory Reconciliation</b>: Sinkronisasi data stok fisik vs digital.</li>
-            <li><b>Log Aktivitas</b>: Pantau riwayat input dan perubahan data.</li>
-        </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col_client:
-        st.markdown("""
-        <div class="eco-box">
-        <h4 style="color:#1e3a8a">📱 Portal Dashboard Klien (Owner)</h4>
-        <ul>
-            <li><b>Executive Summary</b>: Laporan kesehatan bisnis dalam satu layar.</li>
-            <li><b>Leakage Alert</b>: Notifikasi instan via WhatsApp jika terdeteksi fraud.</li>
-            <li><b>ROI Tracking</b>: Pantau dana yang berhasil diselamatkan sistem.</li>
-            <li><b>Multi-Branch View</b>: Pantau semua cabang dari mana saja.</li>
-        </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        st.write("VGUARD AI hadir sebagai 'Perisai Digital' yang bekerja 24/7 tanpa henti untuk mengawal integritas operasional bisnis Anda. Misi kami bukan sekadar menyediakan perangkat lunak, melainkan memberikan ketenangan pikiran bagi para pimpinan perusahaan.")
 
     # FITUR TETAP: KALKULATOR ROI INTERAKTIF
     st.write("---")
@@ -132,18 +99,71 @@ if menu == "Beranda Eksekutif":
     with p4:
         st.markdown('<div class="card-paket"><b>V-CUSTOM</b><h3 style="color:#1e3a8a">NEGO</h3><hr><p style="font-size:0.85rem; text-align:left;">• Solusi Tailor-made<br>• Integrasi ERP/SAP<br>• Support Strategis 24/7</p></div>', unsafe_allow_html=True)
 
-    # FITUR TETAP: KONSULTASI SEKARANG
     st.write("---")
     if st.button("🛡️ KONSULTASI STRATEGIS SEKARANG"):
-        st.success("Admin VGUARD AI akan segera menghubungi Bapak Erwin.")
+        st.success("Permintaan diterima. Admin VGUARD AI akan segera menghubungi Bapak Erwin.")
+
+elif menu == "Fitur Admin & Klien":
+    st.title("🌐 Ekosistem Fitur VGUARD AI")
+    st.write("Simulasi operasional sistem untuk dua level pengguna utama.")
+    
+    tab1, tab2 = st.tabs(["💻 PORTAL ADMIN (OPERASIONAL)", "📱 PORTAL KLIEN (OWNER)"])
+    
+    with tab1:
+        st.markdown("### Alat Kerja Tim Audit & Admin")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("""
+            <div class="feature-box">
+            <b>🔍 AI Audit Scanner</b><br>
+            Mendeteksi anomali pada ribuan entri data dalam hitungan detik.
+            </div>
+            <div class="feature-box">
+            <b>📦 Auto-Reconciliation</b><br>
+            Sinkronisasi otomatis antara stok gudang dan laporan penjualan.
+            </div>
+            """, unsafe_allow_html=True)
+        with c2:
+            st.markdown("""
+            <div class="feature-box">
+            <b>📑 Fraud Reporting</b><br>
+            Menyusun laporan bukti digital jika ditemukan indikasi kebocoran.
+            </div>
+            <div class="feature-box">
+            <b>🛡️ Security Log</b><br>
+            Mencatat setiap perubahan data untuk menjaga integritas sistem.
+            </div>
+            """, unsafe_allow_html=True)
+            
+    with tab2:
+        st.markdown("### Kontrol Eksklusif Pemilik Bisnis")
+        c3, c4 = st.columns(2)
+        with c3:
+            st.markdown("""
+            <div class="feature-box">
+            <b>📊 Executive Dashboard</b><br>
+            Visualisasi laba-rugi bersih secara real-time di genggaman Anda.
+            </div>
+            <div class="feature-box">
+            <b>💬 WhatsApp Alert</b><br>
+            Notifikasi langsung ke HP Anda saat ada transaksi mencurigakan.
+            </div>
+            """, unsafe_allow_html=True)
+        with c4:
+            st.markdown("""
+            <div class="feature-box">
+            <b>📈 ROI Analytics</b><br>
+            Laporan efisiensi: Berapa banyak uang yang diselamatkan setiap bulan.
+            </div>
+            <div class="feature-box">
+            <b>🌍 Multi-Store Control</b><br>
+            Kelola banyak cabang tanpa harus berpindah lokasi.
+            </div>
+            """, unsafe_allow_html=True)
 
 elif menu == "Dashboard Performa":
     st.title("📊 Dashboard Performa")
     st.line_chart(np.random.randn(20, 2))
-
-elif menu == "AI Scanner":
-    st.title("🔍 AI Scanner Audit")
-    st.button("Jalankan Analisis Engine")
 
 # --- 5. FOOTER ---
 st.write("---")
