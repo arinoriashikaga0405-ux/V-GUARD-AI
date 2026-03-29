@@ -31,20 +31,29 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. FUNGSI AMBIL FOTO (Kunci ke bapak_erwin.jpg)
+# 3. FUNGSI DETEKSI FOTO OTOMATIS
 def get_foto(lebar):
-    # Mencari file bapak_erwin.jpg sesuai yang ada di sistem Bapak
-    if os.path.exists('bapak_erwin.jpg'):
-        return st.image(Image.open('bapak_erwin.jpg'), width=lebar)
+    # Daftar kemungkinan nama file yang mungkin Bapak upload
+    file_names = ['bapak_erwin.jpg', 'Bapak_Erwin.jpg', 'bapak_erwin.JPG', 'Bapak_erwin.jpg', 'erwin.jpg']
+    
+    found_file = None
+    for f in file_names:
+        if os.path.exists(f):
+            found_file = f
+            break
+            
+    if found_file:
+        return st.image(Image.open(found_file), width=lebar)
     else:
-        # Jika gagal, tampilkan ikon sementara agar tidak error merah
+        # Jika benar-benar tidak ketemu, tampilkan pesan bantuan
+        st.error(f"File foto tidak ditemukan. Pastikan file sudah di-upload ke GitHub.")
+        st.info(f"File yang ada di folder saat ini: {os.listdir('.')}")
         return st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=lebar)
 
 # 4. SIDEBAR NAVIGATION
 with st.sidebar:
     st.markdown("### 🛡️ V-GUARD SYSTEMS")
     
-    # Grid agar Foto & Nama SEJAJAR
     col_f, col_n = st.columns([1, 2])
     with col_f:
         get_foto(80)
@@ -57,12 +66,12 @@ with st.sidebar:
         """, unsafe_allow_html=True)
         
     st.divider()
-    halaman = st.radio("Pilih Halaman:", ["🌐 Promosi & Umum", "👥 Monitoring Klien", "🔐 Admin & Invoice"])
+    halaman = st.sidebar.radio("Navigasi:", ["🌐 Promosi & Umum", "👥 Monitoring Klien", "🔐 Admin & Invoice"])
     st.divider()
     st.write("📍 Tangerang, Indonesia")
 
 # ==========================================
-# HALAMAN 1: PROMOSI (DESAIN DIKUNCI MATI)
+# HALAMAN 1: PROMOSI (LANDING PAGE)
 # ==========================================
 if halaman == "🌐 Promosi & Umum":
     st.markdown("""
@@ -75,10 +84,9 @@ if halaman == "🌐 Promosi & Umum":
 
     c1, c2 = st.columns([1, 2])
     with c1:
-        get_foto(350) # Foto besar Bapak di landing page
+        get_foto(350) 
     with c2:
         st.markdown("## FILOSOFI & PROFIL")
-        # TEKS TEGAS SESUAI PERMINTAAN BAPAK
         st.write("""
         V-Guard bukan sekadar software, tapi **AI Auditor** yang memberikan **Alarm Merah** ke Business Owner 
         untuk mendeteksi kebocoran dana, menagih piutang lewat WA, dan mengirim laporan mingguan 
@@ -92,28 +100,8 @@ if halaman == "🌐 Promosi & Umum":
         p2.markdown('<div class="card-service" style="border: 2px solid #FFD700"><b>🚀 PRO</b><br>15 Jt</div>', unsafe_allow_html=True)
         p3.markdown('<div class="card-service"><b>🏢 ENTERPRISE</b><br>25 Jt</div>', unsafe_allow_html=True)
 
-# ==========================================
-# HALAMAN 2: MONITORING KLIEN
-# ==========================================
+# HALAMAN LAINNYA (Placeholders tetap ada agar tidak error)
 elif halaman == "👥 Monitoring Klien":
     st.title("👥 Dashboard Monitor Klien")
-    df = pd.DataFrame({
-        "Klien": ["Resto BSD Utama", "Retail Tangerang", "Cafe Serpong"],
-        "Status AI": ["🛡️ Aman", "⚠️ Cek Selisih", "🛡️ Aman"]
-    })
-    st.table(df)
-
-# ==========================================
-# HALAMAN 3: ADMIN & INVOICE
-# ==========================================
 else:
-    st.title("🔐 Admin & Penagihan")
-    pw = st.text_input("Password Admin:", type="password")
-    if pw == "vguard2026":
-        tab1, tab2 = st.tabs(["📊 Audit AI", "🧾 Invoice"])
-        with tab1:
-            st.text_area("Tempel Data Transaksi:")
-            st.button("Jalankan Audit")
-        with tab2:
-            st.text_input("Nama Klien:")
-            st.button("Generate Invoice")
+    st.title("🔐 Admin & Invoice")
