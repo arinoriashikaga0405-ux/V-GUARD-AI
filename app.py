@@ -5,15 +5,18 @@ from PIL import Image
 # 1. KONFIGURASI UTAMA (LOCKED)
 st.set_page_config(page_title="V-GUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# DATA PAKET & DATABASE (Sesuai Instruksi Harga & Market)
+# DATA PAKET (STRUKTUR BIAYA BARU)
+# V-START: 2.5jt Pasang + 1jt Bulanan
+# V-GROW: 5jt Pasang + 2.5jt Bulanan
+# V-PRIME: 10jt Pasang + 5jt Bulanan
+pk = {
+    "V-START": {"psg": 2500000, "bln": 1000000, "ftr": "AI Scanner Dasar, Laporan Mingguan", "mkt": "UMKM / Retail"},
+    "V-GROW": {"psg": 5000000, "bln": 2500000, "ftr": "AI Real-time, Integrasi POS, Alarm WA", "mkt": "Restoran / Cafe"},
+    "V-PRIME": {"psg": 10000000, "bln": 5000000, "ftr": "Audit Fraud Sistemik, Prioritas Support", "mkt": "Korporasi / Gudang"}
+}
+
 if 'role' not in st.session_state: st.session_state.role = None
 if 'user_name' not in st.session_state: st.session_state.user_name = "Visitor"
-
-pk = {
-    "V-START": {"hrga": 2500000, "ftr": "AI Scanner Dasar, Laporan Mingguan", "mkt": "UMKM / Retail Kecil"},
-    "V-GROW": {"hrga": 5500000, "ftr": "AI Real-time, Integrasi POS, Alarm WA", "mkt": "Restoran / Cafe"},
-    "V-PRIME": {"hrga": 12500000, "ftr": "Audit Fraud Sistemik, Prioritas Support", "mkt": "Gudang / Korporasi"}
-}
 
 def get_foto(w):
     path, url = 'erwin.jpg', "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
@@ -29,7 +32,8 @@ st.markdown("""
     [data-testid='stSidebar'] { background-color: #0e1117 !important; border-right: 2px solid #FFD700; }
     .v-head { background: #0e1117; padding: 35px; border-radius: 12px; color: white; text-align: center; border-bottom: 5px solid #FFD700; margin-bottom: 30px; }
     .v-card { background: #0e1117; color: white; padding: 25px; border-radius: 15px; border-left: 10px solid #FFD700; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-    .p-card { background:#0e1117; color:white; padding:20px; border-radius:10px; border-top:4px solid #FFD700; min-height:280px; }
+    .p-card { background:#0e1117; color:white; padding:20px; border-radius:10px; border-top:4px solid #FFD700; min-height:320px; text-align:center; }
+    .fee-tag { color: #FFD700; font-weight: bold; font-size: 0.9em; }
     h1, h2, h3 { color: white !important; }
 </style>
 """, unsafe_allow_html=True)
@@ -46,30 +50,37 @@ with st.sidebar:
     
     m_list = ["Beranda", "Login"]
     if st.session_state.role == "admin": m_list = ["Beranda", "Management", "Scanner"]
-    elif st.session_state.role == "klien": m_list = ["Beranda", "Tagihan"]
     
     menu = st.radio("NAVIGASI", m_list)
     if st.session_state.role and st.button("Logout"):
         st.session_state.role, st.session_state.user_name = None, "Visitor"
         st.rerun()
 
-# 4. HALAMAN BERANDA (PROFIL & PAKET KEMBALI MUNCUL)
+# 4. HALAMAN BERANDA (PROFIL & STRUKTUR BIAYA BARU)
 if menu == "Beranda":
-    st.markdown('<div class="v-head"><h1>V-GUARD AI SYSTEMS</h1><p style="color:#FFD700;">Mencegah Kerugian Owner Melalui Deteksi Proaktif</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="v-head"><h1>V-GUARD AI SYSTEMS</h1><p style="color:#FFD700;">Solusi Proteksi Aset Bisnis Terpercaya</p></div>', unsafe_allow_html=True)
     
     col_foto, col_teks = st.columns([1.2, 1.8])
     with col_foto: get_foto(400)
     with col_teks:
-        st.markdown('<div class="v-card"><h2 style="color:#FFD700;">🛡️ About V-GUARD</h2><p>Platform deteksi fraud sistemik oleh <b>Erwin Sinaga</b> (Senior Business Executive).</p><p>Pengalaman perbankan 10+ tahun kami gunakan untuk memproteksi aset bisnis Anda hingga 90%.</p><hr style="border-color:#444;"><h3 style="color:#FFD700;">Filosofi</h3><p>Kami memastikan setiap rupiah aset Anda terlindungi dengan standar keamanan tinggi dan audit AI proaktif.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="v-card"><h2 style="color:#FFD700;">🛡️ About V-GUARD</h2><p>Dikembangkan oleh <b>Erwin Sinaga</b>, pakar strategi bisnis dengan pengalaman perbankan 10+ tahun. Kami mendeteksi kebocoran sebelum menjadi kerugian permanen.</p><hr style="border-color:#444;"><h3 style="color:#FFD700;">Filosofi Keamanan</h3><p>Proteksi 24/7 dengan sistem AI yang terus belajar dari setiap pola transaksi di bisnis Anda.</p></div>', unsafe_allow_html=True)
     
     st.divider()
-    st.subheader("📦 Pilihan Paket Layanan")
+    st.subheader("📦 Paket Investasi Sistem")
     cols = st.columns(3)
     for i, (nama, d) in enumerate(pk.items()):
         with cols[i]:
-            st.markdown(f'<div class="p-card"><h3 style="color:#FFD700;">{nama}</h3><p><b>Rp {d["hrga"]:,}</b></p><p style="font-size:0.85em;">{d["ftr"]}</p><p style="font-size:0.8em; color:#FFD700;"><i>Market: {d["mkt"]}</i></p></div>', unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="p-card">
+                <h3 style="color:#FFD700;">{nama}</h3>
+                <p class="fee-tag">Biaya Pemasangan: Rp {d['psg']:,}</p>
+                <h2 style="margin:10px 0;">Rp {d['bln']:,}<span style="font-size:0.4em; color:#aaa;">/bulan</span></h2>
+                <p style="font-size:0.85em; color:#ddd; min-height:60px;">{d['ftr']}</p>
+                <p style="font-size:0.8em; color:#FFD700; border-top:1px solid #333; padding-top:10px;"><i>Target: {d['mkt']}</i></p>
+            </div>
+            """, unsafe_allow_html=True)
 
-# 5. HALAMAN LOGIN
+# 5. LOGIN
 elif menu == "Login":
     st.markdown('<div class="v-head"><h1>SECURITY LOGIN</h1></div>', unsafe_allow_html=True)
     u = st.text_input("User ID").lower().strip()
@@ -80,6 +91,5 @@ elif menu == "Login":
             st.rerun()
         else: st.error("Akses Ditolak.")
 
-# FITUR ADMIN (MANAGEMENT & SCANNER)
 elif menu == "Management": st.title("👥 Management Klien")
 elif menu == "Scanner": st.title("🤖 AI Fraud Scanner")
