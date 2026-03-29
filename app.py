@@ -27,7 +27,7 @@ def get_foto(lebar):
         except: return st.image(url_default, width=lebar)
     return st.image(url_default, width=lebar)
 
-# 2. CSS STYLING (KEMBALI KE DESAIN AWAL + FITUR ALARM)
+# 2. CSS STYLING EXECUTIVE (PROFIL + ALARM)
 st.markdown("""
 <style>
     .stApp { background-color: #f4f6f9; }
@@ -52,18 +52,17 @@ with st.sidebar:
     nav_options = ["🌐 Beranda", "🤖 Panel Admin (Fraud Scan)", "📊 Monitoring Invoice", "📝 Meeting Lab"]
     if not st.session_state.role: nav_options.append("🔑 Masuk Ke Sistem")
     menu = st.radio("MENU UTAMA:", nav_options)
-    if st.session_state.role:
-        if st.button("🚪 Logout"):
-            st.session_state.role = None
-            st.rerun()
+    if st.session_state.role and st.button("🚪 Logout"):
+        st.session_state.role = None
+        st.rerun()
 
-# 4. HALAMAN BERANDA (KEMBALI KE DESAIN AWAL)
+# 4. HALAMAN BERANDA (DESAIN AWAL FULL)
 if menu == "🌐 Beranda":
-    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>The Future of Responsible AI Security & Fraud Detection</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero-bg"><h1>V-GUARD AI SYSTEMS</h1><p>Mencegah Kerugian Owner Melalui Deteksi Proaktif</p></div>', unsafe_allow_html=True)
     c_img, c_txt = st.columns([1, 2])
     with c_img: get_foto(350)
     with c_txt:
-        st.markdown("""
-        <div class="bio-section">
-            <h3 style='color:#FFD700;'>🛡️ About V-GUARD</h3>
-            <p>Didirikan pada 2026, <b>V-GUARD</b> adalah platform yang berfokus pada det
+        st.markdown('<div class="bio-section"><h3 style="color:#FFD700;">🛡️ About V-GUARD</h3><p>Didirikan pada 2026, <b>V-GUARD</b> berfokus pada deteksi fraud dan tata kelola AI bertanggung jawab. Dibangun oleh <b>Erwin Sinaga</b> dengan pengalaman perbankan 10+ tahun untuk mencegah kerugian owner hingga 90%.</p></div>', unsafe_allow_html=True)
+    st.divider()
+    p1, p2, p3, p4 = st.columns(4)
+    WA = "https://
