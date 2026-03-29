@@ -2,98 +2,115 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
-# --- 1. KONFIGURASI HALAMAN ---
+# --- 1. KONFIGURASI HALAMAN (STABIL) ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# --- 2. CSS CUSTOM (ALAT KERJA VISUAL) ---
+# --- 2. CSS PERMANEN (TAMPILAN MEWAH & KONSISTEN) ---
 st.markdown("""
     <style>
-    .main { background-color: #f1f5f9; }
-    .stTabs [data-baseweb="tab-list"] { gap: 24px; }
-    .stTabs [data-baseweb="tab"] {
-        height: 50px; white-space: pre-wrap; background-color: #f8fafc;
-        border-radius: 10px 10px 0 0; gap: 0; padding: 10px 20px;
+    .main { background-color: #f8fafc; }
+    .header-container { text-align: center; padding: 30px 0; }
+    .main-title { font-size: 3rem !important; font-weight: 800; color: #1e3a8a; }
+    .card-paket {
+        background-color: #ffffff; padding: 25px; border-radius: 15px; 
+        border: 1px solid #e2e8f0; height: 550px; text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s;
     }
-    .stTabs [aria-selected="true"] { background-color: #1e3a8a !important; color: white !important; }
+    .card-paket:hover { transform: translateY(-10px); border-color: #ef4444; }
+    .price-tag { font-size: 2rem; font-weight: bold; color: #1e3a8a; margin: 15px 0; }
+    .feature-list { text-align: left; font-size: 0.95rem; line-height: 1.8; color: #475569; min-height: 200px; }
+    .alarm-tag { 
+        background-color: #fee2e2; color: #ef4444; padding: 6px 12px; 
+        border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-top: 15px;
+    }
     .work-card {
         background-color: white; padding: 20px; border-radius: 12px;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-left: 5px solid #1e3a8a;
-        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 5px solid #1e3a8a; margin-bottom: 10px;
     }
-    .status-urgent { color: #ef4444; font-weight: bold; background: #fee2e2; padding: 2px 8px; border-radius: 4px; }
-    .status-safe { color: #10b981; font-weight: bold; background: #dcfce7; padding: 2px 8px; border-radius: 4px; }
+    .stButton>button { background-color: #1e3a8a; color: white; border-radius: 10px; font-weight: bold; width: 100%; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR ---
+# --- 3. SIDEBAR (RESTORASI FOTO) ---
 with st.sidebar:
-    try: st.image("erwin.jpg", width=100)
-    except: st.info("👤 CEO: ERWIN")
+    try:
+        st.image("erwin.jpg", width=120) 
+    except:
+        st.info("👤 Foto: erwin.jpg")
     st.markdown("### ERWIN")
     st.caption("Founder & CEO VGUARD AI")
+    st.write("---")
     if st.button("🏠 Beranda Utama"):
         st.session_state.page = "Home"
         st.rerun()
+    st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
 
 # --- 4. LOGIKA NAVIGASI ---
 if st.session_state.page == "Admin":
     st.title("💻 Command Center - Alat Kerja Audit")
     
-    # ALAT KERJA 1: TABS OPERASIONAL
-    tab1, tab2, tab3 = st.tabs(["🔥 Fraud Detection", "💰 Monitoring Piutang (AR)", "📈 Laporan Eksekutif"])
+    t1, t2 = st.tabs(["🔥 Deteksi Fraud", "💰 Kontrol Piutang (AR)"])
     
-    with tab1:
-        st.subheader("🛡️ Alat Deteksi Fraud")
-        st.error("🚨 [ALARM] Terdeteksi 1 Transaksi Mencurigakan: Store 01 - Void Tidak Wajar")
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("🔍 Investigasi Detail"):
-                st.info("Membuka rekaman CCTV & Log Kasir...")
-        with col2:
-            if st.button("🔔 Kirim Fire Alarm ke WhatsApp"):
-                st.success("Notifikasi dikirim ke Owner!")
+    with t1:
+        st.error("🚨 [ALARM] Anomali Transaksi: Store 01 - Tangerang")
+        if st.button("🔔 Kirim Fire Alarm"):
+            st.success("Notifikasi Terkirim!")
 
-    with tab2:
-        st.subheader("💸 Alat Kontrol Piutang (AR)")
-        st.write("Daftar Piutang Jatuh Tempo Mendatang:")
-        
-        # ALAT KERJA NYATA: DATAFLOW PIUTANG
-        ar_list = [
-            {"klien": "PT. Niaga Sakti", "nilai": "Rp 75.000.000", "tempo": "Besok", "status": "Urgent"},
-            {"klien": "Toko Berkah", "nilai": "Rp 12.000.000", "tempo": "3 Hari lagi", "status": "Safe"},
-            {"klien": "CV. Media Tech", "nilai": "Rp 34.500.000", "tempo": "Hari Ini", "status": "Urgent"}
-        ]
-        
-        for item in ar_list:
-            status_class = "status-urgent" if item["status"] == "Urgent" else "status-safe"
-            st.markdown(f"""
-                <div class="work-card">
-                    <div style="display:flex; justify-content:space-between;">
-                        <b>{item['klien']}</b>
-                        <span class="{status_class}">{item['status']}</span>
-                    </div>
-                    <div style="font-size: 1.2rem; margin: 10px 0;">{item['nilai']}</div>
-                    <div style="font-size: 0.8rem; color: #64748b;">Jatuh Tempo: {item['tempo']}</div>
-                </div>
-            """, unsafe_allow_html=True)
-            if st.button(f"📲 Kirim Tagihan ke {item['klien']}", key=item['klien']):
-                st.success(f"Reminder Tagihan untuk {item['klien']} Terkirim!")
-
-    with tab3:
-        st.subheader("📊 Summary Profit")
-        st.bar_chart({"Jan": 100, "Feb": 120, "Mar": 150})
+    with t2:
+        st.subheader("Daftar Tagihan Jatuh Tempo")
+        cols = st.columns(2)
+        with cols[0]:
+            st.markdown('<div class="work-card"><b>PT. Niaga Jaya</b><br>Rp 50.000.000<br><span style="color:red;">Tempo: Besok</span></div>', unsafe_allow_html=True)
+            if st.button("📲 Tagih PT. Niaga"): st.success("WhatsApp Terkirim!")
+        with cols[1]:
+            st.markdown('<div class="work-card"><b>Toko Berkah</b><br>Rp 15.000.000<br><span style="color:orange;">Tempo: 3 Hari</span></div>', unsafe_allow_html=True)
+            if st.button("📲 Tagih Toko Berkah"): st.success("WhatsApp Terkirim!")
 
 else:
-    # --- HALAMAN DEPAN ---
-    st.markdown("<h1 style='text-align: center; color: #1e3a8a;'>🛡️ VGUARD AI SYSTEMS</h1>", unsafe_allow_html=True)
-    st.info("Saya **Erwin**, membawa **10 tahun pengalaman perbankan** untuk memastikan integritas aset Anda.")
+    # --- HALAMAN BERANDA (RESTORASI TOTAL) ---
+    st.markdown('<div class="header-container"><p class="main-title">🛡️ VGUARD AI SYSTEMS</p></div>', unsafe_allow_html=True)
     
-    if st.button("🚀 MASUK KE ALAT KERJA ADMIN"):
-        st.session_state.page = "Admin"
-        st.rerun()
+    # Hero Section & Profil
+    c_img, c_txt = st.columns([1, 3])
+    with c_img:
+        try: st.image("erwin.jpg", width=180)
+        except: st.info("CEO Photo")
+    with c_txt:
+        st.info("Saya **Erwin**, Founder VGUARD AI Systems, membawa **10 tahun pengalaman perbankan** untuk mengamankan aset Anda melalui **V-Guard Fire Alarm**.")
+        if st.button("🚀 MASUK KE ALAT KERJA ADMIN"):
+            st.session_state.page = "Admin"
+            st.rerun()
+
+    # ROI Simulator
+    st.write("---")
+    st.subheader("📈 Simulasi ROI (Penghematan)")
+    omzet = st.slider("Omzet Bulanan (Juta Rp)", 10, 500, 100)
+    leak = omzet * 0.03 # Asumsi bocor 3%
+    st.success(f"Potensi Kebocoran yang Diselamatkan: **Rp {leak:.1f} Juta / Bulan**")
+
+    # Layanan & Paket (Kembali Rapi)
+    st.write("---")
+    st.subheader("🏷️ LAYANAN PRODUK & PAKET")
+    p1, p2, p3, p4 = st.columns(4)
+
+    def draw_card(title, price, features):
+        return f"""
+        <div class="card-paket">
+            <div style="font-weight:bold; font-size:1.2rem;">{title}</div>
+            <div class="price-tag">{price}</div>
+            <hr>
+            <div class="feature-list">{features}</div>
+            <div class="alarm-tag">🔥 V-Guard Fire Alarm</div>
+        </div>
+        """
+
+    with p1: st.markdown(draw_card("V-START", "2.5 JT", "• Audit Harian<br>• Notif WA<br>• Laporan Mingguan"), unsafe_allow_html=True)
+    with p2: st.markdown(draw_card("V-GROW", "5 JT", "• AI Fraud Detection<br>• Sinkron Stok<br>• Monitor AR Dasar"), unsafe_allow_html=True)
+    with p3: st.markdown(draw_card("V-PRIME", "10 JT", "• Multi-Cabang<br>• Predictive AI<br>• Full AR Control"), unsafe_allow_html=True)
+    with p4: st.markdown(draw_card("V-CUSTOM", "NEGO", "• Solusi Enterprise<br>• Integrasi ERP/SAP<br>• Support 24/7"), unsafe_allow_html=True)
 
 st.write("---")
 st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin")
