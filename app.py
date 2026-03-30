@@ -70,29 +70,32 @@ elif menu == "3. 📦 Paket Layanan":
 # --- MENU 4: ADMIN DASHBOARD ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
-    user_id = st.text_input("Username / ID Klien:")
-    pwd = st.text_input("Password:", type="password")
+    u_id = st.text_input("Username:")
+    p_id = st.text_input("Password:", type="password")
     
-    # 4A. AKSES SUPER ADMIN (BAPAK ERWIN)
-    if user_id == "erwin_admin" and pwd == "w1nbju8282": 
-        st.success("Akses Diterima: Super Admin Erwin Sinaga")
-        
-        tab1, tab2, tab3 = st.tabs(["📊 Database & Revenue", "🕒 Scheduler & Traffic", "🖥️ System Health"])
-        
-        with tab1:
-            st.subheader("Database Status Paket Klien")
-            data_klien = {
-                "ID Klien": ["001", "002", "003", "004"],
-                "Nama Bisnis": ["Toko Jaya", "Resto Minang", "Retail Indo", "Sentosa Corp"],
-                "Jenis Usaha": ["Retail", "F&B", "Retail", "Corporate"],
-                "Paket": ["BASIC", "MEDIUM", "BASIC", "CORPORATE"],
-                "Status Bayar": ["Lunas", "Lunas", "Menunggu", "Lunas"]
-            }
-            st.table(pd.DataFrame(data_klien))
-            st.metric("Total Pendapatan (MRR)", "Rp 152.500.000", "+12%")
-            
-        with tab2:
-            st.subheader("Monitoring Jadwal & Load Server")
-            st.write("Pengaturan waktu kirim data untuk mencegah overload:")
-            jadwal = {
-                "Jenis Usaha": ["
+    if u_id == "erwin_admin" and p_id == "w1nbju8282": 
+        st.success("Akses Super Admin Aktif")
+        t1, t2, t3 = st.tabs(["📊 Database", "🕒 Scheduler", "🖥️ System"])
+        with t1:
+            st.subheader("Database Klien & Paket")
+            df_k = pd.DataFrame({"ID":["001","002","003"],"Nama":["Toko Jaya","Resto Minang","Sentosa Corp"],"Usaha":["Retail","F&B","Corp"],"Paket":["BASIC","MEDIUM","CORP"],"Status":["Lunas","Lunas","Lunas"]})
+            st.table(df_k)
+            st.metric("Total MRR", "Rp 152.500.000", "+12%")
+        with t2:
+            st.subheader("Jadwal Audit Server")
+            df_j = pd.DataFrame({"Jenis Usaha":["Retail","F&B","Corp"],"Slot Waktu":["21:00 WIB","23:00 WIB","Real-time"],"Status":["Aman","Padat","Lancar"]})
+            st.table(df_j)
+            st.slider("Bandwidth Allocation (%)", 0, 100, 80)
+        with t3:
+            st.subheader("System Log")
+            st.code("23:50 - Scan Klien 001: OK\n23:51 - Scan Klien 002: Anomaly detected!\n23:52 - Server Status: High Performance")
+    elif u_id == "klien001" and p_id == "owner123":
+        st.success("Selamat Datang, Owner Toko Jaya.")
+        st.metric("Penyelamatan Aset", "Rp 22.500.000")
+        st.file_uploader("Upload Data", type=['csv', 'xlsx'])
+        st.button("Tarik Laporan")
+    elif p_id != "":
+        st.error("Akses Ditolak")
+
+# 4. FOOTER
+st.markdown('<div class="footer-container">© 2026 V-Guard AI Systems - Secured by Advanced Intelligence.</div>', unsafe_allow_html=True)
