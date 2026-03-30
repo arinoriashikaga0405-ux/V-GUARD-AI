@@ -5,17 +5,10 @@ import time
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS CUSTOM UNTUK TAMPILAN PREMIUM
+# 2. CSS CUSTOM PREMIUM
 st.markdown("""
 <style>
-    .alarm-banner {
-        background-color: #ff4b4b; color: white; padding: 15px;
-        border-radius: 10px; text-align: center; font-weight: bold;
-        border: 2px solid white; animation: blinker 1s linear infinite;
-        margin-bottom: 20px;
-    }
-    @keyframes blinker { 50% { opacity: 0.2; } }
-    .status-connected { color: #28a745; font-weight: bold; font-size: 18px; }
+    .status-connected { color: #28a745; font-weight: bold; font-size: 18px; margin-top: -10px; }
     .package-box {
         height: 420px;
         padding: 20px;
@@ -36,7 +29,7 @@ st.markdown("""
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR (STATUS SEDERHANA, TANPA CEK API)
+# 3. SIDEBAR (STATUS SEDERHANA TANPA CEK API)
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
@@ -89,7 +82,6 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
     with st.expander("❓ FAQ - Pertanyaan Umum"):
         st.write("**Bagaimana V-Guard AI mendeteksi kecurangan?** Sistem kami menggunakan algoritma khusus untuk memindai pola transaksi yang tidak wajar secara otomatis.")
         st.write("**Apakah data bisnis saya aman?** Keamanan data adalah prioritas kami. Semua data dienkripsi dengan standar protokol perbankan.")
-        st.write("**Apakah sistem ini bisa dipantau dari HP?** Ya, laporan dikirim secara real-time melalui Dashboard atau notifikasi WhatsApp.")
 
 # --- MENU 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
@@ -97,4 +89,34 @@ elif menu == "3. 📦 Paket Layanan":
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.markdown("""<div class="package-box"><h3>BASIC</h3><b>Setup: 2.5jt</b><br><span style="color:#d32f2f">Monthly: 750rb</span><hr><ul><li>📊 Audit Harian</li><li>📁 Lap. PDF Mingguan</li><li>📱 Support WA</li></ul></div>""", unsafe_allow_html=True)
-        st.link_
+        st.link_button("Pilih BASIC", wa_url, use_container_width=True)
+    with c2:
+        st.markdown("""<div class="package-box"><h3>MEDIUM</h3><b>Setup: 7.5jt</b><br>Monthly: 1.5jt<hr><ul><li>🤖 AI Detection</li><li>👁️ Integrasi CCTV</li><li>🚨 Alarm Fraud</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih MEDIUM", wa_url, use_container_width=True)
+    with c3:
+        st.markdown("""<div class="package-box"><h3>ENTERPRISE</h3><b>Setup: 25jt</b><br>Monthly: 5jt<hr><ul><li>🏢 Multi-Cabang</li><li>🖥️ Dashboard Admin</li><li>🧾 Auto-Invoice</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih ENTERPRISE", wa_url, use_container_width=True)
+    with c4:
+        st.markdown("""<div class="package-box"><h3>CORPORATE</h3><b>Setup: 50jt</b><br>Monthly: 10jt<hr><ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📞 Priority 24/7</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
+
+# --- MENU 4: ADMIN DASHBOARD ---
+elif menu == "4. 🔐 Admin Dashboard":
+    st.header("🔐 Intelligence Center")
+    pwd = st.text_input("Password Admin:", type="password")
+    if pwd == "admin123":
+        st.success("Sistem AI Aktif.")
+        st.metric("Total Aset Terproteksi", "Rp 6.2 Miliar")
+        uploaded = st.file_uploader("Audit File", type=['csv', 'xlsx'])
+        if uploaded:
+            with st.status("AI Menganalisis Data..."): time.sleep(2)
+            st.warning("Hasil Audit: Sistem Stabil.")
+    elif pwd != "":
+        st.error("Akses Ditolak.")
+
+# 4. FOOTER BRANDING (MENGGANTIKAN LOKASI)
+st.markdown("""
+<div class="footer">
+    © 2026 V-Guard AI Systems - Secured by Advanced Intelligence.
+</div>
+""", unsafe_allow_html=True)
