@@ -17,7 +17,7 @@ st.markdown("""
 <style>
     .status-connected { color: #28a745; font-weight: bold; font-size: 16px; margin-top: 10px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
-    .package-card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; height: 500px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
+    .package-card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; height: 480px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; font-size: 16px; border: 1px solid #f0f0f0; }
     .vision-box { background: #fdfdfd; padding: 25px; border-left: 5px solid #007bff; border-radius: 10px; margin-top: 20px; }
 </style>
@@ -32,7 +32,9 @@ with st.sidebar:
     menu = st.radio("Folder Navigasi:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 📦 Paket Layanan", "4. 📝 Registrasi Klien", "5. 🔐 Admin Dashboard"])
     st.write("---")
     st.markdown("### Support Center")
-    st.link_button("💬 Chat Customer Service", "https://wa.me/628212190885")
+    # Link dipisah agar tidak terpotong
+    wa_link = "https://wa.me/628212190885"
+    st.link_button("💬 Chat Customer Service", wa_link)
 
 # --- FOLDER 1: PROFIL FOUNDER ---
 if menu == "1. 👤 Profil Founder":
@@ -41,20 +43,16 @@ if menu == "1. 👤 Profil Founder":
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", use_container_width=True)
     with col2:
-        profil_html = """
-        <div class="profile-box">
+        st.markdown(f"""<div class="profile-box">
         <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengukir rekam jejak impresif selama lebih dari sepuluh tahun di sektor perbankan dan manajemen aset nasional. Sepanjang kariernya, beliau telah memegang berbagai peran strategis, termasuk posisi krusial sebagai Chief Executive Officer (CEO) dan Chief Sales Officer (CSO), di mana beliau bertanggung jawab penuh atas manajemen risiko, kepatuhan operasional, serta pengawasan aset korporasi berskala besar. Pengalaman mendalam ini memberikan beliau pemahaman unik mengenai titik-titik lemah dalam sistem manajemen konvensional yang sering kali menjadi celah terjadinya kebocoran finansial dan inefisiensi operasional. <br><br>
         V-Guard AI didirikan atas dasar visi besar beliau untuk mendemokratisasi standar keamanan audit kelas perbankan agar dapat diakses oleh ekosistem UMKM dan perusahaan menengah di Indonesia. Beliau sangat meyakini bahwa integritas sebuah bisnis sangat bergantung pada transparansi data yang akurat. Oleh karena itu, melalui implementasi teknologi Artificial Intelligence, beliau berkomitmen untuk membangun sebuah "Benteng Pertahanan Digital" yang mampu bekerja secara otonom selama 24/7. <br><br>
         Kepemimpinan beliau di V-Guard AI tidak hanya berfokus pada inovasi teknologi semata, namun juga pada penciptaan nilai ekonomi (ROI) yang nyata bagi para pemilik bisnis. Dengan dedikasi tinggi, Bapak Erwin Sinaga terus memastikan bahwa setiap solusi yang dihadirkan V-Guard AI mampu menutup celah kecurangan (fraud), meningkatkan disiplin operasional, dan pada akhirnya memberikan ketenangan pikiran (peace of mind) bagi para pengusaha dalam mengelola aset berharga mereka.
-        </div>
-        """
-        st.markdown(profil_html, unsafe_allow_html=True)
+        </div>""", unsafe_allow_html=True)
 
 # --- FOLDER 2: VISI, MISI & ROI ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Strategi & Analisis ROI")
-    visi_html = """
-    <div class="vision-box">
+    st.markdown("""<div class="vision-box">
         <h3>Visi</h3>
         <p>Menjadi benteng pertahanan digital terdepan di Indonesia yang mengeliminasi kebocoran aset bisnis melalui kecerdasan buatan.</p>
         <h3>Misi</h3>
@@ -63,35 +61,70 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
             <li>Menyediakan alarm deteksi dini terhadap segala bentuk anomali transaksi.</li>
             <li>Memastikan transparansi penuh antara operasional lapangan dan pemilik bisnis.</li>
         </ul>
-    </div>
-    """
-    st.markdown(visi_html, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
     st.write("---")
     st.subheader("📊 Kalkulator Potensi Penyelamatan Aset")
     omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000, step=10000000)
     st.success(f"🛡️ Potensi kebocoran yang dicegah: **Rp {omzet * 0.045:,.0f}** / bulan.")
 
-# --- FOLDER 3: PAKET LAYANAN (DIPERBAIKI AGAR TIDAK TERPOTONG) ---
+# --- FOLDER 3: PAKET LAYANAN (DIPERBAIKI TOTAL) ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Layanan V-Guard AI")
     p_cols = st.columns(4)
-    
-    # Struktur Paket yang Lebih Pendek
-    p1 = {"n": "BASIC", "s": "2.5jt", "m": "750rb", "c": "#f8f9fa"}
-    p2 = {"n": "MEDIUM", "s": "7.5jt", "m": "1.5jt", "c": "#e3f2fd"}
-    p3 = {"n": "ENTERPRISE", "s": "25jt", "m": "5jt", "c": "#e8f5e9"}
-    p4 = {"n": "CORPORATE", "s": "50jt", "m": "10jt", "c": "#fff3e0"}
-    
-    all_p = [p1, p2, p3, p4]
-    
-    for i, p in enumerate(all_p):
+    pkgs = [
+        {"n": "BASIC", "s": "2.5jt", "m": "750rb", "c": "#f8f9fa"},
+        {"n": "MEDIUM", "s": "7.5jt", "m": "1.5jt", "c": "#e3f2fd"},
+        {"n": "ENTERPRISE", "s": "25jt", "m": "5jt", "c": "#e8f5e9"},
+        {"n": "CORPORATE", "s": "50jt", "m": "10jt", "c": "#fff3e0"}
+    ]
+    for i, p in enumerate(pkgs):
         with p_cols[i]:
-            st.markdown(f"""
-            <div class="package-card" style="background-color: {p['c']};">
+            st.markdown(f"""<div class="package-card" style="background-color: {p['c']};">
                 <h3>{p['n']}</h3>
                 <p>Setup: {p['s']}<br>Bulanan: {p['m']}</p>
                 <hr>
-                <ul><li>Audit Terintegrasi</li><li>AI Monitoring</li></ul>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button(f"Pilih {p['n']}", f"
+                <p>● Audit Terintegrasi<br>● AI Monitoring</p>
+            </div>""", unsafe_allow_html=True)
+            # Link WhatsApp dibuat sangat sederhana agar tidak error
+            st.link_button("Pilih Paket", "https://wa.me/628212190885")
+
+# --- FOLDER 4: REGISTRASI ---
+elif menu == "4. 📝 Registrasi Klien":
+    st.header("📝 Form Pendaftaran Nasabah")
+    with st.form("reg_form"):
+        col_a, col_b = st.columns(2)
+        with col_a:
+            nama_user = st.text_input("Nama Lengkap Pendaftar:")
+            nama_bisnis = st.text_input("Nama Bisnis/Perusahaan:")
+        with col_b:
+            paket_pilihan = st.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+            harga_input = st.text_input("Harga Paket (Rp):")
+            
+        if st.form_submit_button("Simpan Data Pendaftaran"):
+            if nama_user and nama_bisnis:
+                st.session_state.db_nasabah.append({
+                    "Waktu": datetime.now().strftime("%Y-%m-%d"), 
+                    "Nama Personal": nama_user,
+                    "Nama Bisnis": nama_bisnis, 
+                    "Paket": paket_pilihan, 
+                    "Harga": harga_input, 
+                    "Status": "🔴 Menunggu Aktivasi"
+                })
+                st.success(f"Data {nama_user} berhasil disimpan!")
+
+# --- FOLDER 5: ADMIN DASHBOARD ---
+elif menu == "5. 🔐 Admin Dashboard":
+    st.header("🔐 Admin Intelligence")
+    pw = st.text_input("Password Admin:", type="password")
+    if pw == "w1nbju8282":
+        if st.session_state.db_nasabah:
+            df = pd.DataFrame(st.session_state.db_nasabah)
+            st.table(df)
+            idx = st.selectbox("Pilih Nasabah:", range(len(st.session_state.db_nasabah)), 
+                               format_func=lambda x: f"{st.session_state.db_nasabah[x]['Nama Personal']}")
+            if st.button("🟢 AKTIFKAN"):
+                st.session_state.db_nasabah[idx]['Status'] = "🟢 AKTIF"
+                st.rerun()
+
+# 4. FOOTER
+st.markdown('<div class="footer">© 2026 V-Guard AI Systems</div>', unsafe_allow_html=True)
