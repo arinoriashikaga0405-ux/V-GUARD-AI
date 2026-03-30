@@ -1,82 +1,86 @@
 import streamlit as st
 import pandas as pd
-import time
-from datetime import datetime
+import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI | High-Performance Dashboard", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="V-Guard AI | Interactive Dashboard", page_icon="🛡️", layout="wide")
 
-# --- 2. OPTIMASI PERFORMANCE (CACHING) ---
-
-@st.cache_resource
-def load_fraud_model():
-    """Simulasi pemuatan model BERT/AI untuk deteksi fraud (Load sekali saja)."""
-    # Di produksi: model = transformers.pipeline("sentiment-analysis")
-    time.sleep(2)  # Simulasi proses berat
-    return "AI Model Ready"
-
-@st.cache_data(ttl=3600)
-def fetch_transaction_data():
-    """Mengambil data transaksi dengan cache 1 jam untuk efisiensi."""
-    # Simulasi data besar
-    data = pd.DataFrame({
-        "ID": range(1, 101),
-        "Waktu": [datetime.now().strftime("%H:%M:%S")] * 100,
-        "Jumlah": [i * 1000000 for i in range(1, 101)],
-        "Skor_Risiko": [i % 10 / 10 for i in range(1, 101)]
-    })
-    return data
-
-# Memuat Resource di Awal
-fraud_engine = load_fraud_model()
-
-# --- 3. CSS & STYLING ---
+# --- 2. CSS UNTUK UI RESPONSIVE & TOOLTIP ---
 st.markdown("""
 <style>
-    .stApp { background-color: white; }
-    .performance-tag {
-        background-color: #E3F2FD; color: #0D47A1;
-        padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+    /* Tooltip Custom */
+    .tooltip {
+        position: relative; display: inline-block; border-bottom: 1px dotted #0D47A1; color: #0D47A1; cursor: help;
+    }
+    /* Mobile Optimization: Sidebar Width */
+    [data-testid="stSidebar"] { min-width: 250px; max-width: 300px; }
+    /* Dashboard Cards */
+    .card {
+        background: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #00BCD4;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. HEADER & DASHBOARD AREA ---
-st.markdown("""
-<div style='display: flex; justify-content: space-between; align-items: center; padding: 10px 0;'>
-    <h2 style='color: #0D47A1; margin: 0;'>🛡️ V-Guard AI Command Center</h2>
-    <span class="performance-tag">⚡ Engine Status: Optimized (Cache Active)</span>
-</div>
-""", unsafe_allow_html=True)
+# --- 3. SECURITY: ROLE-BASED ACCESS GUARD ---
+if 'user_role' not in st.session_state:
+    st.session_state.user_role = "Viewer" # Default role aman
 
+def check_admin_access():
+    """Guard untuk mencegah unauthorized edit."""
+    if st.session_state.user_role != "Admin":
+        st.error("🚫 Akses Ditolak: Anda memerlukan peran 'Admin' untuk mengubah konfigurasi ini.")
+        return False
+    return True
+
+# --- 4. SIDEBAR NAVIGASI FLEKSIBEL ---
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/1004/1004666.png", width=50)
+    st.title("V-Guard AI")
+    st.markdown("---")
+    
+    # Switcher Role untuk keperluan Demo/Testing Bapak
+    st.session_state.user_role = st.selectbox("Current Role (Demo Mode):", ["Admin", "Viewer"])
+    
+    menu = st.radio("Navigasi:", ["🏠 Dashboard", "👥 Manajemen User", "⚙️ Pengaturan AI"])
+    st.markdown("---")
+    st.caption(f"Logged in as: **Erwin Sinaga** ({st.session_state.user_role})")
+
+# --- 5. AREA KONTEN UTAMA ---
+if menu == "🏠 Dashboard":
+    st.header("📊 Dashboard Overview")
+    
+    # Row 1: Widget Ringkasan dengan Tooltip
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown('<div class="card"><b>Total Saldo Dipantau</b> <span class="tooltip" title="Total dana dari seluruh rekening terhubung">ℹ️</span><h3>Rp 1.42 M</h3></div>', unsafe_allow_html=True)
+    with c2:
+        st.markdown('<div class="card"><b>Potensi Fraud</b> <span class="tooltip" title="Transaksi yang ditandai AI sebagai anomali">ℹ️</span><h3>2 Alert</h3></div>', unsafe_allow_html=True)
+    with c3:
+        st.markdown('<div class="card"><b>Cash Flow Health</b> <span class="tooltip" title="Stabilitas arus kas berdasarkan prediksi AI">ℹ️</span><h3>Optimal</h3></div>', unsafe_allow_html=True)
+
+    st.markdown("---")
+    
+    # Row 2: Charts Interaktif (Simulasi Plotly/Native Streamlit)
+    st.subheader("📈 Proyeksi Arus Kas (Interaktif)")
+    df = pd.DataFrame({
+        'Bulan': ['Jan', 'Feb', 'Mar', 'Apr'],
+        'Cash Flow': [100, 125, 110, 150]
+    }).set_index('Bulan')
+    
+    # Menggunakan Native Chart yang responsif (Otomatis menyesuaikan container width)
+    st.area_chart(df, color="#0D47A1", use_container_width=True)
+    st.info("💡 Tip: Hover pada grafik untuk melihat detail nilai per bulan.")
+
+elif menu == "⚙️ Pengaturan AI":
+    st.subheader("⚙️ Konfigurasi Mesin Deteksi AI")
+    
+    # Require-role guard
+    if check_admin_access():
+        sensitivity = st.slider("Sensitivitas AI (Threshold):", 0.0, 1.0, 0.85)
+        st.write(f"Sensitivitas saat ini diatur pada: **{sensitivity}**")
+        if st.button("Simpan Perubahan"):
+            st.success("Konfigurasi berhasil diperbarui oleh Admin.")
+
+# --- 6. FOOTER ---
 st.write("---")
-
-# --- 5. IMPLEMENTASI LAZY LOADING / PARTIAL UPDATES ---
-col1, col2 = st.columns([2, 1])
-
-with col1:
-    st.subheader("📊 Analisis Real-time Cash Flow")
-    # Menggunakan cache data agar interaksi slider tidak memicu reload data dari nol
-    data_raw = fetch_transaction_data()
-    
-    threshold = st.slider("Filter Ambang Batas Risiko AI", 0.0, 1.0, 0.7)
-    filtered_data = data_raw[data_raw['Skor_Risiko'] >= threshold]
-    
-    st.line_chart(filtered_data['Skor_Risiko'])
-    st.success(f"Ditemukan {len(filtered_data)} transaksi mencurigakan di atas skor {threshold}.")
-
-with col2:
-    st.subheader("🤖 AI Insights")
-    st.info(f"Model Status: {fraud_engine}")
-    st.write("Menggunakan arsitektur decoupling untuk memisahkan komputasi berat dari input UI.")
-    
-    if st.button("Refresh Data Manual"):
-        st.cache_data.clear()
-        st.rerun()
-
-# --- 6. TABEL DATA BESAR ---
-with st.expander("Lihat Detail Transaksi (Optimized Table)"):
-    st.dataframe(filtered_data, use_container_width=True)
-
-st.write("---")
-st.caption(f"© 2026 V-Guard AI Systems | Performance Optimized for CEO Erwin Sinaga")
+st.caption("© 2026 V-Guard AI
