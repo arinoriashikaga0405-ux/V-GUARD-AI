@@ -30,9 +30,7 @@ st.markdown("""
 
 # --- 4. SIDEBAR ---
 with st.sidebar:
-    try: st.image("erwin.jpg", width=120)
-    except: st.info("👤 CEO: ERWIN SINAGA")
-    st.markdown("### ERWIN SINAGA")
+    st.markdown(f"### 👤 CEO: ERWIN SINAGA")
     st.caption("Founder & CEO VGUARD AI")
     st.write("---")
     if st.button("🏠 Beranda Utama"): 
@@ -49,20 +47,4 @@ with st.sidebar:
 if st.session_state.page == "Admin":
     if not st.session_state.auth:
         st.markdown('<h1 style="text-align:center; color:#1e3a8a;">🔐 Executive Access</h1>', unsafe_allow_html=True)
-        col_l1, col_l2, col_l3 = st.columns([1,2,1])
-        with col_l2:
-            pwd = st.text_input("Password Admin:", type="password")
-            if st.button("Masuk ke Command Center"):
-                if pwd == "VGUARD2026":
-                    st.session_state.auth = True
-                    st.rerun()
-                else: st.error("Akses Ditolak!")
-    else:
-        # --- COMMAND CENTER ---
-        st.header("💻 Command Center - Erwin Sinaga")
-        
-        m1, m2, m3, m4 = st.columns(4)
-        with m1: st.markdown('<div class="metric-card">💰 <b>Total Saved</b><br>Rp 1.450.000.000</div>', unsafe_allow_html=True)
-        with m2: st.markdown('<div class="metric-card">👥 <b>Klien Aktif</b><br>12 Perusahaan</div>', unsafe_allow_html=True)
-        with m3: st.markdown('<div class="metric-card">⚠️ <b>Fraud Alert</b><br>2 Temuan Hari Ini</div>', unsafe_allow_html=True)
-        with m4: st.markdown('<div class="metric-card">✅ <b>System Health</b><br>99.9
+        col_l1
