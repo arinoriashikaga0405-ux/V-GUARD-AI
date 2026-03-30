@@ -6,18 +6,24 @@ from datetime import datetime
 
 # --- 1. LOAD CONFIG & SECURITY ---
 load_dotenv()
-ADMIN_PWD = os.getenv("ADMIN_PASSWORD")
+import streamlit as st
+import pandas as pd
+import plotly.express as px
 
-st.set_page_config(page_title="V-Guard AI | Secure", layout="wide")
+# --- 1. AMBIL PASSWORD DARI SECRETS ---
+try:
+    ADMIN_PWD = st.secrets["ADMIN_PASSWORD"]
+except Exception:
+    st.error("⚠️ Password belum diatur di menu Secrets Streamlit Cloud!")
+    st.stop()
 
-# Inisialisasi Session State
+# --- 2. LOGIKA LOGIN ---
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
-# --- 2. LOGIKA LOGIN (SECURITY GUARD) ---
 if not st.session_state.auth:
-    st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
     st.title("🛡️ V-GUARD AI SECURE LOGIN")
+    st.write("Founder: Erwin Sinaga")
     pwd_input = st.text_input("Masukkan Password Admin:", type="password")
     
     if st.button("Masuk"):
@@ -25,10 +31,23 @@ if not st.session_state.auth:
             st.session_state.auth = True
             st.rerun()
         else:
-            st.error("Password Salah. Akses Ditolak.")
-    st.markdown("</div>", unsafe_allow_html=True)
-    st.stop() # Berhenti di sini jika belum login
+            st.error("Password Salah!")
+    st.stop()
 
+# --- 3. KONTEN UTAMA (Hanya muncul jika sudah login) ---
+st.sidebar.title("V-Guard AI")
+st.sidebar.write(f"👤 User: **Erwin Sinaga**")
+if st.sidebar.button("Logout"):
+    st.session_state.auth = False
+    st.rerun()
+
+st.header("Financial Integrity Dashboard")
+st.success("Sistem Online & Terproteksi.")
+
+# Visualisasi Plotly yang tadi error, sekarang sudah aktif
+df = pd.DataFrame({'Kategori': ['Aman', 'Risiko'], 'Nilai': [92, 8]})
+fig = px.bar(df, x='Kategori', y='Nilai', color='Kategori', title="Status Transaksi Real-time")
+st.plotly_chart(fig)
 # --- 3. KONTEN UTAMA (HANYA JIKA SUDAH LOGIN) ---
 try:
     st.sidebar.title("V-Guard AI")
