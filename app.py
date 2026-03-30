@@ -5,10 +5,10 @@ import time
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS CUSTOM PREMIUM
+# 2. CSS CUSTOM UNTUK TAMPILAN PREMIUM & FOOTER
 st.markdown("""
 <style>
-    .status-connected { color: #28a745; font-weight: bold; font-size: 18px; margin-top: -10px; }
+    .status-connected { color: #28a745; font-weight: bold; font-size: 18px; }
     .package-box {
         height: 420px;
         padding: 20px;
@@ -29,7 +29,7 @@ st.markdown("""
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR (STATUS SEDERHANA TANPA CEK API)
+# 3. SIDEBAR (STATUS SEDERHANA)
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
@@ -114,7 +114,7 @@ elif menu == "4. 🔐 Admin Dashboard":
     elif pwd != "":
         st.error("Akses Ditolak.")
 
-# 4. FOOTER BRANDING (MENGGANTIKAN LOKASI)
+# 4. FOOTER (SESUAI PERMINTAAN)
 st.markdown("""
 <div class="footer">
     © 2026 V-Guard AI Systems - Secured by Advanced Intelligence.
