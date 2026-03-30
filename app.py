@@ -3,9 +3,9 @@ import pandas as pd
 from datetime import datetime
 
 # --- 1. INITIALIZE SESSION STATE ---
-if 'page' not in st.session_state: 
+if 'page' not in st.session_state:
     st.session_state.page = "Home"
-if 'auth' not in st.session_state: 
+if 'auth' not in st.session_state:
     st.session_state.auth = False
 
 # --- 2. CONFIGURATION ---
@@ -27,7 +27,7 @@ st.markdown("""
 with st.sidebar:
     st.markdown("### 👤 CEO: ERWIN SINAGA")
     st.write("---")
-    if st.button("🏠 Kembali ke Beranda"): 
+    if st.button("🏠 Kembali ke Beranda"):
         st.session_state.page = "Home"
         st.rerun()
     if st.session_state.auth:
@@ -42,19 +42,19 @@ if st.session_state.page == "Home":
     
     col1, col2 = st.columns([1, 2.2])
     with col1:
-        # Menggunakan foto dari aset yang pernah Bapak tunjukkan
+        # Menggunakan link foto profil yang representatif
         st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
     with col2:
         st.markdown('<div class="profile-box">', unsafe_allow_html=True)
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
         st.write("""
-        **Erwin Sinaga** adalah seorang pemimpin strategis dengan rekam jejak prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Pengalaman panjang beliau di dunia finansial membentuk standar disiplin yang sangat ketat dalam hal akurasi data dan manajemen risiko. Melalui **VGUARD AI Systems**, beliau mentransformasi keahlian audit perbankan ke dalam solusi teknologi cerdas untuk membantu pelaku bisnis mengamankan profit mereka dari ancaman kebocoran data dan kecurangan sistemik.
+        **Erwin Sinaga** adalah seorang pemimpin strategis dengan rekam jejak prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Pengalaman panjang beliau di dunia finansial dan perbankan aset membentuk standar disiplin yang sangat ketat dalam hal akurasi data, integritas sistem, dan manajemen risiko yang komprehensif. Melalui **VGUARD AI Systems**, beliau mentransformasi keahlian audit perbankan ke dalam solusi teknologi cerdas untuk membantu pelaku bisnis menengah dan UMKM mengamankan profit mereka dari ancaman kebocoran data serta kecurangan sistemik.
 
-        Filosofi kepemimpinan beliau berakar pada prinsip **"Presisi Tanpa Kompromi"**. Bapak Erwin meyakini bahwa setiap rupiah dalam omzet klien adalah amanah yang harus dijaga dengan teknologi kecerdasan buatan paling mutakhir. VGUARD AI bukan sekadar alat audit, melainkan perisai pertahanan strategis yang dirancang untuk memberikan ketenangan pikiran bagi para pemilik bisnis modern. Dengan visi untuk menciptakan ekosistem bisnis yang transparan dan aman, beliau berkomitmen bahwa keamanan aset klien adalah prioritas utama yang tidak bisa ditawar dalam setiap baris kode yang kami kembangkan di VGUARD.
+        Filosofi kepemimpinan beliau berakar pada prinsip **"Presisi Tanpa Kompromi"**. Bapak Erwin meyakini bahwa setiap rupiah dalam omzet bisnis klien adalah amanah besar yang harus dijaga dengan teknologi kecerdasan buatan paling mutakhir. VGUARD AI bukan sekadar alat audit digital, melainkan perisai pertahanan strategis yang dirancang khusus untuk memberikan ketenangan pikiran bagi para pemilik bisnis modern di era digital. Dengan visi menciptakan ekosistem bisnis yang transparan dan aman, beliau berkomitmen penuh bahwa keamanan aset klien adalah prioritas utama yang tidak dapat ditawar dalam setiap aspek pengembangan VGUARD.
         """)
         st.markdown('</div>', unsafe_allow_html=True)
         st.write("")
-        if st.button("🚀 BUKA COMMAND CENTER (ADMIN)"): 
+        if st.button("🚀 BUKA COMMAND CENTER (ADMIN)"):
             st.session_state.page = "Admin"
             st.rerun()
 
@@ -82,19 +82,4 @@ if st.session_state.page == "Home":
     with p2:
         st.markdown('<div class="package-card" style="border: 2px solid #1e3a8a;"><h3>🔶 V-GROW</h3><p>Bisnis Multi-Cabang</p><h1>Rp 15 JT</h1><p>/ bulan</p><hr><p>Real-time Scan<br>Notifikasi WA Otomatis</p></div>', unsafe_allow_html=True)
     with p3:
-        st.markdown('<div class="package-card"><h3>💎 V-PRIME</h3><p>Korporasi / Nasional</p><h1>Custom</h1><p>Value Based</p><hr><p>Full AI Customization<br>Dedicated Analyst</p></div>', unsafe_allow_html=True)
-
-elif st.session_state.page == "Admin":
-    if not st.session_state.auth:
-        st.markdown('<h1 style="text-align:center;">🔐 Executive Access</h1>', unsafe_allow_html=True)
-        col_l1, col_l2, col_l3 = st.columns([1,2,1])
-        with col_l2:
-            pwd = st.text_input("Password Admin:", type="password")
-            if st.button("Masuk"):
-                if pwd == "VGUARD2026":
-                    st.session_state.auth = True
-                    st.rerun()
-                else: 
-                    st.error("Akses Ditolak!")
-    else:
-        st
+        st.markdown('<div class="package-card"><h3>💎 V-PRIME</h3><p>Korporasi / Nasional</p><h1>Custom</h1><p>Value
