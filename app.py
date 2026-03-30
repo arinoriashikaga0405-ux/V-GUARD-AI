@@ -70,22 +70,31 @@ if st.session_state.page == "Admin":
         
         with tab1:
             st.markdown('<p class="header-text">🚀 V-SCAN: DEEP-DIVE ANALISA FRAUD</p>', unsafe_allow_html=True)
-            k_sel = st.selectbox("Pilih Klien:", ["Toko Berkah Jaya", "B2B Trading Sinar"])
-            up = st.file_uploader(f"Unggah Data {k_sel}", type=['csv', 'xlsx'])
-            if up:
-                with st.spinner('Menganalisa...'):
+            klien_analisa = st.selectbox("Pilih Klien:", ["Toko Berkah Jaya", "B2B Trading Sinar"])
+            
+            # Update: Sekarang mendukung Excel (.xlsx) dan CSV
+            uploaded_file = st.file_uploader(f"Unggah Data {klien_analisa}", type=['csv', 'xlsx'])
+            
+            if uploaded_file:
+                with st.spinner('V-GUARD AI sedang memproses data...'):
+                    # Logika Auto-Converter
+                    if uploaded_file.name.endswith('.csv'):
+                        df = pd.read_csv(uploaded_file)
+                    else:
+                        df = pd.read_excel(uploaded_file)
+                    
                     time.sleep(1)
-                    st.success("✅ Analisa Selesai")
-                    st.line_chart(pd.DataFrame({'Fraud': [5, 12, 3, 14]}))
+                    st.success(f"✅ Berhasil Membaca {len(df)} Baris Data dari {uploaded_file.name}")
+                    
+                    # Tampilan Grafik Tetap Rapi
+                    st.line_chart(df.select_dtypes(include=['number']).iloc[:, :1]) 
+                    
+                    st.markdown(f'<div class="admin-card">📜 <b>Audit Trail:</b> Analisa sukses oleh CEO pada {datetime.now().strftime("%H:%M:%S")}</div>', unsafe_allow_html=True)
+                    
                     c1, c2 = st.columns(2)
                     with c1: st.download_button("📥 DOWNLOAD PDF", data="Laporan", file_name="Audit.pdf")
                     with c2: 
-                        if st.button("📲 KIRIM WHATSAPP"): st.success("Terkirim!")
-
-        with tab2:
-            st.markdown('<p class="header-text">📅 MONITORING KEPATUHAN & PENJADWALAN</p>', unsafe_allow_html=True)
-            st.table(pd.DataFrame(st.session_state.audit_logs))
-            cb1, cb2 = st.columns(2)
+                        if st.button("📲 KIRIM WHATSAPP"): st.success("Notifikasi Terkirim!")
             with cb1: st.button("📲 KIRIM REMINDER WA OTOMATIS")
             with cb2: st.button("🔔 KIRIM NOTIFIKASI FRAUD")
 
