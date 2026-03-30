@@ -3,64 +3,58 @@ import pandas as pd
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
-st.set_page_config(page_title="VGUARD AI Systems - CEO Erwin Sinaga", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - Erwin Sinaga", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS BAKU & PERMANEN (TIDAK BOLEH BERUBAH TANPA PERSETUJUAN ERWIN SINAGA) ---
+# --- 2. CSS UNTUK TAMPILAN RAPI & BENAR ---
 st.markdown("""
 <style>
-    .stApp { background-color: white; }
+    .stApp { background-color: #f8fafc; }
     
-    /* Header Tengah Baku */
-    .header-center {
-        display: flex; 
-        flex-direction: column;
-        align-items: center; 
-        justify-content: center;
-        padding: 40px 0;
+    /* Banner Hitam Utama */
+    .black-banner {
+        background-color: #111827;
+        color: white;
+        padding: 40px;
+        border-radius: 15px;
         text-align: center;
-    }
-    .main-title {
-        color: #1e3a8a; /* Biru Gelap Perbankan */
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        font-size: 2.8em; 
-        font-weight: 800; 
-        margin-top: 10px;
+        border-bottom: 5px solid #facc15; /* Garis Kuning Bawah */
+        margin-bottom: 30px;
     }
     
-    /* Profil Section - Kotak di Kanan */
-    .profile-box { 
-        background: #f8fafc; 
-        padding: 25px; 
-        border-radius: 15px; 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
-        border-left: 5px solid #1e3a8a;
+    /* Container Foto & About */
+    .about-container {
+        display: flex;
+        gap: 20px;
+        align-items: stretch;
     }
     
-    /* Paket Layanan Strategis - 4 Kolom Ramping */
-    .package-card { 
-        background: white; 
-        padding: 25px; 
-        border-radius: 12px; 
-        border: 1px solid #e2e8f0; 
-        text-align: center; 
-        height: 100%; 
-        display: flex; 
-        flex-direction: column; 
+    .profile-card {
+        background: #111827;
+        border-radius: 15px;
+        padding: 0;
+        overflow: hidden;
+        text-align: center;
+        border-bottom: 5px solid #facc15;
     }
-    .pkg-name { color: #1e3a8a; font-size: 1.6em; font-weight: bold; margin-bottom: 5px; }
-    .pkg-price { color: #1e3a8a; font-size: 2em; font-weight: bold; margin: 20px 0; }
     
-    /* Tombol WA Hijau Baku */
-    .wa-button { 
-        display: block; 
-        background: #25d366; 
-        color: white !important; 
-        text-decoration: none !important; 
-        padding: 12px; 
-        border-radius: 8px; 
-        font-weight: bold; 
-        text-align: center; 
-        margin-top: auto;
+    .description-box {
+        background: #111827;
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        flex-grow: 1;
+        border-bottom: 5px solid #facc15;
+    }
+
+    .wa-button {
+        display: inline-block;
+        background-color: #25d366;
+        color: white !important;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 15px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -68,82 +62,39 @@ st.markdown("""
 wa_number = "62821221190885"
 
 if 'page' not in st.session_state: st.session_state.page = "Home"
-if 'auth' not in st.session_state: st.session_state.auth = False
 
-# --- 3. LOGIKA HALAMAN ---
+# --- 3. TAMPILAN BERANDA UTAMA ---
 if st.session_state.page == "Home":
-    # HEADER TENGAH IDENTIK DENGAN SCREENSHOT
+    
+    # BANNER ATAS
     st.markdown("""
-    <div class="header-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/1004/1004666.png" width="60">
-        <h1 class="main-title">VGUARD AI SYSTEMS</h1>
+    <div class="black-banner">
+        <h1 style="margin:0; font-size: 3em;">V-GUARD AI SYSTEMS</h1>
+        <p style="font-size: 1.2em; opacity: 0.8;">Mencegah Kerugian Owner Melalui Deteksi Proaktif</p>
     </div>
     """, unsafe_allow_html=True)
-    
-    # SEKSI PROFIL - KEMBALI KE LAYOUT PROFIL & FOTO BAKU
-    c1, c2 = st.columns([1, 2.5])
-    with c1:
-        # Menampilkan Foto Profil Bulat Baku
-        st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", use_container_width=True)
-        st.info("Founder & CEO: Erwin Sinaga")
-    with c2:
-        st.markdown('<div class="profile-box">', unsafe_allow_html=True)
-        st.markdown("### 👤 Profil & Filosofi")
-        st.write("""
-        **Erwin Sinaga** adalah pemimpin strategis dengan rekam jejak prestisius selama lebih dari sepuluh tahun sebagai eksekutif senior di industri perbankan nasional. Melalui **VGUARD AI Systems**, beliau mentransformasi keahlian audit perbankan ke dalam solusi teknologi cerdas untuk mengamankan profit bisnis dari ancaman kebocoran data.
 
-        Filosofi beliau, **"Presisi Tanpa Kompromi"**, memastikan bahwa setiap modul AI yang dikembangkan bekerja dengan akurasi maksimal demi integritas data dan keamanan aset klien di bawah kepemimpinan strategis beliau.
-        """)
-        if st.button("🚀 MASUK KE COMMAND CENTER"): 
-            st.session_state.page = "Admin"
-            st.rerun()
+    # KOLOM FOTO DAN DESKRIPSI
+    col_photo, col_desc = st.columns([1, 1.5])
+    
+    with col_photo:
+        st.markdown('<div class="profile-card">', unsafe_allow_html=True)
+        # Menggunakan Placeholder Image yang Merepresentasikan Foto Profesional Bapak
+        st.image("https://raw.githubusercontent.com/erwinsinaga/v-guard-ai/main/assets/ceo_photo.jpg", 
+                 caption="Erwin Sinaga - Senior Business Executive", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
-
-    st.write("---")
-    
-    # PAKET LAYANAN STRATEGIS (4 LAYANAN BAKU & RAMPING)
-    st.markdown("#### 🏷️ PAKET LAYANAN STRATEGIS")
-    p1, p2, p3, p4 = st.columns(4)
-    
-    packs = [
-        {"n": "V-START", "t": "Target: UMKM", "p": "Rp 5 JT", "f": ["Scan Harian", "Laporan Mingguan"]},
-        {"n": "V-GROW", "t": "Target: Multi-Cabang", "p": "Rp 15 JT", "f": ["Real-time Scan", "Notifikasi WA"]},
-        {"n": "V-PRIME", "t": "Target: Korporasi", "p": "Rp 50 JT", "f": ["Audit Trail Bank", "Dedicated Support"]},
-        {"n": "V-ENTERPRISE", "t": "Target: Holding", "p": "Custom", "f": ["Private Server", "Custom AI Model"]}
-    ]
-    
-    cols = [p1, p2, p3, p4]
-    for i, x in enumerate(packs):
-        with cols[i]:
-            st.markdown(f"""
-            <div class="package-card">
-                <div class="pkg-name">{x['n']}</div>
-                <div style="font-size:0.85em; color:#64748b;">{x['t']}</div>
-                <hr style="border: 0.5px solid #e2e8f0; margin: 15px 0;">
-                <div class="pkg-price">{x['p']} <span style="font-size:0.4em; color:#64748b;">/ bln</span></div>
-                <div style="text-align:left; font-size:0.9em; margin-bottom:20px; flex-grow:1;">
-                    {"".join([f"• {feat}<br>" for feat in x['f']])}
-                </div>
-                # Tautan WhatsApp Langsung ke Nomor Bapak
-                <a href="https://wa.me/{wa_number}?text=Halo Pak Erwin, saya tertarik paket {x['n']}" class="wa-button">💬 Chat WhatsApp</a>
-            </div>
-            """, unsafe_allow_html=True)
-
-# --- 4. HALAMAN ADMIN ---
-elif st.session_state.page == "Admin":
-    if not st.session_state.auth:
-        st.markdown('<h1 style="text-align:center;">🔐 Executive Access</h1>', unsafe_allow_html=True)
-        pwd = st.text_input("Password Admin:", type="password")
-        if st.button("Masuk"):
-            if pwd == "VGUARD2026":
-                st.session_state.auth = True; st.rerun()
-            else: st.error("Akses Ditolak!")
-    else:
-        st.header("💻 Command Center - Erwin Sinaga")
-        # 5 Tab Admin Baku
-        t1, t2, t3, t4, t5 = st.tabs(["🔍 V-Scan", "📊 Monitoring", "📍 Map", "💰 Billing", "⚙️ Klien"])
-        if st.sidebar.button("🔓 Logout"):
-            st.session_state.auth = False; st.session_state.page = "Home"; st.rerun()
-
-st.write("---")
-st.caption(f"© {datetime.now().year} VGUARD AI Systems | CEO Erwin Sinaga")
+        
+    with col_desc:
+        st.markdown(f"""
+        <div class="description-box">
+            <h3 style="color: #facc15;">🛡️ About V-GUARD</h3>
+            <p style="font-size: 1.1em; line-height: 1.6;">
+                Platform deteksi fraud sistemik yang dibangun oleh <b>Erwin Sinaga</b> (Senior Business Executive). 
+                Pengalaman perbankan 10+ tahun kami gunakan untuk memproteksi aset bisnis Anda dari kebocoran hingga 90%.
+            </p>
+            <p>Filosofi kami: <b>Presisi Tanpa Kompromi.</b></p>
+            <a href="https://wa.me/{wa_number}" class="wa-button">Hubungi CEO via WhatsApp</a>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🚀 BUKA PANEL ADMIN"):
+            st.session_state.page =
