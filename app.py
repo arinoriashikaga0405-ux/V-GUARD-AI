@@ -1,41 +1,33 @@
 import streamlit as st
 import os
 import pandas as pd
-from datetime import datetime
 
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# CSS PREMIUM (Warna Merah Bold & Professional)
+# CSS PREMIUM
 st.markdown("""
 <style>
-    .main-title { font-size: 30px; font-weight: 800; color: #1f1f1f; }
-    .tech-card {
-        background: #ffffff; border-radius: 12px; padding: 15px;
-        border-left: 5px solid #ff4b4b; margin-bottom: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s;
-    }
-    .tech-card:hover { transform: scale(1.02); }
-    .tech-title { font-weight: bold; color: #ff4b4b; font-size: 16px; margin-bottom: 5px; }
-    .tech-desc { font-size: 13px; color: #444; line-height: 1.4; }
-    .alarm-active {
-        background: #ffe5e5; border: 2px solid #ff4b4b; padding: 15px;
-        border-radius: 10px; color: #a51d1d; font-weight: bold;
-        animation: blinker 1.5s linear infinite;
-    }
-    @keyframes blinker { 50% { opacity: 0.6; } }
-    .chat-bubble {
-        background: #f1f1f1; padding: 10px 15px; border-radius: 15px;
-        margin-bottom: 10px; font-size: 14px; border-left: 4px solid #ff4b4b;
+    .reportview-container { background: #f5f7f9; }
+    .st-emotion-cache-1y4p8pa { padding-top: 2rem; }
+    .vision-box {
+        background: #ffffff; border-radius: 12px; padding: 25px;
+        border-left: 6px solid #ff4b4b; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
     }
     .price-card {
         background: white; border-radius: 15px; border: 1px solid #eee;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 400px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 450px;
         display: flex; flex-direction: column; overflow: hidden;
     }
     .card-header {
         background: linear-gradient(135deg, #ff4b4b 0%, #a51d1d 100%);
-        color: white; padding: 12px; text-align: center; font-weight: bold;
+        color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 18px;
+    }
+    .feature-item { font-size: 13px; color: #444; margin-bottom: 6px; }
+    .roi-box {
+        background: #fff5f5; border: 1px solid #ff4b4b; padding: 20px;
+        border-radius: 12px; color: #a51d1d; margin-top: 20px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -53,14 +45,14 @@ with st.sidebar:
     st.write("---")
     menu = st.radio("Navigasi Utama:", [
         "1. 👤 Profil Founder", 
-        "2. 🏠 Ekosistem Teknologi", 
-        "3. 📦 Paket Solusi", 
-        "4. 🔐 Admin Panel (Control)"
+        "2. 🎯 Visi & Misi", 
+        "3. 📦 Paket Solusi & ROI", 
+        "4. 🔐 Admin Panel (Upload)"
     ])
     st.write("---")
     st.caption("© 2026 V-Guard AI Systems")
 
-# --- MENU 1: PROFIL FOUNDER ---
+# --- MENU 1: PROFIL FOUNDER (100+ KATA) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Strategic Leadership")
     l, r = st.columns([1, 2])
@@ -68,70 +60,80 @@ if menu == "1. 👤 Profil Founder":
         if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with r:
         st.subheader("Erwin Sinaga")
-        st.markdown("#### *Founder & Chief Executive Officer*")
-        st.write("Bapak Erwin Sinaga adalah Senior Business Leader visioner dengan 10+ tahun pengalaman sebagai CEO/CSO di industri perbankan dan aset. Beliau membangun V-Guard AI sebagai benteng pertahanan finansial masa depan.")
+        st.write("""
+        Bapak Erwin Sinaga memiliki rekam jejak profesional yang sangat solid dengan dedikasi lebih dari 10 tahun di industri perbankan dan manajemen aset nasional. Selama satu dekade tersebut, beliau telah mendalami berbagai dinamika operasional perbankan, mulai dari manajemen risiko kredit hingga pengawasan integritas transaksi finansial yang kompleks. Pengalaman luas beliau dalam menghadapi ancaman kebocoran dana dan manipulasi data di sektor keuangan formal menjadi alasan utama lahirnya V-Guard AI Systems. 
+        
+        Melalui pemahaman mendalam mengenai pola-pola fraud yang sering luput dari audit konvensional, Bapak Erwin mengintegrasikan standar keamanan perbankan tingkat tinggi ke dalam ekosistem digital yang lebih luas. Beliau percaya bahwa teknologi AI bukan sekadar alat bantu, melainkan benteng pertahanan utama yang harus dimiliki setiap pelaku bisnis untuk menjamin keberlangsungan aset. Kepemimpinan beliau di V-Guard berfokus pada transparansi, akurasi, dan penyediaan proteksi finansial yang setara dengan sistem pertahanan bank global, namun dapat diakses oleh UMKM maupun korporasi modern.
+        """)
 
-# --- MENU 2: EKOSISTEM TEKNOLOGI ---
-elif menu == "2. 🏠 Ekosistem Teknologi":
-    st.markdown('<div class="main-title">🌐 Ekosistem Teknologi V-Guard AI</div>', unsafe_allow_html=True)
-    st.write("V-Guard AI mengintegrasikan platform terbaik dunia untuk akurasi audit 99,9%.")
+# --- MENU 2: VISI & MISI ---
+elif menu == "2. 🎯 Visi & Misi":
+    st.title("🎯 Arah Strategis Perusahaan")
+    v, m = st.columns(2)
+    with v:
+        st.markdown("""<div class="vision-box"><h3>🎯 Visi</h3>
+        <p>Menjadi pionir penyedia infrastruktur keamanan berbasis AI yang tak tertembus di Asia Tenggara, memberikan kepastian audit bagi investor dan pemilik bisnis melalui integrasi teknologi real-time pada tahun 2026.</p></div>""", unsafe_allow_html=True)
+    with m:
+        st.markdown("""<div class="vision-box"><h3>🚀 Misi</h3>
+        <ul>
+            <li>Menghentikan kebocoran aset bisnis klien melalui sistem deteksi fraud otomatis.</li>
+            <li>Mengotomatisasi kepatuhan operasional (compliance) tanpa campur tangan manusia.</li>
+            <li>Memberikan laporan kesehatan finansial yang akurat dan mudah dipahami secara instan.</li>
+        </ul></div>""", unsafe_allow_html=True)
+
+# --- MENU 3: PAKET SOLUSI & ROI ---
+elif menu == "3. 📦 Paket Solusi & ROI":
+    st.title("📦 Solusi Keamanan & Analisis ROI")
     
-    techs = [
-        ("🧠 Google Gemini AI (Core Brain)", "Analis utama yang memproses data audit kompleks menjadi laporan bahasa manusia yang mudah dipahami."),
-        ("🔍 MindBridge Analytics (Fraud Detection)", "Mendeteksi pola kecurangan akuntansi dan anomali transaksi keuangan melalui Audit Alarms."),
-        ("📈 DataRobot (Forecasting)", "Prediksi risiko operasional di masa depan berdasarkan data historis untuk mencegah kebocoran."),
-        ("⚙️ Alteryx (Workflow Automation)", "Otomasi seluruh alur data dari CCTV dan mesin kasir (POS) tanpa campur tangan manusia."),
-        ("⏰ Workday Adaptive (Scenario Alarms)", "Simulasi perencanaan finansial dan alarm cerdas jika biaya operasional menyimpang."),
-        ("📱 Numeric.ai (Notifications)", "Notifikasi ringkas kesehatan keuangan bisnis langsung ke smartphone investor setiap hari."),
-        ("📹 YOLO / Vision AI (Computer Vision)", "'Mata' digital memantau stok dan aktivitas kasir secara visual untuk validasi data.")
-    ]
+    # Kalkulator ROI Kerugian
+    st.subheader("📈 Analisis Potensi Kerugian Klien")
+    col_roi1, col_roi2 = st.columns(2)
+    with col_roi1:
+        omzet = st.number_input("Omzet Bisnis Per Bulan (Rp):", min_value=10000000, value=500000000, step=10000000)
+        margin_fraud = 0.05 # Estimasi rata-rata kebocoran 5% tanpa sistem AI
+    with col_roi2:
+        st.markdown(f"""<div class="roi-box">
+        <h4>🚨 Potensi Kerugian Tanpa V-Guard:</h4>
+        <h2 style="margin:0;">Rp {(omzet * margin_fraud):,.0f}</h2>
+        <p style="font-size:12px;">*Estimasi kebocoran operasional & fraud rata-rata 5% per bulan.</p>
+        </div>""", unsafe_allow_html=True)
     
+    st.write("---")
+    
+    # Tabel Paket
     c1, c2 = st.columns(2)
-    for i, (title, desc) in enumerate(techs):
-        with (c1 if i % 2 == 0 else c2):
-            st.markdown(f"""<div class="tech-card"><div class="tech-title">{title}</div><div class="tech-desc">{desc}</div></div>""", unsafe_allow_html=True)
-
-# --- MENU 3: PAKET SOLUSI ---
-elif menu == "3. 📦 Paket Solusi":
-    st.title("📦 Investasi Keamanan")
-    col1, col2 = st.columns(2)
     def draw_pkg(title, setup, monthly, features, key):
-        f_list = "".join([f'<div style="font-size:12px;">✅ {f}</div>' for f in features])
-        st.markdown(f"""<div class="price-card"><div class="card-header">{title}</div><div style="padding:15px;">
-        <h3>Rp {setup}</h3><p style="color:#ff4b4b;">Bulanan: Rp {monthly}</p><hr>{f_list}</div></div>""", unsafe_allow_html=True)
-        st.link_button(f"Pilih {title}", wa_url, use_container_width=True, key=key)
+        f_list = "".join([f'<div class="feature-item">✅ {f}</div>' for f in features])
+        st.markdown(f"""<div class="price-card"><div class="card-header">{title}</div><div style="padding:20px; flex-grow:1;">
+        <h3>Setup: Rp {setup}</h3><p style="color:#ff4b4b; font-weight:bold;">Bulanan: Rp {monthly}</p><hr>{f_list}</div></div>""", unsafe_allow_html=True)
+        st.link_button(f"PILIH {title}", wa_url, use_container_width=True, key=key)
 
-    with col1: draw_pkg("Basic Guard", "2.5jt", "500rb", ["AI Fraud Dasar", "Email Support"], "b1")
-    with col2: draw_pkg("Premium Shield", "7.5jt", "1.5jt", ["Alarm Aktif", "WA Priority"], "b2")
+    with c1: 
+        draw_pkg("BASIC GUARD", "2.5jt", "500rb", [
+            "Google Gemini AI Core", "Audit Transaksi Harian", 
+            "Laporan Mingguan via Email", "Support Chat Dasar"
+        ], "p1")
+    with c2: 
+        draw_pkg("PREMIUM SHIELD", "7.5jt", "1.5jt", [
+            "MindBridge Fraud Detection", "Real-time Audit Alarm", 
+            "Auto Invoice Pro", "WA Priority Support", "CCTV AI Integration"
+        ], "p2")
 
-# --- MENU 4: ADMIN PANEL (LENGKAP) ---
-elif menu == "4. 🔐 Admin Panel (Control)":
-    st.title("🔐 Control Center")
+# --- MENU 4: ADMIN PANEL (UNGGAH DATA) ---
+elif menu == "4. 🔐 Admin Panel (Upload)":
+    st.title("🔐 Control Center: Input Data Klien")
     
-    t1, t2, t3, t4 = st.tabs(["🚨 Alarm & Fraud", "📹 AI CCTV", "🧾 Invoice", "💬 Chat Box AI"])
+    st.info("Gunakan menu ini untuk mengunggah data mentah dari klien agar dianalisis oleh V-Guard AI.")
     
-    with t1:
-        st.markdown('<div class="alarm-active">🚨 ALARM AKTIF: Terdeteksi Anomali Transaksi di Kasir 02 pukul 19:45!</div>', unsafe_allow_html=True)
-        st.write("---")
-        st.write("**Riwayat Temuan:**")
-        st.table(pd.DataFrame({"Waktu": ["19:45", "18:20"], "Temuan": ["Selisih Stok Visual vs POS", "Double Entry Input"], "Status": ["🚨 Urgent", "✅ Resolved"]}))
-        
-    with t2:
-        st.subheader("📹 Live AI Vision Feed (YOLO)")
-        st.image("https://images.unsplash.com/photo-1557597774-9d2739f85a76?q=80&w=500", caption="Deteksi Objek & Gerakan Real-time")
-        st.success("✅ CCTV AI Terkoneksi: Objek Manusia & Barang terdeteksi normal.")
-        
-    with t3:
-        st.subheader("🧾 Billing & Invoices")
-        st.info("Invoice #VG-MAR-2026: Rp 1,500,000 (Status: Sent to WhatsApp)")
-        if st.button("Generate Invoice Baru"):
-            st.success("Invoice berhasil dibuat dan dikirim otomatis via NLP Bot.")
+    with st.container():
+        uploaded_file = st.file_uploader("Unggah Laporan Transaksi (Excel/CSV/PDF)", type=['csv', 'xlsx', 'pdf', 'jpg', 'png'])
+        if uploaded_file is not None:
+            st.success(f"File '{uploaded_file.name}' berhasil diterima!")
+            st.warning("🤖 AI V-Guard sedang memindai anomali... (Simulasi)")
             
-    with t4:
-        st.subheader("💬 V-Guard Intelligence Chat")
-        st.markdown('<div class="chat-bubble"><b>V-Guard:</b> Selamat malam Pak Erwin. Ingin mengecek laporan fraud hari ini?</div>', unsafe_allow_html=True)
-        st.markdown('<div class="chat-bubble"><b>V-Guard:</b> Saya menemukan 1 anomali di cabang Tangerang. Sudah saya kirimkan detailnya ke WhatsApp Anda.</div>', unsafe_allow_html=True)
-        st.text_input("Tanya AI (Contoh: Berapa total transaksi aman hari ini?)")
+    st.write("---")
+    st.subheader("🚨 Monitoring Terakhir")
+    st.error("19:30 - Deteksi Anomali pada Transaksi Kasir 01 (Selisih Rp 450,000)")
 
 st.write("---")
 st.caption("© 2026 V-Guard AI Systems | Strategically Led by Erwin Sinaga")
