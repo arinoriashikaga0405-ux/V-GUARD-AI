@@ -1,5 +1,5 @@
 import streamlit as st
-import pd
+import pandas as pd
 import plotly.express as px
 import os
 
@@ -49,7 +49,7 @@ elif page == "📊 Dashboard Monitoring":
     st.header("📊 V-Guard Real-time Monitoring")
     st.success("Sistem AI aktif mengawasi anomali transaksi.")
     df_data = pd.DataFrame({'Kategori': ['Aman', 'Anomali'], 'Skor': [94, 6]})
-    fig_data = px.pie(df_data, values='Skor', names='Kategori', title="Ringkasan Risiko", hole=0.3)
+    fig_data = px.pie(df_data, values='Skor', names='Kategori', title="Ringkasan Risiko Hari Ini", hole=0.3)
     st.plotly_chart(fig_data, use_container_width=True)
 
 # --- HALAMAN 3: PRODUCTS & PACKAGES ---
@@ -68,39 +68,4 @@ elif page == "📦 Products & Packages":
     for i, p in enumerate(pkgs):
         with cols[i]:
             st.warning(f"**{p['N']}**")
-            st.subheader(p['P'])
-            st.write(f"Setup: **Rp {p['S']}**")
-            st.write(f"Bulan: **Rp {p['B']}**")
-            for f in p['F']:
-                st.write(f"- {f}")
-            # Link WhatsApp Aman
-            wa_url = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20minat%20paket%20{p['P']}"
-            st.link_button(f"👉 Pesan {p['P']}", wa_url, use_container_width=True)
-
-# --- HALAMAN 4: CORPORATE PROFILE (FOTO & DESKRIPSI TETAP) ---
-elif page == "👤 Corporate Profile":
-    st.header("Strategic Leadership")
-    col_p1, col_p2 = st.columns([1, 2])
-    
-    with col_p1:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", caption="Erwin Sinaga, Founder V-Guard AI", use_container_width=True)
-        else:
-            st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=250)
-    
-    with col_p2:
-        st.markdown("### Erwin Sinaga")
-        st.markdown("#### *Founder & Chief Executive Officer*")
-        
-        # DESKRIPSI MINIMAL 100 KATA - TIDAK DIUBAH
-        st.markdown("""
-Bapak Erwin Sinaga adalah seorang *Senior Business Leader* visioner dengan rekam jejak impresif selama lebih dari 10 tahun di posisi krusial sebagai CEO dan CSO dalam industri perbankan serta manajemen aset. Pengalaman mendalam beliau dalam mengelola risiko operasional, memimpin transformasi digital, dan menjaga integritas aset bernilai tinggi menjadi pondasi kuat di balik berdirinya **V-Guard AI Systems**.
-
-Dengan latar belakang keahlian strategis yang komprehensif, Pak Erwin berdedikasi penuh untuk mendemokratisasi akses terhadap teknologi keamanan finansial kelas dunia. Beliau melihat celah krusial antara prototipe teknologi dengan solusi *production-grade* yang benar-benar siap menjawab tantangan pasar di tahun 2026. Komitmen utama beliau adalah membangun solusi 'End-to-End Intermediary' yang cerdas, adaptif, dan memiliki daya jual tinggi (*high conversion*), yang tidak hanya melindungi UMKM lokal dari kehancuran finansial akibat *fraud*, tetapi juga memberikan kepastian keamanan di tingkat Korporat global.
-""")
-        # Tombol Kontak Aman (Bukan Tombol Merah HTML)
-        wa_contact = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20ingin%20diskusi%20strategis"
-        st.link_button("📲 Hubungi Pak Erwin via WhatsApp", wa_contact, use_container_width=True, type="primary")
-
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
+            st.subheader(p['
