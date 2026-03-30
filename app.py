@@ -59,6 +59,91 @@ if st.session_state.page == "Admin":
                     st.rerun()
                 else: st.error("Akses Ditolak!")
     else:
+        # --- COMMAND CENTER - FULL STRATEGIC FEATURES ---
+        st.header("💻 Command Center - Erwin Sinaga")
+        
+        # 1. EXECUTIVE SUMMARY (DASHBOARD VISUAL)
+        m1, m2, m3, m4 = st.columns(4)
+        with m1: st.markdown('<div class="metric-card">💰 <b>Total Saved</b><br>Rp 1.450.000.000</div>', unsafe_allow_html=True)
+        with m2: st.markdown('<div class="metric-card">👥 <b>Klien Aktif</b><br>12 Perusahaan</div>', unsafe_allow_html=True)
+        with m3: st.markdown('<div class="metric-card">⚠️ <b>Fraud Alert</b><br>2 Temuan Hari Ini</div>', unsafe_allow_html=True)
+        with m4: st.markdown('<div class="metric-card">✅ <b>System Health</b><br>99.9% Online</div>', unsafe_allow_html=True)
+        
+        st.write("---")
+        
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "🔍 V-Scan & Analisa", 
+            "📊 Monitoring Audit", 
+            "📍 Geolocation Map",
+            "💰 Billing & AR", 
+            "⚙️ Manajemen Klien"
+        ])
+        
+        with tab1:
+            st.markdown('<p class="header-text">🚀 V-SCAN: DEEP-DIVE ANALISA FRAUD</p>', unsafe_allow_html=True)
+            klien_analisa = st.selectbox("Pilih Klien untuk Dianalisa:", ["Toko Berkah Jaya", "B2B Trading Sinar"])
+            uploaded_file = st.file_uploader(f"Unggah Data Transaksi {klien_analisa}", type=['csv', 'xlsx'])
+            
+            if uploaded_file:
+                with st.spinner('V-GUARD AI sedang membedah data dan mencari kecurangan...'):
+                    time.sleep(2)
+                    st.success(f"✅ Analisa Selesai untuk {klien_analisa}")
+                    
+                    # Grafis Tren & Audit Trail
+                    st.markdown("### 📊 Tren Anomali Mingguan")
+                    chart_data = pd.DataFrame({
+                        'Minggu': ['W1', 'W2', 'W3', 'W4'],
+                        'Kecurangan Terdeteksi': [5, 12, 3, 14]
+                    })
+                    st.line_chart(chart_data.set_index('Minggu'))
+                    st.markdown(f'<div class="admin-card">📜 <b>Audit Trail:</b> Scan sukses dilakukan oleh CEO Erwin Sinaga pada {datetime.now().strftime("%H:%M:%S")}</div>', unsafe_allow_html=True)
+
+                    # Metrik Deep Dive
+                    res1, res2, res3 = st.columns(3)
+                    res1.metric("Total Transaksi", "1.240", "Normal")
+                    res2.metric("Anomali Terdeteksi", "14", "-2", delta_color="inverse")
+                    res3.metric("Potensi Kebocoran", "Rp 3.420.000", "Critical")
+                    
+                    # FITUR: AUTO-DOWNLOAD & KIRIM OTOMATIS
+                    st.write("---")
+                    c_act1, c_act2 = st.columns(2)
+                    with c_act1:
+                        st.download_button("📥 AUTO-DOWNLOAD REPORT (PDF)", data="Dummy Report Content", file_name=f"Audit_{klien_analisa}.pdf", mime="application/pdf")
+                    with c_act2:
+                        if st.button("📲 KIRIM LAPORAN KE WA KLIEN"):
+                            st.toast(f"Mengirim hasil analisa ke WhatsApp Owner {klien_analisa}...")
+                            time.sleep(1)
+                            st.success("Terkirim!")
+
+        with tab2:
+            st.markdown('<p class="header-text">📅 OTOMASI PENJADWALAN AUDIT (SMART SCHEDULING)</p>', unsafe_allow_html=True)
+            st.table(pd.DataFrame(st.session_state.audit_logs))
+            st.info("💡 Sistem otomatis mengatur jadwal audit berikutnya berdasarkan volume transaksi harian klien.")
+
+        with tab3:
+            st.markdown('<p class="header-text">📍 GEOLOCATION MAP: SEBARAN KLIEN V-GUARD</p>', unsafe_allow_html=True)
+            # Data lokasi dummy (Tangerang & Jakarta)
+            map_data = pd.DataFrame({
+                'lat': [-6.2088, -6.1751, -6.2297],
+                'lon': [106.8456, 106.8272, 106.6894]
+            })
+            st.map(map_data)
+            st.caption("Peta menunjukkan lokasi aktif perangkat V-GUARD AI Systems di lapangan.")
+
+        with tab4:
+            st.markdown('<p class="header-text">💵 BILLING & ACCOUNTS RECEIVABLE</p>', unsafe_allow_html=True)
+            bill_data = {"Klien": ["Toko Berkah", "Sinar B2B"], "Tagihan": ["5JT", "10JT"], "Status": ["Lunas", "Jatuh Tempo"]}
+            st.table(pd.DataFrame(bill_data))
+            if st.button("📢 BLAST NOTIFIKASI TAGIHAN"):
+                st.success("Email & WA Penagihan telah dikirim ke seluruh klien menunggak.")
+
+        with tab5:
+            st.markdown('<p class="header-text">⚙️ MANAJEMEN KLIEN & INVENTARIS PERANGKAT</p>', unsafe_allow_html=True)
+            with st.form("new_client_full"):
+                st.text_input("Nama Bisnis")
+                st.selectbox("Model AI yang Dipasang", ["V-Guard Retail v2", "V-Guard Trading v1.5"])
+                if st.form_submit_button("Daftarkan Klien & Sinkronisasi AI"):
+                    st.success("Klien baru berhasil disinkronisasi dengan sistem V-GUARD.")
         # --- COMMAND CENTER - FULL FEATURES ---
         st.header("💻 Command Center - Erwin Sinaga")
         
