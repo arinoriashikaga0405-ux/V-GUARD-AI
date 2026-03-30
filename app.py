@@ -1,36 +1,64 @@
-# === GANTI SELURUH BLOK ELSE: INI ===
-else:
-    # --- BERANDA UTAMA (LOCK: JANGAN DIRUBAH) ---
-    st.markdown('<div class="centered-logo"><h1>🛡️ VGUARD AI SYSTEMS</h1></div>', unsafe_allow_html=True)
-    st.write("---")
-    
-    col_p1, col_p2 = st.columns([1, 2.5])
-    with col_p1:
-        # Menampilkan foto eksekutif (Simulasi jika erwin.jpg tidak ditemukan)
-        try:
-            st.image("erwin.jpg", use_container_width=True)
-        except:
-            st.info("ERWIN SINAGA - CEO")
-    
-    with col_p2:
-        st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
-        # Penjabaran Profil & Filosofi (Minimal 100 Kata)
-        st.write("""
-        Erwin Sinaga adalah seorang pemimpin strategis dengan rekam jejak profesional yang prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Sepanjang kariernya di dunia finansial, beliau telah mengelola berbagai risiko kompleks, memimpin transformasi digital perbankan, dan memastikan akurasi finansial pada level tertinggi. Berbekal pengalaman mendalam tersebut, beliau mendirikan **VGUARD AI Systems** dengan visi besar untuk mendemokratisasi keamanan sistem perbankan bagi pelaku usaha UMKM dan korporasi.
+import streamlit as st
+import pandas as pd
+from datetime import datetime
+import time
 
-        Filosofi kepemimpinan beliau tertuang dalam konsep **"Digitizing Trust, Eliminating Leakage"**. Bapak Erwin percaya bahwa kepercayaan pelanggan adalah aset yang paling rauh sekaligus paling berharga. Oleh karena itu, beliau merancang VGUARD AI bukan sekadar sebagai alat audit teknis, melainkan sebagai perisai pertahanan strategis yang mampu mendeteksi potensi kecurangan (*fraud*) dan kebocoran profit secara *real-time*. Dengan integritas yang ditempa selama satu dekade di dunia perbankan, Bapak Erwin memastikan bahwa setiap rupiah dalam ekosistem bisnis kliennya terlindungi oleh teknologi yang presisi, transparan, dan berstandar keamanan finansial kelas dunia.
-        """)
-        if st.button("🚀 MASUK KE COMMAND CENTER (ADMIN)"):
-            st.session_state.page = "Admin"
+# --- 1. INITIALIZE SESSION STATE ---
+if 'page' not in st.session_state: st.session_state.page = "Home"
+if 'auth' not in st.session_state: st.session_state.auth = False
+if 'audit_logs' not in st.session_state:
+    st.session_state.audit_logs = [
+        {"Klien": "Toko Berkah Jaya", "Segmen": "Retail", "Jadwal": "21:00", "Status": "✅ Terpindai", "Hasil": "Aman"},
+        {"Klien": "B2B Trading Sinar", "Segmen": "Trading", "Jadwal": "22:30", "Status": "❌ Belum Upload", "Hasil": "Pending"}
+    ]
+
+# --- 2. CONFIGURATION ---
+st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
+
+# --- 3. PREMIUM CSS ---
+st.markdown("""
+<style>
+    .main { background-color: #f8fafc; }
+    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; width: 100%; height: 45px; }
+    .card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .roi-box { background: #eff6ff; padding: 25px; border-radius: 15px; border: 2px dashed #1e3a8a; }
+    .header-text { color: #1e3a8a; font-weight: bold; border-left: 5px solid #1e3a8a; padding-left: 10px; margin-bottom: 15px; }
+    .metric-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
+    .admin-card { background: #f1f5f9; padding: 15px; border-radius: 10px; border-left: 5px solid #1e3a8a; margin: 10px 0; }
+</style>
+""", unsafe_allow_html=True)
+
+# --- 4. SIDEBAR ---
+with st.sidebar:
+    st.markdown("### 👤 CEO: ERWIN SINAGA")
+    st.caption("Founder & CEO VGUARD AI")
+    st.write("---")
+    if st.button("🏠 Beranda Utama"): 
+        st.session_state.page = "Home"
+        st.rerun()
+    if st.session_state.auth:
+        if st.button("🔓 Log Out Admin"):
+            st.session_state.auth = False
+            st.session_state.page = "Home"
             st.rerun()
+    st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
 
-    st.write("---")
-    # Bagian ROI Calculator & Paket tetap di bawah (tidak dirubah)
-    st.markdown('<p class="header-text">📈 KALKULATOR PENYELAMATAN PROFIT (ROI)</p>', unsafe_allow_html=True)
-    st.markdown('<div class="roi-box">', unsafe_allow_html=True)
-    # ... (kode ROI tetap seperti sebelumnya)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    st.write("---")
-    st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
-    # ... (kode Paket tetap seperti sebelumnya)
+# --- 5. LOGIKA HALAMAN ---
+if st.session_state.page == "Admin":
+    if not st.session_state.auth:
+        st.markdown('<h1 style="text-align:center; color:#1e3a8a;">🔐 Executive Access</h1>', unsafe_allow_html=True)
+        col_l1, col_l2, col_l3 = st.columns([1,2,1])
+        with col_l2:
+            pwd = st.text_input("Password Admin:", type="password")
+            if st.button("Masuk ke Command Center"):
+                if pwd == "VGUARD2026":
+                    st.session_state.auth = True
+                    st.rerun()
+                else: st.error("Akses Ditolak!")
+    else:
+        # --- COMMAND CENTER ---
+        st.header("💻 Command Center - Erwin Sinaga")
+        m1, m2, m3, m4 = st.columns(4)
+        with m1: st.markdown('<div class="metric-card">💰 <b>Total Saved</b><br>Rp 1.450.000.000</div>', unsafe_allow_html=True)
+        with m2: st.markdown('<div class="metric-card">👥 <b>Klien Aktif</b><br>12 Perusahaan</div>', unsafe_allow_html=True)
+        with m3: st.markdown('<div class="metric-card">⚠️ <b>Fraud Alert</b><br>2 Temuan Hari Ini</div>', unsafe_allow_html=True)
