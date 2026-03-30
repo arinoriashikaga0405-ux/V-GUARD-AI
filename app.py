@@ -71,7 +71,7 @@ if menu == "1. 👤 Profil Founder":
         </div>
         """, unsafe_allow_html=True)
 
-# --- MENU 2: VISI, MISI & ROI (DIKEMBALIKAN) ---
+# --- MENU 2: VISI, MISI & ROI ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Strategi & Analisis Risiko")
     v, m = st.columns(2)
@@ -86,7 +86,7 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
     st.error(f"🚨 Estimasi Kebocoran Aset Tanpa V-Guard: Rp {potensi_rugi:,.0f} / Bulan")
     st.success(f"🛡️ Target Penyelamatan Aset (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
 
-# --- MENU 3: PAKET LAYANAN (DITAMPILKAN KEMBALI & SEJAJAR) ---
+# --- MENU 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Proteksi V-Guard AI")
     st.markdown("---")
@@ -140,17 +140,7 @@ elif menu == "3. 📦 Paket Layanan":
         <li>📞 Priority 24/7</li></ul></div>""", unsafe_allow_html=True)
         st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
 
-# --- MENU 4: ADMIN DASHBOARD (PASSWORD: admin123) ---
+# --- MENU 4: ADMIN DASHBOARD ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
-    pwd = st.text_input("Masukkan Password Admin:", type="password")
-    if pwd == "admin123":
-        st.success("Akses Diterima.")
-        m1, m2, m3 = st.columns(3)
-        m1.metric("Klien Aktif", "12 Cabang")
-        m2.metric("Omzet Terpantau", "Rp 6.2 Miliar")
-        m3.metric("Aset Diselamatkan", "Rp 310 Juta")
-        st.write("---")
-        uploaded = st.file_uploader("Unggah Laporan Transaksi untuk Audit AI", type=['csv', 'xlsx'])
-        if uploaded:
-            with st.status("V-Guard
+    pwd = st.text_
