@@ -23,20 +23,58 @@ st.markdown("""
 
 my_wa = "https://wa.me/628212190885"
 
-# 3. SIDEBAR NAVIGATION
-with st.sidebar:
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
-    st.title("🛡️ V-Guard AI")
-    menu = st.radio("Folder Navigasi:", 
-                    ["1. 👤 Profil Founder", 
-                     "2. 🎯 Visi, Misi & ROI", 
-                     "3. 📦 Produk & Paket", 
-                     "4. 📝 Registrasi Klien",
-                     "5. 🔐 Admin Dashboard"])
-    st.markdown('<p class="status-connected">● System Online</p>', unsafe_allow_html=True)
-    st.link_button("📞 Hubungi Erwin Sinaga", my_wa, use_container_width=True)
+# --- MENU 3: PRODUK & PAKET (UKURAN RAMPING & KONEKSI WA) ---
+elif menu == "3. 📦 Produk & Paket":
+    st.header("📦 Paket Layanan V-Guard AI")
+    
+    # Data Paket sesuai dokumen
+    packages = [
+        {
+            "name": "BASIC", "setup": "2.5jt", "monthly": "750rb", 
+            "feat": ["Audit Transaksi Harian", "Laporan Mingguan", "Deteksi Anomali Standar", "Support Chat WA"]
+        },
+        {
+            "name": "MEDIUM", "setup": "7.5jt", "monthly": "1.5jt", 
+            "feat": ["Semua Fitur BASIC", "Integrasi AI CCTV", "Analisa Tren Fraud", "Real-time Alert System", "Audit Stok Digital"]
+        },
+        {
+            "name": "ENTERPRISE", "setup": "25jt", "monthly": "5jt", 
+            "feat": ["Semua Fitur MEDIUM", "Multi-Branch Dashboard", "Dedicated Cloud Server", "Auto-Invoice Validation", "Forensik Digital Lanjutan"]
+        },
+        {
+            "name": "CORPORATE", "setup": "50jt", "monthly": "10jt", 
+            "feat": ["Semua Fitur ENTERPRISE", "Custom AI Model Development", "Audit On-Site Bulanan", "Priority 24/7 Hotline", "Sistem Proteksi Aset Global"]
+        }
+    ]
 
+    # Menggunakan 4 kolom agar ukuran lebih ringkas
+    cols = st.columns(4)
+    
+    for i, p in enumerate(packages):
+        with cols[i]:
+            # CSS inline untuk memperkecil padding dan font agar kartu lebih pendek
+            st.markdown(f"""
+                <div style="
+                    border: 1px solid #e6e9ef; 
+                    border-radius: 10px; 
+                    padding: 15px; 
+                    background-color: #ffffff; 
+                    height: 520px; 
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <h3 style="text-align:center; color:#1f77b4; margin-bottom:5px;">{p['name']}</h3>
+                    <p style="font-size:13px; text-align:center; margin-bottom:10px;">
+                        <b>Setup:</b> {p['setup']} | <b>Monthly:</b> {p['monthly']}
+                    </p>
+                    <hr style="margin: 10px 0;">
+                    <ul style="font-size:12px; padding-left:20px; line-height:1.4;">
+                        {"".join([f"<li>{f}</li>" for f in p['feat']])}
+                    </ul>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            # Pesan otomatis WA yang menyertakan nama paket
+            wa_link = f"https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{p['name']}*%20V-Guard%20AI."
+            st.link_button(f"Pesan {p['name']}", wa_link, use_container_width=True)
 # --- MENU 1: PROFIL FOUNDER ---
 if menu == "1. 👤 Profil Founder":
     st.header("👤 Strategic Leadership & Founder Philosophy")
