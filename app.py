@@ -1,21 +1,18 @@
 import streamlit as st
-import pandas as pd
+import pd
 import plotly.express as px
 import os
 
-# 1. KONFIGURASI HALAMAN
+# 1. KONFIGURASI UTAMA
 st.set_page_config(page_title="V-Guard AI Dashboard", page_icon="🛡️", layout="wide")
-
-# 2. VARIABEL GLOBAL (Mencegah NameError)
 wa_num = "6282122190885"
 
-# 3. SISTEM LOGIN
+# 2. SISTEM LOGIN
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
 if not st.session_state.auth:
     st.title("🛡️ V-GUARD AI SECURE GATE")
-    st.subheader("Founder: Erwin Sinaga")
     pwd_input = st.text_input("Masukkan Password Admin:", type="password")
     if st.button("Authorize Access"):
         try:
@@ -25,10 +22,10 @@ if not st.session_state.auth:
             else:
                 st.error("❌ Password Salah.")
         except:
-            st.error("⚠️ Password belum diatur di menu Secrets!")
+            st.error("⚠️ Atur ADMIN_PASSWORD di menu Secrets Streamlit!")
     st.stop()
 
-# 4. NAVIGASI SIDEBAR
+# 3. NAVIGASI SIDEBAR
 st.sidebar.title("🛡️ V-Guard AI Menu")
 page = st.sidebar.radio("Navigasi:", ["🏠 Home", "📊 Dashboard Monitoring", "📦 Products & Packages", "👤 Corporate Profile"])
 
@@ -58,7 +55,7 @@ elif page == "📊 Dashboard Monitoring":
 # --- HALAMAN 3: PRODUCTS & PACKAGES ---
 elif page == "📦 Products & Packages":
     st.header("📦 Our Products & Services Packages")
-    st.write("Pilih paket investasi keamanan. Klik tombol di bawah untuk konsultasi langsung.")
+    st.write("Silakan pilih paket investasi keamanan yang sesuai.")
     
     pkgs = [
         {"N": "Mikro", "P": "Basic Guard", "S": "2.5jt", "B": "750rb", "F": ["Real-time Mon", "Email Alert"]},
@@ -76,10 +73,11 @@ elif page == "📦 Products & Packages":
             st.write(f"Bulan: **Rp {p['B']}**")
             for f in p['F']:
                 st.write(f"- {f}")
-            url_wa = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20minat%20paket%20{p['P']}"
-            st.link_button(f"👉 Pesan {p['P']}", url_wa, use_container_width=True, type="primary")
+            # Link WhatsApp Aman
+            wa_url = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20minat%20paket%20{p['P']}"
+            st.link_button(f"👉 Pesan {p['P']}", wa_url, use_container_width=True)
 
-# --- HALAMAN 4: CORPORATE PROFILE (DENGAN FOTO & DESKRIPSI 100+ KATA) ---
+# --- HALAMAN 4: CORPORATE PROFILE (FOTO & DESKRIPSI TETAP) ---
 elif page == "👤 Corporate Profile":
     st.header("Strategic Leadership")
     col_p1, col_p2 = st.columns([1, 2])
@@ -94,15 +92,15 @@ elif page == "👤 Corporate Profile":
         st.markdown("### Erwin Sinaga")
         st.markdown("#### *Founder & Chief Executive Officer*")
         
-        # DESKRIPSI TETAP DAN TIDAK BERUBAH (MINIMAL 100 KATA)
+        # DESKRIPSI MINIMAL 100 KATA - TIDAK DIUBAH
         st.markdown("""
 Bapak Erwin Sinaga adalah seorang *Senior Business Leader* visioner dengan rekam jejak impresif selama lebih dari 10 tahun di posisi krusial sebagai CEO dan CSO dalam industri perbankan serta manajemen aset. Pengalaman mendalam beliau dalam mengelola risiko operasional, memimpin transformasi digital, dan menjaga integritas aset bernilai tinggi menjadi pondasi kuat di balik berdirinya **V-Guard AI Systems**.
 
 Dengan latar belakang keahlian strategis yang komprehensif, Pak Erwin berdedikasi penuh untuk mendemokratisasi akses terhadap teknologi keamanan finansial kelas dunia. Beliau melihat celah krusial antara prototipe teknologi dengan solusi *production-grade* yang benar-benar siap menjawab tantangan pasar di tahun 2026. Komitmen utama beliau adalah membangun solusi 'End-to-End Intermediary' yang cerdas, adaptif, dan memiliki daya jual tinggi (*high conversion*), yang tidak hanya melindungi UMKM lokal dari kehancuran finansial akibat *fraud*, tetapi juga memberikan kepastian keamanan di tingkat Korporat global.
 """)
-        # Tombol WhatsApp Resmi (Menggantikan tombol merah yang error)
-        wa_direct = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20saya%20ingin%20konsultasi%20strategis"
-        st.link_button("📲 Hubungi Pak Erwin via WhatsApp", wa_direct, use_container_width=True, type="primary")
+        # Tombol Kontak Aman (Bukan Tombol Merah HTML)
+        wa_contact = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20ingin%20diskusi%20strategis"
+        st.link_button("📲 Hubungi Pak Erwin via WhatsApp", wa_contact, use_container_width=True, type="primary")
 
 st.write("---")
 st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
