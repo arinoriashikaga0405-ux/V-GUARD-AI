@@ -7,9 +7,9 @@ if 'page' not in st.session_state: st.session_state.page = "Home"
 if 'auth' not in st.session_state: st.session_state.auth = False
 
 # --- 2. CONFIGURATION ---
-st.set_page_config(page_title="VGUARD AI Systems - CEO Erwin Sinaga", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="VGUARD AI Systems - Erwin Sinaga", page_icon="🛡️", layout="wide")
 
-# --- 3. PREMIUM CSS (ESTETIKA EKSEKUTIF) ---
+# --- 3. PREMIUM CSS (CEO EXECUTIVE STYLE) ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
@@ -17,7 +17,7 @@ st.markdown("""
     .roi-section { background: #ffffff; padding: 30px; border-radius: 15px; border: 2px dashed #1e3a8a; margin: 20px 0; }
     .package-card { background: white; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .header-text { color: #1e3a8a; font-weight: bold; border-left: 5px solid #1e3a8a; padding-left: 12px; margin: 15px 0; }
-    .profile-box { background: #f1f5f9; padding: 25px; border-radius: 15px; border-left: 8px solid #1e3a8a; }
+    .profile-box { background: #f1f5f9; padding: 25px; border-radius: 15px; border-left: 10px solid #1e3a8a; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -25,11 +25,11 @@ st.markdown("""
 with st.sidebar:
     st.markdown("### 👤 CEO: ERWIN SINAGA")
     st.write("---")
-    if st.button("🏠 Kembali ke Beranda"): 
+    if st.button("🏠 Beranda Utama"): 
         st.session_state.page = "Home"
         st.rerun()
     if st.session_state.auth:
-        if st.button("🔓 Keluar Sistem"):
+        if st.button("🔓 Logout System"):
             st.session_state.auth = False
             st.session_state.page = "Home"
             st.rerun()
@@ -40,25 +40,26 @@ if st.session_state.page == "Home":
     
     col1, col2 = st.columns([1, 2.2])
     with col1:
-        # Menampilkan placeholder foto yang lebih baik
-        st.markdown('<div style="background:#e2e8f0; height:350px; display:flex; align-items:center; justify-content:center; border-radius:15px; border:2px solid #1e3a8a; color:#1e3a8a; font-weight:bold;">PAS FOTO ERWIN SINAGA</div>', unsafe_allow_html=True)
+        # SLOT FOTO CEO
+        st.markdown('<div style="background:#e2e8f0; height:380px; display:flex; align-items:center; justify-content:center; border-radius:15px; border:2px solid #1e3a8a; color:#1e3a8a; font-weight:bold; text-align:center; padding:20px;">FOTO EKSEKUTIF<br>ERWIN SINAGA</div>', unsafe_allow_html=True)
     with col2:
         st.markdown('<div class="profile-box">', unsafe_allow_html=True)
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
+        # PROFIL > 100 KATA
         st.write("""
-        **Erwin Sinaga** adalah seorang pemimpin strategis dengan rekam jejak prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Beliau membawa disiplin ketat perbankan dan manajemen risiko ke dalam dunia teknologi melalui **VGUARD AI Systems**. Sebagai Founder, beliau memahami bahwa kebocoran kecil dalam transaksi bisnis dapat menjadi ancaman fatal bagi pertumbuhan perusahaan jangka panjang.
+        **Erwin Sinaga** adalah seorang pemimpin strategis dengan rekam jejak prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan dan manajemen aset nasional**. Berbekal pengalaman mendalam dalam mengelola risiko keuangan skala besar, beliau mendirikan **VGUARD AI Systems** untuk membawa standar keamanan perbankan ke sektor UMKM dan korporasi global.
 
-        Filosofi kepemimpinan beliau adalah **"Presisi Tanpa Kompromi"**. Bapak Erwin meyakini bahwa setiap rupiah dalam omzet klien adalah amanah yang harus dijaga dengan teknologi kecerdasan buatan paling mutakhir. VGUARD AI bukan sekadar alat audit, melainkan perisai pertahanan strategis yang dirancang untuk memberikan ketenangan pikiran bagi para pemilik bisnis modern agar mereka dapat fokus sepenuhnya pada ekspansi tanpa rasa takut akan kecurangan atau *fraud*.
+        Filosofi beliau, **"Presisi Tanpa Kompromi"**, menjadi fondasi utama VGUARD AI. Bapak Erwin meyakini bahwa setiap rupiah dalam omzet bisnis adalah hasil kerja keras yang harus dilindungi dari segala bentuk kecurangan (*fraud*). Melalui integrasi kecerdasan buatan (AI) yang canggih, beliau berkomitmen memberikan alat pertahanan yang tak tertembus, sehingga para pemilik bisnis dapat berekspansi dengan rasa aman total. VGUARD AI bukan sekadar teknologi; ini adalah manifestasi dari integritas dan akuntabilitas dalam dunia bisnis digital.
         """)
         st.markdown('</div>', unsafe_allow_html=True)
         st.write("")
-        if st.button("🚀 BUKA COMMAND CENTER (ADMIN)"): 
+        if st.button("🚀 AKSES COMMAND CENTER (ADMIN)"): 
             st.session_state.page = "Admin"
             st.rerun()
 
     st.write("---")
     
-    # --- CALCULATOR ROI ---
+    # --- CALCULATOR ROI (BERSIH TANPA KOTAK KOSONG) ---
     st.markdown('<h3 style="color:#1e3a8a;">ANALISIS POTENSI KERUGIAN & PROTEKSI PROFIT</h3>', unsafe_allow_html=True)
     st.markdown('<div class="roi-section">', unsafe_allow_html=True)
     oz = st.number_input("Omzet Bulanan Bisnis (Rp)", value=250000000)
@@ -71,52 +72,58 @@ if st.session_state.page == "Home":
     st.success(f"Profit Diselamatkan V-GUARD (Efisiensi 95%): Rp {saved:,.0f} / bln")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- PAKET LAYANAN STRATEGIS (3 PAKET UTAMA) ---
+    # --- PAKET LAYANAN STRATEGIS (3 PAKET) ---
     st.write("---")
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     p1, p2, p3 = st.columns(3)
     with p1:
-        st.markdown('<div class="package-card"><h3>🔹 V-START</h3><p>Ritel & UMKM</p><h1>Rp 5 JT</h1><p>/ bulan</p><hr><p>Scan Harian<br>Report Mingguan</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="package-card"><h3>🔹 V-START</h3><p>UMKM / Ritel</p><h1 style="color:#1e3a8a;">Rp 5 JT</h1><p>/ bulan</p><hr><p>Analisa Harian<br>Laporan Mingguan</p></div>', unsafe_allow_html=True)
     with p2:
-        st.markdown('<div class="package-card" style="border: 2px solid #1e3a8a;"><h3>🔶 V-GROW</h3><p>Bisnis Multi-Cabang</p><h1>Rp 15 JT</h1><p>/ bulan</p><hr><p>Real-time Scan<br>Notifikasi WA Otomatis</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="package-card" style="border: 2px solid #1e3a8a;"><h3>🔶 V-GROW</h3><p>Bisnis Multi-Cabang</p><h1 style="color:#1e3a8a;">Rp 15 JT</h1><p>/ bulan</p><hr><p>Real-time AI Scan<br>Notifikasi WA Instant</p></div>', unsafe_allow_html=True)
     with p3:
-        st.markdown('<div class="package-card"><h3>💎 V-PRIME</h3><p>Korporasi / Nasional</p><h1>Custom</h1><p>Value Based</p><hr><p>Full AI Customization<br>Dedicated Analyst</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="package-card"><h3>💎 V-PRIME</h3><p>Korporasi / Nasional</p><h1 style="color:#1e3a8a;">Custom</h1><p>Value Based</p><hr><p>AI Custom Model<br>Dedicated Key Account</p></div>', unsafe_allow_html=True)
 
 elif st.session_state.page == "Admin":
     if not st.session_state.auth:
-        st.markdown('<h1 style="text-align:center;">🔐 Executive Access</h1>', unsafe_allow_html=True)
-        col_l1, col_l2, col_l3 = st.columns([1,2,1])
+        st.markdown('<h1 style="text-align:center;">🔐 Executive Login</h1>', unsafe_allow_html=True)
+        col_l1, col_l2, col_l3 = st.columns([1,1.5,1])
         with col_l2:
-            pwd = st.text_input("Password Admin:", type="password")
-            if st.button("Masuk"):
+            pwd = st.text_input("Admin Password:", type="password")
+            if st.button("Authorize Access"):
                 if pwd == "VGUARD2026":
                     st.session_state.auth = True
                     st.rerun()
                 else: st.error("Akses Ditolak!")
     else:
-        # --- COMMAND CENTER LENGKAP ---
+        # --- COMMAND CENTER LENGKAP (FIXED) ---
         st.header("💻 Command Center - Erwin Sinaga")
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(["🔍 V-Scan", "📊 Monitoring", "📍 Map", "💰 Billing", "⚙️ Klien"])
+        t1, t2, t3, t4, t5 = st.tabs(["🔍 V-Scan", "📊 Monitoring", "📍 Geolocation", "💰 Billing", "⚙️ Manajemen"])
         
-        with tab1:
+        with t1:
             st.markdown('<p class="header-text">🚀 V-SCAN: DEEP-DIVE ANALISA FRAUD</p>', unsafe_allow_html=True)
-            up = st.file_uploader("Unggah Laporan Penjualan (CSV/Excel)", type=['csv', 'xlsx'])
+            up = st.file_uploader("Unggah Laporan Transaksi", type=['csv', 'xlsx'])
             if up:
-                st.success("✅ File Dianalisa Sempurna")
-                if st.button("📲 Kirim WhatsApp Ke Klien"): st.success("Terkirim!")
+                st.success("✅ Analisa AI Selesai")
+                if st.button("📲 Kirim WhatsApp Ke Klien"): st.success("Pesan Terkirim!")
 
-        with tab2:
-            st.markdown('<p class="header-text">📅 KEPATUHAN & PENJADWALAN</p>', unsafe_allow_html=True)
-            st.table(pd.DataFrame({"Klien": ["Toko Maju"], "Status": ["Aktif"], "Last Audit": ["H-1"]}))
-            if st.button("🔔 Kirim Reminder WA Otomatis"): st.success("Reminder Terkirim!")
+        with t2:
+            st.markdown('<p class="header-text">📅 MONITORING KEPATUHAN & AUDIT</p>', unsafe_allow_html=True)
+            st.table(pd.DataFrame({"Klien": ["B2B Sinar", "Toko Berkah"], "Status": ["Aktif", "Audit"], "Risiko": ["Rendah", "Sedang"]}))
+            if st.button("🔔 Kirim Reminder WA Masal"): st.success("Notifikasi Terkirim!")
 
-        with tab3:
-            st.markdown('<p class="header-text">📍 SEBARAN GEOLOKASI KLIEN</p>', unsafe_allow_html=True)
-            st.map()
+        with t3:
+            st.markdown('<p class="header-text">📍 SEBARAN KLIEN V-GUARD AI</p>', unsafe_allow_html=True)
+            st.map() # Menampilkan peta default
 
-        with tab4:
-            st.markdown('<p class="header-text">💵 BILLING & AR CONTROL</p>', unsafe_allow_html=True)
-            st.info("Total Piutang Berjalan: Rp 45.000.000")
+        with t4:
+            st.markdown('<p class="header-text">💰 BILLING & AR CONTROL</p>', unsafe_allow_html=True)
+            st.metric("Total Revenue bln ini", "Rp 145.000.000", "+12%")
 
-        with tab5:
-            st.markdown('<p class="header-text">⚙️ MANAJEMEN KLIEN BARU</p>', unsafe_allow_html=True
+        with t5:
+            st.markdown('<p class="header-text">⚙️ MANAJEMEN KLIEN BARU</p>', unsafe_allow_html=True)
+            nama_baru = st.text_input("Nama Perusahaan Klien:")
+            if st.button("Daftarkan Klien"):
+                st.success(f"Klien {nama_baru} Berhasil Ditambahkan ke Database.")
+
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
