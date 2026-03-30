@@ -14,7 +14,7 @@ if 'audit_logs' not in st.session_state:
         {"Klien": "B2B Trading Sinar", "Segmen": "Trading", "Jadwal": "22:30", "Status": "❌ Belum Upload", "Hasil": "Pending"}
     ]
 
-# --- 2. PREMIUM CSS (TETAP SESUAI STANDAR BAGUS) ---
+# --- 2. PREMIUM CSS ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
@@ -53,7 +53,7 @@ if st.session_state.page == "Admin":
                 st.rerun()
             else: st.error("Akses Ditolak!")
     else:
-        # --- DASHBOARD ADMIN (V-SCAN TETAP DI SINI UNTUK PRIVASI) ---
+        # --- DASHBOARD ADMIN ---
         st.header("💻 Command Center - Erwin Sinaga")
         st.markdown('<p class="header-text">🔍 V-SCAN: ANALISA DATA & DETEKSI FRAUD</p>', unsafe_allow_html=True)
         uploaded_file = st.file_uploader("Unggah Laporan Transaksi Klien", type=['csv', 'xlsx'])
@@ -61,16 +61,15 @@ if st.session_state.page == "Admin":
             with st.spinner('Memindai...'):
                 time.sleep(2)
                 st.success("✅ Audit Selesai.")
-
         st.write("---")
         st.subheader("📊 Monitoring Kepatuhan & Slot Waktu")
         st.table(pd.DataFrame(st.session_state.audit_logs))
 
 else:
-    # --- HALAMAN BERANDA (KEMBALI KE POSISI AWAL YANG BAGUS) ---
+    # --- HALAMAN BERANDA (PUBLIC VIEW) ---
     st.title("🛡️ VGUARD AI SYSTEMS")
     
-    # POSISI 1: ROI DI ATAS (SESUAI KEINGINAN BAPAK)
+    # POSISI 1: ROI DI ATAS (PERSIS SEPERTI SCREENSHOT YANG BAGUS)
     st.write("---")
     st.markdown('<p class="header-text">📈 KALKULATOR PENYELAMATAN PROFIT (ROI)</p>', unsafe_allow_html=True)
     st.markdown('<div class="roi-box">', unsafe_allow_html=True)
@@ -85,7 +84,7 @@ else:
         st.success(f"#### Diselamatkan VGUARD: Rp {saved:,.0f} / bln")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # POSISI 2: PROFIL DI BAWAH ROI
+    # POSISI 2: PROFIL & FILOSOFI (MINIMAL 100 KATA + 10 TAHUN BANKER)
     st.write("---")
     col_p1, col_p2 = st.columns([1, 2.5])
     with col_p1:
@@ -94,21 +93,22 @@ else:
     with col_p2:
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
         st.write("""
-        Erwin Sinaga adalah pemimpin strategis dengan pengalaman lebih dari sepuluh tahun sebagai eksekutif senior perbankan nasional. 
-        VGUARD AI hadir dengan teknologi 'Digitizing Trust' untuk melindungi aset bisnis Anda dari fraud dengan standar keamanan finansial kelas dunia.
+        Erwin Sinaga adalah seorang pemimpin strategis dengan rekam jejak profesional yang prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Sepanjang kariernya, beliau telah mengelola berbagai risiko kompleks, memimpin transformasi digital perbankan, dan memastikan akurasi finansial pada level tertinggi. Berbekal pengalaman mendalam tersebut, beliau mendirikan **VGUARD AI Systems** dengan visi besar untuk mendemokratisasi keamanan sistem perbankan bagi pelaku usaha di semua tingkatan.
+
+        Filosofi kepemimpinan beliau tertuang dalam konsep **"Digitizing Trust, Eliminating Leakage"**. Bapak Erwin percaya bahwa kepercayaan pelanggan adalah aset yang paling rapuh sekaligus paling berharga. Oleh karena itu, beliau merancang VGUARD AI bukan sekadar sebagai alat audit teknis, melainkan sebagai perisai pertahanan strategis yang mampu mendeteksi potensi kecurangan (*fraud*) dan kebocoran profit secara *real-time*. Dengan integritas yang ditempa selama satu dekade di dunia perbankan, Bapak Erwin memastikan bahwa setiap rupiah dalam ekosistem bisnis kliennya terlindungi oleh teknologi yang presisi, transparan, dan tidak dapat dimanipulasi secara ilegal.
         """)
         if st.button("🚀 MASUK KE COMMAND CENTER (ADMIN)"):
             st.session_state.page = "Admin"
             st.rerun()
 
-    # POSISI 3: PAKET LAYANAN (TETAP DI BAWAH)
+    # POSISI 3: PAKET LAYANAN STRATEGIS
     st.write("---")
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     pk1, pk2, pk3, pk4 = st.columns(4)
     pk1.markdown('<div class="card"><b>V-START</b><hr>Audit Mingguan<br><b>2.5 JT</b></div>', unsafe_allow_html=True)
     pk2.markdown('<div class="card"><b>V-GROW</b><hr>Audit Harian<br><b>5 JT</b></div>', unsafe_allow_html=True)
     pk3.markdown('<div class="card"><b>V-PRIME</b><hr>Multi-Cabang<br><b>10 JT</b></div>', unsafe_allow_html=True)
-    pk4.markdown('<div class="card"><b>V-CUSTOM</b><hr>Full Support<br><b>NEGO</b></div>', unsafe_allow_html=True)
+    pk4.markdown('<div class="card"><b>V-CUSTOM</b><hr>Full ERP Support<br><b>NEGO</b></div>', unsafe_allow_html=True)
 
 st.write("---")
 st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
