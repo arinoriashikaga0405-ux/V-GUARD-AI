@@ -9,25 +9,17 @@ if 'auth' not in st.session_state: st.session_state.auth = False
 # --- 2. CONFIGURATION ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# --- 3. PREMIUM CSS (CEO EDITION) ---
+# --- 3. PREMIUM CSS (FIXED DESIGN) ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
-    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; width: 100%; }
-    .roi-container { 
-        border: 2px dashed #1e3a8a; 
+    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; width: 100%; height: 45px; }
+    .roi-section { 
+        background: #ffffff; 
+        padding: 30px; 
         border-radius: 15px; 
-        padding: 25px; 
-        background: #eff6ff; 
-        text-align: center;
+        border: 2px dashed #1e3a8a; 
         margin: 20px 0;
-    }
-    .roi-title { 
-        color: #1e3a8a; 
-        font-weight: bold; 
-        font-size: 1.2em; 
-        margin-bottom: 15px;
-        text-transform: uppercase;
     }
     .package-card { 
         background: white; 
@@ -38,13 +30,13 @@ st.markdown("""
         height: 100%;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
+    .header-text { color: #1e3a8a; font-weight: bold; border-left: 5px solid #1e3a8a; padding-left: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 4. SIDEBAR ---
 with st.sidebar:
     st.markdown("### 👤 CEO: ERWIN SINAGA")
-    st.write("---")
     if st.button("🏠 Beranda Utama"): 
         st.session_state.page = "Home"
         st.rerun()
@@ -63,17 +55,16 @@ if st.session_state.page == "Home":
         st.info("📷 FOTO CEO ERWIN SINAGA")
     with col2:
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
-        st.write("Lebih dari 10 tahun pengalaman eksekutif perbankan nasional mendasari presisi VGUARD AI dalam menjaga aset bisnis Anda.")
+        st.write("Lebih dari 10 tahun pengalaman sebagai eksekutif perbankan nasional mendasari presisi VGUARD AI dalam menjaga aset bisnis Anda.")
         if st.button("🚀 MASUK KE COMMAND CENTER"): 
             st.session_state.page = "Admin"
             st.rerun()
 
     st.write("---")
     
-    # --- BOX ANALISIS ROI (POTENSI KERUGIAN) ---
-    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
-    st.markdown('<div class="roi-title">ANALISIS POTENSI KERUGIAN & PROTEKSI PROFIT</div>', unsafe_allow_html=True)
-    
+    # --- CALCULATOR ROI (KOTAK KOSONG SUDAH DIHAPUS) ---
+    st.markdown('<h3 style="color:#1e3a8a;">ANALISIS POTENSI KERUGIAN & PROTEKSI PROFIT</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="roi-section">', unsafe_allow_html=True)
     oz = st.number_input("Omzet Bulanan Bisnis (Rp)", value=250000000)
     kb = st.slider("Estimasi Kebocoran/Fraud (%)", 1, 15, 3)
     
@@ -84,7 +75,7 @@ if st.session_state.page == "Home":
     st.success(f"Profit Diselamatkan V-GUARD (Efisiensi 95%): Rp {saved:,.0f} / bln")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- PAKET LAYANAN STRATEGIS (RESTORED) ---
+    # --- PAKET LAYANAN STRATEGIS ---
     st.write("---")
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     p1, p2, p3 = st.columns(3)
@@ -105,23 +96,25 @@ elif st.session_state.page == "Admin":
                 st.rerun()
             else: st.error("Akses Ditolak!")
     else:
-        # --- COMMAND CENTER (CLEANED) ---
+        # --- COMMAND CENTER FIXED (INDENTASI DIPERBAIKI) ---
         st.header("💻 Command Center - Erwin Sinaga")
         tab1, tab2, tab3 = st.tabs(["🔍 V-Scan", "📊 Monitoring", "💰 Billing"])
         
         with tab1:
-            st.markdown("### 🚀 V-SCAN: ANALISA FRAUD")
+            st.markdown('<p class="header-text">🚀 V-SCAN: ANALISA FRAUD</p>', unsafe_allow_html=True)
             up = st.file_uploader("Unggah Data", type=['csv', 'xlsx'])
             if up:
-                st.success("✅ Analisa Berhasil")
-                if st.button("📲 KIRIM WHATSAPP"): st.success("Terkirim!")
+                st.success("✅ File Berhasil Dianalisa")
+                if st.button("📲 KIRIM WHATSAPP"):
+                    st.success("Terkirim!")
 
         with tab2:
-            st.markdown("### 📅 MONITORING AUDIT")
-            if st.button("📲 KIRIM REMINDER"): st.success("Reminder Terkirim!")
+            st.markdown('<p class="header-text">📅 MONITORING AUDIT</p>', unsafe_allow_html=True)
+            if st.button("📲 KIRIM REMINDER"):
+                st.success("Reminder Terkirim!")
             
         with tab3:
-            st.write("Data Billing & AR Aktif.")
+            st.write("Sistem Billing AR Control Aktif.")
 
 st.write("---")
 st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
