@@ -9,14 +9,13 @@ if 'auth' not in st.session_state: st.session_state.auth = False
 # --- 2. CONFIGURATION ---
 st.set_page_config(page_title="VGUARD AI Systems - CEO Erwin Sinaga", page_icon="🛡️", layout="wide")
 
-# --- 3. PREMIUM CSS (RINGKAS & EKSEKUTIF) ---
+# --- 3. PREMIUM CSS ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
     .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; width: 100%; height: 45px; }
     .roi-section { background: #ffffff; padding: 20px; border-radius: 12px; border: 2px dashed #1e3a8a; margin: 10px 0; }
     
-    /* CSS UNTUK 4 KOTAK PAKET - TINGGI 200PX */
     .package-card { 
         background: white; 
         padding: 12px; 
@@ -32,6 +31,9 @@ st.markdown("""
     
     .profile-box { background: #f1f5f9; padding: 20px; border-radius: 12px; border-left: 6px solid #1e3a8a; }
     .header-text { color: #1e3a8a; font-weight: bold; border-left: 5px solid #1e3a8a; padding-left: 10px; margin: 12px 0; }
+    
+    /* Style khusus agar foto melengkung rapi */
+    .img-style { border-radius: 15px; border: 2px solid #1e3a8a; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -49,12 +51,14 @@ with st.sidebar:
 
 # --- 5. LOGIKA HALAMAN ---
 if st.session_state.page == "Home":
-    st.markdown('<h1 style="text-align:center; color:#1e3a8a; margin-bottom:0;">🛡️ VGUARD AI SYSTEMS</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="text-align:center; color:#1e3a8a; margin-bottom:10px;">🛡️ VGUARD AI SYSTEMS</h1>', unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 2.2])
     with col1:
-        # FOTO DIPULIHKAN (UKURAN KECIL PROPORSIAL)
-        st.markdown('<div style="background:#e2e8f0; height:280px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:2px solid #1e3a8a; color:#1e3a8a; font-weight:bold; text-align:center; font-size:0.9em; padding:10px;">FOTO EKSEKUTIF<br>ERWIN SINAGA</div>', unsafe_allow_html=True)
+        # FOTO CEO - Saya menggunakan link gambar sementara (Avatar Eksekutif)
+        # Bapak bisa mengganti URL di bawah ini dengan link foto Bapak sendiri
+        st.image("https://www.w3schools.com/howto/img_avatar.png", width=250, caption="Erwin Sinaga - Founder & CEO")
+        
     with col2:
         st.markdown('<div class="profile-box">', unsafe_allow_html=True)
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
@@ -84,7 +88,7 @@ if st.session_state.page == "Home":
     st.error(f"Potensi Rugi: Rp {loss:,.0f} | Profit Diselamatkan AI: Rp {(loss * 0.95):,.0f}")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- 4 PAKET LAYANAN STRATEGIS (UKURAN KECIL) ---
+    # --- 4 PAKET LAYANAN STRATEGIS (TINGGI 200PX) ---
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     p1, p2, p3, p4 = st.columns(4)
     with p1:
