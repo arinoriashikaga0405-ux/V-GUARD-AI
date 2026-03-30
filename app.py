@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 import time
 
-# --- 1. INITIALIZE SESSION STATE (FIX NameError) ---
+# --- 1. INITIALIZE SESSION STATE ---
 if 'page' not in st.session_state: st.session_state.page = "Home"
 if 'auth' not in st.session_state: st.session_state.auth = False
 if 'audit_logs' not in st.session_state:
@@ -15,7 +15,7 @@ if 'audit_logs' not in st.session_state:
 # --- 2. CONFIGURATION ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# --- 3. PREMIUM CSS (CENTERED HEADER) ---
+# --- 3. PREMIUM CSS (KUNCI TAMPILAN DEPAN) ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
@@ -25,21 +25,15 @@ st.markdown("""
     .header-text { color: #1e3a8a; font-weight: bold; border-left: 5px solid #1e3a8a; padding-left: 10px; }
     .centered-logo { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 30px; }
     .centered-logo h1 { color: #1e3a8a; font-weight: 800; margin: 0; font-size: 2.5rem; }
+    .admin-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. CENTERED LOGO & TITLE ---
-st.markdown("""
-    <div class="centered-logo">
-        <h1>🛡️ VGUARD AI SYSTEMS</h1>
-    </div>
-""", unsafe_allow_html=True)
-
-# --- 5. SIDEBAR (CEO ERWIN SINAGA) ---
+# --- 4. SIDEBAR (CEO ERWIN SINAGA) ---
 with st.sidebar:
     try: st.image("erwin.jpg", width=120)
     except: st.info("👤 CEO: ERWIN SINAGA")
-    st.markdown("### ERWIN SINAGA")
+    st.markdown(f"### ERWIN SINAGA")
     st.caption("Founder & CEO VGUARD AI")
     st.write("---")
     if st.button("🏠 Beranda Utama"): 
@@ -52,34 +46,65 @@ with st.sidebar:
             st.rerun()
     st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
 
-# --- 6. LOGIKA HALAMAN ---
+# --- 5. LOGIKA HALAMAN ---
 if st.session_state.page == "Admin":
     if not st.session_state.auth:
-        st.header("🔐 Executive Access")
-        pwd = st.text_input("Password Admin:", type="password")
-        if st.button("Masuk ke Command Center"):
-            if pwd == "VGUARD2026":
-                st.session_state.auth = True
-                st.rerun()
-            else: st.error("Akses Ditolak!")
+        st.markdown('<div class="centered-logo"><h1>🔐 Executive Access</h1></div>', unsafe_allow_html=True)
+        col_l1, col_l2, col_l3 = st.columns([1,2,1])
+        with col_l2:
+            pwd = st.text_input("Password Admin:", type="password")
+            if st.button("Masuk ke Command Center"):
+                if pwd == "VGUARD2026":
+                    st.session_state.auth = True
+                    st.rerun()
+                else: st.error("Akses Ditolak!")
     else:
-        # --- DASHBOARD KENDALI ADMIN (COMMAND CENTER) ---
+        # --- COMMAND CENTER - FOKUS PENGEMBANGAN ---
         st.header("💻 Command Center - Erwin Sinaga")
-        st.markdown('<p class="header-text">📑 Monitoring Kepatuhan & Penjadwalan Audit</p>', unsafe_allow_html=True)
-        st.table(pd.DataFrame(st.session_state.audit_logs))
         
-        c1, c2 = st.columns(2)
-        with c1: st.button("🚨 KIRIM REMINDER WA OTOMATIS")
-        with c2: st.button("🔔 KIRIM NOTIFIKASI FRAUD")
+        # TAB UNTUK ORGANISASI ADMIN
+        tab1, tab2, tab3 = st.tabs(["📊 Audit Monitoring", "💰 Invoice & AR", "⚙️ Client Management"])
         
-        st.write("---")
-        st.markdown('<p class="header-text">📑 Kelola Invoice & AR</p>', unsafe_allow_html=True)
-        st.button("🔔 BLAST NOTIFIKASI JATUH TEMPO")
+        with tab1:
+            st.markdown('<p class="header-text">🔎 MONITORING KEPATUHAN & PENJADWALAN</p>', unsafe_allow_html=True)
+            st.table(pd.DataFrame(st.session_state.audit_logs))
+            
+            col_act1, col_act2 = st.columns(2)
+            with col_act1:
+                if st.button("📲 KIRIM REMINDER WA OTOMATIS"):
+                    st.toast("Reminder dikirim ke klien 'Belum Upload'...")
+            with col_act2:
+                if st.button("🔔 KIRIM NOTIFIKASI FRAUD"):
+                    st.warning("Peringatan Fraud Alert telah dikirim ke Toko Berkah.")
+
+        with tab2:
+            st.markdown('<p class="header-text">💵 KELOLA INVOICE & AR (Accounts Receivable)</p>', unsafe_allow_html=True)
+            invoice_data = {
+                "Klien": ["Toko Berkah", "B2B Trading Sinar"],
+                "Jatuh Tempo": ["2026-04-05", "2026-04-12"],
+                "Tagihan": ["Rp 5.000.000", "Rp 10.000.000"],
+                "Status": ["Belum Bayar", "Lunas"]
+            }
+            st.dataframe(pd.DataFrame(invoice_data), use_container_width=True)
+            if st.button("📢 BLAST NOTIFIKASI JATUH TEMPO"):
+                st.success("Blast email & WA penagihan selesai.")
+
+        with tab3:
+            st.markdown('<p class="header-text">👤 MANAGEMENT KLIEN BARU</p>', unsafe_allow_html=True)
+            with st.form("tambah_klien"):
+                nk = st.text_input("Nama Klien Baru")
+                seg = st.selectbox("Segmen Bisnis", ["Retail", "B2B Trading", "Property"])
+                pack = st.selectbox("Paket Layanan", ["V-START", "V-GROW", "V-PRIME", "V-CUSTOM"])
+                if st.form_submit_button("Daftarkan Klien"):
+                    st.session_state.audit_logs.append({"Klien": nk, "Segmen": seg, "Jadwal": "00:00", "Status": "⏳ Baru", "Waktu": "-", "Hasil": "Pending"})
+                    st.success(f"Klien {nk} berhasil ditambahkan ke database.")
 
 else:
-    # --- HALAMAN BERANDA ---
-    # SEKSI PROFIL & FILOSOFI
+    # --- BERANDA UTAMA (KUNCI: JANGAN DIRUBAH) ---
+    st.markdown('<div class="centered-logo"><h1>🛡️ VGUARD AI SYSTEMS</h1></div>', unsafe_allow_html=True)
     st.write("---")
+    
+    # PROFIL (Sesuai Screenshot Bapak)
     col_p1, col_p2 = st.columns([1, 2.5])
     with col_p1:
         try: st.image("erwin.jpg", use_container_width=True)
@@ -95,7 +120,7 @@ else:
             st.session_state.page = "Admin"
             st.rerun()
 
-    # SEKSI ROI (DI BAWAH FOTO)
+    # ROI DI BAWAH FOTO (Sesuai Instruksi)
     st.write("---")
     st.markdown('<p class="header-text">📈 KALKULATOR PENYELAMATAN PROFIT (ROI)</p>', unsafe_allow_html=True)
     st.markdown('<div class="roi-box">', unsafe_allow_html=True)
@@ -110,7 +135,7 @@ else:
         st.success(f"#### Diselamatkan VGUARD: Rp {saved:,.0f} / bln")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # SEKSI PAKET LAYANAN STRATEGIS
+    # PAKET LAYANAN
     st.write("---")
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     pk1, pk2, pk3, pk4 = st.columns(4)
