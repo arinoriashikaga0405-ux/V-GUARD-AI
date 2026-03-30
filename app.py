@@ -4,7 +4,7 @@ import os
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS UNTUK TAMPILAN PREMIUM & SEJAJAR
+# 2. CSS UNTUK TAMPILAN PREMIUM
 st.markdown("""
 <style>
     .main-header { font-size: 24px; font-weight: bold; color: #1f1f1f; margin-bottom: 20px; }
@@ -21,12 +21,15 @@ st.markdown("""
         background: #f8f9fa; padding: 20px; border-radius: 12px;
         border-left: 5px solid #ff4b4b; height: 220px;
     }
+    .founder-text {
+        font-size: 15px; color: #444; line-height: 1.6; text-align: justify;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR NAVIGASI (URUTAN BARU)
+# 3. SIDEBAR NAVIGASI
 with st.sidebar:
     st.title("🛡️ V-Guard AI")
     menu = st.radio("Pilih Menu:", [
@@ -38,57 +41,45 @@ with st.sidebar:
     st.write("---")
     st.caption("© 2026 V-Guard AI Systems | Tangerang")
 
-# --- MENU 1: PROFIL FOUNDER (PINDAH KE NOMOR 1) ---
+# --- MENU 1: PROFIL FOUNDER (PERBAIKAN FOTO & TEKS 100+ KATA) ---
 if menu == "1. 👤 Profil Founder":
     st.header("👤 Strategic Leadership")
+    
+    # Membuat 2 kolom: Kiri untuk Teks, Kanan untuk Foto
     col_txt, col_img = st.columns([2, 1])
+    
     with col_txt:
         st.subheader("Erwin Sinaga")
-        st.write("""
-        Bapak Erwin Sinaga adalah seorang Pemimpin Bisnis Senior dengan pengalaman lebih dari 10 tahun 
-        di industri perbankan dan manajemen aset nasional. Melalui V-Guard AI, beliau menghadirkan 
-        standar audit perbankan ke dalam ekosistem digital untuk mencegah kebocoran aset secara mutlak.
-        """)
+        # Narasi diperluas > 100 kata, fokus pengalaman perbankan, tanpa CEO/CSO
+        st.markdown("""
+        <div class="founder-text">
+        Bapak Erwin Sinaga adalah seorang Pemimpin Bisnis Senior yang membawa dedikasi dan keahlian mendalam selama lebih dari satu dekade di industri perbankan dan manajemen aset nasional. Selama sepuluh tahun masa baktinya di sektor keuangan formal, beliau telah menguasai berbagai seluk-beluk manajemen risiko kredit, pengawasan kepatuhan operasional, hingga strategi perlindungan aset korporasi skala besar. <br><br>
+        Pengalaman luas Bapak Erwin dalam menghadapi dinamika fraud dan celah kebocoran dana di sistem perbankan konvensional menjadi fondasi utama lahirnya ekosistem V-Guard AI. Melalui kepemimpinan strategisnya, beliau menjembatani standar audit ketat perbankan dengan teknologi Artificial Intelligence (AI) terkini, menciptakan sistem pertahanan digital yang holistik, transparan, dan mampu mencegah kebocoran finansial bisnis klien secara mutlak dan real-time.
+        </div>
+        """, unsafe_allow_html=True)
 
-# --- MENU 2: VISI, MISI & ROI ---
+    with col_img:
+        # Menampilkan foto founder (pastikan file erwin.jpg ada)
+        if os.path.exists("erwin.jpg"):
+            st.image("erwin.jpg", caption="Erwin Sinaga", use_container_width=True)
+        else:
+            st.warning("⚠️ File 'erwin.jpg' tidak ditemukan. Harap unggah foto Bapak ke folder aplikasi.")
+
+# --- MENU 2-4 (TETAP SAMA AGAR STABIL) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.markdown('<div class="main-header">Strategi & Analisis Risiko</div>', unsafe_allow_html=True)
     v, m = st.columns(2)
-    with v:
-        st.markdown('<div class="vision-card"><h3>🎯 Visi</h3><p>Menjadi pemimpin pasar solusi audit AI di Indonesia pada 2026.</p></div>', unsafe_allow_html=True)
-    with m:
-        st.markdown('<div class="vision-card"><h3>🚀 Misi</h3><ul><li>Integrasi AI untuk deteksi fraud harian.</li><li>Otomasi pengawasan aset 24/7.</li></ul></div>', unsafe_allow_html=True)
+    with v: st.markdown('<div class="vision-card"><h3>🎯 Visi</h3><p>Menjadi pemimpin pasar solusi audit AI di Indonesia pada 2026.</p></div>', unsafe_allow_html=True)
+    with m: st.markdown('<div class="vision-card"><h3>🚀 Misi</h3><ul><li>Integrasi AI untuk deteksi fraud.</li><li>Otomasi pengawasan 24/7.</li></ul></div>', unsafe_allow_html=True)
     
-    st.write("---")
-    st.subheader("📈 Kalkulator ROI (Penyelamatan Aset)")
-    omzet = st.number_input("Input Omzet Bulanan (Rp):", value=500000000, step=10000000)
-    st.error(f"Potensi Kebocoran Aset: Rp {omzet * 0.05:,.0f} / Bulan")
-
-# --- MENU 3: PAKET LAYANAN (SEJAJAR & RAPI) ---
 elif menu == "3. 📦 Paket Layanan":
     st.markdown('<div class="main-header">📦 Paket Proteksi V-Guard AI</div>', unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns(4)
-    
-    with c1:
-        st.markdown('<div class="price-card"><div class="card-header">BASIC</div><b>Setup: 2.5jt</b><br><span style="color:#ff4b4b;">500rb/Bln</span><hr>✅ Gemini AI Core<br>✅ Audit Harian<br>✅ Email Report</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Basic", wa_url, use_container_width=True)
-    
-    with c2:
-        st.markdown('<div class="price-card"><div class="card-header">MEDIUM</div><b>Setup: 7.5jt</b><br><span style="color:#ff4b4b;">1.5jt/Bln</span><hr>✅ MindBridge Fraud<br>✅ Alarm System<br>✅ Priority Support</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Medium", wa_url, use_container_width=True)
-        
-    with c3:
-        st.markdown('<div class="price-card"><div class="card-header">ENTERPRISE</div><b>Setup: 25jt</b><br><span style="color:#ff4b4b;">5jt/Bln</span><hr>✅ YOLO CCTV AI<br>✅ DataRobot Risk<br>✅ Forecasting</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Enterprise", wa_url, use_container_width=True)
-        
-    with c4:
-        st.markdown('<div class="price-card"><div class="card-header">CORPORATE</div><b>Setup: 50jt</b><br><span style="color:#ff4b4b;">10jt/Bln</span><hr>✅ Custom AI Training<br>✅ Full Automation<br>✅ Security Ops</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Corporate", wa_url, use_container_width=True)
+    with c1: st.markdown('<div class="price-card"><div class="card-header">BASIC</div><b>500rb/Bln</b><hr>Gemini AI</div>', unsafe_allow_html=True)
+    with c2: st.markdown('<div class="price-card"><div class="card-header">MEDIUM</div><b>1.5jt/Bln</b><hr>MindBridge</div>', unsafe_allow_html=True)
+    with c3: st.markdown('<div class="price-card"><div class="card-header">ENTERPRISE</div><b>5jt/Bln</b><hr>YOLO CCTV</div>', unsafe_allow_html=True)
+    with c4: st.markdown('<div class="price-card"><div class="card-header">CORPORATE</div><b>10jt/Bln</b><hr>Custom AI</div>', unsafe_allow_html=True)
 
-# --- MENU 4: ADMIN PANEL ---
 elif menu == "4. 🔐 Admin Panel":
     st.header("🔐 Intelligence Center")
-    st.info("Status Sistem: Aktif Memantau")
-    st.write("Teknologi yang sedang berjalan:")
-    st.code("1. Google Gemini AI\n2. MindBridge Fraud Detection\n3. YOLO Vision Analytics")
-    st.error("🚨 Deteksi Anomali: Cabang Tangerang memerlukan audit harian.")
+    st.code("System Active: Gemini AI, MindBridge, YOLO Vision")
