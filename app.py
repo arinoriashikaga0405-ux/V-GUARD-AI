@@ -143,4 +143,21 @@ elif menu == "3. 📦 Paket Layanan":
 # --- MENU 4: ADMIN DASHBOARD ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
-    pwd = st.text_
+    pwd = st.text_input("Masukkan Password Admin:", type="password")
+    if pwd == "admin123":
+        st.success("Akses Diterima.")
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Klien Aktif", "12 Cabang")
+        m2.metric("Omzet Terpantau", "Rp 6.2 Miliar")
+        m3.metric("Aset Diselamatkan", "Rp 310 Juta")
+        st.write("---")
+        uploaded = st.file_uploader("Unggah Laporan Transaksi untuk Audit AI", type=['csv', 'xlsx'])
+        if uploaded:
+            with st.status("V-Guard AI memproses data...", expanded=True) as status:
+                st.write("🤖 Menganalisis integritas data...")
+                time.sleep(2)
+                status.update(label="Audit Selesai!", state="complete")
+            st.markdown('<div class="alarm-banner">🚨 FRAUD DETECTED: Anomali ditemukan!</div>', unsafe_allow_html=True)
+            st.download_button("📥 Unduh Laporan PDF", "Data Audit V-Guard", file_name="Audit_VGuard.pdf", use_container_width=True)
+    elif pwd != "":
+        st.error("Password Salah!")
