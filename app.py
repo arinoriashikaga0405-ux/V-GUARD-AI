@@ -5,7 +5,7 @@ import plotly.express as px
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Dashboard", page_icon="🛡️", layout="wide")
 
-# 2. STATUS LOGIN (Menggunakan password dari Secrets Streamlit)
+# 2. STATUS LOGIN
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
@@ -38,95 +38,58 @@ st.header("📊 V-Guard AI - Business Strategy Dashboard")
 st.write("---")
 st.subheader("📦 Product Packages & Features")
 
-# Data Final Produk
 data_produk = [
     {
         "Segmen": "Mikro",
         "Paket": "Basic Guard",
         "Instalasi": "Rp 2.500.000",
         "Bulanan": "Rp 750.000",
-        "Fitur Unggulan": [
-            "Monitoring Transaksi Real-time",
-            "Laporan Arus Kas Bulanan",
-            "Notifikasi Email Otomatis",
-            "Kuota 1.000 Transaksi/Bulan"
-        ]
+        "Fitur": ["Monitoring Real-time", "Laporan Kas Bulanan", "Email Alert", "Limit 1rb Transaksi"]
     },
     {
         "Segmen": "Menengah",
         "Paket": "Premium Shield",
         "Instalasi": "Rp 7.500.000",
         "Bulanan": "Rp 2.500.000",
-        "Fitur Unggulan": [
-            "Advanced Fraud Detection AI",
-            "Notifikasi WhatsApp Real-time",
-            "Dashboard Analitik Interaktif",
-            "Kuota 5.000 Transaksi/Bulan"
-        ]
+        "Fitur": ["Advanced Fraud AI", "WhatsApp Alert", "Analitik Dashboard", "Limit 5rb Transaksi"]
     },
     {
         "Segmen": "Enterprise",
         "Paket": "Enterprise Vault",
         "Instalasi": "Rp 50.000.000",
         "Bulanan": "Rp 8.500.000",
-        "Fitur Unggulan": [
-            "Integrasi ERP (SAP/Oracle/Odoo)",
-            "AI CCTV Monitoring (Object Detection)",
-            "Audit Keamanan Finansial Berkala",
-            "Custom AI Model sesuai Data Historis"
-        ]
+        "Fitur": ["ERP Integration", "AI CCTV Object Detection", "Audit Keamanan", "Custom AI Model"]
     },
     {
         "Segmen": "Corporate",
         "Paket": "Elite Managed",
         "Instalasi": "Rp 85.000.000",
         "Bulanan": "Rp 15.000.000",
-        "Fitur Unggulan": [
-            "AI CCTV Face Recognition & Behavior",
-            "Full Managed Security Operations",
-            "Advisory Langsung (Erwin Sinaga)",
-            "Unlimited Data & 24/7 Priority Support"
-        ]
+        "Fitur": ["AI CCTV Face Recognition", "Managed Security Ops", "Advisory Pak Erwin", "Unlimited Data"]
     }
 ]
 
-# Tampilan Grid 4 Kolom
 cols = st.columns(4)
 for i, p in enumerate(data_produk):
     with cols[i]:
         st.info(f"**{p['Segmen']}**")
         st.subheader(p['Paket'])
-        st.write(f"⚙️ **Setup:** {p['Instalasi']}")
-        st.write(f"💳 **Bulan:** {p['Bulanan']}")
-        st.write("**Fitur:**")
-        for f in p['Fitur Unggulan']:
+        st.write(f"⚙️ Setup: **{p['Instalasi']}**")
+        st.write(f"💳 Bulanan: **{p['Bulanan']}**")
+        for f in p['Fitur']:
             st.markdown(f"- {f}")
-        st.write("---")
 
-# 5. TOMBOL WHATSAPP FOUNDER
+# 5. TOMBOL WHATSAPP FOUNDER (VERSI FIX ANTI-ERROR)
 st.write("---")
 st.header("📲 Hubungi Konsultan Kami")
-st.write("Klik tombol di bawah ini untuk konsultasi langsung dengan Founder mengenai integrasi sistem AI di perusahaan Anda.")
+st.write("Klik tombol di bawah ini untuk konsultasi langsung dengan Pak Erwin Sinaga.")
 
-# Silakan ganti nomor di bawah ini jika ingin menggunakan nomor lain
-whatsapp_link = "https://wa.me/6281234567890?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20layanan%20V-Guard%20AI"
+# Ganti nomor WA di bawah ini dengan nomor Bapak yang aktif
+whatsapp_number = "6281234567890" 
+text_pesan = "Halo Pak Erwin, saya tertarik dengan layanan V-Guard AI"
+wa_url = f"https://wa.me/{whatsapp_number}?text={text_pesan.replace(' ', '%20')}"
 
-st.markdown(f"""
-<a href="{whatsapp_link}" target="_blank">
-    <button style="
-        background-color: #25D366;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        font-size: 18px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        width: 100%;">
-        Hubungi Erwin Sinaga via WhatsApp
-    </button>
-</a>
-""", unsafe_allow_all_html=True)
+st.link_button("👉 Hubungi Erwin Sinaga via WhatsApp", wa_url, use_container_width=True, type="primary")
 
 # 6. PROFIL FOUNDER
 st.write("---")
@@ -143,4 +106,4 @@ with col_p2:
     st.write("Berdedikasi memanfaatkan AI untuk keamanan finansial. Dengan pengalaman 10+ tahun di perbankan dan aset sebagai CEO & CSO, saya mendirikan V-Guard AI untuk solusi cerdas UMKM hingga Korporasi.")
 
 st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Berdomisili di Tangerang, Indonesia")
+st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
