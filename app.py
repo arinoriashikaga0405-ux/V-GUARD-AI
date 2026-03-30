@@ -5,31 +5,40 @@ import time
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS CUSTOM UNTUK TAMPILAN PREMIUM & FOOTER
+# 2. CSS CUSTOM UNTUK TAMPILAN PREMIUM
 st.markdown("""
 <style>
+    /* Status Hijau di Sidebar */
     .status-connected { color: #28a745; font-weight: bold; font-size: 18px; }
+    
+    /* Kotak Paket Layanan agar Sejajar dan Sama Tinggi */
     .package-box {
-        height: 420px;
+        height: 480px;
         padding: 20px;
         border: 1px solid #e0e0e0;
         border-radius: 10px;
         background-color: #ffffff;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
     }
+    
+    /* Footer Branding Sesuai Pesanan */
     .footer {
         position: fixed; left: 0; bottom: 0; width: 100%;
         background-color: #f8f9fa; color: #6c757d; text-align: center;
         padding: 10px; font-size: 13px; border-top: 1px solid #dee2e6;
         z-index: 999;
     }
+    
+    /* Teks Profil Rata Kanan-Kiri */
     .profile-text { text-align: justify; line-height: 1.8; }
 </style>
 """, unsafe_allow_html=True)
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR (STATUS SEDERHANA)
+# 3. SIDEBAR (STATUS BERSIH)
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
@@ -83,21 +92,44 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
         st.write("**Bagaimana V-Guard AI mendeteksi kecurangan?** Sistem kami menggunakan algoritma khusus untuk memindai pola transaksi yang tidak wajar secara otomatis.")
         st.write("**Apakah data bisnis saya aman?** Keamanan data adalah prioritas kami. Semua data dienkripsi dengan standar protokol perbankan.")
 
-# --- MENU 3: PAKET LAYANAN ---
+# --- MENU 3: PAKET LAYANAN (DIPERBAIKI AGAR SEJAJAR) ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Proteksi V-Guard AI")
+    st.write("Pilih paket yang sesuai dengan skala bisnis Anda:")
+    
+    # Menggunakan 4 kolom agar semua paket muncul dalam satu baris
     c1, c2, c3, c4 = st.columns(4)
+    
     with c1:
-        st.markdown("""<div class="package-box"><h3>BASIC</h3><b>Setup: 2.5jt</b><br><span style="color:#d32f2f">Monthly: 750rb</span><hr><ul><li>📊 Audit Harian</li><li>📁 Lap. PDF Mingguan</li><li>📱 Support WA</li></ul></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">BASIC</h3>
+        <b>Setup: 2.5jt</b><br><span style="color:#d32f2f">Monthly: 750rb</span><hr>
+        <ul><li>📊 Audit Harian</li><li>📁 Lap. PDF Mingguan</li><li>📱 Support WA</li></ul>
+        </div>""", unsafe_allow_html=True)
         st.link_button("Pilih BASIC", wa_url, use_container_width=True)
+        
     with c2:
-        st.markdown("""<div class="package-box"><h3>MEDIUM</h3><b>Setup: 7.5jt</b><br>Monthly: 1.5jt<hr><ul><li>🤖 AI Detection</li><li>👁️ Integrasi CCTV</li><li>🚨 Alarm Fraud</li></ul></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">MEDIUM</h3>
+        <b>Setup: 7.5jt</b><br>Monthly: 1.5jt<hr>
+        <ul><li>🤖 AI Detection</li><li>👁️ Integrasi CCTV</li><li>🚨 Alarm Fraud</li><li>📉 Analisis Tren</li></ul>
+        </div>""", unsafe_allow_html=True)
         st.link_button("Pilih MEDIUM", wa_url, use_container_width=True)
+        
     with c3:
-        st.markdown("""<div class="package-box"><h3>ENTERPRISE</h3><b>Setup: 25jt</b><br>Monthly: 5jt<hr><ul><li>🏢 Multi-Cabang</li><li>🖥️ Dashboard Admin</li><li>🧾 Auto-Invoice</li></ul></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">ENTERPRISE</h3>
+        <b>Setup: 25jt</b><br>Monthly: 5jt<hr>
+        <ul><li>🏢 Multi-Cabang</li><li>🖥️ Dashboard Admin</li><li>🧾 Auto-Invoice</li><li>🛡️ Proteksi Aset</li></ul>
+        </div>""", unsafe_allow_html=True)
         st.link_button("Pilih ENTERPRISE", wa_url, use_container_width=True)
+        
     with c4:
-        st.markdown("""<div class="package-box"><h3>CORPORATE</h3><b>Setup: 50jt</b><br>Monthly: 10jt<hr><ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📞 Priority 24/7</li></ul></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">CORPORATE</h3>
+        <b>Setup: 50jt</b><br>Monthly: 10jt<hr>
+        <ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📑 Laporan Pajak</li><li>📞 Priority 24/7</li></ul>
+        </div>""", unsafe_allow_html=True)
         st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
 
 # --- MENU 4: ADMIN DASHBOARD ---
@@ -109,12 +141,13 @@ elif menu == "4. 🔐 Admin Dashboard":
         st.metric("Total Aset Terproteksi", "Rp 6.2 Miliar")
         uploaded = st.file_uploader("Audit File", type=['csv', 'xlsx'])
         if uploaded:
-            with st.status("AI Menganalisis Data..."): time.sleep(2)
-            st.warning("Hasil Audit: Sistem Stabil.")
+            with st.status("AI Menganalisis Data..."):
+                time.sleep(2)
+            st.warning("Hasil Audit Selesai.")
     elif pwd != "":
         st.error("Akses Ditolak.")
 
-# 4. FOOTER (SESUAI PERMINTAAN)
+# 4. FOOTER BRANDING (TETAP DI BAWAH)
 st.markdown("""
 <div class="footer">
     © 2026 V-Guard AI Systems - Secured by Advanced Intelligence.
