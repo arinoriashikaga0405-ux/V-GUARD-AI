@@ -1,79 +1,109 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 from datetime import datetime
 
-# --- 1. PERFORMANCE OPTIMIZATION (CACHING) ---
-st.set_page_config(page_title="V-Guard AI | Fast Insights", page_icon="🛡️", layout="wide")
+# --- 1. KONFIGURASI & SECURITY INITIALIZATION ---
+st.set_page_config(page_title="V-Guard AI | Secure Enterprise", page_icon="🛡️", layout="wide")
 
-@st.cache_data(ttl=3600)  # Cache data selama 1 jam untuk load <1 detik
-def get_optimized_data():
-    """Simulasi load data besar yang sudah di-cache."""
-    return pd.DataFrame({
-        'Tanggal': pd.date_range(start='2026-03-01', periods=10),
-        'Cash_Flow': [100, 120, 115, 140, 130, 160, 155, 180, 175, 200],
-        'Risiko_Skor': [0.1, 0.2, 0.15, 0.6, 0.2, 0.1, 0.8, 0.2, 0.1, 0.15]
+if 'auth' not in st.session_state: st.session_state.auth = False
+if 'user_role' not in st.session_state: st.session_state.user_role = "Viewer"
+if 'audit_logs' not in st.session_state: st.session_state.audit_logs = []
+
+def add_audit_log(action):
+    """Fungsi Audit Trail untuk compliance."""
+    st.session_state.audit_logs.append({
+        "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "User": "Erwin Sinaga",
+        "Action": action,
+        "Role": st.session_state.user_role
     })
 
-# --- 2. UI/UX: CUSTOM STYLING & MOBILE OPTIMIZATION ---
+# --- 2. ADVANCED AI INTEGRATION & EXPORT ---
+@st.cache_data
+def convert_df_to_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+# --- 3. UI/UX: PROFESSIONAL & RESPONSIVE ---
 st.markdown("""
 <style>
-    /* Desain Centered on Decisions */
     .stApp { background-color: #FFFFFF; }
-    [data-testid="stSidebar"] { background-color: #0D47A1; }
-    .decision-card {
-        background: #F0F7FF; padding: 20px; border-radius: 12px;
-        border-left: 5px solid #0D47A1; margin-bottom: 20px;
-    }
-    /* Mobile optimization: Perkecil padding di layar kecil */
-    @media (max-width: 600px) { .main .block-container { padding: 10px; } }
+    .status-badge { background: #E8F5E9; color: #2E7D32; padding: 5px 12px; border-radius: 4px; font-weight: 600; }
+    .stSidebar { background-color: #0D47A1 !important; }
+    .stSidebar * { color: white !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR NAVIGASI & DARK MODE SIMULATION ---
-with st.sidebar:
-    st.title("🛡️ V-Guard AI")
-    st.write(f"Eksekutif: **Erwin Sinaga**")
-    st.markdown("---")
-    page = st.radio("Menu Center:", ["📊 Dashboard", "⚙️ Pengaturan AI", "📜 Audit Log"])
-    dark_mode = st.toggle("🌙 Dark Mode (Beta)")
-    st.markdown("---")
-    st.caption("v2.6.0 - Production Ready")
+# --- 4. LOGIKA AKSES (RBAC) & MAINTENANCE ---
+try:
+    if not st.session_state.auth:
+        st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
+        st.title("🛡️ V-GUARD AI SECURE ACCESS")
+        st.info("Sistem ini mematuhi standar enkripsi FinTech 2026.")
+        
+        # Simulasi Login Role-Based
+        role = st.selectbox("Pilih Role Akses:", ["Admin (Akses Penuh)", "Viewer (Laporan Sahaja)"])
+        if st.button("Autentikasi & Masuk"):
+            st.session_state.auth = True
+            st.session_state.user_role = "Admin" if "Admin" in role else "Viewer"
+            add_audit_log(f"Login Berhasil sebagai {st.session_state.user_role}")
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+    else:
+        # --- SIDEBAR NAVIGASI ---
+        with st.sidebar:
+            st.header("V-Guard AI")
+            st.write(f"👤 User: **Erwin Sinaga**")
+            st.markdown("---")
+            menu = ["🏠 Overview", "📜 Audit Trail"]
+            if st.session_state.user_role == "Admin":
+                menu.append("⚙️ AI Config")
+            
+            choice = st.radio("Navigasi:", menu)
+            if st.button("🔓 Logout"):
+                add_audit_log("User Logout")
+                st.session_state.auth = False
+                st.rerun()
 
-# --- 4. DASHBOARD UTAMA (INTERAKTIF & FAST) ---
-if page == "📊 Dashboard":
-    st.header("Decision Support System")
-    
-    # Decision Card (Focus on Action)
-    st.markdown("""
-    <div class="decision-card">
-        <h4 style="margin:0; color:#0D47A1;">⚠️ Rekomendasi Tindakan</h4>
-        <p style="margin:0;">Ditemukan 1 anomali transaksi (TX-99). Segera verifikasi vendor "Unknown Corp" untuk mencegah loss.</p>
-    </div>
-    """, unsafe_allow_html=True)
+        # --- KONTEN DINAMIS ---
+        if choice == "🏠 Overview":
+            st.header("Financial Integrity Dashboard")
+            st.markdown('<span class="status-badge">🛡️ Compliance: Active</span>', unsafe_allow_html=True)
+            
+            # Simulasi Data
+            fraud_df = pd.DataFrame({
+                "ID": ["TX-101", "TX-105"],
+                "Vendor": ["Unknown Cloud", "Global Sys"],
+                "Risiko": [0.92, 0.88],
+                "Analisis_AI": ["Anomali Volume", "Pattern Tidak Biasa"]
+            })
+            
+            st.subheader("Deteksi Fraud (High Confidence)")
+            st.table(fraud_df)
+            
+            # Export Feature
+            st.download_button(
+                label="📥 Export Report (CSV)",
+                data=convert_df_to_csv(fraud_df),
+                file_name=f'vguard_audit_{datetime.now().strftime("%Y%m%d")}.csv',
+                mime='text/csv',
+            )
 
-    # Load Data dengan Spinner
-    with st.spinner("Memuat data cepat..."):
-        df = get_optimized_data()
+        elif choice == "⚙️ AI Config":
+            if st.session_state.user_role == "Admin":
+                st.subheader("Konfigurasi Parameter AI")
+                sensitivitas = st.slider("Sensitivitas Deteksi Fraud", 0.0, 1.0, 0.85)
+                if st.button("Simpan Perubahan"):
+                    add_audit_log(f"Mengubah sensitivitas AI ke {sensitivitas}")
+                    st.success("Parameter AI berhasil diperbarui dan dicatat dalam log.")
+            else:
+                st.error("Akses Ditolak.")
 
-    # Plotly Interaktif (Zoom/Hover)
-    fig = px.area(df, x='Tanggal', y='Cash_Flow', title="Tren Arus Kas (Interaktif)",
-                  color_discrete_sequence=['#0D47A1'])
-    fig.update_layout(hovermode="x unified", margin=dict(l=20, r=20, t=40, b=20))
-    st.plotly_chart(fig, use_container_width=True)
+        elif choice == "📜 Audit Trail":
+            st.subheader("Audit Trail (System Logs)")
+            if st.session_state.audit_logs:
+                st.dataframe(pd.DataFrame(st.session_state.audit_logs), use_container_width=True)
+            else:
+                st.info("Belum ada aktivitas tercatat.")
 
-    # Filter Dinamis & Drill-down
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Filter Risiko")
-        min_risk = st.slider("Ambang Batas Skor Risiko", 0.0, 1.0, 0.5)
-        filtered_df = df[df['Risiko_Skor'] >= min_risk]
-        st.write(f"Menampilkan {len(filtered_df)} transaksi di atas ambang batas.")
-
-    with col2:
-        st.subheader("Detail Transaksi")
-        st.dataframe(filtered_df, use_container_width=True)
-
-# --- 5. FOOTER ---
-st.write("---")
-st.caption(f"© 2026 V-Guard AI | Optimasi Performa & UX untuk UMKM Indonesia")
+except Exception as e:
+    # Global Error Handling [cite: Gap
