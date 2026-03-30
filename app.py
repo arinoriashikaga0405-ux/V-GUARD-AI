@@ -1,86 +1,67 @@
 import streamlit as st
 import pandas as pd
-import datetime
+from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI | Interactive Dashboard", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="V-Guard AI Systems", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS UNTUK UI RESPONSIVE & TOOLTIP ---
+# --- 2. CSS MODERN & CLEAN ---
 st.markdown("""
 <style>
-    /* Tooltip Custom */
-    .tooltip {
-        position: relative; display: inline-block; border-bottom: 1px dotted #0D47A1; color: #0D47A1; cursor: help;
-    }
-    /* Mobile Optimization: Sidebar Width */
-    [data-testid="stSidebar"] { min-width: 250px; max-width: 300px; }
-    /* Dashboard Cards */
-    .card {
-        background: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #00BCD4;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    .stApp { font-family: 'Poppins', sans-serif; background-color: white; }
+    [data-testid="stSidebar"] { background-color: #0D47A1; }
+    [data-testid="stSidebar"] * { color: white !important; }
+    .card { background: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #00BCD4; margin-bottom: 20px; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. SECURITY: ROLE-BASED ACCESS GUARD ---
-if 'user_role' not in st.session_state:
-    st.session_state.user_role = "Viewer" # Default role aman
+# --- 3. SESSION STATE ---
+if 'auth' not in st.session_state: st.session_state.auth = False
 
-def check_admin_access():
-    """Guard untuk mencegah unauthorized edit."""
-    if st.session_state.user_role != "Admin":
-        st.error("🚫 Akses Ditolak: Anda memerlukan peran 'Admin' untuk mengubah konfigurasi ini.")
-        return False
-    return True
+# --- 4. LOGIKA NAVIGASI ---
+if not st.session_state.auth:
+    st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
+    st.image("https://cdn-icons-png.flaticon.com/512/1004/1004666.png", width=80)
+    st.title("V-GUARD AI SYSTEMS")
+    st.write("Intelligence That Protects Profit | Founder: Erwin Sinaga")
+    if st.button("🚀 MASUK KE COMMAND CENTER"):
+        st.session_state.auth = True
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# --- 4. SIDEBAR NAVIGASI FLEKSIBEL ---
-with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/1004/1004666.png", width=50)
-    st.title("V-Guard AI")
-    st.markdown("---")
-    
-    # Switcher Role untuk keperluan Demo/Testing Bapak
-    st.session_state.user_role = st.selectbox("Current Role (Demo Mode):", ["Admin", "Viewer"])
-    
-    menu = st.radio("Navigasi:", ["🏠 Dashboard", "👥 Manajemen User", "⚙️ Pengaturan AI"])
-    st.markdown("---")
-    st.caption(f"Logged in as: **Erwin Sinaga** ({st.session_state.user_role})")
+else:
+    with st.sidebar:
+        st.markdown("### 🛡️ V-Guard AI")
+        st.markdown("---")
+        menu = st.radio("Navigasi:", ["🏠 Overview", "👥 Manajemen User", "⚙️ Pengaturan AI"])
+        st.markdown("---")
+        if st.button("🔓 Logout"):
+            st.session_state.auth = False
+            st.rerun()
 
-# --- 5. AREA KONTEN UTAMA ---
-if menu == "🏠 Dashboard":
-    st.header("📊 Dashboard Overview")
+    st.header(f"💼 {menu}")
     
-    # Row 1: Widget Ringkasan dengan Tooltip
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown('<div class="card"><b>Total Saldo Dipantau</b> <span class="tooltip" title="Total dana dari seluruh rekening terhubung">ℹ️</span><h3>Rp 1.42 M</h3></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="card"><b>Potensi Fraud</b> <span class="tooltip" title="Transaksi yang ditandai AI sebagai anomali">ℹ️</span><h3>2 Alert</h3></div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown('<div class="card"><b>Cash Flow Health</b> <span class="tooltip" title="Stabilitas arus kas berdasarkan prediksi AI">ℹ️</span><h3>Optimal</h3></div>', unsafe_allow_html=True)
+    if menu == "🏠 Overview":
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown('<div class="card"><h4>Status Keamanan</h4><h2 style="color:#F44336;">HIGH RISK!</h2><p>2 Anomali Terdeteksi</p></div>', unsafe_allow_html=True)
+        with c2:
+            st.markdown('<div class="card"><h4>Total Monitoring</h4><h2>Rp 1.42 M</h2><p>Asset under protection</p></div>', unsafe_allow_html=True)
+        
+        st.subheader("Proyeksi Cash Flow")
+        chart_data = pd.DataFrame({'Actual': [10, 20, 15, 30], 'Target': [12, 18, 20, 35]})
+        st.line_chart(chart_data)
 
-    st.markdown("---")
-    
-    # Row 2: Charts Interaktif (Simulasi Plotly/Native Streamlit)
-    st.subheader("📈 Proyeksi Arus Kas (Interaktif)")
-    df = pd.DataFrame({
-        'Bulan': ['Jan', 'Feb', 'Mar', 'Apr'],
-        'Cash Flow': [100, 125, 110, 150]
-    }).set_index('Bulan')
-    
-    # Menggunakan Native Chart yang responsif (Otomatis menyesuaikan container width)
-    st.area_chart(df, color="#0D47A1", use_container_width=True)
-    st.info("💡 Tip: Hover pada grafik untuk melihat detail nilai per bulan.")
+    elif menu == "👥 Manajemen User":
+        st.subheader("Daftar Pengguna Aktif")
+        users = pd.DataFrame({
+            "Nama": ["Erwin Sinaga", "Jaya", "Shafen"],
+            "Role": ["CEO / Admin", "Manager", "Admin"],
+            "Status": ["Aktif", "Aktif", "Aktif"]
+        })
+        st.table(users)
 
-elif menu == "⚙️ Pengaturan AI":
-    st.subheader("⚙️ Konfigurasi Mesin Deteksi AI")
-    
-    # Require-role guard
-    if check_admin_access():
-        sensitivity = st.slider("Sensitivitas AI (Threshold):", 0.0, 1.0, 0.85)
-        st.write(f"Sensitivitas saat ini diatur pada: **{sensitivity}**")
-        if st.button("Simpan Perubahan"):
-            st.success("Konfigurasi berhasil diperbarui oleh Admin.")
-
-# --- 6. FOOTER ---
+# --- 5. FOOTER (DIPERBAIKI AGAR TIDAK ERROR) ---
 st.write("---")
-st.caption("© 2026 V-Guard AI
+st.caption("© 2026 V-Guard AI Systems | Developed for Erwin Sinaga")
