@@ -13,7 +13,7 @@ st.markdown("""
     
     /* Box Paket Layanan agar Rapi & Sejajar */
     .package-box {
-        height: 450px;
+        height: 500px;
         padding: 20px;
         border: 1px solid #e0e0e0;
         border-radius: 10px;
@@ -21,7 +21,7 @@ st.markdown("""
         margin-bottom: 10px;
     }
     
-    /* Footer Branding di Paling Bawah */
+    /* Footer Branding Permanen di Bawah */
     .footer-container {
         position: fixed;
         left: 0;
@@ -36,8 +36,8 @@ st.markdown("""
         z-index: 9999;
     }
     
-    /* Memberi ruang di bawah agar konten tidak tertutup footer */
-    .stApp { margin-bottom: 80px; }
+    /* Memberi ruang agar konten utama tidak tertutup footer */
+    .stApp { margin-bottom: 100px; }
     
     .profile-text { text-align: justify; line-height: 1.8; }
 </style>
@@ -45,7 +45,7 @@ st.markdown("""
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR (SESUAI AWAL)
+# 3. SIDEBAR
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
@@ -81,19 +81,17 @@ if menu == "1. 👤 Profil & Filosofi":
 
 # --- MENU 2: VISI, MISI & ROI ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("🎯 Analisis ROI")
+    st.header("🎯 Analisis Strategi")
     st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit AI di Indonesia.")
     st.write("---")
-    st.subheader("🚀 Misi Strategis")
-    st.write("1. Integrasi AI untuk deteksi fraud otomatis.")
-    st.write("2. Laporan audit transparan & real-time.")
-    st.write("3. Otomasi pengawasan aset 24/7.")
-    st.write("---")
-    st.subheader("📈 Kalkulator Penyelamatan Aset")
-    omzet = st.number_input("Input Omzet Bulanan (Rp):", value=500000000, step=10000000)
+    st.subheader("📈 Kalkulator Penyelamatan Aset (ROI)")
+    omzet = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=500000000, step=10000000)
     potensi_rugi = omzet * 0.05
     st.error(f"🚨 Estimasi Kebocoran Aset (5%): Rp {potensi_rugi:,.0f} / Bulan")
     st.success(f"🛡️ Target Penyelamatan V-Guard (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
+    st.write("---")
+    st.subheader("🚀 Misi Utama")
+    st.markdown("- **Otomasi**: Audit berbasis AI 24/7.\n- **Transparansi**: Laporan real-time tanpa manipulasi.\n- **Akurasi**: Deteksi anomali transaksi instan.")
 
 # --- MENU 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
@@ -120,19 +118,20 @@ elif menu == "3. 📦 Paket Layanan":
 # --- MENU 4: ADMIN DASHBOARD ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
+    # Password Baru: w1nbju8282
     pwd = st.text_input("Password Admin:", type="password")
-    if pwd == "admin123":
-        st.success("Sistem AI Aktif.")
+    if pwd == "w1nbju8282": 
+        st.success("Sistem AI Aktif. Selamat Datang Kembali, Pak Erwin.")
         st.metric("Total Aset Terproteksi", "Rp 6.2 Miliar")
         uploaded = st.file_uploader("Unggah File Audit", type=['csv', 'xlsx'])
         if uploaded:
-            with st.status("AI Menganalisis Data..."):
+            with st.status("AI Menganalisis Kebocoran..."):
                 time.sleep(2)
-            st.warning("Analisis Selesai: Tidak Ditemukan Anomali.")
+            st.warning("Analisis Selesai: Belum ditemukan indikasi fraud pada file ini.")
     elif pwd != "":
-        st.error("Akses Ditolak.")
+        st.error("Akses Ditolak. Password Salah.")
 
-# 4. FOOTER (SESUAI PERMINTAAN)
+# 4. FOOTER BRANDING (TETAP MUNCUL DI SEMUA MENU)
 st.markdown("""
 <div class="footer-container">
     © 2026 V-Guard AI Systems - Secured by Advanced Intelligence.
