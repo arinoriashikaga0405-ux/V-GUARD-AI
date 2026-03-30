@@ -7,18 +7,10 @@ from datetime import datetime
 # 1. KONFIGURASI HALAMAN & UI PREMIUM
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
+# CSS CUSTOM
 st.markdown("""
 <style>
-    .main-title { font-size: 32px; font-weight: 800; color: #1f1f1f; margin-bottom: 5px; }
-    .sub-title { font-size: 16px; color: #666; margin-bottom: 25px; }
-    .vision-mission-box {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 20px;
-        border-left: 5px solid #ff4b4b;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        margin-bottom: 20px;
-    }
+    /* Styling Kartu Paket Premium agar Tinggi Sejajar */
     .price-card {
         background: white; border-radius: 15px; padding: 0px; border: 1px solid #eee;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 420px;
@@ -38,7 +30,7 @@ st.markdown("""
 
 wa_url = "https://wa.me/6282122190885"
 
-# 2. DATA MASTER PAKET
+# DATA MASTER PAKET
 pkgs = {
     "MIKRO": {"N": "Basic Guard", "S": "2.5jt", "M": "500rb", "F": ["🛡️ AI Fraud Detection", "📩 Email Support", "📊 Laporan Mingguan"]},
     "MENENGAH": {"N": "Premium Shield", "S": "7.5jt", "M": "1.5jt", "F": ["🔍 Anomaly Detection", "🚨 Real-time Alarm", "🧾 Auto Invoice Pro", "📱 WA Priority Support"]},
@@ -46,49 +38,57 @@ pkgs = {
     "CORPORATE": {"N": "Elite Managed", "S": "85jt", "M": "10jt", "F": ["🧠 Custom AI Training", "🚨 Executive Alarm", "🧾 Auto Invoice Pro", "📹 CCTV AI 24/7", "👤 Dedicated Engineer"]}
 }
 
-# 3. SIDEBAR
+# 2. SIDEBAR NAVIGASI (URUTAN DIUBAH SESUAI PERMINTAAN)
 with st.sidebar:
+    # --- MENAMPILKAN FOTO FOUNDER DI ATAS LOGO ---
+    if os.path.exists("erwin.jpg"): 
+        st.image("erwin.jpg", use_container_width=True)
+    else: 
+        st.error("Silakan unggah file 'erwin.jpg' ke folder aplikasi.")
+
+    # LOGO PERUSAHAAN DI BAWAH FOTO
     st.title("🛡️ V-Guard AI")
-    menu = st.radio("Pilih Menu:", ["1. 🏠 Home & ROI", "2. 📦 Paket Solusi", "3. 👤 Profil Founder", "4. 🔐 Admin Panel"])
+    st.caption("Strategic Security Solutions | © 2026")
     st.write("---")
-
-# --- 1. HOME: VISI, MISI & ROI ---
-if menu == "1. 🏠 Home & ROI":
-    st.markdown('<div class="main-title">🛡️ Keamanan Masa Depan dengan AI</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-title">V-Guard AI Systems hadir untuk melindungi aset bisnis Anda secara otomatis dan cerdas.</div>', unsafe_allow_html=True)
     
-    # BAGIAN VISI & MISI
-    col_v, col_m = st.columns(2)
-    with col_v:
-        st.markdown("""
-        <div class="vision-mission-box">
-            <h4 style="color:#ff4b4b; margin-top:0;">🎯 Visi</h4>
-            <p style="font-size:14px; color:#444;">Menjadi <b>Intermediary Keamanan AI Global Nomor 1</b> yang mendemokratisasi teknologi proteksi finansial tingkat tinggi untuk semua skala bisnis di Indonesia pada tahun 2026.</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col_m:
-        st.markdown("""
-        <div class="vision-mission-box">
-            <h4 style="color:#ff4b4b; margin-top:0;">🚀 Misi</h4>
-            <ul style="font-size:14px; color:#444; padding-left:20px;">
-                <li>Mengintegrasikan AI adaptif untuk deteksi fraud dini.</li>
-                <li>Menyediakan solusi keamanan end-to-end yang terjangkau bagi UMKM.</li>
-                <li>Menjamin integritas aset klien melalui monitoring CCTV AI 24/7.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
+    # MENU DENGAN FOUNDER NOMOR 1
+    menu = st.radio("Pilih Menu:", [
+        "1. 👤 Profil Founder", 
+        "2. 🏠 Home & ROI", 
+        "3. 📦 Paket Solusi", 
+        "4. 🔐 Admin Panel"
+    ])
     st.write("---")
-    st.subheader("📈 Kalkulator Penyelamatan Aset")
+
+# --- 1. HALAMAN UTAMA: PROFIL FOUNDER ---
+if menu == "1. 👤 Profil Founder":
+    st.header("Strategic Leadership")
+    l, r = st.columns([1, 2])
+    with l:
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
+    with r:
+        st.subheader("Erwin Sinaga")
+        st.markdown("#### *Founder & Chief Executive Officer*")
+        st.write("""
+        Bapak Erwin Sinaga adalah seorang Senior Business Leader visioner dengan rekam jejak impresif selama lebih dari sepuluh tahun menduduki posisi strategis sebagai CEO dan CSO dalam industri perbankan serta manajemen aset. Pengalaman mendalam beliau dalam mengelola risiko operasional, memitigasi fraud finansial, dan menjaga integritas aset bernilai tinggi menjadi pondasi utama berdirinya V-Guard AI Systems.
+        """)
+
+# --- 2. HALAMAN HOME & ROI ---
+elif menu == "2. 🏠 Home & ROI":
+    st.title("🛡️ Keamanan Masa Depan dengan AI")
+    st.write("V-Guard AI Systems hadir untuk melindungi aset bisnis Anda secara otomatis.")
+    st.write("---")
+    st.subheader("📈 Kalkulator ROI")
     nt = st.number_input("Transaksi/Bulan:", value=1000)
     vt = st.number_input("Rata-rata Nilai (Rp):", value=500000)
     loss = (nt * vt) * 0.012
-    st.error(f"Potensi Kerugian Tanpa AI: Rp {loss:,.0f}")
-    st.success(f"Penyelamatan V-Guard AI (99%): Rp {loss * 0.99:,.0f}")
+    st.error(f"Potensi Kerugian: Rp {loss:,.0f}")
+    st.success(f"Penyelamatan AI: Rp {loss * 0.99:,.0f}")
 
-# --- 2. PAKET SOLUSI ---
-elif menu == "2. 📦 Paket Solusi":
+# --- 3. HALAMAN PAKET SOLUSI (DENGAN TAMPILAN KEREN) ---
+elif menu == "3. 📦 Paket Solusi":
     st.title("📦 Investasi Keamanan Bisnis")
+    
     def draw_premium_card(key):
         item = pkgs[key]
         features_html = "".join([f'<div class="feature-item">{f}</div>' for f in item['F']])
@@ -113,21 +113,10 @@ elif menu == "2. 📦 Paket Solusi":
     with c3: draw_premium_card("ENTERPRISE")
     with c4: draw_premium_card("CORPORATE")
 
-# --- 3. PROFIL FOUNDER ---
-elif menu == "3. 👤 Profil Founder":
-    st.header("Strategic Leadership")
-    l, r = st.columns([1, 2])
-    with l:
-        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
-        else: st.error("Silakan unggah 'erwin.jpg'")
-    with r:
-        st.subheader("Erwin Sinaga")
-        st.write("Bapak Erwin Sinaga adalah Senior Business Leader visioner dengan pengalaman lebih dari 10 tahun sebagai CEO/CSO di industri perbankan.")
-
 # --- 4. ADMIN PANEL ---
 elif menu == "4. 🔐 Admin Panel":
-    st.title("🔐 Admin Dashboard")
-    # ... (Fitur Admin tetap sama seperti sebelumnya)
+    st.title("🔐 Dashboard Admin")
+    st.write("Monitoring Real-time dan Alarm Aktif tersedia di sini.")
 
 st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia | Strategically Led by Erwin Sinaga")
+st.caption("© 2026 V-Guard AI Systems | Strategically Led by Erwin Sinaga")
