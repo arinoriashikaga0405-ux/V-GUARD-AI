@@ -66,8 +66,9 @@ if menu == "1. 👤 Profil & Filosofi":
         </div>
         """, unsafe_allow_html=True)
 
-# --- MENU 2: VISI, MISI & ROI (ROI DI BAWAH) ---
+# --- MENU 2: VISI, MISI & ROI (URUTAN DIPERBAIKI) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Analisis Strategi")
-    st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit AI di Indonesia.")
-    st.
+    
+    # Visi & Misi di Atas
+    st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit AI di Indonesia.
