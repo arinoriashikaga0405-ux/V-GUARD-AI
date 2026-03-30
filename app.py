@@ -5,25 +5,29 @@ import time
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. KONEKSI SISTEM AI & NOTIFIKASI (CSS)
+# 2. CSS UNTUK ALARM & NOTIFIKASI
 st.markdown("""
 <style>
     .alarm-banner {
-        background-color: #ff4b4b; color: white; padding: 10px;
-        border-radius: 8px; text-align: center; font-weight: bold;
-        animation: blinker 1.5s linear infinite;
+        background-color: #ff4b4b; color: white; padding: 15px;
+        border-radius: 10px; text-align: center; font-weight: bold;
+        border: 2px solid white; animation: blinker 1s linear infinite;
+        margin-bottom: 20px;
     }
-    @keyframes blinker { 50% { opacity: 0; } }
-    .invoice-card {
-        background: #e1f5fe; border-left: 5px solid #0288d1;
-        padding: 15px; border-radius: 5px; margin-top: 10px;
+    @keyframes blinker { 50% { opacity: 0.2; } }
+    .invoice-box {
+        background: #e3f2fd; border-left: 8px solid #1976d2;
+        padding: 20px; border-radius: 10px; margin-top: 15px;
+    }
+    .founder-text {
+        font-size: 16px; line-height: 1.7; text-align: justify;
     }
 </style>
 """, unsafe_allow_html=True)
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR DENGAN FOTO FOUNDER
+# 3. SIDEBAR NAVIGASI DENGAN FOTO DI ATAS
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
@@ -31,74 +35,44 @@ with st.sidebar:
     st.write("---")
     menu = st.radio("Folder Menu:", [
         "1. 👤 Profil Founder", 
-        "2. 🎯 Visi & ROI", 
+        "2. 🎯 Visi & ROI Kerugian", 
         "3. 📦 Paket Layanan", 
         "4. 🔐 Intelligence Center"
     ])
     st.write("---")
-    st.success("✅ AI Core Connected")
-    st.caption("Location: Tangerang")
+    st.info("📡 **Sistem Status:**\n- Gemini AI: Connected\n- MindBridge: Connected\n- YOLO Vision: Connected")
+    st.caption("Lokasi: Tangerang")
 
-# --- MENU 1: PROFIL ---
+# --- MENU 1: PROFIL FOUNDER (FOTO DI KIRI) ---
 if menu == "1. 👤 Profil Founder":
     st.header("👤 Strategic Leadership")
     col_img, col_txt = st.columns([1, 2])
+    
     with col_img:
         if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_container_width=True)
+            st.image("erwin.jpg", caption="Erwin Sinaga", use_container_width=True)
+        else:
+            st.warning("⚠️ Foto 'erwin.jpg' tidak ditemukan.")
+            
     with col_txt:
         st.subheader("Erwin Sinaga")
-        st.write("Senior Business Leader dengan 10+ tahun pengalaman perbankan.")
-
-# --- MENU 2: ROI ---
-elif menu == "2. 🎯 Visi & ROI":
-    st.subheader("📈 Analisis Penyelamatan Aset")
-    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
-    rugi = omzet * 0.05
-    st.error(f"Potensi Kebocoran Tanpa V-Guard: Rp {rugi:,.0f}")
-
-# --- MENU 3: PAKET ---
-elif menu == "3. 📦 Paket Layanan":
-    st.header("📦 Paket Proteksi V-Guard AI")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.info("**BASIC (MIKRO)**\n\nSetup: 2.5jt | Rp 500rb/bln")
-        st.link_button("Pesan Basic", wa_url)
-    with c2:
-        st.info("**MEDIUM (SME)**\n\nSetup: 7.5jt | Rp 1.5jt/bln")
-        st.link_button("Pesan Medium", wa_url)
-
-# --- MENU 4: INTELLIGENCE CENTER (KONEKSI AI & ALARM) ---
-elif menu == "4. 🔐 Intelligence Center":
-    st.header("🔐 Intelligence Center")
-    
-    # Menampilkan Status Koneksi AI
-    st.write("### 🤖 Connection Status:")
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Google Gemini", "CONNECTED", "Active")
-    col2.metric("MindBridge AI", "CONNECTED", "Monitoring")
-    col3.metric("YOLO Vision", "CONNECTED", "Secured")
-
-    st.write("---")
-    
-    # Fitur Upload & Alarm
-    uploaded_file = st.file_uploader("Unggah Laporan Transaksi (CSV/Excel)", type=['csv', 'xlsx'])
-    
-    if uploaded_file:
-        with st.status("V-Guard AI sedang menganalisis data...", expanded=True) as status:
-            st.write("Mengoneksikan ke MindBridge Fraud Engine...")
-            time.sleep(1)
-            st.write("Sinkronisasi dengan Google Gemini Core...")
-            time.sleep(1)
-            status.update(label="Analisis Selesai!", state="complete")
-        
-        # Simulasi Alarm Fraud
-        st.markdown('<div class="alarm-banner">🚨 FRAUD ALERT: Ditemukan selisih stok di Cabang Tangerang!</div>', unsafe_allow_html=True)
-        
-        # Simulasi Notifikasi Invoice
         st.markdown(f"""
-        <div class="invoice-card">
-            <h4 style="margin:0; color:#0288d1;">📄 Auto-Invoice Generated</h4>
-            <p>Invoice #VGD-2026-001 telah berhasil dibuat dan dikirim ke Client via WhatsApp.</p>
+        <div class="founder-text">
+        Bapak Erwin Sinaga adalah seorang Pemimpin Bisnis Senior dengan pengalaman lebih dari sepuluh tahun 
+        di industri perbankan dan manajemen aset nasional. Selama masa baktinya di sektor keuangan formal, 
+        beliau telah menguasai berbagai seluk-beluk manajemen risiko kredit, pengawasan kepatuhan operasional, 
+        hingga strategi perlindungan aset korporasi skala besar.<br><br>
+        Pengalaman luas Bapak Erwin dalam menghadapi dinamika fraud di perbankan konvensional menjadi fondasi 
+        utama lahirnya ekosistem V-Guard AI. Melalui kepemimpinan strategisnya, beliau menjembatani standar 
+        audit perbankan dengan teknologi AI terkini (Gemini, MindBridge, YOLO) untuk mencegah kebocoran 
+        finansial bisnis klien secara mutlak dan real-time.
         </div>
         """, unsafe_allow_html=True)
+
+# --- MENU 2: VISI & ROI ---
+elif menu == "2. 🎯 Visi & ROI Kerugian":
+    st.header("📈 Analisis ROI & Penyelamatan Aset")
+    omzet = st.number_input("Input Omzet Bulanan Klien (Rp):", value=500000000, step=10000000)
+    potensi_rugi = omzet * 0.05
+    st.error(f"🚨 Estimasi Kebocoran Aset (Fraud/Error): Rp {potensi_rugi:,.0f} / Bulan")
+    st.
