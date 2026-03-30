@@ -17,14 +17,13 @@ if not st.session_state.auth:
     pwd_input = st.text_input("Masukkan Password Admin:", type="password")
     if st.button("Authorize Access"):
         try:
-            # Pastikan ADMIN_PASSWORD sudah diatur di Secrets Streamlit
             if pwd_input.strip() == st.secrets["ADMIN_PASSWORD"].strip():
                 st.session_state.auth = True
                 st.rerun()
             else:
                 st.error("❌ Password Salah.")
         except:
-            st.error("⚠️ Peringatan: Atur ADMIN_PASSWORD di menu Secrets Streamlit!")
+            st.error("⚠️ Atur ADMIN_PASSWORD di menu Secrets Streamlit!")
     st.stop()
 
 # 3. NAVIGASI SIDEBAR
@@ -73,4 +72,6 @@ elif page == "📦 Products & Packages":
             st.subheader(p['P'])
             st.write(f"Setup: **Rp {p['S']}**")
             st.write(f"Bulan: **Rp {p['B']}**")
-            for f in p['F
+            for feat in p['F']:
+                st.write(f"- {feat}")
+            wa_url = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20minat%20paket%20{p['P
