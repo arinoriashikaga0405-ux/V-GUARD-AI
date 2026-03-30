@@ -45,3 +45,25 @@ st.success("Koneksi Aman & Terverifikasi.")
 df = pd.DataFrame({'Kategori': ['Aman', 'Anomali'], 'Skor': [94, 6]})
 fig = px.pie(df, values='Skor', names='Kategori', title="Ringkasan Risiko Real-time")
 st.plotly_chart(fig)
+# ... (Baris 1-40: Kode Login & Grafik Plotly yang sudah kita buat) ...
+
+# --- BARIS 45: GARIS PEMISAH ---
+st.write("---") 
+
+# --- BARIS 47-65: BAGIAN PROFIL FOUNDER ---
+col1, col2 = st.columns([1, 2])
+
+with col1:
+    # Jika Bapak sudah upload foto ke GitHub, ganti "profil.jpg" dengan nama file Bapak
+    st.image("https://via.placeholder.com/300", caption="Erwin Sinaga - Founder", use_container_width=True)
+
+with col2:
+    st.markdown("""
+    ### 👤 Mengenal Founder V-Guard AI
+    **Erwin Sinaga** *Senior Business Leader dengan 10+ Tahun Pengalaman*
+    
+    Halo! Saya **Erwin Sinaga**, berdedikasi untuk memanfaatkan AI dalam menyelesaikan masalah nyata di bidang keuangan dan keamanan. Dengan pengalaman lebih dari sepuluh tahun di industri perbankan dan aset (CEO & CSO), saya mendirikan **V-Guard AI** untuk memberdayakan bisnis dengan solusi cerdas.
+    """)
+
+# --- BARIS 67: FOOTER AKHIR ---
+st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
