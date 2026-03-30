@@ -1,11 +1,10 @@
 import streamlit as st
 import os
-from datetime import datetime
 
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# CSS UNTUK TAMPILAN PREMIUM & RINGKAS
+# CSS UNTUK TAMPILAN PREMIUM
 st.markdown("""
 <style>
     .tech-card {
@@ -23,33 +22,34 @@ st.markdown("""
         background: #f0fff4; border: 1px solid #38a169;
         padding: 15px; border-radius: 10px; color: #276749; font-size: 14px;
     }
+    .vision-mission-box {
+        background: #ffffff; border-radius: 12px; padding: 20px;
+        border-left: 5px solid #ff4b4b; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
     .price-card {
         background: white; border-radius: 15px; padding: 0px; border: 1px solid #eee;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 420px;
-        display: flex; flex-direction: column; overflow: hidden; transition: 0.3s;
+        display: flex; flex-direction: column; overflow: hidden;
     }
     .card-header {
         background: linear-gradient(135deg, #ff4b4b 0%, #a51d1d 100%);
         color: white; padding: 15px; text-align: center; font-weight: bold;
     }
-    .card-content { padding: 20px; flex-grow: 1; }
 </style>
 """, unsafe_allow_html=True)
 
 wa_url = "https://wa.me/6282122190885"
 
-# 2. SIDEBAR DENGAN FOTO FOUNDER NOMOR 1
+# 2. SIDEBAR DENGAN FOTO FOUNDER DI ATAS LOGO (MENU NOMOR 1)
 with st.sidebar:
-    # Menampilkan Foto Founder di paling atas
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
     else:
-        st.error("File 'erwin.jpg' tidak ditemukan. Harap unggah ke GitHub.")
+        st.error("Unggah foto 'erwin.jpg' ke folder GitHub.")
     
     st.title("🛡️ V-Guard AI")
     st.write("---")
-    
-    # Menu Navigasi
     menu = st.radio("Pilih Menu:", [
         "1. 👤 Profil Founder", 
         "2. 🏠 Home: Ekosistem AI", 
@@ -77,11 +77,7 @@ if menu == "1. 👤 Profil Founder":
 
 # --- MENU 2: HOME & EKOSISTEM TEKNOLOGI ---
 elif menu == "2. 🏠 Home: Ekosistem AI":
-    st.title("🛡️ Ekosistem Teknologi V-Guard AI")
-    st.info("V-Guard mengintegrasikan platform AI terbaik dunia untuk memastikan akurasi audit 99,9%.")
+    st.title("🛡️ Keamanan Masa Depan dengan AI")
     
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("""<div class="tech-card"><div class="tech-title">🧠 Google Gemini AI (Core Brain)</div>
-        <div class="tech-desc">Proses data audit kompleks menjadi laporan bahasa manusia yang mudah dipahami.</div></div>""", unsafe_allow_html=True)
-        st.markdown("""<div class="
+    # VISI & MISI
+    col_v, col
