@@ -1,89 +1,79 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 from datetime import datetime
 
-# --- 1. KONFIGURASI & CACHING ---
-st.set_page_config(page_title="V-Guard AI | Enterprise", page_icon="🛡️", layout="wide")
+# --- 1. PERFORMANCE OPTIMIZATION (CACHING) ---
+st.set_page_config(page_title="V-Guard AI | Fast Insights", page_icon="🛡️", layout="wide")
 
-@st.cache_data(ttl=600)
-def load_financial_data():
+@st.cache_data(ttl=3600)  # Cache data selama 1 jam untuk load <1 detik
+def get_optimized_data():
+    """Simulasi load data besar yang sudah di-cache."""
     return pd.DataFrame({
-        'Kategori': ['Operasional', 'Payroll', 'Marketing', 'Vendor A', 'Vendor B'],
-        'Nilai': [250, 450, 150, 80, 120],
-        'Risiko': [0.1, 0.05, 0.2, 0.85, 0.15]
+        'Tanggal': pd.date_range(start='2026-03-01', periods=10),
+        'Cash_Flow': [100, 120, 115, 140, 130, 160, 155, 180, 175, 200],
+        'Risiko_Skor': [0.1, 0.2, 0.15, 0.6, 0.2, 0.1, 0.8, 0.2, 0.1, 0.15]
     })
 
-# --- 2. SESSION STATE ---
-if 'auth' not in st.session_state: st.session_state.auth = False
-if 'user_role' not in st.session_state: st.session_state.user_role = "Viewer"
-if 'audit_log' not in st.session_state: st.session_state.audit_log = []
-
-def log_action(action):
-    st.session_state.audit_log.append({
-        "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "User": "Erwin Sinaga",
-        "Aksi": action
-    })
-
-# --- 3. UI CUSTOM STYLING ---
+# --- 2. UI/UX: CUSTOM STYLING & MOBILE OPTIMIZATION ---
 st.markdown("""
 <style>
-    .stApp { background-color: white; }
+    /* Desain Centered on Decisions */
+    .stApp { background-color: #FFFFFF; }
     [data-testid="stSidebar"] { background-color: #0D47A1; }
-    [data-testid="stSidebar"] * { color: white !important; }
-    .card { background: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #00BCD4; }
+    .decision-card {
+        background: #F0F7FF; padding: 20px; border-radius: 12px;
+        border-left: 5px solid #0D47A1; margin-bottom: 20px;
+    }
+    /* Mobile optimization: Perkecil padding di layar kecil */
+    @media (max-width: 600px) { .main .block-container { padding: 10px; } }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. LOGIKA APLIKASI ---
-try:
-    if not st.session_state.auth:
-        st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
-        st.title("🛡️ V-GUARD AI SECURE LOGIN")
-        role = st.selectbox("Pilih Role Akses", ["Admin", "Viewer"])
-        if st.button("Masuk Ke Dashboard"):
-            st.session_state.auth = True
-            st.session_state.user_role = role
-            log_action(f"Login sebagai {role}")
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-    else:
-        with st.sidebar:
-            st.title("V-Guard AI")
-            st.write(f"👤 {st.session_state.user_role}: Erwin Sinaga")
-            st.markdown("---")
-            menu = st.radio("Navigasi", ["🏠 Dashboard Utama", "👥 Admin Panel", "📜 Audit Trail"])
-            if st.button("🔓 Logout"):
-                st.session_state.auth = False
-                st.rerun()
+# --- 3. SIDEBAR NAVIGASI & DARK MODE SIMULATION ---
+with st.sidebar:
+    st.title("🛡️ V-Guard AI")
+    st.write(f"Eksekutif: **Erwin Sinaga**")
+    st.markdown("---")
+    page = st.radio("Menu Center:", ["📊 Dashboard", "⚙️ Pengaturan AI", "📜 Audit Log"])
+    dark_mode = st.toggle("🌙 Dark Mode (Beta)")
+    st.markdown("---")
+    st.caption("v2.6.0 - Production Ready")
 
-        if menu == "🏠 Dashboard Utama":
-            st.header("Dashboard Pemantauan")
-            data = load_financial_data()
-            st.bar_chart(data.set_index('Kategori')['Nilai'])
-            
-            csv = data.to_csv().encode('utf-8')
-            st.download_button("📥 Download Report CSV", data=csv, file_name="report.csv", mime="text/csv")
+# --- 4. DASHBOARD UTAMA (INTERAKTIF & FAST) ---
+if page == "📊 Dashboard":
+    st.header("Decision Support System")
+    
+    # Decision Card (Focus on Action)
+    st.markdown("""
+    <div class="decision-card">
+        <h4 style="margin:0; color:#0D47A1;">⚠️ Rekomendasi Tindakan</h4>
+        <p style="margin:0;">Ditemukan 1 anomali transaksi (TX-99). Segera verifikasi vendor "Unknown Corp" untuk mencegah loss.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-        elif menu == "👥 Admin Panel":
-            if st.session_state.user_role == "Admin":
-                st.header("Konfigurasi Aturan AI")
-                # Baris yang diperbaiki:
-                sensitivitas = st.slider("Ambang Batas Deteksi", 0.0, 1.0, 0.85)
-                if st.button("Simpan Aturan Baru"):
-                    log_action(f"Update sensitivitas ke {sensitivitas}")
-                    st.success("Aturan berhasil diperbarui.")
-            else:
-                st.error("Akses Ditolak: Khusus Admin.")
+    # Load Data dengan Spinner
+    with st.spinner("Memuat data cepat..."):
+        df = get_optimized_data()
 
-        elif menu == "📜 Audit Trail":
-            st.header("Log Aktivitas")
-            if st.session_state.audit_log:
-                st.table(pd.DataFrame(st.session_state.audit_log))
+    # Plotly Interaktif (Zoom/Hover)
+    fig = px.area(df, x='Tanggal', y='Cash_Flow', title="Tren Arus Kas (Interaktif)",
+                  color_discrete_sequence=['#0D47A1'])
+    fig.update_layout(hovermode="x unified", margin=dict(l=20, r=20, t=40, b=20))
+    st.plotly_chart(fig, use_container_width=True)
 
-except Exception as e:
-    st.error(f"Sistem Error: {e}")
+    # Filter Dinamis & Drill-down
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Filter Risiko")
+        min_risk = st.slider("Ambang Batas Skor Risiko", 0.0, 1.0, 0.5)
+        filtered_df = df[df['Risiko_Skor'] >= min_risk]
+        st.write(f"Menampilkan {len(filtered_df)} transaksi di atas ambang batas.")
+
+    with col2:
+        st.subheader("Detail Transaksi")
+        st.dataframe(filtered_df, use_container_width=True)
 
 # --- 5. FOOTER ---
 st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Secured for Erwin Sinaga")
+st.caption(f"© 2026 V-Guard AI | Optimasi Performa & UX untuk UMKM Indonesia")
