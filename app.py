@@ -82,4 +82,14 @@ for i, item in enumerate(data):
     with cols[i]:
         st.markdown(f"""
         <div class="pkg-card">
-            <div class="pkg-name
+            <div class="pkg-name">{item['n']}</div>
+            <div style="font-size:0.8em; color:gray;">{item['t']}</div>
+            <div class="pkg-price">{item['p']}</div>
+            <div class="pkg-feat">{item['f']}</div>
+            <a href="https://wa.me/{wa_num}?text=Halo Pak Erwin, saya tertarik paket {item['n']}" class="wa-btn">💬 Hubungi WA</a>
+        </div>
+        """, unsafe_allow_html=True)
+
+# --- 6. FOOTER ---
+st.write("---")
+st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
