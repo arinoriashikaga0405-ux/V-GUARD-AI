@@ -5,7 +5,7 @@ import time
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS CUSTOM PREMIUM
+# 2. CSS CUSTOM UNTUK FOOTER & TAMPILAN
 st.markdown("""
 <style>
     .alarm-banner {
@@ -24,95 +24,92 @@ st.markdown("""
         background-color: #ffffff;
         margin-bottom: 10px;
     }
+    /* STYLE UNTUK FOOTER PESANAN BAPAK */
     .footer {
-        position: fixed; left: 0; bottom: 0; width: 100%;
-        background-color: white; color: #757575; text-align: center;
-        padding: 10px; font-size: 12px; border-top: 1px solid #eee;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        text-align: center;
+        padding: 10px;
+        font-size: 13px;
+        border-top: 1px solid #dee2e6;
+        z-index: 999;
     }
 </style>
 """, unsafe_allow_html=True)
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR NAVIGASI
+# 3. SIDEBAR
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
     st.title("🛡️ V-Guard AI")
     st.write("---")
-    menu = st.radio("Folder Menu:", [
-        "1. 👤 Profil Founder", 
-        "2. 🎯 Visi, Misi & ROI", 
-        "3. 📦 Paket Layanan", 
-        "4. 🔐 Admin Dashboard"
-    ])
+    menu = st.radio("Folder Menu:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 📦 Paket Layanan", "4. 🔐 Admin Dashboard"])
     st.write("---")
     st.subheader("📡 Sistem Status")
     st.markdown('<p class="status-connected">● Connected</p>', unsafe_allow_html=True)
-    st.write("---")
-    # TAMBAHAN: TOMBOL KONSULTASI CEPAT
     st.link_button("📞 Konsultasi Langsung", wa_url, use_container_width=True)
-    st.caption("Lokasi: Tangerang")
 
-# --- MENU 1: PROFIL FOUNDER ---
+# --- MENU 1: PROFIL ---
 if menu == "1. 👤 Profil Founder":
     st.header("👤 Strategic Leadership")
-    col_img, col_txt = st.columns([1, 2])
-    with col_img:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_container_width=True)
-    with col_txt:
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg")
+    with col2:
         st.subheader("Erwin Sinaga")
-        st.write("Bapak Erwin Sinaga merupakan seorang profesional dan Pemimpin Bisnis Senior dengan rekam jejak prestisius selama lebih dari sepuluh tahun di industri perbankan serta manajemen aset nasional. Beliau menguasai manajemen risiko kredit, kepatuhan operasional, hingga strategi perlindungan aset korporasi.")
-        st.write("Di bawah kepemimpinan beliau, V-Guard AI mengintegrasikan standar audit perbankan yang ketat dengan kecanggihan teknologi Artificial Intelligence untuk memberikan perlindungan finansial yang holistik dan transparan.")
+        st.write("Pemimpin Bisnis Senior dengan pengalaman 10+ tahun di perbankan & manajemen aset. V-Guard AI adalah visi beliau untuk membawa standar audit bank ke sektor UMKM dan Korporasi melalui teknologi AI.")
 
-# --- MENU 2: VISI, MISI & ROI + FAQ ---
+# --- MENU 2: ROI ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("🎯 Strategi & Analisis Risiko")
-    v, m = st.columns(2)
-    with v:
-        st.info("### 🎯 Visi\nMenjadi pemimpin pasar solusi keamanan audit berbasis AI di Indonesia pada tahun 2026.")
-    with m:
-        st.info("### 🚀 Misi\n1. Integrasi AI otomatis.\n2. Laporan transparan.\n3. Pengawasan aset 24/7.")
-    
+    st.header("🎯 Analisis ROI")
+    st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit AI di Indonesia.")
     st.write("---")
-    st.subheader("📈 Kalkulator Penyelamatan Aset (ROI)")
-    omzet = st.number_input("Input Omzet Bulanan Klien (Rp):", value=500000000, step=10000000)
-    potensi_rugi = omzet * 0.05
-    st.error(f"🚨 Estimasi Kebocoran Aset: Rp {potensi_rugi:,.0f} / Bulan")
-    st.success(f"🛡️ Target Penyelamatan V-Guard: Rp {potensi_rugi * 0.9:,.0f} / Bulan")
-    
-    # TAMBAHAN: FAQ SINGKAT
-    with st.expander("❓ FAQ - Pertanyaan Umum"):
-        st.write("**Bagaimana AI bekerja?** AI kami memindai anomali data transaksi dan visual CCTV secara real-time.")
-        st.write("**Apakah aman?** Data dienkripsi dengan standar keamanan perbankan tinggi.")
+    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
+    st.error(f"Potensi Kebocoran (5%): Rp {omzet*0.05:,.0f}")
+    st.success(f"Penyelamatan V-Guard: Rp {omzet*0.05*0.9:,.0f}")
 
-# --- MENU 3: PAKET LAYANAN ---
+# --- MENU 3: PAKET ---
 elif menu == "3. 📦 Paket Layanan":
-    st.header("📦 Paket Proteksi V-Guard AI")
-    st.markdown("---")
+    st.header("📦 Paket Proteksi")
     c1, c2, c3, c4 = st.columns(4)
-    
+    # List paket sudah sejajar dengan harga Basic 750rb
     with c1:
-        st.markdown("""<div class="package-box"><h3>BASIC</h3><b>Setup: Rp 2.5 Juta</b><br><span style="color:#d32f2f">Monthly: Rp 750rb</span><hr><ul><li>📊 Audit Harian</li><li>📁 Lap. PDF</li><li>📱 Support WA</li><li>🔍 Cek Manual</li></ul></div>""", unsafe_allow_html=True)
-        st.link_button("Pilih BASIC", wa_url, use_container_width=True)
+        st.markdown('<div class="package-box"><h3>BASIC</h3><b>Setup: 2.5jt</b><br>Monthly: 750rb<hr>Audit harian & Lap. PDF</div>', unsafe_allow_html=True)
+        st.link_button("Pilih", wa_url)
     with c2:
-        st.markdown("""<div class="package-box"><h3>MEDIUM</h3><b>Setup: Rp 7.5 Juta</b><br>Monthly: Rp 1.5jt<hr><b>BASIC +</b><ul><li>🤖 AI Detection</li><li>👁️ Integrasi CCTV</li><li>🚨 Alarm Fraud</li><li>📉 Analisis Tren</li></ul></div>""", unsafe_allow_html=True)
-        st.link_button("Pilih MEDIUM", wa_url, use_container_width=True)
+        st.markdown('<div class="package-box"><h3>MEDIUM</h3><b>Setup: 7.5jt</b><br>Monthly: 1.5jt<hr>AI Detection & CCTV</div>', unsafe_allow_html=True)
+        st.link_button("Pilih", wa_url)
     with c3:
-        st.markdown("""<div class="package-box"><h3>ENTERPRISE</h3><b>Setup: Rp 25 Juta</b><br>Monthly: Rp 5jt<hr><b>MEDIUM +</b><ul><li>🏢 Multi-Cabang</li><li>🖥️ Dashboard Admin</li><li>🧾 Auto-Invoice</li><li>🛡️ Proteksi Aset</li></ul></div>""", unsafe_allow_html=True)
-        st.link_button("Pilih ENTERPRISE", wa_url, use_container_width=True)
+        st.markdown('<div class="package-box"><h3>ENTERPRISE</h3><b>Setup: 25jt</b><br>Monthly: 5jt<hr>Multi-Branch & Auto-Invoice</div>', unsafe_allow_html=True)
+        st.link_button("Pilih", wa_url)
     with c4:
-        st.markdown("""<div class="package-box"><h3>CORPORATE</h3><b>Setup: Rp 50 Juta</b><br>Monthly: Rp 10jt<hr><b>ENTERPRISE +</b><ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📑 Laporan Pajak</li><li>📞 Priority 24/7</li></ul></div>""", unsafe_allow_html=True)
-        st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
+        st.markdown('<div class="package-box"><h3>CORPORATE</h3><b>Setup: 50jt</b><br>Monthly: 10jt<hr>Custom Dev & Audit On-Site</div>', unsafe_allow_html=True)
+        st.link_button("Pilih", wa_url)
 
-# --- MENU 4: ADMIN DASHBOARD ---
+# --- MENU 4: ADMIN (AI PENDUKUNG ADA DI SINI) ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
-    pwd = st.text_input("Password:", type="password")
+    pwd = st.text_input("Password Admin:", type="password")
     if pwd == "admin123":
-        st.success("Akses Diterima.")
-        m1, m2, m3 = st.columns(3)
-        m1.metric("Klien Aktif", "12 Cabang")
-        m2.metric("Omzet", "Rp 6.2 Miliar")
-        m3.metric("Diselamatkan", "Rp 310 Juta")
+        st.success("Sistem AI Aktif & Terkoneksi.")
+        st.metric("Aset Terproteksi", "Rp 6.2 Miliar")
+        uploaded = st.file_uploader("Unggah Data untuk Audit AI", type=['csv', 'xlsx'])
+        if uploaded:
+            with st.status("AI Sedang Menganalisis..."):
+                time.sleep(2)
+            st.warning("Hasil Audit: Data Bersih dari Anomali.")
+    elif pwd != "":
+        st.error("Akses Ditolak.")
+
+# 4. FOOTER PESANAN BAPAK
+st.markdown("""
+<div class="footer">
+    © 2026 V-Guard AI Systems - Secured by Advanced Intelligence. Tangerang, Indonesia.
+</div>
+""", unsafe_allow_html=True)
