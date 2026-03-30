@@ -6,7 +6,7 @@ from datetime import datetime
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database dengan Data Contoh
+# Inisialisasi Database (Data Contoh agar Dropdown Muncul)
 if 'db_nasabah' not in st.session_state or len(st.session_state.db_nasabah) == 0:
     st.session_state.db_nasabah = [
         {"Waktu": "2026-03-31", "Nama": "Nasabah Contoh", "Bidang": "Retail", "Paket": "BASIC", "Harga": "2.5jt", "Status": "🔴 Menunggu Aktivasi"}
@@ -24,11 +24,8 @@ st.markdown("""
 
 # 3. SIDEBAR
 with st.sidebar:
-    # Memanggil Foto Utama Founder (erwin.jpg)
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
-    else:
-        st.image("https://www.w3schools.com/howto/img_avatar.png", use_container_width=True)
     
     st.title("🛡️ V-Guard AI")
     st.markdown('<p class="status-connected">● System Online / Connected</p>', unsafe_allow_html=True)
@@ -37,30 +34,32 @@ with st.sidebar:
     st.write("---")
     st.link_button("📞 Hubungi Erwin Sinaga", "https://wa.me/628212190885")
 
-# --- FOLDER 1: PROFIL FOUNDER (MEMANGGIL IKON RESMI) ---
+# --- FOLDER 1: PROFIL FOUNDER (MENGGUNAKAN ERWIN.JPG) ---
 if menu == "1. 👤 Profil Founder":
-    # Memanggil Ikon Resmi Berlatar Biru (erwin_icon.png) di bagian atas
-    if os.path.exists("erwin_icon.png"):
-        st.image("erwin_icon.png", width=60, caption="") # Menampilkan ikon dengan ukuran kecil
-    else:
-        st.warning("Mohon unggah file 'erwin_icon.png' (ikon resmi) ke folder project GitHub Bapak.")
-    
     col1, col2 = st.columns([1, 2.5])
     with col1:
-        # Menampilkan Foto Besar Founder di samping narasi
+        # Langsung memanggil erwin.jpg tanpa mencari file lain
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", use_container_width=True)
-        else:
-            st.info("Foto Founder (erwin.jpg)")
             
     with col2:
         st.markdown(f"""<div class="profile-box">
-        <b>Bapak Erwin Sinaga</b> merupakan seorang profesional dan Pemimpin Bisnis Senior yang telah mendedikasikan lebih dari sepuluh tahun kariernya dalam industri perbankan serta manajemen aset nasional. Melalui perjalanan panjang di sektor keuangan formal, beliau telah membangun keahlian mendalam dalam manajemen risiko strategis, kepatuhan operasional (compliance), hingga pengawasan aset korporasi yang sangat kompleks. Pengalaman ini membentuk pemahaman beliau bahwa celah kecurangan atau fraud sering kali muncul dari kelemahan sistem pengawasan manual yang tidak mampu bekerja secara real-time. <br><br>
-        V-Guard AI didirikan berdasarkan visi besar Bapak Erwin Sinaga untuk membawa standar keamanan audit perbankan yang sangat ketat ke dalam ekosistem bisnis UMKM dan perusahaan menengah di Indonesia. Beliau sangat meyakini bahwa pemanfaatan teknologi Artificial Intelligence adalah solusi mutlak untuk menutup celah kebocoran finansial dan memastikan transparansi aset bagi para pemilik bisnis. Melalui V-Guard AI, beliau berkomitmen untuk menyediakan benteng pertahanan digital cerdas yang mampu melakukan deteksi dini terhadap setiap anomali transaksi.
+        <b>Bapak Erwin Sinaga</b> merupakan seorang profesional dan Pemimpin Bisnis Senior yang telah mendedikasikan lebih dari sepuluh tahun kariernya dalam industri perbankan serta manajemen aset nasional. Melalui perjalanan panjang di sektor keuangan formal, beliau telah membangun keahlian mendalam dalam manajemen risiko strategis, kepatuhan operasional (compliance), hingga pengawasan aset korporasi yang sangat kompleks. <br><br>
+        V-Guard AI didirikan berdasarkan visi besar Bapak Erwin Sinaga untuk membawa standar keamanan audit perbankan yang sangat ketat ke dalam ekosistem bisnis UMKM dan perusahaan menengah di Indonesia. Beliau sangat meyakini bahwa pemanfaatan teknologi Artificial Intelligence adalah solusi mutlak untuk menutup celah kebocoran finansial dan memastikan transparansi aset bagi para pemilik bisnis.
         </div>""", unsafe_allow_html=True)
 
-# --- FOLDER LAIN TETAP SAMA (DIPOTONG AGAR RINGKAS) ---
-# ... (Blok elif menu untuk ROI, Paket, Registrasi, Admin) ...
+# --- FOLDER 2: VISI, MISI & ROI ---
+elif menu == "2. 🎯 Visi, Misi & ROI":
+    st.header("🎯 Analisis ROI")
+    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000, step=10000000)
+    st.success(f"🛡️ Target Penyelamatan Aset: Rp {omzet * 0.045:,.0f}")
 
-# 4. FOOTER
-st.markdown('<div class="footer">© 2026 V-Guard AI Systems</div>', unsafe_allow_html=True)
+# --- FOLDER 3: PAKET LAYANAN ---
+elif menu == "3. 📦 Paket Layanan":
+    st.header("📦 Paket Layanan V-Guard AI")
+    p_cols = st.columns(4)
+    pkgs = [
+        {"n": "BASIC", "s": "2.5jt", "m": "750rb", "c": "#f8f9fa", "f": ["Audit Harian", "Laporan Mingguan"]},
+        {"n": "MEDIUM", "s": "7.5jt", "m": "1.5jt", "c": "#e3f2fd", "f": ["Semua Fitur BASIC", "AI CCTV Integration"]},
+        {"n": "ENTERPRISE", "s": "25jt", "m": "5jt", "c": "#e8f5e9", "f": ["Semua Fitur MEDIUM", "Multi-Branch Dashboard"]},
+        {"n": "CORPORATE", "s": "50jt", "m": "10jt", "c": "#fff3e0", "f": ["Semua Fitur ENTERPRISE", "Custom AI
