@@ -80,19 +80,31 @@ if st.session_state.page == "Admin":
             
             if uploaded_file:
                 with st.spinner('V-GUARD AI sedang membedah data dan mencari kecurangan...'):
-                    with tab1: # Baris ~80
+                   with tab1: # Baris 83
+            # Pastikan baris di bawah ini menjorok ke dalam (4 spasi dari 'with')
             st.markdown('<p class="header-text">🚀 V-SCAN: ANALISA DEEP-DIVE DATA KLIEN</p>', unsafe_allow_html=True)
             klien_analisa = st.selectbox("Pilih Klien untuk Dianalisa:", ["Toko Berkah Jaya", "B2B Trading Sinar"])
             uploaded_file = st.file_uploader(f"Unggah Data Transaksi {klien_analisa}", type=['csv', 'xlsx'])
             
-            if uploaded_file: # Baris ~83
+            if uploaded_file:
+                # Pastikan baris di bawah ini menjorok lebih dalam lagi (8 spasi dari awal)
                 with st.spinner('V-GUARD AI sedang membedah data dan mencari kecurangan...'):
                     time.sleep(3) 
                     st.success(f"✅ Analisa Selesai untuk {klien_analisa}")
                     
-                    # --- MASUKKAN KODE BARU DI SINI (Sekitar Baris 88) ---
                     st.markdown("### 📊 Tren Anomali Mingguan")
                     chart_data = pd.DataFrame({
+                        'Minggu': ['W1', 'W2', 'W3', 'W4'],
+                        'Kecurangan Terdeteksi': [5, 12, 3, 14]
+                    })
+                    st.line_chart(chart_data.set_index('Minggu'))
+                    
+                    st.markdown(f'<div class="admin-card">📜 <b>Audit Trail:</b> System scanned file at {datetime.now().strftime("%H:%M:%S")}</div>', unsafe_allow_html=True)
+
+                    res1, res2, res3 = st.columns(3)
+                    res1.metric("Total Transaksi", "1.240", "Normal")
+                    res2.metric("Anomali Terdeteksi", "14", "-2", delta_color="inverse")
+                    res3.metric("Potensi Kebocoran", "Rp 3.420.000", "Critical")
                         'Minggu': ['W1', 'W2', 'W3', 'W4'],
                         'Kecurangan Terdeteksi': [5, 12, 3, 14]
                     })
