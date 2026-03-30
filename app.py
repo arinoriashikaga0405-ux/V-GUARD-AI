@@ -18,18 +18,18 @@ def add_audit_log(action):
         "Role": st.session_state.user_role
     })
 
-# --- 2. ADVANCED AI INTEGRATION & EXPORT ---
+# --- 2. ADVANCED EXPORT FUNCTION ---
 @st.cache_data
 def convert_df_to_csv(df):
     return df.to_csv(index=False).encode('utf-8')
 
-# --- 3. UI/UX: PROFESSIONAL & RESPONSIVE ---
+# --- 3. UI/UX: PROFESSIONAL STYLE ---
 st.markdown("""
 <style>
     .stApp { background-color: #FFFFFF; }
     .status-badge { background: #E8F5E9; color: #2E7D32; padding: 5px 12px; border-radius: 4px; font-weight: 600; }
-    .stSidebar { background-color: #0D47A1 !important; }
-    .stSidebar * { color: white !important; }
+    [data-testid="stSidebar"] { background-color: #0D47A1 !important; }
+    [data-testid="stSidebar"] * { color: white !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -38,9 +38,8 @@ try:
     if not st.session_state.auth:
         st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
         st.title("🛡️ V-GUARD AI SECURE ACCESS")
-        st.info("Sistem ini mematuhi standar enkripsi FinTech 2026.")
+        st.info("Intelligence That Protects Profit | Founder: Erwin Sinaga")
         
-        # Simulasi Login Role-Based
         role = st.selectbox("Pilih Role Akses:", ["Admin (Akses Penuh)", "Viewer (Laporan Sahaja)"])
         if st.button("Autentikasi & Masuk"):
             st.session_state.auth = True
@@ -49,7 +48,6 @@ try:
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
     else:
-        # --- SIDEBAR NAVIGASI ---
         with st.sidebar:
             st.header("V-Guard AI")
             st.write(f"👤 User: **Erwin Sinaga**")
@@ -64,12 +62,11 @@ try:
                 st.session_state.auth = False
                 st.rerun()
 
-        # --- KONTEN DINAMIS ---
+        # --- CONTENT AREA ---
         if choice == "🏠 Overview":
             st.header("Financial Integrity Dashboard")
             st.markdown('<span class="status-badge">🛡️ Compliance: Active</span>', unsafe_allow_html=True)
             
-            # Simulasi Data
             fraud_df = pd.DataFrame({
                 "ID": ["TX-101", "TX-105"],
                 "Vendor": ["Unknown Cloud", "Global Sys"],
@@ -80,7 +77,6 @@ try:
             st.subheader("Deteksi Fraud (High Confidence)")
             st.table(fraud_df)
             
-            # Export Feature
             st.download_button(
                 label="📥 Export Report (CSV)",
                 data=convert_df_to_csv(fraud_df),
@@ -94,7 +90,7 @@ try:
                 sensitivitas = st.slider("Sensitivitas Deteksi Fraud", 0.0, 1.0, 0.85)
                 if st.button("Simpan Perubahan"):
                     add_audit_log(f"Mengubah sensitivitas AI ke {sensitivitas}")
-                    st.success("Parameter AI berhasil diperbarui dan dicatat dalam log.")
+                    st.success("Parameter AI berhasil diperbarui.")
             else:
                 st.error("Akses Ditolak.")
 
@@ -106,4 +102,10 @@ try:
                 st.info("Belum ada aktivitas tercatat.")
 
 except Exception as e:
-    # Global Error Handling [cite: Gap
+    # PERBAIKAN INDENTASI DI SINI:
+    st.error(f"⚠️ Gangguan Sistem: {str(e)}")
+    st.write("Sistem mendeteksi kegagalan pada modul atau data. Mohon muat ulang halaman.")
+
+# --- 5. FOOTER ---
+st.write("---")
+st.caption("© 2026 V-Guard AI Systems | Secured Environment for Erwin Sinaga")
