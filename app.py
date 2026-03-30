@@ -4,7 +4,7 @@ import os
 # 1. KONFIGURASI
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS CUSTOM & FOOTER
+# 2. CSS CUSTOM
 st.markdown("""
 <style>
     .status-connected { color: #28a745; font-weight: bold; font-size: 18px; }
@@ -26,13 +26,12 @@ with st.sidebar:
     st.markdown('<p class="status-connected">● Connected</p>', unsafe_allow_html=True)
     st.link_button("📞 Konsultasi Langsung", wa_url, use_container_width=True)
 
-# --- MENU 1: PROFIL & FILOSOFI ---
+# --- MENU 1: PROFIL ---
 if menu == "1. 👤 Profil & Filosofi":
     st.header("👤 Strategic Leadership & Philosophy")
     col1, col2 = st.columns([1, 2])
     with col1:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_container_width=True)
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with col2:
         st.subheader("Erwin Sinaga")
         st.markdown('<div class="profile-text">Bapak Erwin Sinaga adalah seorang profesional dan Pemimpin Bisnis Senior yang memiliki dedikasi tinggi selama lebih dari sepuluh tahun dalam dunia perbankan serta manajemen aset nasional. Melalui perjalanan karier yang panjang di sektor keuangan formal, beliau telah mengasah keahlian strategis dalam manajemen risiko kredit, pengawasan kepatuhan operasional (compliance), hingga perancangan sistem perlindungan aset korporasi skala besar. Pengalaman mendalam beliau dalam menangani struktur keuangan yang kompleks memberikan landasan kuat bagi pengembangan sistem keamanan audit berbasis teknologi tinggi.<br><br>Filosofi kepemimpinan beliau berakar pada integritas mutlak dan transparansi data, di mana beliau percaya bahwa setiap celah fraud dapat ditutup dengan sinergi antara ketelitian manusia dan kecanggihan teknologi digital. V-Guard AI lahir dari visi beliau untuk membawa standar keamanan audit perbankan yang sangat ketat ke dalam ekosistem bisnis UMKM dan perusahaan menengah. Beliau memandang bahwa Artificial Intelligence bukan sekadar alat otomatisasi, melainkan benteng pertahanan utama dalam menjaga keberlangsungan finansial klien. Dengan mengintegrasikan algoritma deteksi anomali secara real-time, Bapak Erwin berkomitmen untuk menciptakan lingkungan bisnis yang bersih dari kebocoran dana, memastikan setiap rupiah aset klien terlindungi secara holistik dan terukur di bawah pengawasan sistem yang cerdas dan jujur.</div>', unsafe_allow_html=True)
@@ -40,15 +39,15 @@ if menu == "1. 👤 Profil & Filosofi":
 # --- MENU 2: VISI, MISI & ROI ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Analisis Strategi")
-    st.info("### 🎯 Visi\nMenjadi standar utama keamanan audit AI di Indonesia pada tahun 2026.")
+    st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit AI di Indonesia.")
     st.subheader("🚀 Misi Utama")
-    st.markdown("* **Otomasi**: Audit AI 24/7.\n* **Transparansi**: Laporan akurat.\n* **Akurasi**: Deteksi instan.")
+    st.markdown("* **Otomasi**: Audit AI 24/7\n* **Transparansi**: Laporan Akurat\n* **Akurasi**: Deteksi Instan")
     st.write("---")
     st.subheader("📈 Kalkulator Penyelamatan Aset (ROI)")
-    omzet = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=500000000, step=10000000)
+    omzet = st.number_input("Input Omzet Bulanan (Rp):", value=500000000)
     potensi_rugi = omzet * 0.05
-    st.error(f"🚨 Estimasi Kebocoran Aset (5%): Rp {potensi_rugi:,.0f}")
-    st.success(f"🛡️ Target Penyelamatan V-Guard (90%): Rp {potensi_rugi * 0.9:,.0f}")
+    st.error(f"🚨 Estimasi Kebocoran (5%): Rp {potensi_rugi:,.0f}")
+    st.success(f"🛡️ Target Penyelamatan (90%): Rp {potensi_rugi * 0.9:,.0f}")
 
 # --- MENU 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
@@ -67,18 +66,32 @@ elif menu == "3. 📦 Paket Layanan":
         st.markdown('<div class="package-box"><h3>CORPORATE</h3><b>Setup: 50jt</b><br>Monthly: 10jt<hr><ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📞 Priority 24/7</li></ul></div>', unsafe_allow_html=True)
         st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
 
-# --- MENU 4: ADMIN DASHBOARD ---
+# --- MENU 4: ADMIN DASHBOARD (MULTI-USER LENGKAP) ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
     user_id = st.text_input("Username / ID Klien:")
     pwd = st.text_input("Password Admin:", type="password")
+    
     if user_id == "erwin_admin" and pwd == "w1nbju8282": 
         st.success("Selamat Datang, Bapak Erwin (Super Admin).")
-        st.metric("Total Aset Terproteksi", "Rp 6.2 Miliar")
+        st.metric("Total Aset Terproteksi Jaringan", "Rp 6.2 Miliar")
+        st.write("---")
+        st.subheader("📡 Status Cabang Real-Time")
+        st.write("✅ Klien 001 (Toko Jaya): NORMAL")
+        st.write("🚨 Klien 002 (Resto Minang): ANOMALI TERDETEKSI")
+        
     elif user_id == "klien001" and pwd == "owner123":
         st.success("Selamat Datang, Owner Toko Jaya.")
+        st.info("Status Lisensi: BASIC - Aktif s/d Des 2026")
+        st.metric("Estimasi Penyelamatan Aset Toko", "Rp 22.500.000")
+        st.write("---")
+        st.subheader("📂 Menu Mandiri Klien")
+        st.file_uploader("Upload Data Transaksi (.csv/.xlsx)", type=['csv', 'xlsx'])
+        if st.button("Tarik Laporan Audit Terakhir"):
+            st.download_button("Download Laporan PDF", "Data Laporan Demo", file_name="audit_toko_jaya.txt")
+            
     elif pwd != "":
-        st.error("Akses Ditolak.")
+        st.error("Akses Ditolak. Silakan periksa kembali Username atau Password.")
 
 # 4. FOOTER
 st.markdown('<div class="footer-container">© 2026 V-Guard AI Systems - Secured by Advanced Intelligence.</div>', unsafe_allow_html=True)
