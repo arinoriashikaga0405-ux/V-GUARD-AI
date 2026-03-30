@@ -28,7 +28,7 @@ if not st.session_state.auth:
 
 # 3. NAVIGASI SIDEBAR
 st.sidebar.title("🛡️ V-Guard AI Menu")
-page = st.sidebar.radio("Navigasi:", ["🏠 Home", "📊 Dashboard Monitoring", "📦 Products & Packages", "👤 Corporate Profile"])
+page = st.sidebar.radio("Navigasi:", ["🏠 Home", "📊 Dashboard Monitoring", "📦 Products", "👤 Corporate Profile"])
 
 if st.sidebar.button("🔒 Logout"):
     st.session_state.auth = False
@@ -53,25 +53,45 @@ elif page == "📊 Dashboard Monitoring":
     fig_data = px.pie(df_data, values='Skor', names='Kategori', title="Ringkasan Risiko Hari Ini", hole=0.3)
     st.plotly_chart(fig_data, use_container_width=True)
 
-# --- HALAMAN 3: PRODUCTS & PACKAGES ---
-elif page == "📦 Products & Packages":
+# --- HALAMAN 3: PRODUCTS ---
+elif page == "📦 Products":
     st.header("📦 Our Products & Services Packages")
-    st.write("Silakan pilih paket investasi keamanan yang sesuai.")
-    
     pkgs = [
-        {"N": "Mikro", "P": "Basic Guard", "S": "2.5jt", "B": "750rb", "F": ["Real-time Mon", "Email Alert"]},
-        {"N": "Menengah", "P": "Premium Shield", "S": "7.5jt", "B": "2.5jt", "F": ["Advanced AI", "WA Alert"]},
-        {"N": "Enterprise", "P": "Enterprise Vault", "S": "50jt", "B": "8.5jt", "F": ["ERP Integration", "AI CCTV"]},
-        {"N": "Corporate", "P": "Elite Managed", "S": "85jt", "B": "15jt", "F": ["Face Recognition", "CSO Advisory"]}
+        {"N": "Mikro", "P": "Basic Guard", "S": "2.5jt", "B": "750rb"},
+        {"N": "Menengah", "P": "Premium Shield", "S": "7.5jt", "B": "2.5jt"},
+        {"N": "Enterprise", "P": "Enterprise Vault", "S": "50jt", "B": "8.5jt"},
+        {"N": "Corporate", "P": "Elite Managed", "S": "85jt", "B": "15jt"}
     ]
-    
     cols = st.columns(4)
     for i, p in enumerate(pkgs):
         with cols[i]:
             st.warning(f"**{p['N']}**")
             st.subheader(p['P'])
-            st.write(f"Setup: **Rp {p['S']}**")
-            st.write(f"Bulan: **Rp {p['B']}**")
-            for feat in p['F']:
-                st.write(f"- {feat}")
-            wa_url = f"https://wa.me/{wa_num}?text=Halo%20Pak%20Erwin%2C%20minat%20paket%20{p['P
+            st.write(f"Setup: {p['S']}")
+            st.write(f"Bulan: {p['B']}")
+            # Link WA yang diperpendek agar tidak terpotong (SyntaxError)
+            txt = f"Halo Pak Erwin, minat paket {p['P']}"
+            wa_link = f"https://wa.me/{wa_num}?text={txt.replace(' ', '%20')}"
+            st.link_button(f"👉 Pesan", wa_link, use_container_width=True)
+
+# --- HALAMAN 4: CORPORATE PROFILE ---
+elif page == "👤 Corporate Profile":
+    st.header("Strategic Leadership")
+    col_p1, col_p2 = st.columns([1, 2])
+    with col_p1:
+        if os.path.exists("erwin.jpg"):
+            st.image("erwin.jpg", caption="Erwin Sinaga, Founder V-Guard AI", use_container_width=True)
+        else:
+            st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=250)
+    with col_p2:
+        st.markdown("### Erwin Sinaga")
+        st.markdown("#### *Founder & Chief Executive Officer*")
+        st.markdown("""
+Bapak Erwin Sinaga adalah seorang *Senior Business Leader* visioner dengan rekam jejak impresif selama lebih dari 10 tahun di posisi krusial sebagai CEO dan CSO dalam industri perbankan serta manajemen aset. Pengalaman mendalam beliau dalam mengelola risiko operasional, memimpin transformasi digital, dan menjaga integritas aset bernilai tinggi menjadi pondasi kuat di balik berdirinya **V-Guard AI Systems**.
+
+Dengan latar belakang keahlian strategis yang komprehensif, Pak Erwin berdedikasi penuh untuk mendemokratisasi akses terhadap teknologi keamanan finansial kelas dunia. Beliau melihat celah krusial antara prototipe teknologi dengan solusi *production-grade* yang benar-benar siap menjawab tantangan pasar di tahun 2026. Komitmen utama beliau adalah membangun solusi 'End-to-End Intermediary' yang cerdas, adaptif, dan memiliki daya jual tinggi (*high conversion*), yang tidak hanya melindungi UMKM lokal dari kehancuran finansial akibat *fraud*, tetapi juga memberikan kepastian keamanan di tingkat Korporat global.
+""")
+        st.link_button("📲 Hubungi Pak Erwin via WhatsApp", f"https://wa.me/{wa_num}", use_container_width=True, type="primary")
+
+st.write("---")
+st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
