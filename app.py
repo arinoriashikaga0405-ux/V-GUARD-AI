@@ -25,9 +25,8 @@ st.markdown("""
     .status-connected {
         color: #28a745; font-weight: bold; font-size: 18px;
     }
-    /* Style untuk kotak paket agar tinggi sejajar */
     .package-box {
-        height: 400px;
+        height: 420px;
         padding: 20px;
         border: 1px solid #e0e0e0;
         border-radius: 10px;
@@ -71,3 +70,87 @@ if menu == "1. 👤 Profil Founder":
         Pemahaman komprehensif beliau terhadap celah-celah fraud dan dinamika kebocoran dana yang sering terjadi pada sistem keuangan konvensional menjadi batu pijakan utama dalam mendirikan ekosistem V-Guard AI. Di bawah kepemimpinan strategisnya, Bapak Erwin berhasil mengintegrasikan standar audit perbankan yang sangat ketat dengan kecanggihan teknologi Artificial Intelligence modern. Sinergi teknologi ini dirancang khusus untuk memberikan perlindungan finansial yang holistik, transparan, dan mampu mencegah segala bentuk anomali transaksi bisnis klien secara mutlak dan real-time.
         </div>
         """, unsafe_allow_html=True)
+
+# --- MENU 2: VISI, MISI & ROI (DIKEMBALIKAN) ---
+elif menu == "2. 🎯 Visi, Misi & ROI":
+    st.header("🎯 Strategi & Analisis Risiko")
+    v, m = st.columns(2)
+    with v:
+        st.info("### 🎯 Visi\nMenjadi pemimpin pasar dalam solusi keamanan audit berbasis AI di Indonesia pada tahun 2026.")
+    with m:
+        st.info("### 🚀 Misi\n1. Integrasi AI untuk deteksi fraud otomatis.\n2. Laporan audit transparan & real-time.\n3. Otomasi pengawasan aset 24/7.")
+    st.write("---")
+    st.subheader("📈 Kalkulator Penyelamatan Aset (ROI)")
+    omzet = st.number_input("Input Omzet Bulanan Klien (Rp):", value=500000000, step=10000000)
+    potensi_rugi = omzet * 0.05
+    st.error(f"🚨 Estimasi Kebocoran Aset Tanpa V-Guard: Rp {potensi_rugi:,.0f} / Bulan")
+    st.success(f"🛡️ Target Penyelamatan Aset (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
+
+# --- MENU 3: PAKET LAYANAN (DITAMPILKAN KEMBALI & SEJAJAR) ---
+elif menu == "3. 📦 Paket Layanan":
+    st.header("📦 Paket Proteksi V-Guard AI")
+    st.markdown("---")
+    c1, c2, c3, c4 = st.columns(4)
+    
+    with c1:
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">BASIC</h3>
+        <b>Setup: Rp 2.5 Juta</b><br>
+        <span style="color:#d32f2f">Monthly: Rp 750rb</span><hr>
+        <b>Fitur:</b><ul>
+        <li>📊 Audit Harian</li>
+        <li>📁 Lap. PDF Mingguan</li>
+        <li>📱 Support WA</li>
+        <li>🔍 Cek Kasir Manual</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih BASIC", wa_url, use_container_width=True)
+
+    with c2:
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">MEDIUM</h3>
+        <b>Setup: Rp 7.5 Juta</b><br>
+        Monthly: Rp 1.5jt<hr>
+        <b>Fitur BASIC +</b><ul>
+        <li>🤖 <b>AI Detection</b></li>
+        <li>👁️ Integrasi CCTV</li>
+        <li>🚨 Alarm Fraud</li>
+        <li>📉 Analisis Tren</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih MEDIUM", wa_url, use_container_width=True)
+
+    with c3:
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">ENTERPRISE</h3>
+        <b>Setup: Rp 25 Juta</b><br>
+        Monthly: Rp 5jt<hr>
+        <b>Fitur MEDIUM +</b><ul>
+        <li>🏢 Multi-Cabang</li>
+        <li>🖥️ Dashboard Khusus</li>
+        <li>🧾 <b>Auto-Invoice</b></li>
+        <li>🛡️ Proteksi Aset</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih ENTERPRISE", wa_url, use_container_width=True)
+
+    with c4:
+        st.markdown("""<div class="package-box">
+        <h3 style="color:#1976d2">CORPORATE</h3>
+        <b>Setup: Rp 50 Juta</b><br>
+        Monthly: Rp 10jt<hr>
+        <b>Fitur ENTERPRISE +</b><ul>
+        <li>🏗️ <b>Custom AI Dev</b></li>
+        <li>🕵️ Audit On-Site</li>
+        <li>📑 Laporan Pajak</li>
+        <li>📞 Priority 24/7</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
+
+# --- MENU 4: ADMIN DASHBOARD (PASSWORD: admin123) ---
+elif menu == "4. 🔐 Admin Dashboard":
+    st.header("🔐 Intelligence Center")
+    pwd = st.text_input("Masukkan Password Admin:", type="password")
+    if pwd == "admin123":
+        st.success("Akses Diterima.")
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Klien Aktif", "12 Cabang")
+        m2.metric("Omzet Terpantau", "Rp 6.2 Miliar")
+        m3.metric("Aset Diselamatkan", "Rp 310 Juta")
+        st.write("---")
+        uploaded = st.file_uploader("Unggah Laporan Transaksi untuk Audit AI", type=['csv', 'xlsx'])
+        if uploaded:
+            with st.status("V-Guard
