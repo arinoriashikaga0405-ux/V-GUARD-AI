@@ -33,9 +33,8 @@ with st.sidebar:
     menu = st.radio("Folder Navigasi:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 📦 Paket Layanan", "4. 📝 Registrasi Klien", "5. 🔐 Admin Dashboard"])
     st.write("---")
     
-    # PERUBAHAN: Tombol Customer Service (Menggantikan Hubungi Erwin Sinaga)
     st.markdown("### Support Center")
-    st.link_button("💬 Chat Customer Service", "https://wa.me/628212190885?text=Halo%20Customer%20Service%20V-Guard%20AI,%20saya%20ingin%20bertanya.")
+    st.link_button("💬 Chat Customer Service", "https://wa.me/628212190885?text=Halo%20CS%20V-Guard%20AI,%20saya%20ingin%20bertanya.")
 
 # --- FOLDER 1: PROFIL FOUNDER ---
 if menu == "1. 👤 Profil Founder":
@@ -45,16 +44,5 @@ if menu == "1. 👤 Profil Founder":
             st.image("erwin.jpg", use_container_width=True)
     with col2:
         st.markdown(f"""<div class="profile-box">
-        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengukir rekam jejak impresif selama lebih dari sepuluh tahun di sektor perbankan dan manajemen aset nasional. Sepanjang kariernya, beliau telah memegang berbagai peran strategis, termasuk posisi krusial sebagai Chief Executive Officer (CEO) dan Chief Sales Officer (CSO), di mana beliau bertanggung jawab penuh atas manajemen risiko, kepatuhan operasional, serta pengawasan aset korporasi berskala besar. Pengalaman mendalam ini memberikan beliau pemahaman unik mengenai titik-titik lemah dalam sistem manajemen konvensional yang sering kali menjadi celah terjadinya kebocoran finansial dan inefisiensi operasional. <br><br>
-        V-Guard AI didirikan atas dasar visi besar beliau untuk mendemokratisasi standar keamanan audit kelas perbankan agar dapat diakses oleh ekosistem UMKM dan perusahaan menengah di Indonesia. Beliau sangat meyakini bahwa integritas sebuah bisnis sangat bergantung pada transparansi data yang akurat. Oleh karena itu, melalui implementasi teknologi Artificial Intelligence, beliau berkomitmen untuk membangun sebuah "Benteng Pertahanan Digital" yang mampu bekerja secara otonom selama 24/7. <br><br>
-        Kepemimpinan beliau di V-Guard AI tidak hanya berfokus pada inovasi teknologi semata, namun juga pada penciptaan nilai ekonomi (ROI) yang nyata bagi para pemilik bisnis. Dengan dedikasi tinggi, Bapak Erwin Sinaga terus memastikan bahwa setiap solusi yang dihadirkan V-Guard AI mampu menutup celah kecurangan (fraud), meningkatkan disiplin operasional, dan pada akhirnya memberikan ketenangan pikiran (peace of mind) bagi para pengusaha dalam mengelola aset berharga mereka.
-        </div>""", unsafe_allow_html=True)
-
-# --- FOLDER 2: VISI, MISI & ROI ---
-elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("🎯 Strategi & Analisis ROI")
-    st.markdown("""<div class="vision-box">
-    <h3>Visi</h3>
-    <p>Menjadi benteng pertahanan digital terdepan di Indonesia yang mengeliminasi kebocoran aset bisnis melalui kecerdasan buatan.</p>
-    <h3>Misi</h3>
-    <ul>
+        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengukir rekam jejak impresif selama lebih dari sepuluh tahun di sektor perbankan dan manajemen aset nasional. Sepanjang kariernya, beliau telah memegang berbagai peran strategis, termasuk posisi krusial sebagai Chief Executive Officer (CEO) dan Chief Sales Officer (CSO), di mana beliau bertanggung jawab penuh atas manajemen risiko, kepatuhan operasional, serta pengawasan aset korporasi berskala besar. <br><br>
+        V-Guard AI didirikan
