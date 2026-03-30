@@ -2,10 +2,10 @@ import streamlit as st
 import os
 import time
 
-# 1. KONFIGURASI HALAMAN UTAMA
+# 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS UNTUK TAMPILAN DASHBOARD, ALARM & STEP BOX
+# 2. CSS CUSTOM
 st.markdown("""
 <style>
     .alarm-banner {
@@ -32,7 +32,7 @@ st.markdown("""
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR NAVIGASI & STATUS API
+# 3. SIDEBAR NAVIGASI
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
@@ -46,54 +46,49 @@ with st.sidebar:
     ])
     st.write("---")
     st.subheader("📡 Sistem Status")
-    st.info("- Gemini AI: Connected\n- MindBridge: Connected\n- YOLO Vision: Connected")
+    st.info("- AI Engine: Connected\n- Audit Core: Connected\n- Vision System: Connected")
     
-    # Tombol Cek API
     if st.button("🔌 Cek Koneksi API"):
         with st.spinner("Sinkronisasi Server..."):
             time.sleep(1.5)
             st.success("API Terhubung!")
-            st.toast("Semua sistem V-Guard Siap", icon="🛡️")
     
     st.caption("Lokasi: Tangerang")
 
-# --- MENU 1: PROFIL FOUNDER ---
+# --- MENU 1: PROFIL FOUNDER (VERSI TERBARU) ---
 if menu == "1. 👤 Profil Founder":
     st.header("👤 Strategic Leadership")
     col_img, col_txt = st.columns([1, 2])
     
     with col_img:
         if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", caption="Erwin Sinaga", use_container_width=True)
-        else:
-            st.warning("Foto 'erwin.jpg' tidak ditemukan.")
+            st.image("erwin.jpg", use_container_width=True)
             
     with col_txt:
         st.subheader("Erwin Sinaga")
         st.markdown("""
         <div class="founder-text">
         Bapak Erwin Sinaga merupakan seorang profesional dan Pemimpin Bisnis Senior yang memiliki rekam jejak prestisius selama lebih dari sepuluh tahun di industri perbankan serta manajemen aset nasional. Melalui dedikasi panjang di sektor keuangan formal, beliau telah menguasai secara mendalam berbagai aspek krusial seperti manajemen risiko kredit, pengawasan kepatuhan operasional (compliance), hingga perancangan strategi perlindungan aset korporasi dalam skala besar. <br><br>
-        Pemahaman komprehensif beliau terhadap celah-celah fraud dan dinamika kebocoran dana yang sering terjadi pada sistem keuangan konvensional menjadi batu pijakan utama dalam mendirikan ekosistem V-Guard AI. Di bawah kepemimpinan strategisnya, Bapak Erwin berhasil mengintegrasikan standar audit perbankan yang sangat ketat dengan kecanggihan teknologi Artificial Intelligence modern, termasuk Google Gemini, MindBridge, dan YOLO Vision. Sinergi teknologi ini dirancang khusus untuk memberikan perlindungan finansial yang holistik, transparan, dan mampu mencegah segala bentuk anomali transaksi bisnis klien secara mutlak dan real-time.
+        Pemahaman komprehensif beliau terhadap celah-celah fraud dan dinamika kebocoran dana yang sering terjadi pada sistem keuangan konvensional menjadi batu pijakan utama dalam mendirikan ekosistem V-Guard AI. Di bawah kepemimpinan strategisnya, Bapak Erwin berhasil mengintegrasikan standar audit perbankan yang sangat ketat dengan kecanggihan teknologi Artificial Intelligence modern. Sinergi teknologi ini dirancang khusus untuk memberikan perlindungan finansial yang holistik, transparan, dan mampu mencegah segala bentuk anomali transaksi bisnis klien secara mutlak dan real-time.
         </div>
         """, unsafe_allow_html=True)
 
-# --- MENU 2: VISI, MISI & ROI ---
+# --- MENU 2 & 3 TETAP SAMA ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Strategi & Analisis Risiko")
     v, m = st.columns(2)
     with v:
-        st.info("### 🎯 Visi\nMenjadi pemimpin pasar dalam solusi keamanan audit berbasis AI di Indonesia, memastikan integritas finansial bisnis klien terjaga secara mutlak pada tahun 2026.")
+        st.info("### 🎯 Visi\nMenjadi pemimpin pasar dalam solusi keamanan audit berbasis AI di Indonesia pada tahun 2026.")
     with m:
         st.info("### 🚀 Misi\n1. Integrasi AI untuk deteksi fraud otomatis.\n2. Laporan audit transparan & real-time.\n3. Otomasi pengawasan aset 24/7.")
     
     st.write("---")
-    st.subheader("📈 Kalkulator ROI (Penyelamatan Aset)")
+    st.subheader("📈 Kalkulator ROI")
     omzet = st.number_input("Input Omzet Bulanan Klien (Rp):", value=500000000, step=10000000)
     potensi_rugi = omzet * 0.05
     st.error(f"🚨 Estimasi Kebocoran Aset Tanpa V-Guard: Rp {potensi_rugi:,.0f} / Bulan")
-    st.success(f"🛡️ Target Penyelamatan Aset V-Guard (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
+    st.success(f"🛡️ Target Penyelamatan Aset (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
 
-# --- MENU 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Proteksi V-Guard AI")
     c1, c2, c3, c4 = st.columns(4)
@@ -110,69 +105,40 @@ elif menu == "3. 📦 Paket Layanan":
         st.info("**CORPORATE**\n\nSetup: 50jt\nRp 10jt/Bln")
         st.link_button("Pilih Corporate", wa_url, use_container_width=True)
 
-# --- MENU 4: ADMIN DASHBOARD (PROTEKSI PASSWORD) ---
+# --- MENU 4: ADMIN DASHBOARD (PASSWORD: admin123) ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Admin Strategic Dashboard")
-    
-    # Input Password
     pwd = st.text_input("Masukkan Password Admin:", type="password")
     
     if pwd == "admin123":
-        st.success("Akses Diterima. Selamat datang kembali, Pak Erwin.")
-        
-        # Metrik Utama
+        st.success("Akses Diterima.")
         m1, m2, m3 = st.columns(3)
         m1.metric("Klien Aktif", "12 Cabang", "+2")
         m2.metric("Omzet Terpantau", "Rp 6.2 Miliar")
         m3.metric("Aset Diselamatkan", "Rp 310 Juta", "95%")
         
         st.write("---")
-        st.subheader("🔄 Alur Proses Kerja V-Guard AI")
-        
-        # Simulasi Alur
-        s1, s2, s3, s4 = st.columns(4)
-        with s1:
-            st.markdown('<div class="step-box"><b>1. DATA IN</b><br>POS & CCTV</div>', unsafe_allow_html=True)
-        with s2:
-            st.markdown('<div class="step-box"><b>2. GEMINI AI</b><br>Logic Audit</div>', unsafe_allow_html=True)
-        with s3:
-            st.markdown('<div class="step-box"><b>3. YOLO VISION</b><br>Visual Check</div>', unsafe_allow_html=True)
-        with s4:
-            st.markdown('<div class="step-box"><b>4. OUTPUT</b><br>Inv & PDF</div>', unsafe_allow_html=True)
-        
-        st.write("---")
         uploaded = st.file_uploader("Unggah Laporan Transaksi untuk Audit AI", type=['csv', 'xlsx'])
         
         if uploaded:
             with st.status("V-Guard AI sedang bekerja...", expanded=True) as status:
-                st.write("🤖 Sinkronisasi Google Gemini Core...")
+                st.write("🤖 Sinkronisasi AI Core...")
                 time.sleep(1)
-                st.write("🔍 MindBridge memindai anomali finansial...")
+                st.write("🔍 Memindai anomali finansial...")
                 time.sleep(1)
-                st.write("👁️ YOLO Vision mendeteksi objek & wajah pada CCTV...")
+                st.write("👁️ Melakukan verifikasi visual...")
                 time.sleep(1)
                 status.update(label="Audit Selesai!", state="complete")
             
-            # Alarm Fraud
             st.markdown('<div class="alarm-banner">🚨 FRAUD DETECTED: Ditemukan selisih transaksi pada Cabang Tangerang!</div>', unsafe_allow_html=True)
             
-            # Invoice Otomatis
             st.markdown(f"""
             <div class="invoice-box">
-                <h4 style="margin:0; color:#1976d2;">📄 Auto-Invoice & Report Generated</h4>
+                <h4 style="margin:0; color:#1976d2;">📄 Auto-Invoice Generated</h4>
                 <p>Invoice <b>#VGD-{int(time.time())}</b> telah dikirim otomatis via WhatsApp.</p>
             </div>
             """, unsafe_allow_html=True)
             
-            # Download PDF
-            st.download_button(
-                label="📥 Unduh Laporan Audit Lengkap (PDF)",
-                data="Laporan Audit Komprehensif V-Guard AI.",
-                file_name="Audit_VGuard.pdf",
-                use_container_width=True
-            )
-            
-    elif pwd == "":
-        st.warning("Silakan masukkan password untuk mengakses data strategis.")
-    else:
-        st.error("Password Salah! Akses ditolak.")
+            st.download_button("📥 Unduh Laporan PDF", "Data Audit V-Guard", file_name="Audit_VGuard.pdf", use_container_width=True)
+    elif pwd != "":
+        st.error("Password Salah!")
