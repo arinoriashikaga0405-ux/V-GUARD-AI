@@ -41,15 +41,13 @@ if menu == "1. 👤 Profil Founder":
             st.image("erwin.jpg", use_container_width=True)
     with col2:
         st.markdown(f"""<div class="profile-box">
-        <b>Bapak Erwin Sinaga</b> merupakan seorang profesional dan Pemimpin Bisnis Senior dengan pengalaman lebih dari sepuluh tahun di industri perbankan dan manajemen aset. <br><br>
+        <b>Bapak Erwin Sinaga</b> merupakan seorang profesional dan Pemimpin Bisnis Senior dengan pengalaman lebih dari sepuluh tahun di industri perbankan dan manajemen aset nasional. <br><br>
         V-Guard AI adalah wujud dedikasi beliau untuk menghadirkan sistem pengawasan aset berbasis AI yang mampu mendeteksi kecurangan secara real-time, memberikan rasa aman bagi para pemilik usaha di Indonesia.
         </div>""", unsafe_allow_html=True)
 
-# --- FOLDER 2: VISI, MISI & ROI (VISI MISI DITAMPILKAN KEMBALI) ---
+# --- FOLDER 2: VISI, MISI & ROI ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Strategi & Analisis ROI")
-    
-    # Bagian Visi & Misi
     st.markdown("""<div class="vision-box">
     <h3>Visi</h3>
     <p>Menjadi benteng pertahanan digital terdepan di Indonesia yang mengeliminasi kebocoran aset bisnis melalui kecerdasan buatan.</p>
@@ -60,13 +58,12 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
         <li>Memastikan transparansi penuh antara operasional lapangan dan pemilik bisnis.</li>
     </ul>
     </div>""", unsafe_allow_html=True)
-    
     st.write("---")
     st.subheader("📊 Kalkulator Potensi Penyelamatan Aset")
     omzet = st.number_input("Omzet Bulanan Bisnis Anda (Rp):", value=500000000, step=10000000)
     st.success(f"🛡️ Estimasi kebocoran yang bisa dicegah V-Guard AI: **Rp {omzet * 0.045:,.0f}** per bulan.")
 
-# --- FOLDER 3: PAKET LAYANAN ---
+# --- FOLDER 3: PAKET LAYANAN (BARIS 82 SUDAH DIPERBAIKI) ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Layanan V-Guard AI")
     p_cols = st.columns(4)
@@ -79,4 +76,47 @@ elif menu == "3. 📦 Paket Layanan":
     for i, p in enumerate(pkgs):
         with p_cols[i]:
             st.markdown(f'<div class="package-card" style="background-color: {p["c"]};"><h3>{p["n"]}</h3><p>Setup: {p["s"]}<br>Bulanan: {p["m"]}</p><hr><ul>{"".join([f"<li>{item}</li>" for item in p["f"]])}</ul></div>', unsafe_allow_html=True)
-            st.link_button(f"Pilih {p['n']}", f"
+            # Baris di bawah ini disatukan agar tidak error:
+            url = f"https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20{p['n']}"
+            st.link_button(f"Pilih {p['n']}", url)
+
+# --- FOLDER 4: REGISTRASI ---
+elif menu == "4. 📝 Registrasi Klien":
+    st.header("📝 Form Pendaftaran Nasabah")
+    with st.form("reg_form"):
+        col_a, col_b = st.columns(2)
+        with col_a:
+            nama_user = st.text_input("Nama Lengkap Pendaftar:")
+            nama_bisnis = st.text_input("Nama Bisnis/Perusahaan:")
+        with col_b:
+            paket_pilihan = st.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+            harga_input = st.text_input("Harga Paket (Rp):")
+            
+        if st.form_submit_button("Simpan Data Pendaftaran"):
+            if nama_user and nama_bisnis:
+                st.session_state.db_nasabah.append({
+                    "Waktu": datetime.now().strftime("%Y-%m-%d"), 
+                    "Nama Personal": nama_user,
+                    "Nama Bisnis": nama_bisnis, 
+                    "Paket": paket_pilihan, 
+                    "Harga": harga_input, 
+                    "Status": "🔴 Menunggu Aktivasi"
+                })
+                st.success(f"Data {nama_user} berhasil disimpan!")
+
+# --- FOLDER 5: ADMIN DASHBOARD ---
+elif menu == "5. 🔐 Admin Dashboard":
+    st.header("🔐 Admin Intelligence")
+    pw = st.text_input("Password Admin:", type="password")
+    if pw == "w1nbju8282":
+        if st.session_state.db_nasabah:
+            df = pd.DataFrame(st.session_state.db_nasabah)
+            st.table(df)
+            idx = st.selectbox("Pilih Nasabah:", range(len(st.session_state.db_nasabah)), 
+                               format_func=lambda x: f"{st.session_state.db_nasabah[x]['Nama Personal']} - {st.session_state.db_nasabah[x]['Nama Bisnis']}")
+            if st.button("🟢 AKTIFKAN"):
+                st.session_state.db_nasabah[idx]['Status'] = "🟢 AKTIF"
+                st.rerun()
+
+# 4. FOOTER
+st.markdown('<div class="footer">© 2026 V-Guard AI Systems</div>', unsafe_allow_html=True)
