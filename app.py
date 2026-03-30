@@ -47,7 +47,6 @@ with st.sidebar:
 if st.session_state.page == "Admin":
     if not st.session_state.auth:
         st.header("🔐 Executive Access")
-        st.markdown("Silakan masukkan kredibilitas keamanan untuk mengakses Command Center.")
         pwd = st.text_input("Password Admin:", type="password")
         if st.button("Masuk ke Command Center"):
             if pwd == "VGUARD2026":
@@ -58,7 +57,6 @@ if st.session_state.page == "Admin":
         # --- DASHBOARD KENDALI ADMIN (TEMPAT ANALISA DATA) ---
         st.header("💻 Command Center - Erwin Sinaga")
         
-        # FITUR 1: UPLOAD & ANALISA DATA (PINDAH KE SINI)
         st.markdown('<p class="header-text">🔍 V-SCAN: ANALISA DATA & DETEKSI FRAUD</p>', unsafe_allow_html=True)
         with st.container():
             st.markdown('<div class="admin-box">', unsafe_allow_html=True)
@@ -72,7 +70,6 @@ if st.session_state.page == "Admin":
                     col_m2.metric("Potensi Kebocoran", "Rp 1.250.000", delta="Fraud Detected", delta_color="inverse")
             st.markdown('</div>', unsafe_allow_html=True)
 
-        # FITUR 2: MONITORING JADWAL & SLOT (ANTI OVERLOAD)
         st.write("---")
         st.markdown('<p class="header-text">📊 MONITORING KEPATUHAN & SLOT WAKTU</p>', unsafe_allow_html=True)
         st.table(pd.DataFrame(st.session_state.audit_logs))
@@ -93,22 +90,7 @@ else:
     # --- HALAMAN BERANDA (PUBLIC VIEW) ---
     st.title("🛡️ VGUARD AI SYSTEMS")
     
-    # SEKSI ROI (DI DEPAN SESUAI INSTRUKSI)
-    st.write("---")
-    st.markdown('<p class="header-text">📈 KALKULATOR PENYELAMATAN PROFIT (ROI)</p>', unsafe_allow_html=True)
-    st.markdown('<div class="roi-box">', unsafe_allow_html=True)
-    col_a1, col_a2 = st.columns(2)
-    with col_a1:
-        omzet = st.number_input("Estimasi Omzet Bulanan (Rp)", value=250000000, step=10000000)
-        kebocoran = st.slider("Tingkat Kebocoran Bisnis (%)", 1, 15, 3)
-    with col_a2:
-        loss_total = omzet * (kebocoran/100)
-        saved = loss_total * 0.95
-        st.write(f"#### Potensi Kerugian: Rp {loss_total:,.0f}")
-        st.success(f"#### Diselamatkan VGUARD: Rp {saved:,.0f} / bln")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # SEKSI PROFIL
+    # SEKSI PROFIL (SEKARANG DI ATAS)
     st.write("---")
     col_p1, col_p2 = st.columns([1, 2.5])
     with col_p1:
@@ -125,7 +107,22 @@ else:
             st.session_state.page = "Admin"
             st.rerun()
 
-    # SEKSI PAKET
+    # SEKSI ROI (SUDAH DI PINDAHKAN KE BAWAH PROFIL)
+    st.write("---")
+    st.markdown('<p class="header-text">📈 KALKULATOR PENYELAMATAN PROFIT (ROI)</p>', unsafe_allow_html=True)
+    st.markdown('<div class="roi-box">', unsafe_allow_html=True)
+    col_a1, col_a2 = st.columns(2)
+    with col_a1:
+        omzet = st.number_input("Estimasi Omzet Bulanan (Rp)", value=250000000, step=10000000)
+        kebocoran = st.slider("Tingkat Kebocoran Bisnis (%)", 1, 15, 3)
+    with col_a2:
+        loss_total = omzet * (kebocoran/100)
+        saved = loss_total * 0.95
+        st.write(f"#### Potensi Kerugian: Rp {loss_total:,.0f}")
+        st.success(f"#### Diselamatkan VGUARD: Rp {saved:,.0f} / bln")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # SEKSI PAKET (DI BAWAH ROI, TETAP PADA POSISI BENARNYA)
     st.write("---")
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     pk1, pk2, pk3, pk4 = st.columns(4)
