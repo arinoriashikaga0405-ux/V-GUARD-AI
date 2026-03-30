@@ -1,10 +1,11 @@
 import streamlit as st
 import os
+import pandas as pd
 
 # 1. KONFIGURASI
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS CUSTOM
+# 2. CSS CUSTOM & FOOTER
 st.markdown("""
 <style>
     .status-connected { color: #28a745; font-weight: bold; font-size: 18px; }
@@ -66,32 +67,32 @@ elif menu == "3. 📦 Paket Layanan":
         st.markdown('<div class="package-box"><h3>CORPORATE</h3><b>Setup: 50jt</b><br>Monthly: 10jt<hr><ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📞 Priority 24/7</li></ul></div>', unsafe_allow_html=True)
         st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
 
-# --- MENU 4: ADMIN DASHBOARD (MULTI-USER LENGKAP) ---
+# --- MENU 4: ADMIN DASHBOARD ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
     user_id = st.text_input("Username / ID Klien:")
-    pwd = st.text_input("Password Admin:", type="password")
+    pwd = st.text_input("Password:", type="password")
     
+    # 4A. AKSES SUPER ADMIN (BAPAK ERWIN)
     if user_id == "erwin_admin" and pwd == "w1nbju8282": 
-        st.success("Selamat Datang, Bapak Erwin (Super Admin).")
-        st.metric("Total Aset Terproteksi Jaringan", "Rp 6.2 Miliar")
-        st.write("---")
-        st.subheader("📡 Status Cabang Real-Time")
-        st.write("✅ Klien 001 (Toko Jaya): NORMAL")
-        st.write("🚨 Klien 002 (Resto Minang): ANOMALI TERDETEKSI")
+        st.success("Akses Diterima: Super Admin Erwin Sinaga")
         
-    elif user_id == "klien001" and pwd == "owner123":
-        st.success("Selamat Datang, Owner Toko Jaya.")
-        st.info("Status Lisensi: BASIC - Aktif s/d Des 2026")
-        st.metric("Estimasi Penyelamatan Aset Toko", "Rp 22.500.000")
-        st.write("---")
-        st.subheader("📂 Menu Mandiri Klien")
-        st.file_uploader("Upload Data Transaksi (.csv/.xlsx)", type=['csv', 'xlsx'])
-        if st.button("Tarik Laporan Audit Terakhir"):
-            st.download_button("Download Laporan PDF", "Data Laporan Demo", file_name="audit_toko_jaya.txt")
+        tab1, tab2, tab3 = st.tabs(["📊 Database & Revenue", "🕒 Scheduler & Traffic", "🖥️ System Health"])
+        
+        with tab1:
+            st.subheader("Database Status Paket Klien")
+            data_klien = {
+                "ID Klien": ["001", "002", "003", "004"],
+                "Nama Bisnis": ["Toko Jaya", "Resto Minang", "Retail Indo", "Sentosa Corp"],
+                "Jenis Usaha": ["Retail", "F&B", "Retail", "Corporate"],
+                "Paket": ["BASIC", "MEDIUM", "BASIC", "CORPORATE"],
+                "Status Bayar": ["Lunas", "Lunas", "Menunggu", "Lunas"]
+            }
+            st.table(pd.DataFrame(data_klien))
+            st.metric("Total Pendapatan (MRR)", "Rp 152.500.000", "+12%")
             
-    elif pwd != "":
-        st.error("Akses Ditolak. Silakan periksa kembali Username atau Password.")
-
-# 4. FOOTER
-st.markdown('<div class="footer-container">© 2026 V-Guard AI Systems - Secured by Advanced Intelligence.</div>', unsafe_allow_html=True)
+        with tab2:
+            st.subheader("Monitoring Jadwal & Load Server")
+            st.write("Pengaturan waktu kirim data untuk mencegah overload:")
+            jadwal = {
+                "Jenis Usaha": ["
