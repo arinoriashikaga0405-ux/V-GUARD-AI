@@ -66,9 +66,36 @@ if menu == "1. 👤 Profil & Filosofi":
         </div>
         """, unsafe_allow_html=True)
 
-# --- MENU 2: VISI, MISI & ROI (URUTAN DIPERBAIKI) ---
+# --- MENU 2: VISI, MISI & ROI (ROI DI BAWAH) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Analisis Strategi")
     
-    # Visi & Misi di Atas
-    st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit AI di Indonesia.
+    # Perbaikan pada bagian Visi & Misi yang sebelumnya eror
+    st.info("### 🎯 Visi 2026\\nMenjadi standar utama keamanan audit AI di Indonesia.")
+    
+    st.subheader("🚀 Misi Utama")
+    st.markdown("- **Otomasi**: Audit AI 24/7.")
+    st.markdown("- **Transparansi**: Laporan real-time.")
+    st.markdown("- **Akurasi**: Deteksi anomali instan.")
+    
+    st.write("---")
+    
+    # ROI di posisi paling bawah sesuai permintaan
+    st.subheader("📈 Kalkulator Penyelamatan Aset (ROI)")
+    omzet = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=500000000, step=10000000)
+    potensi_rugi = omzet * 0.05
+    st.error(f"🚨 Estimasi Kebocoran Aset (5%): Rp {potensi_rugi:,.0f} / Bulan")
+    st.success(f"🛡️ Target Penyelamatan V-Guard (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
+
+# --- MENU 3: PAKET LAYANAN ---
+elif menu == "3. 📦 Paket Layanan":
+    st.header("📦 Paket Proteksi V-Guard AI")
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown("""<div class="package-box"><h3>BASIC</h3><b>Setup: 2.5jt</b><hr><ul><li>📊 Audit Harian</li><li>📁 Lap. PDF Mingguan</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih BASIC", wa_url, use_container_width=True)
+    with c2:
+        st.markdown("""<div class="package-box"><h3>MEDIUM</h3><b>Setup: 7.5jt</b><hr><ul><li>🤖 AI CCTV</li><li>📈 Tren Fraud</li></ul></div>""", unsafe_allow_html=True)
+        st.link_button("Pilih MEDIUM", wa_url, use_container_width=True)
+    with c3:
+        st.markdown("""
