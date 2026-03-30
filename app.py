@@ -47,23 +47,30 @@ fig = px.pie(df, values='Skor', names='Kategori', title="Ringkasan Risiko Real-t
 st.plotly_chart(fig)
 # ... (Baris 1-40: Kode Login & Grafik Plotly yang sudah kita buat) ...
 
-# --- BARIS 45: GARIS PEMISAH ---
+# # --- BARIS 50: PEMBATAS & PROFIL ---
 st.write("---") 
-
-# --- BARIS 47-65: BAGIAN PROFIL FOUNDER ---
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    # Jika Bapak sudah upload foto ke GitHub, ganti "profil.jpg" dengan nama file Bapak
-    st.image("https://via.placeholder.com/300", caption="Erwin Sinaga - Founder", use_container_width=True)
+    # Menggunakan file erwin.jpg yang sudah Bapak upload ke GitHub
+    try:
+        st.image("erwin.jpg", caption="Erwin Sinaga - Founder", use_container_width=True)
+    except:
+        # Cadangan jika file erwin.jpg belum terbaca sempurna oleh server
+        st.warning("Memuat foto 'erwin.jpg'...")
+        st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=150)
 
 with col2:
     st.markdown("""
     ### 👤 Mengenal Founder V-Guard AI
-    **Erwin Sinaga** *Senior Business Leader dengan 10+ Tahun Pengalaman*
+    **Erwin Sinaga** – *Senior Business Leader & Founder*
     
-    Halo! Saya **Erwin Sinaga**, berdedikasi untuk memanfaatkan AI dalam menyelesaikan masalah nyata di bidang keuangan dan keamanan. Dengan pengalaman lebih dari sepuluh tahun di industri perbankan dan aset (CEO & CSO), saya mendirikan **V-Guard AI** untuk memberdayakan bisnis dengan solusi cerdas.
+    Halo! Saya **Erwin Sinaga**, berdedikasi untuk memanfaatkan AI dalam menyelesaikan masalah nyata di bidang keuangan . Dengan pengalaman lebih dari **10 tahun** di industri perbankan dan aset, saya mendirikan **V-Guard AI** untuk memberdayakan UMKM dengan solusi cerdas.
     """)
+
+# --- FOOTER ---
+st.write("---")
+st.caption("© 2026 V-Guard AI Systems | Berdomisili di Tangerang, Indonesia")
 
 # --- BARIS 67: FOOTER AKHIR ---
 st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
