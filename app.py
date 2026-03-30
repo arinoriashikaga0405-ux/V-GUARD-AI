@@ -3,11 +3,11 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# 1. KONFIGURASI UTAMA
+# 1. SETUP DASAR
 st.set_page_config(page_title="V-Guard AI", layout="wide")
 wa_url = "https://wa.me/6282122190885"
 
-# 2. LOGIN SISTEM
+# 2. LOGIN (SESUAIKAN DENGAN SECRETS BAPAK)
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
@@ -18,33 +18,28 @@ if not st.session_state.auth:
         if pwd == st.secrets["ADMIN_PASSWORD"]:
             st.session_state.auth = True
             st.rerun()
-        else: st.error("❌ Password Salah.")
+        else: st.error("Password Salah!")
     st.stop()
 
-# 3. NAVIGASI
-menu = st.sidebar.radio("Navigasi Menu:", ["Dashboard", "Produk", "Profil Founder"])
+# 3. NAVIGASI MENU
+menu = st.sidebar.radio("Menu:", ["Dashboard", "Produk", "Profil Founder"])
 
-# --- HALAMAN DASHBOARD ---
 if menu == "Dashboard":
     st.header("📊 Monitoring Real-time")
     df = pd.DataFrame({'Status':['Aman','Anomali'], 'Skor':[94, 6]})
     fig = px.pie(df, values='Skor', names='Status', hole=0.3)
     st.plotly_chart(fig, use_container_width=True)
 
-# --- HALAMAN PRODUK ---
 elif menu == "Produk":
-    st.header("📦 Produk & Layanan V-Guard AI")
+    st.header("📦 Produk & Layanan")
     c1, c2 = st.columns(2)
     with c1:
         st.info("**Paket Mikro**")
-        st.write("Setup: Rp 2.5jt")
-        st.link_button("Hubungi WhatsApp", wa_url, use_container_width=True)
+        st.link_button("Hubungi via WhatsApp", wa_url)
     with c2:
         st.info("**Paket Corporate**")
-        st.write("Setup: Rp 85jt")
-        st.link_button("Hubungi WhatsApp", wa_url, use_container_width=True)
+        st.link_button("Hubungi via WhatsApp", wa_url)
 
-# --- HALAMAN PROFIL (KATA-KATA LENGKAP & NO RED BOX) ---
 elif menu == "Profil Founder":
     st.header("Strategic Leadership")
     l, r = st.columns([1, 2])
@@ -52,29 +47,23 @@ elif menu == "Profil Founder":
         if os.path.exists("erwin.jpg"): 
             st.image("erwin.jpg", use_container_width=True)
         else: 
-            st.subheader("Founder Erwin Sinaga")
+            st.subheader("Erwin Sinaga, Founder")
     with r:
         st.subheader("Erwin Sinaga")
         st.markdown("#### *Founder & Chief Executive Officer*")
         
-        # KATA-KATA LENGKAP SESUAI PROFIL BAPAK
-        deskripsi_lengkap = (
+        # Narasi profesional Bapak Erwin Sinaga
+        deskripsi = (
             "Bapak Erwin Sinaga adalah seorang Senior Business Leader visioner dengan rekam jejak impresif "
-            "selama lebih dari 10 tahun di posisi krusial sebagai CEO dan CSO dalam industri perbankan "
-            "serta manajemen aset. Pengalaman mendalam beliau dalam mengelola risiko operasional, "
-            "memimpin transformasi digital, dan menjaga integritas aset bernilai tinggi menjadi pondasi "
-            "kuat di balik berdirinya V-Guard AI Systems. Dengan latar belakang keahlian strategis yang "
-            "komprehensif, Pak Erwin berdedikasi penuh untuk mendemokratisasi akses terhadap teknologi "
-            "keamanan finansial kelas dunia. Beliau melihat celah krusial antara prototipe teknologi dengan "
-            "solusi production-grade yang benar-benar siap menjawab tantangan pasar di tahun 2026. "
-            "Komitmen utama beliau adalah membangun solusi 'End-to-End Intermediary' yang cerdas, adaptif, "
-            "dan memiliki daya jual tinggi (high conversion), yang tidak hanya melindungi UMKM lokal dari "
-            "kehancuran finansial akibat fraud, tetapi juga memberikan kepastian keamanan di tingkat Korporat global."
+            "selama lebih dari 10 tahun di posisi CEO dan CSO dalam industri perbankan serta manajemen aset. "
+            "Pengalaman mendalam beliau dalam mengelola risiko operasional dan memimpin transformasi digital "
+            "menjadi pondasi kuat V-Guard AI Systems. Pak Erwin berdedikasi mendemokratisasi akses terhadap "
+            "teknologi keamanan finansial kelas dunia untuk melindungi UMKM dan Korporat dari fraud global."
         )
-        st.write(deskripsi_lengkap)
+        st.write(deskripsi)
         
-        # TOMBOL WHATSAPP ASLI (WARNA BIRU/HITAM STANDAR, BUKAN MERAH)
-        st.link_button("📲 Hubungi Pak Erwin via WhatsApp", wa_url, type="primary", use_container_width=True)
+        # TOMBOL STANDAR (DIJAMIN BUKAN MERAH)
+        st.link_button("📲 Hubungi via WhatsApp", wa_url, type="primary")
 
 st.write("---")
 st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
