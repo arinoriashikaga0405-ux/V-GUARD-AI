@@ -17,70 +17,24 @@ pkgs = {
     "CORPORATE": {"N": "Elite Managed", "S": "85.000.000", "M": "10.000.000"}
 }
 
-# 2. SIDEBAR NAVIGASI
+# 2. SIDEBAR NAVIGASI DENGAN URUTAN BARU
 with st.sidebar:
     st.title("🛡️ V-Guard AI")
-    menu = st.sidebar.radio("Pilih Menu:", ["🏠 Home & ROI", "📦 Paket Solusi", "👤 Profil Founder", "🔐 Admin Panel"])
+    # Urutan menu diubah sesuai permintaan: Profile, Home (Visi Misi), Paket, Admin
+    menu = st.sidebar.radio("Pilih Menu:", [
+        "1. 👤 Profil Founder", 
+        "2. 🏠 Home: Visi & Misi", 
+        "3. 📦 Paket Solusi", 
+        "4. 🔐 Admin Panel"
+    ])
     st.write("---")
 
-# --- HOME & ROI ---
-if menu == "🏠 Home & ROI":
-    st.title("🛡️ ROI & Penyelamatan Kerugian")
-    st.info("Kalkulator untuk mengukur potensi penghematan bisnis Anda.")
-    
-    num_trans = st.number_input("Total Transaksi/Bulan:", value=1000)
-    avg_val = st.number_input("Rata-rata Nilai Transaksi (Rp):", value=500000)
-    fraud_p = st.slider("Asumsi Fraud (%):", 0.0, 5.0, 1.2)
-    
-    pot_loss = (num_trans * avg_val) * (fraud_p / 100)
-    
-    st.error(f"### 🚩 Potensi Kerugian: Rp {pot_loss:,.0f}")
-    st.success(f"### ✅ Penyelamatan V-Guard AI: Rp {pot_loss * 0.99:,.0f}")
-
-# --- PAKET SOLUSI (2x2 LAYOUT AGAR TIDAK BERANTAKAN) ---
-elif menu == "📦 Paket Solusi":
-    st.title("📦 Paket Solusi & Pengiriman Data")
-    
-    # Baris 1
-    c1, c2 = st.columns(2)
-    with c1:
-        st.warning("**MIKRO - Basic Guard**")
-        st.write(f"Setup: Rp {pkgs['MIKRO']['S']}")
-        st.write(f"Bulanan: Rp {pkgs['MIKRO']['M']}")
-        st.link_button("Pesan via WA", wa_url, use_container_width=True)
-    with c2:
-        st.warning("**MENENGAH - Premium Shield**")
-        st.write(f"Setup: Rp {pkgs['MENENGAH']['S']}")
-        st.write(f"Bulanan: Rp {pkgs['MENENGAH']['M']}")
-        st.link_button("Pesan via WA", wa_url, use_container_width=True)
-    
-    # Baris 2
-    c3, c4 = st.columns(2)
-    with c3:
-        st.warning("**ENTERPRISE - Enterprise Vault**")
-        st.write(f"Setup: Rp {pkgs['ENTERPRISE']['S']}")
-        st.write(f"Bulanan: Rp {pkgs['ENTERPRISE']['M']}")
-        st.link_button("Pesan via WA", wa_url, use_container_width=True)
-    with c4:
-        st.warning("**CORPORATE - Elite Managed**")
-        st.write(f"Setup: Rp {pkgs['CORPORATE']['S']}")
-        st.write(f"Bulanan: Rp {pkgs['CORPORATE']['M']}")
-        st.link_button("Pesan via WA", wa_url, use_container_width=True)
-
-    st.write("---")
-    st.subheader("📲 Antrean Data AI (Server Control)")
-    c_name = st.text_input("Nama Perusahaan:")
-    if st.button("Kirim ke Antrean"):
-        if c_name:
-            tm = datetime.now().strftime("%H:%M:%S")
-            st.success(f"Data {c_name} berhasil masuk antrean pada jam {tm}")
-        else: st.warning("Mohon isi nama perusahaan.")
-
-# --- PROFIL FOUNDER (WA SUDAH DIHAPUS TOTAL) ---
-elif menu == "👤 Profil Founder":
+# --- NOMOR 1: PROFIL FOUNDER (TANPA WA) ---
+if menu == "1. 👤 Profil Founder":
     st.header("Strategic Leadership")
     l, r = st.columns([1, 2])
     with l:
+        # Menampilkan foto profil jika ada
         if os.path.exists("erwin.jpg"): 
             st.image("erwin.jpg", use_container_width=True)
         else: 
@@ -91,29 +45,25 @@ elif menu == "👤 Profil Founder":
         st.write("""
         Bapak Erwin Sinaga adalah seorang Senior Business Leader visioner dengan rekam jejak impresif selama lebih dari 10 tahun 
         di posisi krusial sebagai CEO dan CSO dalam industri perbankan serta manajemen aset. Pengalaman mendalam beliau dalam 
-        mengelola risiko operasional, memimpin transformasi digital, dan menjaga integritas aset bernilai tinggi menjadi pondasi 
-        kuat di balik berdirinya V-Guard AI Systems. Beliau berdedikasi penuh untuk mendemokratisasi akses terhadap teknologi 
-        keamanan finansial kelas dunia bagi UMKM maupun Korporat global di tahun 2026.
+        mengelola risiko operasional, meminimalkan fraud, dan menjaga integritas aset menjadi pondasi kuat V-Guard AI Systems.
         """)
 
-# --- ADMIN PANEL ---
-elif menu == "🔐 Admin Panel":
-    st.title("🔐 Admin Dashboard")
-    if 'auth' not in st.session_state: st.session_state.auth = False
+# --- NOMOR 2: HOME (VISI & MISI + ROI) ---
+elif menu == "2. 🏠 Home: Visi & Misi":
+    st.title("🛡️ Visi & Misi V-Guard AI")
     
-    if not st.session_state.auth:
-        pwd = st.text_input("Masukkan Password Admin:", type="password")
-        if st.button("Authorize"):
-            if pwd == st.secrets["ADMIN_PASSWORD"]:
-                st.session_state.auth = True
-                st.rerun()
-            else: st.error("Akses Ditolak!")
-    else:
-        st.success("Selamat Datang kembali, Pak Erwin.")
-        if st.button("Logout Admin"):
-            st.session_state.auth = False
-            st.rerun()
-        st.write("Monitoring Real-time dan Alarm Aktif tersedia di sini.")
-
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
+    col_vm1, col_vm2 = st.columns(2)
+    with col_vm1:
+        st.subheader("🎯 Visi")
+        st.write("Menjadi perantara (intermediary) keamanan finansial berbasis AI terdepan yang mendemokratisasi proteksi aset tingkat tinggi untuk semua skala bisnis di pasar global tahun 2026.")
+    
+    with col_vm2:
+        st.subheader("🚀 Misi")
+        st.write("""
+        1. Menyediakan solusi deteksi fraud yang cerdas, adaptif, dan siap produksi (production-grade).
+        2. Memberikan kepastian keamanan finansial kelas dunia bagi UMKM maupun Korporat global.
+        3. Menghadirkan teknologi 'End-to-End Intermediary' yang memiliki daya jual tinggi dan akurasi maksimal.
+        """)
+    
+    st.write("---")
+    st.
