@@ -2,87 +2,53 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems - Erwin Sinaga", page_icon="🛡️", layout="wide")
+# --- 1. CONFIGURATION ---
+st.set_page_config(page_title="VGUARD AI Systems - CEO Erwin Sinaga", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS TAMPILAN RAPI (HITAM & KUNING) ---
+# --- 2. BAKU & PERMANEN CSS (ESTETIKA EKSEKUTIF) ---
+# Saya kunci CSS ini agarvisual Beranda Utama tidak berubah tanpa persetujuan Bapak.
 st.markdown("""
 <style>
-    .stApp { background-color: #f8fafc; }
+    .stApp { background-color: white; }
+    .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; height: 45px; }
     
-    /* Banner Hitam Atas */
-    .black-banner {
-        background-color: #111827;
-        color: white;
-        padding: 40px;
-        border-radius: 15px;
-        text-align: center;
-        border-bottom: 5px solid #facc15;
-        margin-bottom: 30px;
-    }
+    /* Header Baku (Tengah) */
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; }
+    .main-title { color: #1e3a8a; font-size: 2.5em; font-weight: bold; margin: 0; }
     
-    /* Box Deskripsi Hitam */
-    .description-box {
-        background: #111827;
-        color: white;
-        padding: 30px;
-        border-radius: 15px;
-        height: 100%;
-        border-bottom: 5px solid #facc15;
+    /* Profil Section Baku */
+    .profile-box { background: #f8fafc; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    
+    /* Paket Layanan Strategis - Ramping & Baku (4 Kolom) */
+    .package-card { 
+        background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; 
+        text-align: center; height: 100%; display: flex; flex-direction: column; 
     }
-
-    .wa-button {
-        display: inline-block;
-        background-color: #25d366;
-        color: white !important;
-        padding: 12px 25px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-        margin-top: 15px;
-    }
+    .pkg-name { color: #1e3a8a; font-size: 1.5em; font-weight: bold; margin-bottom: 10px; }
+    .pkg-price { color: #1e3a8a; font-size: 1.8em; font-weight: bold; margin: 10px 0; }
+    .pkg-feat { text-align: left; font-size: 0.9em; margin: 15px 0; min-height: 120px; flex-grow: 1; list-style-type: disc; padding-left: 20px;}
 </style>
 """, unsafe_allow_html=True)
 
-if 'page' not in st.session_state: st.session_state.page = "Home"
+wa_number = "62821221190885"
 
-# --- 3. LOGIKA HALAMAN ---
+# --- 3. LOGIKA HALAMAN & STATE ---
+if 'page' not in st.session_state: st.session_state.page = "Home"
+if 'auth' not in st.session_state: st.session_state.auth = False
+
+# --- 4. HEADER & PROFIL (KONSEP BAKU) ---
 if st.session_state.page == "Home":
-    
-    # BANNER UTAMA
+    # Header Logo & Judul (Tengah)
     st.markdown("""
-    <div class="black-banner">
-        <h1 style="margin:0; font-size: 3em;">V-GUARD AI SYSTEMS</h1>
-        <p style="font-size: 1.2em; opacity: 0.8;">Mencegah Kerugian Owner Melalui Deteksi Proaktif</p>
+    <div class="header-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/1004/1004666.png" width="40">
+        <h1 class="main-title">VGUARD AI SYSTEMS</h1>
     </div>
     """, unsafe_allow_html=True)
-
-    # KONTEN PROFIL (FOTO & ABOUT)
-    col_photo, col_desc = st.columns([1, 1.5])
     
-    with col_photo:
-        # Foto Profil Strategis
-        st.image("https://raw.githubusercontent.com/erwinsinaga/v-guard-ai/main/assets/ceo_photo.jpg", 
-                 caption="Erwin Sinaga - Senior Business Executive", use_container_width=True)
-        
-    with col_desc:
-        st.markdown(f"""
-        <div class="description-box">
-            <h3 style="color: #facc15;">🛡️ About V-GUARD</h3>
-            <p style="font-size: 1.1em; line-height: 1.6;">
-                Platform deteksi fraud sistemik yang dibangun oleh <b>Erwin Sinaga</b> (Senior Business Executive). 
-                Pengalaman perbankan 10+ tahun kami gunakan untuk memproteksi aset bisnis Anda dari kebocoran hingga 90%.
-            </p>
-            <p>Filosofi Kami: <b>Presisi Tanpa Kompromi</b>.</p>
-            <a href="https://wa.me/62821221190885" class="wa-button">💬 Hubungi CEO via WhatsApp</a>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.write("")
-        if st.button("🚀 MASUK KE COMMAND CENTER"):
-            st.session_state.page = "Admin"
-            st.rerun()
-
-    st.write("---")
-    
-    # 4 PAKET LAYANAN STRATE
+    # Kolom Profil
+    with st.container():
+        c1, c2 = st.columns([1, 2.5])
+        with c1:
+            # Foto Profil (Aset baku Bapak)
+            st.image("https://cdn-icons
