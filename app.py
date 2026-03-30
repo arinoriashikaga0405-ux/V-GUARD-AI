@@ -37,20 +37,29 @@ st.sidebar.write(f"👤 User: **Erwin Sinaga**")
 if st.sidebar.button("Logout"):
     st.session_state.auth = False
     st.rerun()
+# --- BARIS 40: FILOSOFI BISNIS ---
+st.write("---")
+st.header("🛡️ Our Philosophy")
 
-st.header("📊 Financial Integrity Dashboard")
-st.success("Koneksi Aman & Terverifikasi.")
+st.markdown("""
+At V-Guard AI, our philosophy is simple yet profound: **Empowering Businesses Through Intelligent Protection**. 
 
-# Grafik Plotly (Dukungan dari requirements.txt Bapak)
-df = pd.DataFrame({'Kategori': ['Aman', 'Anomali'], 'Skor': [94, 6]})
-fig = px.pie(df, values='Skor', names='Kategori', title="Ringkasan Risiko Real-time")
-st.plotly_chart(fig)
-# ... (Baris 1-40: Kode Login & Grafik Plotly yang sudah kita buat) ...
+We believe that every business deserves protection against financial threats and operational inefficiencies. Our mission is to harness the power of Artificial Intelligence to provide proactive, reliable, and accessible solutions that safeguard assets, optimize processes, and foster sustainable growth.
 
-# # --- BARIS 50: PEMBATAS & PROFIL ---
-st.write("---") 
-col1, col2 = st.columns([1, 2])
+In a world increasingly driven by data, we aim to make cutting-edge AI technology accessible to all, ensuring that businesses of all sizes can thrive in the digital age.
+""")
 
+# --- BARIS 52: VISI & MISI ---
+st.subheader("🎯 Vision & Mission")
+col_v, col_m = st.columns(2)
+
+with col_v:
+    st.markdown("#### **Vision**")
+    st.info("To become the leading provider of AI-powered financial security solutions globally.")
+
+with col_m:
+    st.markdown("#### **Mission**")
+    st.info("To develop innovative AI technologies that anticipate risks, automate defenses, and enable informed decision-making for businesses worldwide.")
 with col1:
     # Menggunakan file erwin.jpg yang sudah Bapak upload ke GitHub
     try:
