@@ -26,11 +26,10 @@ st.markdown("""
         z-index: 9999;
     }
     .stApp { margin-bottom: 100px; }
-    .profile-text { text-align: justify; line-height: 1.6; }
+    .profile-text { text-align: justify; line-height: 1.8; }
 </style>
 """, unsafe_allow_html=True)
 
-# Nomor WA diperbarui sesuai permintaan
 wa_url = "https://wa.me/628212190885"
 
 # 3. SIDEBAR
@@ -51,9 +50,9 @@ with st.sidebar:
     st.write("---")
     st.link_button("📞 Konsultasi Langsung", wa_url, use_container_width=True)
 
-# --- MENU 1: PROFIL & FILOSOFI (RINGKAS < 100 KATA) ---
+# --- MENU 1: PROFIL & FILOSOFI (MINIMAL 100 KATA) ---
 if menu == "1. 👤 Profil & Filosofi":
-    st.header("👤 Strategic Leadership")
+    st.header("👤 Strategic Leadership & Philosophy")
     col1, col2 = st.columns([1, 2])
     with col1:
         if os.path.exists("erwin.jpg"):
@@ -62,15 +61,12 @@ if menu == "1. 👤 Profil & Filosofi":
         st.subheader("Erwin Sinaga")
         st.markdown("""
         <div class="profile-text">
-        Bapak Erwin Sinaga adalah Pemimpin Bisnis Senior dengan pengalaman 10+ tahun di sektor perbankan dan manajemen aset. 
-        Keahliannya fokus pada manajemen risiko dan kepatuhan operasional. <br><br>
-        <b>Filosofi:</b> Beliau memegang teguh prinsip integritas dan transparansi. 
-        Melalui V-Guard AI, beliau berkomitmen melindungi aset pelaku usaha dari risiko fraud menggunakan 
-        teknologi audit cerdas yang presisi dan real-time.
+        Bapak Erwin Sinaga adalah seorang profesional dan Pemimpin Bisnis Senior yang memiliki dedikasi tinggi selama lebih dari sepuluh tahun dalam dunia perbankan serta manajemen aset nasional. Melalui perjalanan karier yang panjang di sektor keuangan formal, beliau telah mengasah keahlian strategis dalam manajemen kredit,hingga perancangan sistem perlindungan aset korporasi skala besar. Pengalaman mendalam beliau dalam menangani struktur keuangan yang kompleks memberikan landasan kuat bagi pengembangan sistem keamanan audit berbasis teknologi tinggi. <br><br>
+        Filosofi kepemimpinan beliau berakar pada integritas mutlak dan transparansi data, di mana beliau percaya bahwa setiap celah fraud dapat ditutup dengan sinergi antara ketelitian manusia dan kecanggihan teknologi digital. V-Guard AI lahir dari visi beliau untuk membawa standar keamanan audit perbankan yang sangat ketat ke dalam ekosistem bisnis UMKM dan perusahaan menengah. Beliau memandang bahwa Artificial Intelligence bukan sekadar alat otomatisasi, melainkan benteng pertahanan utama dalam menjaga keberlangsungan finansial klien. Dengan mengintegrasikan algoritma deteksi anomali secara real-time, Bapak Erwin berkomitmen untuk menciptakan lingkungan bisnis yang bersih dari kebocoran dana, memastikan setiap rupiah aset klien terlindungi secara holistik dan terukur di bawah pengawasan sistem yang cerdas dan jujur.
         </div>
         """, unsafe_allow_html=True)
 
-# --- MENU 2: VISI, MISI & ROI (ROI DI BAWAH MISI) ---
+# --- MENU 2: VISI, MISI & ROI (TIDAK BERUBAH) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Analisis Strategi")
     st.info("### 🎯 Visi\nMenjadi standar utama keamanan audit AI di Indonesia pada tahun 2026.")
@@ -84,14 +80,13 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
     
     st.write("---")
     
-    # ROI dikembalikan dan diletakkan di bawah Misi
     st.subheader("📈 Kalkulator Penyelamatan Aset (ROI)")
     omzet = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=500000000, step=10000000)
     potensi_rugi = omzet * 0.05
     st.error(f"🚨 Estimasi Kebocoran Aset (5%): Rp {potensi_rugi:,.0f} / Bulan")
     st.success(f"🛡️ Target Penyelamatan V-Guard (90%): Rp {potensi_rugi * 0.9:,.0f} / Bulan")
 
-# --- MENU 3: PAKET LAYANAN (LENGKAP 4 PAKET) ---
+# --- MENU 3: PAKET LAYANAN (TIDAK BERUBAH) ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Proteksi V-Guard AI")
     c1, c2, c3, c4 = st.columns(4)
@@ -113,7 +108,7 @@ elif menu == "3. 📦 Paket Layanan":
         <b>Manfaat:</b><ul><li>🏗️ Custom AI Dev</li><li>🕵️ Audit On-Site</li><li>📞 Priority 24/7</li></ul></div>""", unsafe_allow_html=True)
         st.link_button("Pilih CORPORATE", wa_url, use_container_width=True)
 
-# --- MENU 4: ADMIN DASHBOARD (KEMBALI) ---
+# --- MENU 4: ADMIN DASHBOARD (TIDAK BERUBAH) ---
 elif menu == "4. 🔐 Admin Dashboard":
     st.header("🔐 Intelligence Center")
     pwd = st.text_input("Password Admin:", type="password")
@@ -125,5 +120,5 @@ elif menu == "4. 🔐 Admin Dashboard":
     elif pwd != "":
         st.error("Akses Ditolak. Password Salah.")
 
-# 4. FOOTER (DITAMPILKAN @2026)
+# 4. FOOTER (TETAP ADA)
 st.markdown("""<div class="footer-container">© 2026 V-Guard AI Systems - Secured by Advanced Intelligence.</div>""", unsafe_allow_html=True)
