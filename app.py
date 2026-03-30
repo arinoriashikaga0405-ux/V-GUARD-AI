@@ -1,77 +1,47 @@
 import streamlit as st
-import os
-import pandas as pd
-from dotenv import load_dotenv
-from datetime import datetime
-
-# --- 1. LOAD CONFIG & SECURITY ---
-load_dotenv()
-import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# --- 1. AMBIL PASSWORD DARI SECRETS ---
+# 1. Ambil Password dari Secrets
 try:
-    ADMIN_PWD = st.secrets["ADMIN_PASSWORD"]
+    # Memastikan sistem membaca ADMIN_PASSWORD dari menu Secrets
+    CORRECT_PASSWORD = st.secrets["ADMIN_PASSWORD"]
 except Exception:
-    st.error("⚠️ Password belum diatur di menu Secrets Streamlit Cloud!")
+    st.error("⚠️ Password belum terpasang di menu Secrets Streamlit!")
     st.stop()
 
-# --- 2. LOGIKA LOGIN ---
+# 2. Inisialisasi Status Login
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
+# 3. Tampilan Halaman Login
 if not st.session_state.auth:
     st.title("🛡️ V-GUARD AI SECURE LOGIN")
-    st.write("Founder: Erwin Sinaga")
+    st.subheader("Founder: Erwin Sinaga")
+    
+    # Input Password
     pwd_input = st.text_input("Masukkan Password Admin:", type="password")
     
-    if st.button("Masuk"):
-        if pwd_input == ADMIN_PWD:
+    if st.button("Masuk Sekarang"):
+        # Menghapus spasi yang mungkin tidak sengaja terketik user
+        if pwd_input.strip() == CORRECT_PASSWORD.strip():
             st.session_state.auth = True
             st.rerun()
         else:
-            st.error("Password Salah!")
+            st.error("❌ Password Salah. Pastikan sama dengan di menu Secrets.")
     st.stop()
 
-# --- 3. KONTEN UTAMA (Hanya muncul jika sudah login) ---
+# 4. Tampilan Dashboard (Hanya muncul jika Login Sukses)
 st.sidebar.title("V-Guard AI")
 st.sidebar.write(f"👤 User: **Erwin Sinaga**")
 if st.sidebar.button("Logout"):
     st.session_state.auth = False
     st.rerun()
 
-st.header("Financial Integrity Dashboard")
-st.success("Sistem Online & Terproteksi.")
+st.header("📊 Financial Integrity Dashboard")
+st.success("Koneksi Aman & Terverifikasi.")
 
-# Visualisasi Plotly yang tadi error, sekarang sudah aktif
-df = pd.DataFrame({'Kategori': ['Aman', 'Risiko'], 'Nilai': [92, 8]})
-fig = px.bar(df, x='Kategori', y='Nilai', color='Kategori', title="Status Transaksi Real-time")
+# Grafik Plotly (Dukungan dari requirements.txt Bapak)
+df = pd.DataFrame({'Kategori': ['Aman', 'Anomali'], 'Skor': [94, 6]})
+fig = px.pie(df, values='Skor', names='Kategori', title="Ringkasan Risiko Real-time")
 st.plotly_chart(fig)
-# --- 3. KONTEN UTAMA (HANYA JIKA SUDAH LOGIN) ---
-try:
-    st.sidebar.title("V-Guard AI")
-    st.sidebar.write(f"👤 User: **Erwin Sinaga**")
-    
-    if st.sidebar.button("🔓 Logout"):
-        st.session_state.auth = False
-        st.rerun()
-
-    st.success("Selamat Datang di Command Center, Pak Erwin Sinaga.")
-    
-    # Area Simulasi Dashboard
-    st.header("Financial Integrity Monitoring")
-    data = pd.DataFrame({
-        'Status': ['Safe', 'Flagged', 'Critical'],
-        'Jumlah': [85, 12, 3]
-    })
-    st.bar_chart(data.set_index('Status'))
-
-except Exception as e:
-    # Baris 94+: Indentasi harus menjorok ke dalam (4 spasi)
-    st.error(f"⚠️ Terjadi gangguan pada sistem: {str(e)}")
-    st.write("Silakan cek koneksi database atau variabel di file .env Anda.")
-
-# --- 4. FOOTER ---
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Secured Environment")
