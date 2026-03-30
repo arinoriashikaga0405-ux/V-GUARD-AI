@@ -2,50 +2,43 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import os
+from datetime import datetime
 
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 wa_url = "https://wa.me/6282122190885"
 
-# 2. DATA PAKET (DYNAMIC PACKAGES)
-pkgs = [
-    {"T": "MIKRO", "N": "Basic Guard", "S": "2.5jt", "M": "500rb", "B": ["Fraud Dasar", "WA Support"]},
-    {"T": "MENENGAH", "N": "Premium Shield", "S": "7.5jt", "M": "1.5jt", "B": ["Anomaly Detection", "Dashboard"]},
-    {"T": "ENTERPRISE", "N": "Enterprise Vault", "S": "50jt", "M": "5jt", "B": ["Full Integration", "Audit Bulanan"]},
-    {"T": "CORPORATE", "N": "Elite Managed", "S": "85jt", "M": "10jt", "B": ["24/7 Response", "Custom AI Training"]}
-]
+# 2. DATA MASTER (DYNAMIC PACKAGES)
+pkgs = {
+    "MIKRO": {"N": "Basic Guard", "S": 2500000, "M": 500000},
+    "MENENGAH": {"N": "Premium Shield", "S": 7500000, "M": 1500000},
+    "ENTERPRISE": {"N": "Enterprise Vault", "S": 50000000, "M": 5000000},
+    "CORPORATE": {"N": "Elite Managed", "S": 85000000, "M": 10000000}
+}
 
-# 3. NAVIGASI SIDEBAR
+# 3. NAVIGASI
 menu = st.sidebar.radio("Pilih Menu:", ["🏠 Home & AI Services", "📦 Produk & Layanan", "👤 Profil Founder", "🔐 Admin Dashboard"])
 
 # --- HALAMAN 1: HOME ---
 if menu == "🏠 Home & AI Services":
     st.title("🛡️ V-Guard AI Systems")
-    st.markdown("### *Next-Generation Financial Security*")
-    st.write("Solusi intermediary cerdas untuk keamanan bisnis Anda.")
+    st.write("Next-Generation Financial Security. Solusi intermediary cerdas untuk bisnis Anda.")
     st.write("---")
     c1, c2, c3 = st.columns(3)
-    with c1:
-        st.info("**Real-time Detection**")
-        st.write("Mendeteksi pola mencurigakan dalam milidetik.")
-    with c2:
-        st.info("**End-to-End Link**")
-        st.write("Koneksi otomatis ke jaringan fraud global.")
-    with c3:
-        st.info("**Risk Scoring**")
-        st.write("Penilaian risiko prediktif untuk tiap entitas.")
+    with c1: st.info("**Real-time Detection**")
+    with c2: st.info("**End-to-End Link**")
+    with c3: st.info("**Risk Scoring**")
 
-# --- HALAMAN 2: PRODUK (DYNAMIC VIEW) ---
+# --- HALAMAN 2: PRODUK ---
 elif menu == "📦 Produk & Layanan":
     st.title("📦 Paket Investasi Keamanan")
     cols = st.columns(4)
-    for i, p in enumerate(pkgs):
+    for i, (tier, data) in enumerate(pkgs.items()):
         with cols[i]:
-            st.subheader(f"🛡️ {p['T']}")
-            st.write(f"Setup: **Rp {p['S']}**")
-            st.write(f"Bulanan: **Rp {p['M']}**")
-            for b in p['B']: st.write(f"✅ {b}")
-            st.link_button(f"Pesan {p['T']}", wa_url, use_container_width=True)
+            st.subheader(f"🛡️ {tier}")
+            st.write(f"Setup: **Rp {data['S']:,}**")
+            st.write(f"Bulanan: **Rp {data['M']:,}**")
+            st.link_button(f"Pesan {tier}", wa_url, use_container_width=True)
 
 # --- HALAMAN 3: PROFIL ---
 elif menu == "👤 Profil Founder":
@@ -58,7 +51,7 @@ elif menu == "👤 Profil Founder":
         st.subheader("Erwin Sinaga")
         st.write("Bapak Erwin Sinaga adalah Senior Business Leader dengan pengalaman 10+ tahun sebagai CEO/CSO di perbankan.")
 
-# --- HALAMAN 4: ADMIN DASHBOARD (MONITORING & INPUT DATA) ---
+# --- HALAMAN 4: ADMIN DASHBOARD (ALARM & INVOICE) ---
 elif menu == "🔐 Admin Dashboard":
     st.title("🔐 Secure Admin Access")
     if 'auth' not in st.session_state: st.session_state.auth = False
@@ -76,25 +69,35 @@ elif menu == "🔐 Admin Dashboard":
             st.session_state.auth = False
             st.rerun()
         
-        st.write("---")
-        st.subheader("📊 Monitoring Real-time (Control Panel)")
+        tab1, tab2 = st.tabs(["📊 Monitoring & Alarm", "🧾 Invoice Generator"])
         
-        # FITUR INPUT DATA UNTUK ADMIN
-        col_in1, col_in2 = st.columns(2)
-        with col_in1:
-            val_aman = st.number_input("Jumlah Data Aman:", value=94)
-        with col_in2:
-            val_anomali = st.number_input("Jumlah Data Anomali:", value=6)
+        with tab1:
+            st.subheader("🚨 Live Security Alarm")
+            # Simulasi Alarm Log
+            log_data = [
+                {"Waktu": "18:30", "Event": "Login Access", "Status": "Aman", "IP": "192.168.1.1"},
+                {"Waktu": "18:32", "Event": "API Request", "Status": "Aman", "IP": "104.22.1.5"},
+                {"Waktu": "18:45", "Event": "Massive Withdrawal", "Status": "🚨 ANOMALI", "IP": "Unknown (Proxy)"},
+            ]
+            for log in log_data:
+                if "ANOMALI" in log['Status']:
+                    st.error(f"**{log['Waktu']}** | {log['Event']} | {log['Status']} | Origin: {log['IP']}")
+                else:
+                    st.write(f"{log['Waktu']} | {log['Event']} | {log['Status']} | Origin: {log['IP']}")
             
-        # GRAFIK DINAMIS BERDASARKAN INPUT
-        df = pd.DataFrame({'Status':['Aman','Anomali'], 'Skor':[val_aman, val_anomali]})
-        fig = px.pie(df, values='Skor', names='Status', hole=0.4, 
-                     color_discrete_sequence=['#00CC96', '#EF553B'])
-        st.plotly_chart(fig, use_container_width=True)
+            st.write("---")
+            val_anomali = st.slider("Simulasi Tingkat Anomali (%):", 0, 100, 6)
+            fig = px.pie(values=[100-val_anomali, val_anomali], names=['Aman', 'Anomali'], hole=0.4, color_discrete_sequence=['#00CC96', '#EF553B'])
+            st.plotly_chart(fig, use_container_width=True)
 
-        st.write("---")
-        st.subheader("📦 Monitoring Dynamic Packages")
-        st.table(pd.DataFrame(pkgs).drop(columns=['B'])) # Menampilkan ringkasan paket
-
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
+        with tab2:
+            st.subheader("🧾 Create New Invoice")
+            c_name = st.text_input("Nama Klien / Perusahaan:")
+            c_pkg = st.selectbox("Pilih Paket:", list(pkgs.keys()))
+            
+            if st.button("Generate Invoice Draft"):
+                selected = pkgs[c_pkg]
+                total = selected['S'] + selected['M']
+                st.markdown(f"""
+                ---
+                **INVOICE #VGD-{datetime.now().strftime('%Y%m%d%H%M')}**
