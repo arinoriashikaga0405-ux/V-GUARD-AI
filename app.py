@@ -55,7 +55,7 @@ if menu == "1. 👤 Profil Founder":
         st.subheader("Erwin Sinaga")
         st.markdown("""
         <div style="text-align: justify;">
-        Bapak Erwin Sinaga merupakan seorang profesional dan Pemingin Bisnis Senior yang memiliki rekam jejak prestisius selama lebih dari sepuluh tahun di industri perbankan serta manajemen aset nasional. Melalui dedikasi panjang di sektor keuangan formal, beliau telah menguasai secara mendalam berbagai aspek krusial seperti manajemen risiko kredit, pengawasan kepatuhan operasional (compliance), hingga perancangan strategi perlindungan aset korporasi dalam skala besar. <br><br>
+        Bapak Erwin Sinaga merupakan seorang profesional dan Pemimpin Bisnis Senior yang memiliki rekam jejak prestisius selama lebih dari sepuluh tahun di industri perbankan serta manajemen aset nasional. Melalui dedikasi panjang di sektor keuangan formal, beliau telah menguasai secara mendalam berbagai aspek krusial seperti manajemen risiko kredit, pengawasan kepatuhan operasional (compliance), hingga perancangan strategi perlindungan aset korporasi dalam skala besar. <br><br>
         Pemahaman komprehensif beliau terhadap celah-celah fraud dan dinamika kebocoran dana yang sering terjadi pada sistem keuangan konvensional menjadi batu pijakan utama dalam mendirikan ekosistem V-Guard AI. Di bawah kepemimpinan strategisnya, Bapak Erwin berhasil mengintegrasikan standar audit perbankan yang sangat ketat dengan kecanggihan teknologi Artificial Intelligence modern, termasuk Google Gemini, MindBridge, dan YOLO Vision. Sinergi teknologi ini dirancang khusus untuk memberikan perlindungan finansial yang holistik, transparan, dan mampu mencegah segala bentuk anomali transaksi bisnis klien secara mutlak dan real-time.
         </div>
         """, unsafe_allow_html=True)
@@ -79,47 +79,4 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
 # --- MENU 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Proteksi V-Guard AI")
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
-        st.info("**BASIC**\n\nSetup: 2.5jt\nRp 500rb/Bln")
-        st.link_button("Pilih Basic", wa_url)
-    with c2:
-        st.info("**MEDIUM**\n\nSetup: 7.5jt\nRp 1.5jt/Bln")
-        st.link_button("Pilih Medium", wa_url)
-    with c3:
-        st.info("**ENTERPRISE**\n\nSetup: 25jt\nRp 5jt/Bln")
-        st.link_button("Pilih Enterprise", wa_url)
-    with c4:
-        st.info("**CORPORATE**\n\nSetup: 50jt\nRp 10jt/Bln")
-        st.link_button("Pilih Corporate", wa_url)
-
-# --- MENU 4: ADMIN DASHBOARD (PERBAIKAN INDENTASI) ---
-elif menu == "4. 🔐 Admin Dashboard":
-    st.header("🔐 Admin Strategic Dashboard")
-    
-    k1, k2, k3 = st.columns(3)
-    k1.metric("Klien Aktif", "12 Cabang", "+2")
-    k2.metric("Omzet Terpantau", "Rp 6.2 Miliar")
-    k3.metric("Aset Diselamatkan", "Rp 310 Juta", "95%")
-    
-    st.write("---")
-    st.subheader("🔄 Simulasi Alur Proses V-Guard AI")
-    
-    # Visualisasi Alur
-    s1, s2, s3, s4 = st.columns(4)
-    with s1:
-        st.markdown('<div class="step-box"><b>1. DATA IN</b><br><small>Upload POS/CCTV</small></div>', unsafe_allow_html=True)
-    with s2:
-        st.markdown('<div class="step-box"><b>2. AI AUDIT</b><br><small>Gemini Analysis</small></div>', unsafe_allow_html=True)
-    with s3:
-        st.markdown('<div class="step-box"><b>3. FRAUD SCAN</b><br><small>YOLO Vision Check</small></div>', unsafe_allow_html=True)
-    with s4:
-        st.markdown('<div class="step-box"><b>4. OUTPUT</b><br><small>Invoice & PDF</small></div>', unsafe_allow_html=True)
-    
-    st.write("---")
-    uploaded = st.file_uploader("Unggah Laporan Transaksi Klien (CSV/Excel)", type=['csv', 'xlsx'])
-    
-    # PERBAIKAN INDENTASI DI SINI
-    if uploaded:
-        with st.status("V-Guard AI sedang bekerja...", expanded=True) as status:
-            st.write("🤖 Sinkronisasi Google
+    c1, c2,
