@@ -93,31 +93,25 @@ elif menu == "3. 📦 Paket Layanan":
         st.info("**CORPORATE**\n\nSetup: 50jt\nRp 10jt/Bln")
         st.link_button("Pilih Corporate", wa_url)
 
-# --- MENU 4: ADMIN DASHBOARD (FITUR BARU) ---
-elif menu == "4. 🔐 Admin Dashboard":
-    st.header("🔐 Admin Strategic Dashboard")
-    
-    # Ringkasan Global
-    k1, k2, k3 = st.columns(3)
-    k1.metric("Total Klien Aktif", "12 Cabang", "+2")
-    k2.metric("Total Omzet Terpantau", "Rp 6.2 Miliar")
-    k3.metric("Total Aset Diselamatkan", "Rp 310 Juta", "95%")
-    
-    st.write("---")
-    st.subheader("🕵️ Intelligence Center & Audit Tool")
-    
-    uploaded = st.file_uploader("Unggah Laporan Transaksi Klien (CSV/Excel)", type=['csv', 'xlsx'])
-    
-    if uploaded:
-        with st.status("V-Guard AI sedang melakukan Audit Komprehensif...", expanded=True) as s:
-            st.write("🤖 Sinkronisasi Google Gemini Core...")
-            time.sleep(1)
-            st.write("🔍 MindBridge memindai pola anomali...")
-            time.sleep(1)
-            st.write("👁️ YOLO Vision melakukan cross-check visual...")
-            time.sleep(1)
-            s.update(label="Audit Selesai!", state="complete")
-        
+# Tambahkan potongan kode ini di bagian Menu 4: Admin Dashboard
+st.write("---")
+st.subheader("🔄 V-Guard AI Live Process Visualizer")
+
+# Membuat kolom alur
+s1, s2, s3, s4 = st.columns(4)
+
+with s1:
+    st.info("📥 **DATA IN**\nUpload POS/CCTV")
+with s2:
+    st.info("🤖 **AI AUDIT**\nGemini + MindBridge")
+with s3:
+    st.info("🚨 **FRAUD SCAN**\nYOLO Vision Check")
+with s4:
+    st.info("📄 **OUTPUT**\nInvoice & PDF")
+
+# Garis progress simulasi
+st.progress(100)
+st.caption("✅ Sistem siap melakukan audit menyeluruh untuk mengamankan aset Anda.")
         # ALARM FRAUD
         st.markdown('<div class="alarm-banner">🚨 FRAUD DETECTED: Ditemukan selisih transaksi pada Cabang Tangerang!</div>', unsafe_allow_html=True)
         
