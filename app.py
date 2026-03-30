@@ -1,42 +1,35 @@
 import streamlit as st
-import pandas as pd
-from datetime import datetime
+import os
+from dotenv import load_dotenv
 
-# --- 1. CONFIG & SECURITY INITIALIZATION ---
-st.set_page_config(page_title="V-Guard AI | Secure Admin", page_icon="🛡️", layout="wide")
+# --- 1. LOAD ENVIRONMENT VARIABLES ---
+load_dotenv()  # Mengambil variabel dari file .env
+ADMIN_PWD = os.getenv("ADMIN_PASSWORD") # Mengambil password rahasia
 
-# Menginisialisasi session state untuk login & audit log
-if 'auth' not in st.session_state: st.session_state.auth = False
-if 'user_role' not in st.session_state: st.session_state.user_role = "Viewer"
-if 'audit_logs' not in st.session_state: st.session_state.audit_logs = []
+# --- 2. SECURITY LOGIC ---
+if 'auth' not in st.session_state:
+    st.session_state.auth = False
 
-def add_audit_log(action):
-    """Mencatat setiap aksi ke dalam Audit Trail."""
-    st.session_state.audit_logs.append({
-        "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "User": "Erwin Sinaga",
-        "Aksi": action,
-        "Role": st.session_state.user_role
-    })
+if not st.session_state.auth:
+    st.title("🛡️ V-GUARD AI SECURE LOGIN")
+    
+    # Input password dengan mode 'password' (karakter disembunyikan)
+    pwd_input = st.text_input("Masukkan Password Admin:", type="password")
+    
+    if st.button("Masuk"):
+        # Validasi menggunakan variabel dari file .env
+        if pwd_input == ADMIN_PWD:
+            st.session_state.auth = True
+            st.success("Akses Diberikan.")
+            st.rerun()
+        else:
+            st.error("Password Salah. Akses Ditolak.")
 
-# --- 2. PROFESSIONAL UI STYLING ---
-st.markdown("""
-<style>
-    .stApp { background-color: white; }
-    [data-testid="stSidebar"] { background-color: #0D47A1 !important; }
-    [data-testid="stSidebar"] * { color: white !important; }
-    .status-badge { background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 4px; font-weight: 600; }
-</style>
-""", unsafe_allow_html=True)
-
-# --- 3. CORE LOGIC: LOGIN & RBAC ---
-try:
-    if not st.session_state.auth:
-        # Halaman Login (Basic Auth Simulation)
-        st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
-        st.title("🛡️ V-GUARD AI SECURE ACCESS")
-        st.info("Sistem Pemantauan Keuangan UMKM | Founder: Erwin Sinaga")
-        
+else:
+    st.success(f"Selamat Datang di Command Center, Pak Erwin Sinaga.")
+    if st.button("Logout"):
+        st.session_state.auth = False
+        st.rerun()
         # Pilihan Role untuk simulasi RBAC
         role_selection = st.selectbox("Pilih Role Akses:", ["Admin (Full Access)", "Viewer (Read Only)"])
         
