@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# 1. KONFIGURASI UTAMA
+# 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Dashboard", page_icon="🛡️", layout="wide")
 wa_num = "6282122190885"
 
@@ -13,16 +13,18 @@ if 'auth' not in st.session_state:
 
 if not st.session_state.auth:
     st.title("🛡️ V-GUARD AI SECURE GATE")
+    st.subheader("Founder: Erwin Sinaga")
     pwd_input = st.text_input("Masukkan Password Admin:", type="password")
     if st.button("Authorize Access"):
         try:
+            # Pastikan ADMIN_PASSWORD sudah diatur di Secrets Streamlit
             if pwd_input.strip() == st.secrets["ADMIN_PASSWORD"].strip():
                 st.session_state.auth = True
                 st.rerun()
             else:
                 st.error("❌ Password Salah.")
         except:
-            st.error("⚠️ Atur ADMIN_PASSWORD di menu Secrets Streamlit!")
+            st.error("⚠️ Peringatan: Atur ADMIN_PASSWORD di menu Secrets Streamlit!")
     st.stop()
 
 # 3. NAVIGASI SIDEBAR
@@ -71,7 +73,4 @@ elif page == "📦 Products & Packages":
             st.subheader(p['P'])
             st.write(f"Setup: **Rp {p['S']}**")
             st.write(f"Bulan: **Rp {p['B']}**")
-            for f in p['F']:
-                st.write(f"- {f}")
-            # Tombol Pesan Standar (Tanpa Desain Merah Bermasalah)
-            wa
+            for f in p['F
