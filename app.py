@@ -15,7 +15,7 @@ if 'audit_logs' not in st.session_state:
 # --- 2. CONFIGURATION ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# --- 3. PREMIUM CSS (LOCK TAMPILAN DEPAN) ---
+# --- 3. PREMIUM CSS ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
@@ -23,14 +23,12 @@ st.markdown("""
     .card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     .roi-box { background: #eff6ff; padding: 25px; border-radius: 15px; border: 2px dashed #1e3a8a; }
     .header-text { color: #1e3a8a; font-weight: bold; border-left: 5px solid #1e3a8a; padding-left: 10px; }
-    .centered-logo { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 30px; }
-    .centered-logo h1 { color: #1e3a8a; font-weight: 800; margin: 0; font-size: 2.5rem; }
     .metric-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
     .admin-card { background: #f1f5f9; padding: 15px; border-radius: 10px; border-left: 5px solid #1e3a8a; margin: 10px 0; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. SIDEBAR (CEO ERWIN SINAGA) ---
+# --- 4. SIDEBAR (ERWIN SINAGA) ---
 with st.sidebar:
     try: st.image("erwin.jpg", width=120)
     except: st.info("👤 CEO: ERWIN SINAGA")
@@ -50,7 +48,7 @@ with st.sidebar:
 # --- 5. LOGIKA HALAMAN ---
 if st.session_state.page == "Admin":
     if not st.session_state.auth:
-        st.markdown('<div class="centered-logo"><h1>🔐 Executive Access</h1></div>', unsafe_allow_html=True)
+        st.markdown('<h1 style="text-align:center; color:#1e3a8a;">🔐 Executive Access</h1>', unsafe_allow_html=True)
         col_l1, col_l2, col_l3 = st.columns([1,2,1])
         with col_l2:
             pwd = st.text_input("Password Admin:", type="password")
@@ -60,10 +58,10 @@ if st.session_state.page == "Admin":
                     st.rerun()
                 else: st.error("Akses Ditolak!")
     else:
-        # --- COMMAND CENTER - FULL STRATEGIC FEATURES ---
+        # --- COMMAND CENTER ---
         st.header("💻 Command Center - Erwin Sinaga")
         
-        # 1. EXECUTIVE SUMMARY (DASHBOARD VISUAL)
+        # Dashboard Visual (Executive Summary)
         m1, m2, m3, m4 = st.columns(4)
         with m1: st.markdown('<div class="metric-card">💰 <b>Total Saved</b><br>Rp 1.450.000.000</div>', unsafe_allow_html=True)
         with m2: st.markdown('<div class="metric-card">👥 <b>Klien Aktif</b><br>12 Perusahaan</div>', unsafe_allow_html=True)
@@ -72,6 +70,7 @@ if st.session_state.page == "Admin":
         
         st.write("---")
         
+        # Menu Tab Lengkap
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "🔍 V-Scan & Analisa", 
             "📊 Monitoring Audit", 
@@ -80,7 +79,7 @@ if st.session_state.page == "Admin":
             "⚙️ Manajemen Klien"
         ])
         
-        with tab1:
+        with tab1: # Fitur "Deep Dive" & Analisa Data
             st.markdown('<p class="header-text">🚀 V-SCAN: DEEP-DIVE ANALISA FRAUD</p>', unsafe_allow_html=True)
             klien_analisa = st.selectbox("Pilih Klien untuk Dianalisa:", ["Toko Berkah Jaya", "B2B Trading Sinar"])
             uploaded_file = st.file_uploader(f"Unggah Data Transaksi {klien_analisa}", type=['csv', 'xlsx'])
@@ -94,7 +93,8 @@ if st.session_state.page == "Admin":
                     chart_data = pd.DataFrame({'Minggu': ['W1', 'W2', 'W3', 'W4'], 'Kecurangan': [5, 12, 3, 14]})
                     st.line_chart(chart_data.set_index('Minggu'))
                     
-                    st.markdown(f'<div class="admin-card">📜 <b>Audit Trail:</b> Scan sukses dilakukan oleh CEO Erwin Sinaga pada {datetime.now().strftime("%H:%M:%S")}</div>', unsafe_allow_html=True)
+                    # Log Aktivitas (Audit Trail)
+                    st.markdown(f'<div class="admin-card">📜 <b>Audit Trail:</b> Analisa sukses dilakukan pada {datetime.now().strftime("%H:%M:%S")}</div>', unsafe_allow_html=True)
 
                     res1, res2, res3 = st.columns(3)
                     res1.metric("Total Transaksi", "1.240", "Normal")
@@ -103,37 +103,38 @@ if st.session_state.page == "Admin":
                     
                     st.write("---")
                     c_act1, c_act2 = st.columns(2)
-                    with c_act1:
-                        st.download_button("📥 AUTO-DOWNLOAD REPORT (PDF)", data="Dummy PDF Content", file_name=f"Audit_{klien_analisa}.pdf")
-                    with c_act2:
+                    with c_act1: # Auto-Download Report
+                        st.download_button("📥 AUTO-DOWNLOAD REPORT (PDF)", data="Laporan Audit Terenkripsi", file_name=f"VGUARD_Audit_{klien_analisa}.pdf")
+                    with c_act2: # Tombol Kirim Otomatis
                         if st.button("📲 KIRIM LAPORAN KE WA KLIEN"):
-                            st.success(f"Laporan berhasil terkirim ke owner {klien_analisa}!")
+                            st.success(f"Notifikasi berhasil dikirim ke Owner {klien_analisa}!")
 
-        with tab2:
-            st.markdown('<p class="header-text">📅 OTOMASI PENJADWALAN AUDIT (SMART SCHEDULING)</p>', unsafe_allow_html=True)
+        with tab2: # Otomasi Penjadwalan Audit
+            st.markdown('<p class="header-text">📅 MONITORING KEPATUHAN & JADWAL</p>', unsafe_allow_html=True)
             st.table(pd.DataFrame(st.session_state.audit_logs))
 
-        with tab3:
+        with tab3: # Geolocation Map
             st.markdown('<p class="header-text">📍 GEOLOCATION MAP: SEBARAN KLIEN</p>', unsafe_allow_html=True)
-            map_df = pd.DataFrame({'lat': [-6.2088, -6.1751], 'lon': [106.8456, 106.8272]})
-            st.map(map_df)
+            map_points = pd.DataFrame({'lat': [-6.2088, -6.1751, -6.2297], 'lon': [106.8456, 106.8272, 106.6894]})
+            st.map(map_points)
+            st.caption("Monitoring lokasi aktif perangkat V-GUARD di seluruh cabang klien.")
 
-        with tab4:
-            st.markdown('<p class="header-text">💵 BILLING & ACCOUNTS RECEIVABLE</p>', unsafe_allow_html=True)
-            bill_df = pd.DataFrame({"Klien": ["Toko Berkah", "Sinar B2B"], "Status": ["Lunas", "Jatuh Tempo"]})
+        with tab4: # Billing & AR
+            st.markdown('<p class="header-text">💵 STATUS TAGIHAN KLIEN</p>', unsafe_allow_html=True)
+            bill_df = pd.DataFrame({"Klien": ["Toko Berkah", "Sinar B2B"], "Nilai": ["5 JT", "10 JT"], "Status": ["Lunas", "Jatuh Tempo"]})
             st.table(bill_df)
 
-        with tab5:
-            st.markdown('<p class="header-text">⚙️ MANAJEMEN KLIEN</p>', unsafe_allow_html=True)
-            with st.form("new_client"):
-                st.text_input("Nama Bisnis/Klien")
-                st.selectbox("Pilih Paket", ["V-START", "V-GROW", "V-PRIME"])
-                if st.form_submit_button("Simpan Klien ke Database"):
-                    st.success("Klien Terdaftar!")
+        with tab5: # Manajemen Klien & Perangkat
+            st.markdown('<p class="header-text">⚙️ MANAJEMEN SISTEM & KLIEN</p>', unsafe_allow_html=True)
+            with st.form("client_form"):
+                st.text_input("Nama Bisnis")
+                st.selectbox("Paket", ["V-START", "V-GROW", "V-PRIME"])
+                if st.form_submit_button("Simpan Klien"):
+                    st.success("Data berhasil disinkronisasi.")
 
 else:
-    # --- BERANDA UTAMA (KUNCI: JANGAN DIRUBAH) ---
-    st.markdown('<div class="centered-logo"><h1>🛡️ VGUARD AI SYSTEMS</h1></div>', unsafe_allow_html=True)
+    # --- BERANDA UTAMA (KUNCI - JANGAN DIUBAH) ---
+    st.markdown('<h1 style="text-align:center; color:#1e3a8a;">🛡️ VGUARD AI SYSTEMS</h1>', unsafe_allow_html=True)
     st.write("---")
     
     col_p1, col_p2 = st.columns([1, 2.5])
@@ -143,9 +144,9 @@ else:
     with col_p2:
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
         st.write("""
-        Erwin Sinaga adalah seorang pemimpin strategis dengan rekam jejak profesional yang prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Sepanjang kariernya di dunia finansial, beliau telah mengelola berbagai risiko kompleks, memimpin transformasi digital perbankan, dan memastikan akurasi finansial pada level tertinggi.
+        Erwin Sinaga adalah seorang pemimpin strategis dengan rekam jejak profesional yang prestisius selama lebih dari **sepuluh tahun sebagai eksekutif senior di industri perbankan nasional**. Beliau telah memimpin transformasi digital perbankan dan memastikan akurasi finansial pada level tertinggi.
 
-        Filosofi kepemimpinan beliau tertuang dalam konsep **"Digitizing Trust, Eliminating Leakage"**. Bapak Erwin percaya bahwa kepercayaan pelanggan adalah aset yang paling rauh sekaligus paling berharga. Oleh karena itu, beliau merancang VGUARD AI bukan sekadar sebagai alat audit teknis, melainkan sebagai perisai pertahanan strategis yang mampu mendeteksi potensi kecurangan (*fraud*) dan kebocoran profit secara *real-time*.
+        Filosofi kepemimpinan beliau tertuang dalam konsep **"Digitizing Trust, Eliminating Leakage"**. Beliau merancang VGUARD AI sebagai perisai pertahanan strategis yang mampu mendeteksi potensi kecurangan (*fraud*) secara *real-time*.
         """)
         if st.button("🚀 MASUK KE COMMAND CENTER (ADMIN)"):
             st.session_state.page = "Admin"
