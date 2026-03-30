@@ -1,89 +1,89 @@
 import streamlit as st
 import pandas as pd
-import time
 from datetime import datetime
 
-# --- 1. KONFIGURASI & PERFORMANCE (CACHING) ---
+# --- 1. KONFIGURASI & CACHING ---
 st.set_page_config(page_title="V-Guard AI | Enterprise", page_icon="🛡️", layout="wide")
 
-@st.cache_data(ttl=600) # Cache data selama 10 menit
+@st.cache_data(ttl=600)
 def load_financial_data():
-    """Simulasi penarikan data dari sistem eksternal/API."""
     return pd.DataFrame({
         'Kategori': ['Operasional', 'Payroll', 'Marketing', 'Vendor A', 'Vendor B'],
         'Nilai': [250, 450, 150, 80, 120],
         'Risiko': [0.1, 0.05, 0.2, 0.85, 0.15]
     })
 
-# --- 2. MANAJEMEN AKSES & AUDIT TRAIL ---
+# --- 2. SESSION STATE ---
 if 'auth' not in st.session_state: st.session_state.auth = False
 if 'user_role' not in st.session_state: st.session_state.user_role = "Viewer"
 if 'audit_log' not in st.session_state: st.session_state.audit_log = []
 
 def log_action(action):
-    """Mencatat setiap aksi sensitif ke dalam log sistem."""
     st.session_state.audit_log.append({
         "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "User": "Erwin Sinaga",
         "Aksi": action
     })
 
-# --- 3. UI/UX: CUSTOM CSS & DESIGN ---
+# --- 3. UI CUSTOM STYLING ---
 st.markdown("""
 <style>
-    .main { background-color: #f5f7f9; }
-    .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #0D47A1; color: white; }
-    .reportview-container .main .block-container { padding-top: 2rem; }
-    .card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+    .stApp { background-color: white; }
+    [data-testid="stSidebar"] { background-color: #0D47A1; }
+    [data-testid="stSidebar"] * { color: white !important; }
+    .card { background: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #00BCD4; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. LOGIKA HALAMAN & ERROR HANDLING ---
+# --- 4. LOGIKA APLIKASI ---
 try:
     if not st.session_state.auth:
-        # Halaman Login Minimalis
-        st.markdown("<h1 style='text-align: center;'>🛡️ V-GUARD AI LOGIN</h1>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns([1,2,1])
-        with col2:
-            role = st.selectbox("Pilih Role Akses", ["Admin", "Viewer"])
-            if st.button("Masuk Ke Dashboard"):
-                st.session_state.auth = True
-                st.session_state.user_role = role
-                log_action(f"Login sukses sebagai {role}")
-                st.rerun()
+        st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
+        st.title("🛡️ V-GUARD AI SECURE LOGIN")
+        role = st.selectbox("Pilih Role Akses", ["Admin", "Viewer"])
+        if st.button("Masuk Ke Dashboard"):
+            st.session_state.auth = True
+            st.session_state.user_role = role
+            log_action(f"Login sebagai {role}")
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
-        # --- SIDEBAR NAVIGASI ---
         with st.sidebar:
             st.title("V-Guard AI")
-            st.write(f"👤 **User:** Erwin Sinaga")
-            st.write(f"🔑 **Role:** {st.session_state.user_role}")
+            st.write(f"👤 {st.session_state.user_role}: Erwin Sinaga")
             st.markdown("---")
-            menu = st.radio("Navigasi Utama", ["🏠 Dashboard Utama", "👥 Admin Panel", "📜 Audit Trail"])
-            if st.button("🔓 Keluar Sistem"):
-                log_action("Logout dari sistem")
+            menu = st.radio("Navigasi", ["🏠 Dashboard Utama", "👥 Admin Panel", "📜 Audit Trail"])
+            if st.button("🔓 Logout"):
                 st.session_state.auth = False
                 st.rerun()
 
-        # --- KONTEN DINAMIS ---
         if menu == "🏠 Dashboard Utama":
-            st.header("Dashboard Pemantauan Keuangan")
-            
-            # Filter Dinamis
-            col_f1, col_f2 = st.columns(2)
-            with col_f1:
-                kategori_filter = st.multiselect("Filter Kategori", ['Operasional', 'Payroll', 'Marketing', 'Vendor'], default=['Operasional'])
-            
-            # Widget Visualisasi
+            st.header("Dashboard Pemantauan")
             data = load_financial_data()
-            st.subheader("Analisis Arus Kas Berdasarkan Risiko")
             st.bar_chart(data.set_index('Kategori')['Nilai'])
             
-            # Fitur Ekspor
             csv = data.to_csv().encode('utf-8')
-            st.download_button("📥 Ekspor Laporan ke CSV", data=csv, file_name="vguard_report.csv", mime="text/csv")
+            st.download_button("📥 Download Report CSV", data=csv, file_name="report.csv", mime="text/csv")
 
         elif menu == "👥 Admin Panel":
             if st.session_state.user_role == "Admin":
-                st.header("Manajemen Aturan AI")
-                st.write("Sesuaikan ambang batas sensitivitas deteksi fraud.")
-                sensitivitas = st.slider("Ambang Batas Deteksi",
+                st.header("Konfigurasi Aturan AI")
+                # Baris yang diperbaiki:
+                sensitivitas = st.slider("Ambang Batas Deteksi", 0.0, 1.0, 0.85)
+                if st.button("Simpan Aturan Baru"):
+                    log_action(f"Update sensitivitas ke {sensitivitas}")
+                    st.success("Aturan berhasil diperbarui.")
+            else:
+                st.error("Akses Ditolak: Khusus Admin.")
+
+        elif menu == "📜 Audit Trail":
+            st.header("Log Aktivitas")
+            if st.session_state.audit_log:
+                st.table(pd.DataFrame(st.session_state.audit_log))
+
+except Exception as e:
+    st.error(f"Sistem Error: {e}")
+
+# --- 5. FOOTER ---
+st.write("---")
+st.caption("© 2026 V-Guard AI Systems | Secured for Erwin Sinaga")
