@@ -1,32 +1,35 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import time
 
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
 if 'page' not in st.session_state: st.session_state.page = "Home"
 if 'auth' not in st.session_state: st.session_state.auth = False
+if 'audit_logs' not in st.session_state:
+    # Simulasi Data Awal untuk Demo Investor
+    st.session_state.audit_logs = [
+        {"Klien": "Toko Berkah Jaya", "Jadwal": "21:00", "Status": "✅ Terpindai", "Waktu": "2026-03-30 21:05", "Hasil": "Aman"},
+        {"Klien": "B2B Trading Sinar", "Jadwal": "22:00", "Status": "❌ Belum Upload", "Waktu": "-", "Hasil": "Pending"}
+    ]
 
-# --- 2. CSS ANTI-ERROR (PREMIUM VISUAL) ---
+# --- 2. CSS PREMIUM & DASHBOARD ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
     .stButton>button { background: #1e3a8a !important; color: white !important; border-radius: 8px; font-weight: bold; width: 100%; height: 45px; }
     .card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; height: 100%; transition: 0.3s; }
-    .card:hover { border-color: #1e3a8a; transform: translateY(-5px); }
     .roi-box { background: #eff6ff; padding: 25px; border-radius: 15px; border: 2px dashed #1e3a8a; }
+    .status-box { padding: 10px; border-radius: 10px; font-weight: bold; text-align: center; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (DENGAN FOTO ANDA) ---
+# --- 3. SIDEBAR (CEO ERWIN SINAGA) ---
 with st.sidebar:
-    # MENAMPILKAN FOTO ERWIN SINAGA
-    try:
-        st.image("erwin.jpg", width=120)
-    except:
-        st.info("👤 CEO: ERWIN SINAGA")
-        
+    try: st.image("erwin.jpg", width=120)
+    except: st.info("👤 CEO: ERWIN SINAGA")
     st.markdown("### ERWIN SINAGA")
     st.caption("Founder & CEO VGUARD AI")
     st.write("---")
@@ -40,12 +43,10 @@ with st.sidebar:
             st.rerun()
     st.error("🚨 V-GUARD FIRE ALARM: ACTIVE")
 
-# --- 4. LOGIKA NAVIGASI ---
+# --- 4. LOGIKA HALAMAN ---
 if st.session_state.page == "Admin":
     if not st.session_state.auth:
-        # AKSES TERBATAS
         st.header("🔐 Executive Access")
-        st.markdown('<div class="alarm-banner">🚨 SISTEM MONITORING FRAUD & PIUTANG 🚨</div>', unsafe_allow_html=True)
         pwd = st.text_input("Masukkan Password Admin:", type="password")
         if st.button("Masuk ke Command Center"):
             if pwd == "VGUARD2026":
@@ -53,37 +54,40 @@ if st.session_state.page == "Admin":
                 st.rerun()
             else: st.error("Akses Ditolak!")
     else:
-        # COMMAND CENTER ERWIN
+        # --- COMMAND CENTER ERWIN SINAGA ---
         st.header("💻 Command Center - Erwin Sinaga")
-        st.info("Status: Monitoring Fraud & Invoice Terintegrasi")
+        st.subheader("📊 Monitoring Kepatuhan & Penjadwalan Audit")
         
-        col_adm1, col_adm2 = st.columns(2)
-        with col_adm1:
-            st.subheader("🛡️ Fraud Detection")
-            if st.button("🚨 AKTIFKAN FIRE ALARM"):
-                st.error("ALARM AKTIF! Notifikasi kebocoran dikirim ke Owner.")
+        # TABEL MONITORING (FITUR BARU)
+        df_logs = pd.DataFrame(st.session_state.audit_logs)
+        st.table(df_logs)
         
-        with col_adm2:
-            st.subheader("📑 Invoice & AR")
-            if st.button("🔔 KIRIM NOTIFIKASI INVOICE"):
-                st.success("Notifikasi WhatsApp Piutang Berhasil Dikirim!")
+        c_adm1, c_adm2 = st.columns(2)
+        with c_adm1:
+            st.info("💡 Tip CEO: Kirim reminder ke klien yang berstatus 'Belum Upload' untuk menjaga retensi.")
+            if st.button("🚨 KIRIM REMINDER WA OTOMATIS"):
+                st.success("Notifikasi pengingat jadwal audit telah dikirim ke 1 mitra.")
         
+        with c_adm2:
+            st.warning("⚠️ Fraud Alert: Terdeteksi selisih stok di Mitra 'Toko Berkah'.")
+            if st.button("🔔 KIRIM NOTIFIKASI FRAUD"):
+                st.error("Fire Alarm dikirim ke Owner Mitra!")
+
         st.write("---")
-        st.file_uploader("Unggah Data Transaksi Klien untuk Audit AI V-Guard", type=['csv', 'xlsx'])
+        st.subheader("📑 Kelola Invoice & AR")
+        if st.button("🔔 BLAST NOTIFIKASI JATUH TEMPO"):
+            st.success("Invoice Reminder dikirim ke semua debitur klien.")
 
 else:
     # --- HALAMAN BERANDA ---
     st.title("🛡️ VGUARD AI SYSTEMS")
     
-    # SEKSI PROFIL (DENGAN FOTO ANDA & WAJIB MINIMAL 100 KATA)
+    # SEKSI PROFIL (WAJIB MINIMAL 100 KATA)
     st.write("---")
     col_p1, col_p2 = st.columns([1, 2.5])
     with col_p1:
-        # MENAMPILKAN FOTO ERWIN SINAGA DI PROFIL
-        try:
-            st.image("erwin.jpg", use_container_width=True)
-        except:
-            st.info("ERWIN SINAGA\n\nFounder VGUARD AI")
+        try: st.image("erwin.jpg", use_container_width=True)
+        except: st.info("ERWIN SINAGA\n\nFounder VGUARD AI")
     with col_p2:
         st.subheader("👤 Profil & Filosofi: Erwin Sinaga")
         st.write("""
@@ -95,7 +99,7 @@ else:
             st.session_state.page = "Admin"
             st.rerun()
 
-    # SEKSI ROI (PENGHITUNG KERUGIAN)
+    # SEKSI ROI (WAJIB ADA)
     st.write("---")
     st.subheader("📈 Kalkulator ROI Penyelamatan Profit")
     st.markdown('<div class="roi-box">', unsafe_allow_html=True)
@@ -109,14 +113,14 @@ else:
         st.success(f"### Diselamatkan V-Guard AI: Rp {loss*0.95:,.0f} / bln")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # SEKSI PAKET LAYANAN (WAJIB ADA)
+    # SEKSI PAKET (WAJIB ADA)
     st.write("---")
     st.subheader("🏷️ PAKET LAYANAN STRATEGIS")
     pk1, pk2, pk3, pk4 = st.columns(4)
-    with pk1: st.markdown('<div class="card"><b>V-START</b><br>2.5 JT<hr>Audit Harian Retail<br>Notifikasi WA Aktif<br>Monitor Piutang Dasar</div>', unsafe_allow_html=True)
-    with pk2: st.markdown('<div class="card"><b>V-GROW</b><br>5 JT<hr>AI Fraud Detection<br>Sinkron Stok Otomatis<br>AR Auto-Reminder</div>', unsafe_allow_html=True)
-    with pk3: st.markdown('<div class="card"><b>V-PRIME</b><br>10 JT<hr>Multi-Cabang Control<br>Predictive Analytics<br>Full AR Control</div>', unsafe_allow_html=True)
-    with pk4: st.markdown('<div class="card"><b>V-CUSTOM</b><br>NEGO<hr>Solusi Enterprise<br>Integrasi ERP/SAP<br>Support Strategis 24/7</div>', unsafe_allow_html=True)
+    with pk1: st.markdown('<div class="card"><b>V-START</b><br>2.5 JT<hr>Audit Mingguan<br>WA Alert Dasar</div>', unsafe_allow_html=True)
+    with pk2: st.markdown('<div class="card"><b>V-GROW</b><br>5 JT<hr>Audit Harian<br>AI Fraud Detection</div>', unsafe_allow_html=True)
+    with pk3: st.markdown('<div class="card"><b>V-PRIME</b><br>10 JT<hr>Multi-Cabang<br>AR Auto-Reminder</div>', unsafe_allow_html=True)
+    with pk4: st.markdown('<div class="card"><b>V-CUSTOM</b><br>NEGO<hr>Integrasi ERP<br>Support 24/7</div>', unsafe_allow_html=True)
 
 st.write("---")
 st.caption(f"© {datetime.now().year} VGUARD AI Systems | Strategically Built by Erwin Sinaga")
