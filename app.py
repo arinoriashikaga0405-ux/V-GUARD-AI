@@ -41,16 +41,18 @@ if page == "🏠 Home":
     st.write("---")
     st.subheader("🎯 Vision & Mission")
     c1, c2 = st.columns(2)
-    with c1: st.info("**Vision**: Menjadi penyedia solusi keamanan finansial berbasis AI terdepan secara global.")
-    with c2: st.info("**Mission**: Mengembangkan teknologi AI inovatif yang mengantisipasi risiko secara otomatis.")
+    with c1:
+        st.info("**Vision**: Menjadi penyedia solusi keamanan finansial berbasis AI terdepan secara global.")
+    with c2:
+        st.info("**Mission**: Mengembangkan teknologi AI inovatif yang mengantisipasi risiko secara otomatis.")
 
 # --- HALAMAN 2: DASHBOARD MONITORING ---
 elif page == "📊 Dashboard Monitoring":
     st.header("📊 V-Guard Real-time Monitoring")
     st.success("Sistem AI aktif mengawasi anomali transaksi.")
     df_data = pd.DataFrame({'Kategori': ['Aman', 'Anomali'], 'Skor': [94, 6]})
-    fig = px.pie(df_data, values='Skor', names='Kategori', title="Ringkasan Risiko Hari Ini", hole=0.3)
-    st.plotly_chart(fig, use_container_width=True)
+    fig_data = px.pie(df_data, values='Skor', names='Kategori', title="Ringkasan Risiko Hari Ini", hole=0.3)
+    st.plotly_chart(fig_data, use_container_width=True)
 
 # --- HALAMAN 3: PRODUCTS & PACKAGES ---
 elif page == "📦 Products & Packages":
@@ -68,3 +70,10 @@ elif page == "📦 Products & Packages":
     cols = st.columns(4)
     for i, p in enumerate(data_produk):
         with cols[i]:
+            st.warning(f"**{p['Seg']}**")
+            st.subheader(p['Pk'])
+            st.markdown(f"**Setup: Rp {p['Set']}**")
+            st.markdown(f"**Bulanan: Rp {p['Bul']}**")
+            for f in p['Feat']:
+                st.markdown(f"- {f}")
+            msg = f"Halo Pak Erwin Sinaga, saya tertarik paket {p['Pk']} ({p['Seg
