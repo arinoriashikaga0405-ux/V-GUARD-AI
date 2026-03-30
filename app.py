@@ -15,7 +15,7 @@ if 'audit_logs' not in st.session_state:
 # --- 2. CONFIGURATION ---
 st.set_page_config(page_title="VGUARD AI Systems", page_icon="🛡️", layout="wide")
 
-# --- 3. PREMIUM CSS (ESTETIKA EKSEKUTIF) ---
+# --- 3. PREMIUM CSS (ESTETIKA CEO) ---
 st.markdown("""
 <style>
     .main { background-color: #f8fafc; }
@@ -24,7 +24,7 @@ st.markdown("""
     .metric-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
     .roi-box { background: #eff6ff; padding: 25px; border-radius: 15px; border: 2px dashed #1e3a8a; }
     .admin-card { background: #f1f5f9; padding: 15px; border-radius: 10px; border-left: 5px solid #1e3a8a; margin: 10px 0; }
-    .package-card { background: white; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .package-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; height: 100%; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -51,27 +51,4 @@ if st.session_state.page == "Admin":
         with col_l2:
             pwd = st.text_input("Password Admin:", type="password")
             if st.button("Masuk ke Command Center"):
-                if pwd == "VGUARD2026":
-                    st.session_state.auth = True
-                    st.rerun()
-                else: st.error("Akses Ditolak!")
-    else:
-        # --- COMMAND CENTER ---
-        st.header("💻 Command Center - Erwin Sinaga")
-        m1, m2, m3, m4 = st.columns(4)
-        with m1: st.markdown('<div class="metric-card">💰 <b>Total Saved</b><br>Rp 1.450.000.000</div>', unsafe_allow_html=True)
-        with m2: st.markdown('<div class="metric-card">👥 <b>Klien Aktif</b><br>12 Perusahaan</div>', unsafe_allow_html=True)
-        with m3: st.markdown('<div class="metric-card">⚠️ <b>Fraud Alert</b><br>2 Temuan Hari Ini</div>', unsafe_allow_html=True)
-        with m4: st.markdown('<div class="metric-card">✅ <b>System Health</b><br>99.9% Online</div>', unsafe_allow_html=True)
-        
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "🔍 V-Scan & Analisa", "📊 Monitoring Audit", "📍 Geolocation Map", "💰 Billing & AR", "⚙️ Manajemen Klien"
-        ])
-        
-        with tab1: # V-SCAN DENGAN AUTO-CALCULATE
-            st.markdown('<p class="header-text">🚀 V-SCAN: DEEP-DIVE ANALISA FRAUD</p>', unsafe_allow_html=True)
-            k_sel = st.selectbox("Pilih Klien:", ["Toko Berkah Jaya", "B2B Trading Sinar"])
-            # Update: Mendukung Excel
-            up = st.file_uploader(f"Unggah Data {k_sel}", type=['csv', 'xlsx'])
-            if up:
-                with
+                if pwd == "VGUARD20
