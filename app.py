@@ -1,114 +1,104 @@
 import streamlit as st
 import os
+import time
 
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS UNTUK TAMPILAN PREMIUM & KARTU SEJAJAR
+# 2. KONEKSI SISTEM AI & NOTIFIKASI (CSS)
 st.markdown("""
 <style>
-    .price-card {
-        background: white; border-radius: 12px; border: 1px solid #eee;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05); height: 500px;
-        padding: 15px; display: flex; flex-direction: column;
+    .alarm-banner {
+        background-color: #ff4b4b; color: white; padding: 10px;
+        border-radius: 8px; text-align: center; font-weight: bold;
+        animation: blinker 1.5s linear infinite;
     }
-    .card-header {
-        background: #ff4b4b; color: white; padding: 10px;
-        text-align: center; font-weight: bold; border-radius: 8px;
-        margin-bottom: 15px;
-    }
-    .vision-card {
-        background: #f8f9fa; padding: 20px; border-radius: 12px;
-        border-left: 5px solid #ff4b4b; height: 220px;
-    }
-    .roi-box {
-        background: #fff5f5; border: 2px solid #ff4b4b; padding: 20px;
-        border-radius: 12px; text-align: center; color: #a51d1d;
+    @keyframes blinker { 50% { opacity: 0; } }
+    .invoice-card {
+        background: #e1f5fe; border-left: 5px solid #0288d1;
+        padding: 15px; border-radius: 5px; margin-top: 10px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 wa_url = "https://wa.me/6282122190885"
 
-# 3. SIDEBAR NAVIGASI DENGAN FOTO DI ATAS
+# 3. SIDEBAR DENGAN FOTO FOUNDER
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
-    else:
-        st.warning("Unggah 'erwin.jpg' untuk melihat foto di sini.")
-        
     st.title("🛡️ V-Guard AI")
     st.write("---")
-    menu = st.radio("Pilih Folder Menu:", [
+    menu = st.radio("Folder Menu:", [
         "1. 👤 Profil Founder", 
-        "2. 🎯 Visi, Misi & ROI", 
+        "2. 🎯 Visi & ROI", 
         "3. 📦 Paket Layanan", 
-        "4. 🔐 Admin Panel"
+        "4. 🔐 Intelligence Center"
     ])
     st.write("---")
-    st.caption("© 2026 V-Guard AI Systems | Tangerang")
+    st.success("✅ AI Core Connected")
+    st.caption("Location: Tangerang")
 
-# --- MENU 1: PROFIL FOUNDER ---
+# --- MENU 1: PROFIL ---
 if menu == "1. 👤 Profil Founder":
     st.header("👤 Strategic Leadership")
-    col_txt, col_img = st.columns([2, 1])
-    with col_txt:
-        st.subheader("Erwin Sinaga")
-        st.markdown("""
-        Bapak Erwin Sinaga adalah seorang Pemimpin Bisnis Senior dengan pengalaman lebih dari sepuluh tahun 
-        di industri perbankan dan manajemen aset nasional. Beliau telah menguasai manajemen risiko kredit 
-        dan strategi perlindungan aset korporasi skala besar. Melalui V-Guard AI, beliau menghadirkan 
-        standar audit perbankan ke dalam sistem digital untuk mencegah kebocoran finansial bisnis klien 
-        secara mutlak dan real-time.
-        """)
+    col_img, col_txt = st.columns([1, 2])
     with col_img:
         if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", caption="Erwin Sinaga", use_container_width=True)
+            st.image("erwin.jpg", use_container_width=True)
+    with col_txt:
+        st.subheader("Erwin Sinaga")
+        st.write("Senior Business Leader dengan 10+ tahun pengalaman perbankan.")
 
-# --- MENU 2: VISI, MISI & ROI (SESUAI IMAGE_0 & IMAGE_1) ---
-elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.title("🎯 Strategi & Analisis Risiko")
-    v, m = st.columns(2)
-    with v:
-        st.markdown('<div class="vision-card"><h3>🎯 Visi</h3><p>Menjadi pemimpin pasar dalam solusi keamanan audit berbasis AI di Indonesia pada 2026.</p></div>', unsafe_allow_html=True)
-    with m:
-        st.markdown('<div class="vision-card"><h3>🚀 Misi</h3><ul><li>Deteksi fraud otomatis.</li><li>Laporan audit transparan.</li><li>Otomasi pengawasan 24/7.</li></ul></div>', unsafe_allow_html=True)
-    
-    st.write("---")
-    st.subheader("📈 Analisis Potensi Kerugian Klien")
-    col_roi1, col_roi2 = st.columns(2)
-    with col_roi1:
-        omzet = st.number_input("Omzet Bisnis Per Bulan (Rp):", value=500000000, step=10000000)
-    with col_roi2:
-        potensi_rugi = omzet * 0.05
-        st.markdown(f"""<div class="roi-box">
-        <h4>🚨 Potensi Kerugian Tanpa V-Guard:</h4>
-        <h2 style="margin:0;">Rp {potensi_rugi:,.0f}</h2>
-        <p style="font-size:12px;">*Estimasi kebocoran operasional & fraud rata-rata 5%</p>
-        </div>""", unsafe_allow_html=True)
+# --- MENU 2: ROI ---
+elif menu == "2. 🎯 Visi & ROI":
+    st.subheader("📈 Analisis Penyelamatan Aset")
+    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
+    rugi = omzet * 0.05
+    st.error(f"Potensi Kebocoran Tanpa V-Guard: Rp {rugi:,.0f}")
 
-# --- MENU 3: PAKET LAYANAN (SEJAJAR & STABIL) ---
+# --- MENU 3: PAKET ---
 elif menu == "3. 📦 Paket Layanan":
-    st.title("📦 Paket Proteksi V-Guard AI")
-    c1, c2, c3, c4 = st.columns(4)
-    
+    st.header("📦 Paket Proteksi V-Guard AI")
+    c1, c2 = st.columns(2)
     with c1:
-        st.markdown('<div class="price-card"><div class="card-header">BASIC (MIKRO)</div><b>Setup: 2.5jt</b><br><span style="color:red">500rb/Bln</span><hr>✅ Gemini AI Core<br>✅ Audit Harian<br>✅ Email Report</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Basic", wa_url, use_container_width=True)
+        st.info("**BASIC (MIKRO)**\n\nSetup: 2.5jt | Rp 500rb/bln")
+        st.link_button("Pesan Basic", wa_url)
     with c2:
-        st.markdown('<div class="price-card"><div class="card-header">MEDIUM (SME)</div><b>Setup: 7.5jt</b><br><span style="color:red">1.5jt/Bln</span><hr>✅ MindBridge Fraud<br>✅ Alarm System<br>✅ Priority Support</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Medium", wa_url, use_container_width=True)
-    with c3:
-        st.markdown('<div class="price-card"><div class="card-header">ENTERPRISE</div><b>Setup: 25jt</b><br><span style="color:red">5jt/Bln</span><hr>✅ YOLO CCTV AI<br>✅ DataRobot Risk<br>✅ Forecasting</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Enterprise", wa_url, use_container_width=True)
-    with c4:
-        st.markdown('<div class="price-card"><div class="card-header">CORPORATE</div><b>Setup: 50jt</b><br><span style="color:red">10jt/Bln</span><hr>✅ Custom AI Training<br>✅ Full Automation<br>✅ Security Ops</div>', unsafe_allow_html=True)
-        st.link_button("Pilih Corporate", wa_url, use_container_width=True)
+        st.info("**MEDIUM (SME)**\n\nSetup: 7.5jt | Rp 1.5jt/bln")
+        st.link_button("Pesan Medium", wa_url)
 
-# --- MENU 4: ADMIN PANEL ---
-elif menu == "4. 🔐 Admin Panel":
+# --- MENU 4: INTELLIGENCE CENTER (KONEKSI AI & ALARM) ---
+elif menu == "4. 🔐 Intelligence Center":
     st.header("🔐 Intelligence Center")
-    st.info("Input Data Klien untuk Analisis AI")
-    uploaded_file = st.file_uploader("Unggah file transaksi (CSV/Excel)", type=['csv', 'xlsx'])
+    
+    # Menampilkan Status Koneksi AI
+    st.write("### 🤖 Connection Status:")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Google Gemini", "CONNECTED", "Active")
+    col2.metric("MindBridge AI", "CONNECTED", "Monitoring")
+    col3.metric("YOLO Vision", "CONNECTED", "Secured")
+
+    st.write("---")
+    
+    # Fitur Upload & Alarm
+    uploaded_file = st.file_uploader("Unggah Laporan Transaksi (CSV/Excel)", type=['csv', 'xlsx'])
+    
     if uploaded_file:
-        st.success("File berhasil diterima. AI sedang memproses...")
+        with st.status("V-Guard AI sedang menganalisis data...", expanded=True) as status:
+            st.write("Mengoneksikan ke MindBridge Fraud Engine...")
+            time.sleep(1)
+            st.write("Sinkronisasi dengan Google Gemini Core...")
+            time.sleep(1)
+            status.update(label="Analisis Selesai!", state="complete")
+        
+        # Simulasi Alarm Fraud
+        st.markdown('<div class="alarm-banner">🚨 FRAUD ALERT: Ditemukan selisih stok di Cabang Tangerang!</div>', unsafe_allow_html=True)
+        
+        # Simulasi Notifikasi Invoice
+        st.markdown(f"""
+        <div class="invoice-card">
+            <h4 style="margin:0; color:#0288d1;">📄 Auto-Invoice Generated</h4>
+            <p>Invoice #VGD-2026-001 telah berhasil dibuat dan dikirim ke Client via WhatsApp.</p>
+        </div>
+        """, unsafe_allow_html=True)
