@@ -3,55 +3,62 @@ import os
 import pandas as pd
 from datetime import datetime
 
-# 1. KONFIGURASI UTAMA
-st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
+# 1. SETUP & STYLE
+st.set_page_config(page_title="V-Guard AI Systems", layout="wide")
+st.markdown("""<style>
+    .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #f8f9fa; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 9999; }
+    .package-box { padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #fff; height: 500px; }
+</style>""", unsafe_allow_html=True)
 
-# Inisialisasi Database (Session State)
-if 'db_nasabah' not in st.session_state:
-    st.session_state.db_nasabah = []
-
-# 2. CSS CUSTOM
-st.markdown("""
-<style>
-    .status-connected { color: #28a745; font-weight: bold; font-size: 18px; }
-    .package-box { height: 680px; padding: 25px; border: 2px solid #f0f0f0; border-radius: 15px; background-color: #ffffff; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-    .footer-container { position: fixed; left: 0; bottom: 0; width: 100%; background-color: #f8f9fa; text-align: center; padding: 15px 0px; font-weight: bold; border-top: 1px solid #dee2e6; z-index: 9999; }
-    .stApp { margin-bottom: 120px; }
-    .profile-text { text-align: justify; line-height: 1.8; font-size: 16px; }
-</style>
-""", unsafe_allow_html=True)
-
-my_wa = "https://wa.me/628212190885"
-
-# 3. SIDEBAR NAVIGATION
+# 2. SIDEBAR
 with st.sidebar:
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
+    if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     st.title("🛡️ V-Guard AI")
-    menu = st.radio("Folder Navigasi:", 
-                    ["1. 👤 Profil Founder", 
-                     "2. 🎯 Visi, Misi & ROI", 
-                     "3. 📦 Produk & Paket", 
-                     "4. 📝 Registrasi Klien",
-                     "5. 🔐 Admin Dashboard"])
-    st.markdown('<p class="status-connected">● System Online</p>', unsafe_allow_html=True)
-    st.link_button("📞 Hubungi Erwin Sinaga", my_wa, use_container_width=True)
+    menu = st.radio("Folder:", ["1. 👤 Profil", "2. 🎯 Visi & Misi", "3. 📦 Paket", "4. 📝 Registrasi", "5. 🔐 Admin"])
 
-# --- MENU 1: PROFIL FOUNDER ---
-if menu == "1. 👤 Profil Founder":
-    st.header("👤 Strategic Leadership & Founder Philosophy")
-    col1, col2 = st.columns([1, 2.5])
-    with col1:
-        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
-    with col2:
-        st.subheader("Erwin Sinaga")
-        st.markdown(f"""<div class="profile-text">
-        Bapak Erwin Sinaga adalah seorang profesional dan Pemimpin Bisnis Senior dengan pengalaman lebih dari sepuluh tahun di dunia perbankan serta manajemen aset nasional. Beliau memiliki keahlian strategis dalam manajemen risiko kredit dan pengawasan kepatuhan operasional. V-Guard AI lahir dari visi beliau untuk membawa standar keamanan audit perbankan ke ekosistem UMKM dan perusahaan menengah. Beliau berkomitmen menciptakan lingkungan bisnis yang bersih dari kebocoran dana melalui teknologi cerdas.
-        </div>""", unsafe_allow_html=True)
+# 3. FOLDER 1: PROFIL
+if menu == "1. 👤 Profil":
+    st.header("👤 Profil Founder")
+    st.write("Bapak Erwin Sinaga adalah Pemimpin Bisnis Senior dengan 10+ tahun pengalaman di perbankan. V-Guard AI adalah visinya untuk mengamankan aset UMKM dengan standar audit perbankan menggunakan teknologi AI.")
 
-# --- MENU 2: VISI, MISI & ROI ---
-elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("🎯 Analisis Strategi Bisnis")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit berbasis AI di seluruh ekosistem bisnis Indonesia.")
+# 4. FOLDER 2: VISI, MISI & ROI
+elif menu == "2. 🎯 Visi & Misi":
+    st.info("### 🎯 Visi 2026\nMenjadi standar utama keamanan audit berbasis AI di Indonesia.")
+    st.success("### 🚀 Misi Utama\n1. Otomasi Audit 24/7\n2. Deteksi Fraud Instan\n3. Transparansi Aset\n4. Efisiensi Teknologi AI")
+    st.write("---")
+    st.subheader("📈 Kalkulator ROI (Penyelamatan Aset)")
+    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
+    st.error(f"🚨 Estimasi Kebocoran (5%): Rp {omzet * 0.05:,.0f}")
+    st.success(f"🛡️ Target Penyelamatan V-Guard: Rp {omzet * 0.05 * 0.9:,.0f}")
+
+# 5. FOLDER 3: PRODUK & PAKET
+elif menu == "3. 📦 Paket":
+    cols = st.columns(4)
+    pkgs = [("BASIC", "2.5jt", "750rb"), ("MEDIUM", "7.5jt", "1.5jt"), ("ENTERPRISE", "25jt", "5jt"), ("CORPORATE", "50jt", "10jt")]
+    for i, (n, s, m) in enumerate(pkgs):
+        with cols[i]:
+            st.markdown(f"<div class='package-box'><h3>{n}</h3><p>Setup: {s}<br>Bulanan: {m}</p><hr><ul><li>Audit Harian</li><li>AI Detection</li></ul></div>", unsafe_allow_html=True)
+
+# 6. FOLDER 4: REGISTRASI
+elif menu == "4. 📝 Registrasi":
+    st.header("📝 Registrasi Nasabah")
+    with st.form("reg"):
+        st.text_input("Nama Bisnis:")
+        st.selectbox("Jenis Usaha:", ["Retail", "F&B", "Jasa", "Corporate"])
+        st.text_input("Harga (Sesuai Paket):")
+        st.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+        if st.form_submit_button("Kirim"): st.success("Data Terkirim!")
+
+# 7. FOLDER 5: ADMIN (FITUR UNGGAH/TARIK DI SINI)
+elif menu == "5. 🔐 Admin":
+    st.header("🔐 Admin Dashboard")
+    pw = st.text_input("Password Admin:", type="password")
+    if pw == "w1nbju8282":
+        t1, t2 = st.tabs(["📊 Database", "📤 Kelola File"])
+        with t1: st.write("Daftar Nasabah Aktif")
+        with t2:
+            st.file_uploader("Upload Data Transaksi (.csv/.xlsx)")
+            st.button("Tarik Laporan Audit Terakhir")
+
+# 8. FOOTER
+st.markdown('<div class="footer">© 2026 V-Guard AI Systems - Secured by Advanced Intelligence</div>', unsafe_allow_html=True)
