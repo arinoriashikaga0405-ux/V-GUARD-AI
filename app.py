@@ -18,7 +18,7 @@ st.markdown("""
     .status-connected { color: #28a745; font-weight: bold; font-size: 16px; margin-top: 10px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
     .package-card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; height: 580px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-    .profile-box { text-align: justify; line-height: 1.8; padding: 20px; background: white; border-radius: 15px; font-size: 16px; }
+    .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; font-size: 16px; border: 1px solid #f0f0f0; }
     .vision-box { background: #fdfdfd; padding: 25px; border-left: 5px solid #007bff; border-radius: 10px; margin-top: 20px; }
 </style>
 """, unsafe_allow_html=True)
@@ -33,7 +33,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("📞 Hubungi Erwin Sinaga", "https://wa.me/628212190885")
 
-# --- FOLDER 1: PROFIL FOUNDER ---
+# --- FOLDER 1: PROFIL FOUNDER (NARASI DIPERPANJANG > 100 KATA) ---
 if menu == "1. 👤 Profil Founder":
     col1, col2 = st.columns([1, 2.5])
     with col1:
@@ -41,8 +41,9 @@ if menu == "1. 👤 Profil Founder":
             st.image("erwin.jpg", use_container_width=True)
     with col2:
         st.markdown(f"""<div class="profile-box">
-        <b>Bapak Erwin Sinaga</b> merupakan seorang profesional dan Pemimpin Bisnis Senior dengan pengalaman lebih dari sepuluh tahun di industri perbankan dan manajemen aset nasional. <br><br>
-        V-Guard AI adalah wujud dedikasi beliau untuk menghadirkan sistem pengawasan aset berbasis AI yang mampu mendeteksi kecurangan secara real-time, memberikan rasa aman bagi para pemilik usaha di Indonesia.
+        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengukir rekam jejak impresif selama lebih dari sepuluh tahun di sektor perbankan dan manajemen aset nasional. Sepanjang kariernya, beliau telah memegang berbagai peran strategis, termasuk posisi krusial sebagai Chief Executive Officer (CEO) dan Chief Sales Officer (CSO), di mana beliau bertanggung jawab penuh atas manajemen risiko, kepatuhan operasional, serta pengawasan aset korporasi berskala besar. Pengalaman mendalam ini memberikan beliau pemahaman unik mengenai titik-titik lemah dalam sistem manajemen konvensional yang sering kali menjadi celah terjadinya kebocoran finansial dan inefisiensi operasional. <br><br>
+        V-Guard AI didirikan atas dasar visi besar beliau untuk mendemokratisasi standar keamanan audit kelas perbankan agar dapat diakses oleh ekosistem UMKM dan perusahaan menengah di Indonesia. Beliau sangat meyakini bahwa integritas sebuah bisnis sangat bergantung pada transparansi data yang akurat. Oleh karena itu, melalui implementasi teknologi Artificial Intelligence, beliau berkomitmen untuk membangun sebuah "Benteng Pertahanan Digital" yang mampu bekerja secara otonom selama 24/7. <br><br>
+        Kepemimpinan beliau di V-Guard AI tidak hanya berfokus pada inovasi teknologi semata, namun juga pada penciptaan nilai ekonomi (ROI) yang nyata bagi para pemilik bisnis. Dengan dedikasi tinggi, Bapak Erwin Sinaga terus memastikan bahwa setiap solusi yang dihadirkan V-Guard AI mampu menutup celah kecurangan (fraud), meningkatkan disiplin operasional, dan pada akhirnya memberikan ketenangan pikiran (peace of mind) bagi para pengusaha dalam mengelola aset berharga mereka.
         </div>""", unsafe_allow_html=True)
 
 # --- FOLDER 2: VISI, MISI & ROI ---
@@ -63,7 +64,7 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
     omzet = st.number_input("Omzet Bulanan Bisnis Anda (Rp):", value=500000000, step=10000000)
     st.success(f"🛡️ Estimasi kebocoran yang bisa dicegah V-Guard AI: **Rp {omzet * 0.045:,.0f}** per bulan.")
 
-# --- FOLDER 3: PAKET LAYANAN (BARIS 82 SUDAH DIPERBAIKI) ---
+# --- FOLDER 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
     st.header("📦 Paket Layanan V-Guard AI")
     p_cols = st.columns(4)
@@ -76,7 +77,6 @@ elif menu == "3. 📦 Paket Layanan":
     for i, p in enumerate(pkgs):
         with p_cols[i]:
             st.markdown(f'<div class="package-card" style="background-color: {p["c"]};"><h3>{p["n"]}</h3><p>Setup: {p["s"]}<br>Bulanan: {p["m"]}</p><hr><ul>{"".join([f"<li>{item}</li>" for item in p["f"]])}</ul></div>', unsafe_allow_html=True)
-            # Baris di bawah ini disatukan agar tidak error:
             url = f"https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20{p['n']}"
             st.link_button(f"Pilih {p['n']}", url)
 
