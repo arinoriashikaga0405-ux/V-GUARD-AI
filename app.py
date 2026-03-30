@@ -68,4 +68,4 @@ elif page == "📦 Products & Packages":
     for i, p in enumerate(pkgs):
         with cols[i]:
             st.warning(f"**{p['N']}**")
-            st.subheader(p['
+            st
