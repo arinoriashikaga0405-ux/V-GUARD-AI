@@ -5,13 +5,9 @@ import time
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Systems", layout="wide", page_icon="🛡️")
 
-# 2. CSS UNTUK DASHBOARD, ALARM & NOTIFIKASI
+# 2. CSS UNTUK TAMPILAN DASHBOARD & ALARM
 st.markdown("""
 <style>
-    .report-card {
-        background: #f1f8e9; border-radius: 10px; padding: 15px;
-        border-left: 5px solid #4caf50; margin-bottom: 10px;
-    }
     .alarm-banner {
         background-color: #ff4b4b; color: white; padding: 15px;
         border-radius: 10px; text-align: center; font-weight: bold;
@@ -22,6 +18,10 @@ st.markdown("""
     .invoice-box {
         background: #e3f2fd; border-left: 8px solid #1976d2;
         padding: 20px; border-radius: 10px; margin-top: 15px;
+    }
+    .step-box {
+        background: #f8f9fa; border: 1px solid #dee2e6;
+        padding: 10px; border-radius: 8px; text-align: center;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -55,7 +55,7 @@ if menu == "1. 👤 Profil Founder":
         st.subheader("Erwin Sinaga")
         st.markdown("""
         <div style="text-align: justify;">
-        Bapak Erwin Sinaga merupakan seorang profesional dan Pemimpin Bisnis Senior yang memiliki rekam jejak prestisius selama lebih dari sepuluh tahun di industri perbankan serta manajemen aset nasional. Melalui dedikasi panjang di sektor keuangan formal, beliau telah menguasai secara mendalam berbagai aspek krusial seperti manajemen risiko kredit, pengawasan kepatuhan operasional (compliance), hingga perancangan strategi perlindungan aset korporasi dalam skala besar. <br><br>
+        Bapak Erwin Sinaga merupakan seorang profesional dan Pemingin Bisnis Senior yang memiliki rekam jejak prestisius selama lebih dari sepuluh tahun di industri perbankan serta manajemen aset nasional. Melalui dedikasi panjang di sektor keuangan formal, beliau telah menguasai secara mendalam berbagai aspek krusial seperti manajemen risiko kredit, pengawasan kepatuhan operasional (compliance), hingga perancangan strategi perlindungan aset korporasi dalam skala besar. <br><br>
         Pemahaman komprehensif beliau terhadap celah-celah fraud dan dinamika kebocoran dana yang sering terjadi pada sistem keuangan konvensional menjadi batu pijakan utama dalam mendirikan ekosistem V-Guard AI. Di bawah kepemimpinan strategisnya, Bapak Erwin berhasil mengintegrasikan standar audit perbankan yang sangat ketat dengan kecanggihan teknologi Artificial Intelligence modern, termasuk Google Gemini, MindBridge, dan YOLO Vision. Sinergi teknologi ini dirancang khusus untuk memberikan perlindungan finansial yang holistik, transparan, dan mampu mencegah segala bentuk anomali transaksi bisnis klien secara mutlak dan real-time.
         </div>
         """, unsafe_allow_html=True)
@@ -93,34 +93,33 @@ elif menu == "3. 📦 Paket Layanan":
         st.info("**CORPORATE**\n\nSetup: 50jt\nRp 10jt/Bln")
         st.link_button("Pilih Corporate", wa_url)
 
-# Tambahkan potongan kode ini di bagian Menu 4: Admin Dashboard
-st.write("---")
-st.subheader("🔄 V-Guard AI Live Process Visualizer")
-
-# Membuat kolom alur
-s1, s2, s3, s4 = st.columns(4)
-
-with s1:
-    st.info("📥 **DATA IN**\nUpload POS/CCTV")
-with s2:
-    st.info("🤖 **AI AUDIT**\nGemini + MindBridge")
-with s3:
-    st.info("🚨 **FRAUD SCAN**\nYOLO Vision Check")
-with s4:
-    st.info("📄 **OUTPUT**\nInvoice & PDF")
-
-# Garis progress simulasi
-st.progress(100)
-st.caption("✅ Sistem siap melakukan audit menyeluruh untuk mengamankan aset Anda.")
-        # ALARM FRAUD
-        st.markdown('<div class="alarm-banner">🚨 FRAUD DETECTED: Ditemukan selisih transaksi pada Cabang Tangerang!</div>', unsafe_allow_html=True)
-        
-        # NOTIFIKASI INVOICE
-        st.markdown(f"""
-        <div class="invoice-box">
-            <h4 style="margin:0; color:#1976d2;">📄 Auto-Invoice & Report Generated</h4>
-            <p>Invoice <b>#VGD-{int(time.time())}</b> telah dikirim otomatis ke klien via WhatsApp.</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.download_button("📥 Unduh Laporan Audit Lengkap (PDF)", "Hasil Audit V-Guard AI", file_name="Laporan_Audit_VGuard.pdf")
+# --- MENU 4: ADMIN DASHBOARD (PERBAIKAN INDENTASI) ---
+elif menu == "4. 🔐 Admin Dashboard":
+    st.header("🔐 Admin Strategic Dashboard")
+    
+    k1, k2, k3 = st.columns(3)
+    k1.metric("Klien Aktif", "12 Cabang", "+2")
+    k2.metric("Omzet Terpantau", "Rp 6.2 Miliar")
+    k3.metric("Aset Diselamatkan", "Rp 310 Juta", "95%")
+    
+    st.write("---")
+    st.subheader("🔄 Simulasi Alur Proses V-Guard AI")
+    
+    # Visualisasi Alur
+    s1, s2, s3, s4 = st.columns(4)
+    with s1:
+        st.markdown('<div class="step-box"><b>1. DATA IN</b><br><small>Upload POS/CCTV</small></div>', unsafe_allow_html=True)
+    with s2:
+        st.markdown('<div class="step-box"><b>2. AI AUDIT</b><br><small>Gemini Analysis</small></div>', unsafe_allow_html=True)
+    with s3:
+        st.markdown('<div class="step-box"><b>3. FRAUD SCAN</b><br><small>YOLO Vision Check</small></div>', unsafe_allow_html=True)
+    with s4:
+        st.markdown('<div class="step-box"><b>4. OUTPUT</b><br><small>Invoice & PDF</small></div>', unsafe_allow_html=True)
+    
+    st.write("---")
+    uploaded = st.file_uploader("Unggah Laporan Transaksi Klien (CSV/Excel)", type=['csv', 'xlsx'])
+    
+    # PERBAIKAN INDENTASI DI SINI
+    if uploaded:
+        with st.status("V-Guard AI sedang bekerja...", expanded=True) as status:
+            st.write("🤖 Sinkronisasi Google
