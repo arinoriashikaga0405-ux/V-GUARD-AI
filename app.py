@@ -2,99 +2,103 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# 1. KONFIGURASI DASAR
-st.set_page_config(page_title="V-Guard AI Dashboard", page_icon="🛡️", layout="wide")
+# 1. OPTIMASI PERFORMA (Caching Data Statis)
+@st.cache_data
+def get_static_data():
+    return {
+        "Mikro": {"S": "2.5jt", "B": "750rb", "F": ["Monitoring Real-time", "Limit 1rb Tx"]},
+        "Menengah": {"S": "7.5jt", "B": "2.5jt", "F": ["WA Alert", "Advanced AI", "Limit 5rb Tx"]},
+        "Enterprise": {"S": "50jt", "B": "8.5jt", "F": ["ERP Integration", "AI CCTV Basic"]},
+        "Corporate": {"S": "85jt", "B": "15jt", "F": ["AI CCTV Face Recog", "CSO Advisory"]}
+    }
 
-# 2. SISTEM KEAMANAN LOGIN (MENGGUNAKAN SECRETS)
+# 2. KONFIGURASI HALAMAN
+st.set_page_config(page_title="V-Guard AI | Secure Dashboard", page_icon="🛡️", layout="wide")
+
+# 3. SESSION STATE & LOGIN
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
 if not st.session_state.auth:
-    st.title("🛡️ V-GUARD AI SECURE LOGIN")
-    st.subheader("Founder: Erwin Sinaga")
-    pwd_input = st.text_input("Masukkan Password Admin:", type="password")
-    if st.button("Masuk Sekarang"):
-        try:
-            if pwd_input.strip() == st.secrets["ADMIN_PASSWORD"].strip():
-                st.session_state.auth = True
-                st.rerun()
-            else:
-                st.error("❌ Password Salah.")
-        except:
-            st.error("⚠️ Password belum diatur di menu Secrets Streamlit!")
+    st.title("🛡️ V-GUARD AI SECURE GATE")
+    pwd = st.text_input("Admin Access Code:", type="password")
+    if st.button("Authorize Access"):
+        if pwd == st.secrets.get("ADMIN_PASSWORD", "admin123"): # Fallback jika secrets belum set
+            st.session_state.auth = True
+            st.rerun()
+        else:
+            st.error("Access Denied.")
     st.stop()
 
-# 3. NAVIGASI SIDEBAR (MENU UTAMA)
-st.sidebar.title("🛡️ V-Guard AI Menu")
-page = st.sidebar.radio("Navigasi Halaman:", ["🏠 Home", "📊 Dashboard Monitoring", "📦 Products & Packages", "👤 About Founder"])
+# 4. SIDEBAR NAVIGATION
+st.sidebar.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=100)
+page = st.sidebar.selectbox("Main Menu", ["🏠 Overview", "📊 Live Monitoring", "💎 Investment Plans", "👤 Corporate Profile"])
 
-if st.sidebar.button("🔒 Logout"):
-    st.session_state.auth = False
-    st.rerun()
-
-# --- HALAMAN 1: HOME ---
-if page == "🏠 Home":
-    st.title("🛡️ Welcome to V-Guard AI")
-    st.header("Our Philosophy")
-    st.write("At V-Guard AI, our philosophy is simple: **Empowering Businesses Through Intelligent Protection**.")
+# --- HALAMAN 1: OVERVIEW (Engagement) ---
+if page == "🏠 Overview":
+    st.title("Welcome, Pak Erwin Sinaga")
+    st.markdown("### *Empowering Businesses Through Intelligent Protection*")
     st.write("---")
-    st.subheader("🎯 Vision & Mission")
-    c1, c2 = st.columns(2)
-    with c1: st.info("**Vision**: Menjadi penyedia solusi keamanan finansial berbasis AI terdepan secara global.")
-    with c2: st.info("**Mission**: Mengembangkan teknologi AI inovatif yang mengantisipasi risiko secara otomatis.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Our Vision 2026")
+        st.info("Menjadi standar keamanan finansial global berbasis AI yang adaptif dan proaktif.")
+    with col2:
+        st.subheader("Digital Trust")
+        st.success("Sistem V-Guard telah memproteksi aset senilai Rp 500M+ di wilayah Tangerang & Jakarta.")
 
-# --- HALAMAN 2: DASHBOARD MONITORING ---
-elif page == "📊 Dashboard Monitoring":
-    st.header("📊 V-Guard Real-time Monitoring")
-    st.success("Sistem AI aktif mengawasi anomali transaksi.")
-    df_data = pd.DataFrame({'Kategori': ['Aman', 'Anomali'], 'Skor': [94, 6]})
-    fig = px.pie(df_data, values='Skor', names='Kategori', title="Ringkasan Risiko Hari Ini", hole=0.3)
-    st.plotly_chart(fig, use_container_width=True)
+# --- HALAMAN 2: MONITORING (Interactive UI) ---
+elif page == "📊 Live Monitoring":
+    st.header("📊 Intelligence Ops Center")
+    tab1, tab2 = st.tabs(["Risk Analysis", "Transaction Flow"])
+    
+    with tab1:
+        df = pd.DataFrame({'Status': ['Safe', 'Flagged'], 'Count': [94, 6]})
+        fig = px.pie(df, values='Count', names='Status', hole=0.5, color_discrete_sequence=['#2ecc71', '#e74c3c'])
+        st.plotly_chart(fig, use_container_width=True)
+    with tab2:
+        st.info("Fitur Grafik Aliran Transaksi sedang dioptimalkan untuk integrasi API.")
 
-# --- HALAMAN 3: PRODUCTS & PACKAGES (DENGAN CCTV & WHATSAPP) ---
-elif page == "📦 Products & Packages":
-    st.header("📦 Our Products & Services Packages")
-    st.write("Silakan pilih paket investasi keamanan yang sesuai. Klik tombol untuk konsultasi langsung.")
+# --- HALAMAN 3: PLANS (Dynamic & Persuasive) ---
+elif page == "💎 Investment Plans":
+    st.header("💎 Choose Your Shield")
+    data = get_static_data()
+    wa_num = "6282122190885"
     
-    # Nomor WhatsApp Resmi Pak Erwin
-    wa_num = "6282122190885" 
-    
-    data_produk = [
-        {"Seg": "Mikro", "Pk": "Basic Guard", "Set": "2.5jt", "Bul": "750rb", "Feat": ["Monitoring Real-time", "Email Alert", "Limit 1rb Transaksi"]},
-        {"Seg": "Menengah", "Pk": "Premium Shield", "Set": "7.5jt", "Bul": "2.5jt", "Feat": ["Advanced Fraud AI", "WhatsApp Alert", "Limit 5rb Transaksi"]},
-        {"Seg": "Enterprise", "Pk": "Enterprise Vault", "Set": "50jt", "Bul": "8.5jt", "Feat": ["ERP Integration", "AI CCTV Object Detection", "Custom AI Model"]},
-        {"Seg": "Corporate", "Pk": "Elite Managed", "Set": "85jt", "Bul": "15jt", "Feat": ["AI CCTV Face Recognition", "Managed Security Ops", "Advisory Pak Erwin"]}
-    ]
-    
+    # Pricing Comparison Table (Dinamis)
+    st.subheader("Comparison Matrix")
+    compare_df = pd.DataFrame([
+        {"Package": "Mikro", "Setup": "2.5jt", "Monthly": "750rb", "AI Level": "Basic"},
+        {"Package": "Menengah", "Setup": "7.5jt", "Monthly": "2.5jt", "AI Level": "Intermediate"},
+        {"Package": "Enterprise", "Setup": "50jt", "Monthly": "8.5jt", "AI Level": "Advanced"},
+        {"Package": "Corporate", "Setup": "85jt", "Monthly": "15jt", "AI Level": "Expert (Custom)"}
+    ])
+    st.table(compare_df)
+
     cols = st.columns(4)
-    for i, p in enumerate(data_produk):
+    for i, (name, detail) in enumerate(data.items()):
         with cols[i]:
-            st.warning(f"**{p['Seg']}**")
-            st.subheader(p['Pk'])
-            st.markdown(f"**Setup: Rp {p['Set']}**")
-            st.markdown(f"**Bulanan: Rp {p['Bul']}**")
-            for f in p['Feat']:
+            st.markdown(f"### {name}")
+            st.metric("Monthly", detail['B'])
+            st.write(f"**Setup: {detail['S']}**")
+            for f in detail['F']:
                 st.markdown(f"- {f}")
             
-            # Link WhatsApp Otomatis
-            msg = f"Halo Pak Erwin Sinaga, saya tertarik paket {p['Pk']} ({p['Seg']}) V-Guard AI."
-            wa_url = f"https://wa.me/{wa_num}?text={msg.replace(' ', '%20')}"
-            st.link_button(f"👉 Pesan {p['Pk']}", wa_url, use_container_width=True, type="primary")
+            msg = f"Halo Pak Erwin, saya tertarik paket {name}. Bisa diskusi?"
+            url = f"https://wa.me/{wa_num}?text={msg.replace(' ', '%20')}"
+            st.link_button(f"Pesan {name}", url, use_container_width=True, type="primary")
 
-# --- HALAMAN 4: ABOUT FOUNDER ---
-elif page == "👤 About Founder":
-    st.header("👤 Meet the Founder")
-    col_p1, col_p2 = st.columns([1, 2])
-    with col_p1:
-        try:
-            st.image("erwin.jpg", caption="Erwin Sinaga - CEO", use_container_width=True)
-        except:
-            st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=150)
-    with col_p2:
-        st.write("### Erwin Sinaga")
-        st.write("**Senior Business Leader & Founder V-Guard AI**")
-        st.write("Berpengalaman lebih dari 10 tahun sebagai CEO & CSO di industri perbankan dan aset.")
-        st.write("Berdomisili di Tangerang, Pak Erwin berdedikasi membangun solusi keamanan cerdas untuk masa depan.")
+# --- HALAMAN 4: CORPORATE PROFILE ---
+elif page == "👤 Corporate Profile":
+    st.header("Strategic Leadership")
+    c1, c2 = st.columns([1, 2])
+    with c1:
+        st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", caption="Erwin Sinaga, CEO")
+    with c2:
+        st.markdown("#### Erwin Sinaga")
+        st.markdown("*Senior Business Leader with 10+ years in Banking & Asset Management.*")
+        st.write("Berdomisili di Tangerang, mengarahkan V-Guard AI untuk menjadi solusi 'End-to-End Intermediary' bagi dunia B2B.")
 
 st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
+st.caption("V-Guard AI Systems © 2026 | Secure Transactional Environment")
