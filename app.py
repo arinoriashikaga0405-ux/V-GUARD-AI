@@ -2,47 +2,32 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- 1. CONFIGURATION ---
+# --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="VGUARD AI Systems - Erwin Sinaga", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS UNTUK TAMPILAN RAPI & BENAR ---
+# --- 2. CSS TAMPILAN RAPI (HITAM & KUNING) ---
 st.markdown("""
 <style>
     .stApp { background-color: #f8fafc; }
     
-    /* Banner Hitam Utama */
+    /* Banner Hitam Atas */
     .black-banner {
         background-color: #111827;
         color: white;
         padding: 40px;
         border-radius: 15px;
         text-align: center;
-        border-bottom: 5px solid #facc15; /* Garis Kuning Bawah */
+        border-bottom: 5px solid #facc15;
         margin-bottom: 30px;
     }
     
-    /* Container Foto & About */
-    .about-container {
-        display: flex;
-        gap: 20px;
-        align-items: stretch;
-    }
-    
-    .profile-card {
-        background: #111827;
-        border-radius: 15px;
-        padding: 0;
-        overflow: hidden;
-        text-align: center;
-        border-bottom: 5px solid #facc15;
-    }
-    
+    /* Box Deskripsi Hitam */
     .description-box {
         background: #111827;
         color: white;
         padding: 30px;
         border-radius: 15px;
-        flex-grow: 1;
+        height: 100%;
         border-bottom: 5px solid #facc15;
     }
 
@@ -50,7 +35,7 @@ st.markdown("""
         display: inline-block;
         background-color: #25d366;
         color: white !important;
-        padding: 10px 20px;
+        padding: 12px 25px;
         border-radius: 8px;
         text-decoration: none;
         font-weight: bold;
@@ -59,14 +44,12 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-wa_number = "62821221190885"
-
 if 'page' not in st.session_state: st.session_state.page = "Home"
 
-# --- 3. TAMPILAN BERANDA UTAMA ---
+# --- 3. LOGIKA HALAMAN ---
 if st.session_state.page == "Home":
     
-    # BANNER ATAS
+    # BANNER UTAMA
     st.markdown("""
     <div class="black-banner">
         <h1 style="margin:0; font-size: 3em;">V-GUARD AI SYSTEMS</h1>
@@ -74,15 +57,13 @@ if st.session_state.page == "Home":
     </div>
     """, unsafe_allow_html=True)
 
-    # KOLOM FOTO DAN DESKRIPSI
+    # KONTEN PROFIL (FOTO & ABOUT)
     col_photo, col_desc = st.columns([1, 1.5])
     
     with col_photo:
-        st.markdown('<div class="profile-card">', unsafe_allow_html=True)
-        # Menggunakan Placeholder Image yang Merepresentasikan Foto Profesional Bapak
+        # Foto Profil Strategis
         st.image("https://raw.githubusercontent.com/erwinsinaga/v-guard-ai/main/assets/ceo_photo.jpg", 
                  caption="Erwin Sinaga - Senior Business Executive", use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
         
     with col_desc:
         st.markdown(f"""
@@ -92,9 +73,16 @@ if st.session_state.page == "Home":
                 Platform deteksi fraud sistemik yang dibangun oleh <b>Erwin Sinaga</b> (Senior Business Executive). 
                 Pengalaman perbankan 10+ tahun kami gunakan untuk memproteksi aset bisnis Anda dari kebocoran hingga 90%.
             </p>
-            <p>Filosofi kami: <b>Presisi Tanpa Kompromi.</b></p>
-            <a href="https://wa.me/{wa_number}" class="wa-button">Hubungi CEO via WhatsApp</a>
+            <p>Filosofi Kami: <b>Presisi Tanpa Kompromi</b>.</p>
+            <a href="https://wa.me/62821221190885" class="wa-button">💬 Hubungi CEO via WhatsApp</a>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🚀 BUKA PANEL ADMIN"):
-            st.session_state.page =
+        
+        st.write("")
+        if st.button("🚀 MASUK KE COMMAND CENTER"):
+            st.session_state.page = "Admin"
+            st.rerun()
+
+    st.write("---")
+    
+    # 4 PAKET LAYANAN STRATE
