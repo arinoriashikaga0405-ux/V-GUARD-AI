@@ -3,65 +3,93 @@ import pandas as pd
 from datetime import datetime
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI Systems", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="V-Guard AI | Secure Admin", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS MODERN & CLEAN ---
+# --- 2. SECURITY & SESSION STATE ---
+if 'auth' not in st.session_state:
+    st.session_state.auth = False
+if 'user_role' not in st.session_state:
+    st.session_state.user_role = "Viewer"
+if 'audit_logs' not in st.session_state:
+    st.session_state.audit_logs = []
+
+def add_audit_log(action):
+    """Mencatat aktivitas admin untuk audit trail."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    st.session_state.audit_logs.append({
+        "Timestamp": timestamp,
+        "User": "Erwin Sinaga",
+        "Action": action,
+        "Role": st.session_state.user_role
+    })
+
+# --- 3. UI & CSS ---
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-    .stApp { font-family: 'Poppins', sans-serif; background-color: white; }
-    [data-testid="stSidebar"] { background-color: #0D47A1; }
-    [data-testid="stSidebar"] * { color: white !important; }
-    .card { background: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #00BCD4; margin-bottom: 20px; }
+    .stApp { background-color: white; }
+    .status-active { color: #4CAF50; font-weight: bold; }
+    .log-table { font-size: 0.85rem; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. SESSION STATE ---
-if 'auth' not in st.session_state: st.session_state.auth = False
-
-# --- 4. LOGIKA NAVIGASI ---
+# --- 4. LOGIN & AUTHENTICATION GUARD ---
 if not st.session_state.auth:
     st.markdown("<div style='text-align:center; padding-top:100px;'>", unsafe_allow_html=True)
-    st.image("https://cdn-icons-png.flaticon.com/512/1004/1004666.png", width=80)
-    st.title("V-GUARD AI SYSTEMS")
-    st.write("Intelligence That Protects Profit | Founder: Erwin Sinaga")
-    if st.button("🚀 MASUK KE COMMAND CENTER"):
+    st.title("🛡️ V-GUARD AI SECURE LOGIN")
+    
+    # Simulasi Basic Auth / Role Selection untuk Prototype
+    role_choice = st.selectbox("Pilih Peran Akses:", ["Admin (Full Access)", "Viewer (Read Only)"])
+    
+    if st.button("Masuk Ke Sistem"):
         st.session_state.auth = True
+        st.session_state.user_role = "Admin" if "Admin" in role_choice else "Viewer"
+        add_audit_log(f"Login sukses sebagai {st.session_state.user_role}")
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
 else:
+    # --- SIDEBAR NAVIGASI ---
     with st.sidebar:
-        st.markdown("### 🛡️ V-Guard AI")
+        st.header("V-Guard AI")
+        st.write(f"Status: <span class='status-active'>Encrypted</span>", unsafe_allow_html=True)
         st.markdown("---")
-        menu = st.radio("Navigasi:", ["🏠 Overview", "👥 Manajemen User", "⚙️ Pengaturan AI"])
+        
+        # Menu Navigasi
+        menu_options = ["🏠 Dashboard", "📜 Audit Logs"]
+        # Role Guard: Hanya tampilkan menu AI Settings untuk Admin
+        if st.session_state.user_role == "Admin":
+            menu_options.append("⚙️ AI Configuration")
+            
+        menu = st.radio("Menu Utama:", menu_options)
+        
         st.markdown("---")
         if st.button("🔓 Logout"):
+            add_audit_log("User Logout")
             st.session_state.auth = False
             st.rerun()
 
+    # --- KONTEN UTAMA ---
     st.header(f"💼 {menu}")
-    
-    if menu == "🏠 Overview":
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown('<div class="card"><h4>Status Keamanan</h4><h2 style="color:#F44336;">HIGH RISK!</h2><p>2 Anomali Terdeteksi</p></div>', unsafe_allow_html=True)
-        with c2:
-            st.markdown('<div class="card"><h4>Total Monitoring</h4><h2>Rp 1.42 M</h2><p>Asset under protection</p></div>', unsafe_allow_html=True)
-        
-        st.subheader("Proyeksi Cash Flow")
-        chart_data = pd.DataFrame({'Actual': [10, 20, 15, 30], 'Target': [12, 18, 20, 35]})
-        st.line_chart(chart_data)
 
-    elif menu == "👥 Manajemen User":
-        st.subheader("Daftar Pengguna Aktif")
-        users = pd.DataFrame({
-            "Nama": ["Erwin Sinaga", "Jaya", "Shafen"],
-            "Role": ["CEO / Admin", "Manager", "Admin"],
-            "Status": ["Aktif", "Aktif", "Aktif"]
-        })
-        st.table(users)
+    if menu == "🏠 Dashboard":
+        st.info(f"Selamat Datang, Pak Erwin. Anda masuk dengan akses: **{st.session_state.user_role}**")
+        st.write("Menampilkan ringkasan fraud terdeteksi dengan enkripsi end-to-end.")
 
-# --- 5. FOOTER (DIPERBAIKI AGAR TIDAK ERROR) ---
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Developed for Erwin Sinaga")
+    elif menu == "⚙️ AI Configuration":
+        # Permission Check Tambahan
+        if st.session_state.user_role != "Admin":
+            st.error("Akses Ditolak. Halaman ini memerlukan izin Admin.")
+        else:
+            st.subheader("Pengaturan Ambang Batas Fraud")
+            new_val = st.slider("Sensitivitas Deteksi:", 0.0, 1.0, 0.8)
+            if st.button("Update Rules"):
+                add_audit_log(f"Mengubah sensitivitas AI menjadi {new_val}")
+                st.success("Konfigurasi disimpan dan dicatat dalam log.")
+
+    elif menu == "📜 Audit Logs":
+        st.subheader("Audit Trail: Aktivitas Admin")
+        if st.session_state.audit_logs:
+            log_df = pd.DataFrame(st.session_state.audit_logs)
+            st.table(log_df)
+        else:
+            st
