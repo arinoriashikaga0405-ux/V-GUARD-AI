@@ -5,7 +5,7 @@ import plotly.express as px
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Dashboard", page_icon="🛡️", layout="wide")
 
-# 2. SISTEM LOGIN
+# 2. SISTEM LOGIN (KEAMANAN DATA)
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
@@ -37,7 +37,6 @@ if page == "🏠 Home":
     st.title("🛡️ Welcome to V-Guard AI")
     st.header("Our Philosophy")
     st.write("At V-Guard AI, our philosophy is simple yet profound: **Empowering Businesses Through Intelligent Protection**.")
-    st.write("We believe that every business deserves protection against financial threats and operational inefficiencies.")
     st.write("---")
     st.subheader("🎯 Vision & Mission")
     c1, c2 = st.columns(2)
@@ -52,19 +51,19 @@ elif page == "📊 Dashboard Monitoring":
     fig = px.pie(df, values='Skor', names='Kategori', title="Ringkasan Risiko Hari Ini", hole=0.3)
     st.plotly_chart(fig, use_container_width=True)
 
-# --- HALAMAN 3: PRODUCTS & PACKAGES (DENGAN TOMBOL WA TIAP PAKET) ---
+# --- HALAMAN 3: PRODUCTS & PACKAGES (WA TERHUBUNG KE NOMOR PAK ERWIN) ---
 elif page == "📦 Products & Packages":
     st.header("📦 Our Products & Services Packages")
-    st.write("Klik tombol di bawah paket untuk konsultasi pemesanan langsung.")
+    st.write("Silakan pilih paket investasi keamanan yang sesuai. Klik tombol di bawah paket untuk konsultasi langsung.")
     
-    # Nomor WhatsApp Bapak
-    wa_num = "6281234567890" # Ganti dengan nomor Bapak
+    # Nomor WhatsApp Resmi Pak Erwin
+    wa_num = "6282122190885" 
     
     data_produk = [
         {"Segmen": "Mikro", "Paket": "Basic Guard", "Setup": "2.5jt", "Bulan": "750rb", "Fitur": ["Monitoring Real-time", "Email Alert", "Limit 1rb Transaksi"]},
         {"Segmen": "Menengah", "Paket": "Premium Shield", "Setup": "7.5jt", "Bulan": "2.5jt", "Fitur": ["Advanced Fraud AI", "WhatsApp Alert", "Limit 5rb Transaksi"]},
         {"Segmen": "Enterprise", "Paket": "Enterprise Vault", "Setup": "50jt", "Bulan": "8.5jt", "Fitur": ["ERP Integration", "AI CCTV Object Detection", "Custom AI Model"]},
-        {"Segmen": "Corporate", "Paket": "Elite Managed", "Setup": "85jt", "Bulan": "15jt", "Fitur": ["AI CCTV Face Recognition", "Managed Security Ops", "Unlimited Data"]}
+        {"Segmen": "Corporate", "Paket": "Elite Managed", "Setup": "85jt", "Bulan": "15jt", "Fitur": ["AI CCTV Face Recognition", "Managed Security Ops", "Advisory Pak Erwin", "Unlimited Data"]}
     ]
     
     cols = st.columns(4)
@@ -77,24 +76,12 @@ elif page == "📦 Products & Packages":
             for f in p['Fitur']:
                 st.markdown(f"- {f}")
             
-            # Tombol WhatsApp Spesifik tiap paket
-            msg = f"Halo Pak Erwin, saya tertarik pesan paket {p['Paket']} ({p['Segmen']})"
+            # Link WhatsApp dengan Pesan Otomatis Per Paket
+            msg = f"Halo Pak Erwin Sinaga, saya tertarik untuk memesan paket {p['Paket']} ({p['Segmen']}) V-Guard AI."
             wa_url = f"https://wa.me/{wa_num}?text={msg.replace(' ', '%20')}"
-            st.link_button(f"Pesan {p['Paket']}", wa_url, use_container_width=True)
+            
+            st.link_button(f"👉 Pesan {p['Paket']}", wa_url, use_container_width=True, type="primary")
 
-# --- HALAMAN 4: ABOUT FOUNDER (BERSIH TANPA TOMBOL MERAH) ---
+# --- HALAMAN 4: ABOUT FOUNDER ---
 elif page == "👤 About Founder":
-    st.header("👤 Meet the Founder")
-    col_p1, col_p2 = st.columns([1, 2])
-    with col_p1:
-        try:
-            st.image("erwin.jpg", caption="Erwin Sinaga - CEO", use_container_width=True)
-        except:
-            st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=150)
-    with col_p2:
-        st.write("### Erwin Sinaga")
-        st.write("**Senior Business Leader & Founder V-Guard AI**")
-        st.write("Dengan pengalaman lebih dari 10 tahun sebagai CEO & CSO di industri perbankan dan aset, Pak Erwin berdedikasi membangun solusi keamanan cerdas.")
-
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Tangerang, Indonesia")
+    st.header("👤 Meet
