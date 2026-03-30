@@ -3,79 +3,54 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# 1. SETUP AWAL
+# 1. SETUP
 st.set_page_config(page_title="V-Guard AI", layout="wide")
-wa_num = "6282122190885"
+wa = "6282122190885"
 
-# 2. LOGIN (PASTIKAN PASSWORD SESUAI SECRETS)
+# 2. LOGIN
 if 'auth' not in st.session_state:
     st.session_state.auth = False
 
 if not st.session_state.auth:
     st.title("🛡️ V-GUARD AI SECURE GATE")
-    pwd = st.text_input("Password Admin:", type="password")
+    pwd = st.text_input("Password:", type="password")
     if st.button("Masuk"):
-        try:
-            if pwd.strip() == st.secrets["ADMIN_PASSWORD"].strip():
-                st.session_state.auth = True
-                st.rerun()
-            else: st.error("❌ Password Salah.")
-        except: st.error("⚠️ Atur Password di Secrets!")
+        if pwd == st.secrets["ADMIN_PASSWORD"]:
+            st.session_state.auth = True
+            st.rerun()
+        else: st.error("Salah!")
     st.stop()
 
-# 3. NAVIGASI
-menu = ["📊 Dashboard", "📦 Paket", "👤 Profil"]
-page = st.sidebar.radio("Navigasi:", menu)
+# 3. MENU
+page = st.sidebar.radio("Menu:", ["Monitoring", "Paket", "Profil"])
 
-# --- HALAMAN DASHBOARD ---
-if page == "📊 Dashboard":
-    st.header("📊 Monitoring Real-time")
-    data = {'Status':['Aman','Anomali'], 'Skor':[94, 6]}
-    df = pd.DataFrame(data)
-    fig = px.pie(df, values='Skor', names='Status', hole=0.3)
+if page == "Monitoring":
+    st.header("📊 Monitoring")
+    df = pd.DataFrame({'St':['Aman','Anomali'], 'Sk':[94, 6]})
+    fig = px.pie(df, values='Sk', names='St', hole=0.3)
     st.plotly_chart(fig, use_container_width=True)
 
-# --- HALAMAN PAKET ---
-elif page == "📦 Paket":
-    st.header("📦 Produk V-Guard AI")
+elif page == "Paket":
+    st.header("📦 Produk V-Guard")
     c1, c2 = st.columns(2)
     with c1:
-        st.warning("**Paket Mikro**")
-        st.write("Setup: Rp 2.5jt")
-        st.link_button("👉 Pesan", f"https://wa.me/{wa_num}")
+        st.info("Paket Mikro - Rp 2.5jt")
+        st.link_button("Pesan Mikro", f"https://wa.me/{wa}")
     with c2:
-        st.warning("**Paket Corporate**")
-        st.write("Setup: Rp 85jt")
-        st.link_button("👉 Pesan", f"https://wa.me/{wa_num}")
+        st.info("Paket Corporate - Rp 85jt")
+        st.link_button("Pesan Corporate", f"https://wa.me/{wa}")
 
-# --- HALAMAN PROFIL (TULISAN MERAH SUDAH DIHAPUS TOTAL) ---
-elif page == "👤 Profil":
+elif page == "Profil":
     st.header("Strategic Leadership")
-    col1, col2 = st.columns([1, 2])
-    with col1:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_container_width=True)
-        else:
-            st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=200)
-    with col2:
+    l, r = st.columns([1, 2])
+    with l:
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg")
+        else: st.write("Founder Erwin Sinaga")
+    with r:
         st.subheader("Erwin Sinaga")
-        st.write("**Founder & Chief Executive Officer**")
-        # Narasi dipecah agar tidak panjang ke samping (Anti-Error)
-        desc = (
-            "Bapak Erwin Sinaga adalah seorang Senior Business Leader visioner "
-            "dengan rekam jejak impresif selama lebih dari 10 tahun di posisi "
-            "CEO dan CSO dalam industri perbankan serta manajemen aset. "
-            "Pengalaman beliau dalam mengelola risiko operasional dan "
-            "transformasi digital menjadi pondasi kuat V-Guard AI Systems. "
-            "Beliau berdedikasi mendemokratisasi akses teknologi keamanan "
-            "finansial kelas dunia untuk menjawab tantangan pasar tahun 2026. "
-            "Komitmen utama beliau adalah membangun solusi End-to-End "
-            "Intermediary yang cerdas, adaptif, dan memiliki daya jual tinggi, "
-            "guna melindungi UMKM dan Korporat dari risiko fraud global."
-        )
-        st.write(desc)
-        st.link_button("📲 Chat Pak Erwin", f"https://wa.me/{wa_num}", type="primary")
+        st.write("**Founder & CEO**")
+        st.write("Bapak Erwin Sinaga adalah Senior Business Leader dengan pengalaman 10+ tahun sebagai CEO/CSO di perbankan. Beliau membangun V-Guard AI untuk melindungi UMKM dan Korporat dari fraud global melalui solusi intermediary yang cerdas dan adaptif.")
+        st.link_button("📲 Chat WhatsApp", f"https://wa.me/{wa}")
 
-# --- FOOTER ---
 st.write("---")
 st.caption("© 2026 V-Guard AI Systems | Tangerang")
