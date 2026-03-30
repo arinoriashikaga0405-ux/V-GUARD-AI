@@ -1,78 +1,89 @@
 import streamlit as st
 import pandas as pd
-import sys
+import time
+from datetime import datetime
 
-# --- 1. HEALTH CHECK & DEPENDENCY MONITORING ---
-def check_environment():
-    """Memastikan modul kritikal tersedia sebelum aplikasi berjalan penuh."""
-    required_modules = ['pandas', 'streamlit']
-    missing = [mod for mod in required_modules if mod not in sys.modules]
-    if missing:
-        st.error(f"❌ Kritis: Modul berikut hilang: {', '.join(missing)}")
-        st.stop()
+# --- 1. KONFIGURASI & PERFORMANCE (CACHING) ---
+st.set_page_config(page_title="V-Guard AI | Enterprise", page_icon="🛡️", layout="wide")
 
-check_environment()
+@st.cache_data(ttl=600) # Cache data selama 10 menit
+def load_financial_data():
+    """Simulasi penarikan data dari sistem eksternal/API."""
+    return pd.DataFrame({
+        'Kategori': ['Operasional', 'Payroll', 'Marketing', 'Vendor A', 'Vendor B'],
+        'Nilai': [250, 450, 150, 80, 120],
+        'Risiko': [0.1, 0.05, 0.2, 0.85, 0.15]
+    })
 
-# --- 2. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI | Enterprise Grade", page_icon="🛡️", layout="wide")
+# --- 2. MANAJEMEN AKSES & AUDIT TRAIL ---
+if 'auth' not in st.session_state: st.session_state.auth = False
+if 'user_role' not in st.session_state: st.session_state.user_role = "Viewer"
+if 'audit_log' not in st.session_state: st.session_state.audit_log = []
 
-# --- 3. ERROR HANDLING & MONITORING ---
-def safe_ai_prediction(data):
-    """Membungkus logika AI dengan error handling untuk mencegah crash sistem."""
-    try:
-        # Simulasi logika prediksi berat
-        if data is None:
-            raise ValueError("Data input kosong.")
-        return "Safe"
-    except Exception as e:
-        # Mencatat error ke sistem (Logging)
-        st.error(f"⚠️ Gangguan Sistem AI: {str(e)}")
-        return "Error"
+def log_action(action):
+    """Mencatat setiap aksi sensitif ke dalam log sistem."""
+    st.session_state.audit_log.append({
+        "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "User": "Erwin Sinaga",
+        "Aksi": action
+    })
 
-# --- 4. CSS MODERN ---
+# --- 3. UI/UX: CUSTOM CSS & DESIGN ---
 st.markdown("""
 <style>
-    .stApp { background-color: white; }
-    .status-badge { background-color: #E8F5E9; color: #2E7D32; padding: 5px 15px; border-radius: 5px; font-weight: bold; }
+    .main { background-color: #f5f7f9; }
+    .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #0D47A1; color: white; }
+    .reportview-container .main .block-container { padding-top: 2rem; }
+    .card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1rem; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 5. AREA KONTEN UTAMA ---
-st.title("🛡️ V-Guard AI Command Center")
-st.write(f"Sistem Terpantau untuk: **Erwin Sinaga**")
+# --- 4. LOGIKA HALAMAN & ERROR HANDLING ---
+try:
+    if not st.session_state.auth:
+        # Halaman Login Minimalis
+        st.markdown("<h1 style='text-align: center;'>🛡️ V-GUARD AI LOGIN</h1>", unsafe_allow_html=True)
+        col1, col2, col3 = st.columns([1,2,1])
+        with col2:
+            role = st.selectbox("Pilih Role Akses", ["Admin", "Viewer"])
+            if st.button("Masuk Ke Dashboard"):
+                st.session_state.auth = True
+                st.session_state.user_role = role
+                log_action(f"Login sukses sebagai {role}")
+                st.rerun()
+    else:
+        # --- SIDEBAR NAVIGASI ---
+        with st.sidebar:
+            st.title("V-Guard AI")
+            st.write(f"👤 **User:** Erwin Sinaga")
+            st.write(f"🔑 **Role:** {st.session_state.user_role}")
+            st.markdown("---")
+            menu = st.radio("Navigasi Utama", ["🏠 Dashboard Utama", "👥 Admin Panel", "📜 Audit Trail"])
+            if st.button("🔓 Keluar Sistem"):
+                log_action("Logout dari sistem")
+                st.session_state.auth = False
+                st.rerun()
 
-# Status Uptime/Health
-col_status, col_empty = st.columns([1, 4])
-with col_status:
-    st.markdown('<div class="status-badge">🟢 System Online</div>', unsafe_allow_html=True)
+        # --- KONTEN DINAMIS ---
+        if menu == "🏠 Dashboard Utama":
+            st.header("Dashboard Pemantauan Keuangan")
+            
+            # Filter Dinamis
+            col_f1, col_f2 = st.columns(2)
+            with col_f1:
+                kategori_filter = st.multiselect("Filter Kategori", ['Operasional', 'Payroll', 'Marketing', 'Vendor'], default=['Operasional'])
+            
+            # Widget Visualisasi
+            data = load_financial_data()
+            st.subheader("Analisis Arus Kas Berdasarkan Risiko")
+            st.bar_chart(data.set_index('Kategori')['Nilai'])
+            
+            # Fitur Ekspor
+            csv = data.to_csv().encode('utf-8')
+            st.download_button("📥 Ekspor Laporan ke CSV", data=csv, file_name="vguard_report.csv", mime="text/csv")
 
-st.markdown("---")
-
-# Row 1: Simulasi Fitur dengan Proteksi Error
-st.subheader("🛠️ Diagnosa Keuangan Real-time")
-input_data = st.text_input("Masukkan ID Transaksi untuk Analisis AI:", placeholder="Contoh: TX-2026")
-
-if st.button("Jalankan Pemindaian"):
-    with st.spinner("Menganalisis..."):
-        # Implementasi Try-Except sesuai saran Bapak
-        prediction = safe_ai_prediction(input_data if input_data else None)
-        
-        if prediction != "Error":
-            st.success(f"Hasil Analisis: {prediction}")
-        else:
-            st.warning("Gagal memproses data. Tim teknis telah dinotifikasi.")
-
-# --- 6. REKOMENDASI DEPLOYMENT ---
-with st.expander("📝 Daftar Persiapan Deployment (Requirements.txt)"):
-    st.code("""
-# requirements.txt baku untuk V-Guard AI 2026
-streamlit>=1.30.0
-pandas>=2.1.0
-scikit-learn>=1.3.0
-plotly>=5.18.0
-    """, language="text")
-    st.info("Gunakan file ini agar tidak terjadi 'ModuleNotFoundError' saat deploy di Streamlit Cloud.")
-
-# --- 7. FOOTER ---
-st.write("---")
-st.caption("© 2026 V-Guard AI Systems | Enterprise Monitoring Active for Erwin Sinaga")
+        elif menu == "👥 Admin Panel":
+            if st.session_state.user_role == "Admin":
+                st.header("Manajemen Aturan AI")
+                st.write("Sesuaikan ambang batas sensitivitas deteksi fraud.")
+                sensitivitas = st.slider("Ambang Batas Deteksi",
