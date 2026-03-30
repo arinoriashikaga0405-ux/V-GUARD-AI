@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- 1. KONFIGURASI HALAMAN ---
+# --- 1. CONFIGURATION ---
 st.set_page_config(page_title="VGUARD AI Systems - CEO Erwin Sinaga", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS BAKU (MENJAGA POSISI TENGAH & WARNA) ---
+# --- 2. CSS BAKU & PERMANEN (TIDAK BOLEH BERUBAH TANPA PERSETUJUAN ERWIN SINAGA) ---
 st.markdown("""
 <style>
     .stApp { background-color: white; }
@@ -27,7 +27,7 @@ st.markdown("""
         margin-top: 10px;
     }
     
-    /* Profil Section */
+    /* Profil Section - Kotak di Kanan */
     .profile-box { 
         background: #f8fafc; 
         padding: 25px; 
@@ -36,7 +36,7 @@ st.markdown("""
         border-left: 5px solid #1e3a8a;
     }
     
-    /* Paket Layanan Strategis - 4 Kolom */
+    /* Paket Layanan Strategis - 4 Kolom Ramping */
     .package-card { 
         background: white; 
         padding: 25px; 
@@ -49,6 +49,8 @@ st.markdown("""
     }
     .pkg-name { color: #1e3a8a; font-size: 1.6em; font-weight: bold; margin-bottom: 5px; }
     .pkg-price { color: #1e3a8a; font-size: 2em; font-weight: bold; margin: 20px 0; }
+    
+    /* Tombol WA Hijau Baku */
     .wa-button { 
         display: block; 
         background: #25d366; 
@@ -78,9 +80,10 @@ if st.session_state.page == "Home":
     </div>
     """, unsafe_allow_html=True)
     
-    # SEKSI PROFIL
+    # SEKSI PROFIL - KEMBALI KE LAYOUT PROFIL & FOTO BAKU
     c1, c2 = st.columns([1, 2.5])
     with c1:
+        # Menampilkan Foto Profil Bulat Baku
         st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", use_container_width=True)
         st.info("Founder & CEO: Erwin Sinaga")
     with c2:
@@ -98,7 +101,7 @@ if st.session_state.page == "Home":
 
     st.write("---")
     
-    # PAKET LAYANAN STRATEGIS (4 LAYANAN BAKU)
+    # PAKET LAYANAN STRATEGIS (4 LAYANAN BAKU & RAMPING)
     st.markdown("#### 🏷️ PAKET LAYANAN STRATEGIS")
     p1, p2, p3, p4 = st.columns(4)
     
@@ -121,6 +124,7 @@ if st.session_state.page == "Home":
                 <div style="text-align:left; font-size:0.9em; margin-bottom:20px; flex-grow:1;">
                     {"".join([f"• {feat}<br>" for feat in x['f']])}
                 </div>
+                # Tautan WhatsApp Langsung ke Nomor Bapak
                 <a href="https://wa.me/{wa_number}?text=Halo Pak Erwin, saya tertarik paket {x['n']}" class="wa-button">💬 Chat WhatsApp</a>
             </div>
             """, unsafe_allow_html=True)
@@ -129,15 +133,14 @@ if st.session_state.page == "Home":
 elif st.session_state.page == "Admin":
     if not st.session_state.auth:
         st.markdown('<h1 style="text-align:center;">🔐 Executive Access</h1>', unsafe_allow_html=True)
-        col_l1, col_l2, col_l3 = st.columns([1,2,1])
-        with col_l2:
-            pwd = st.text_input("Password Admin:", type="password")
-            if st.button("Masuk"):
-                if pwd == "VGUARD2026":
-                    st.session_state.auth = True; st.rerun()
-                else: st.error("Akses Ditolak!")
+        pwd = st.text_input("Password Admin:", type="password")
+        if st.button("Masuk"):
+            if pwd == "VGUARD2026":
+                st.session_state.auth = True; st.rerun()
+            else: st.error("Akses Ditolak!")
     else:
         st.header("💻 Command Center - Erwin Sinaga")
+        # 5 Tab Admin Baku
         t1, t2, t3, t4, t5 = st.tabs(["🔍 V-Scan", "📊 Monitoring", "📍 Map", "💰 Billing", "⚙️ Klien"])
         if st.sidebar.button("🔓 Logout"):
             st.session_state.auth = False; st.session_state.page = "Home"; st.rerun()
