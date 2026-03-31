@@ -14,16 +14,15 @@ if 'db_nasabah' not in st.session_state:
         {"Waktu": "2026-03-31", "Pelanggan": "Admin", "Bisnis": "V-Guard Core", "Paket": "CORPORATE", "Harga": 50000000, "Status": "🟢 AKTIF"}
     ]
 
-# 2. CSS CUSTOM PREMIUM
+# 2. CSS CUSTOM
 st.markdown("""
 <style>
     .status-connected { color: #28a745; font-weight: bold; font-size: 14px; margin-top: 5px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; font-size: 16px; border: 1px solid #f0f0f0; box-shadow: 2px 2px 8px rgba(0,0,0,0.02); }
     .security-info { color: #666; font-size: 12px; font-weight: bold; margin-top: 10px; text-align: center; border: 1px dashed #ccc; padding: 8px; border-radius: 8px; background: #fafafa; }
-    .invoice-output { background: #f8f9fa; padding: 20px; border-left: 8px solid #007bff; border-radius: 5px; font-family: monospace; white-space: pre-wrap; font-size: 14px; margin-top: 15px; }
-    .stat-card { background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
-    .package-item { background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 10px; text-align: center; }
+    .invoice-output { background: #f8f9fa; padding: 20px; border-left: 8px solid #28a745; border-radius: 5px; font-family: monospace; white-space: pre-wrap; font-size: 14px; margin-top: 15px; }
+    .stat-card { background: #007bff; color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -60,15 +59,16 @@ elif menu == "2. 🎯 Visi & ROI":
 
 # --- FOLDER 3: PAKET LAYANAN ---
 elif menu == "3. 📦 Paket Layanan":
-    st.header("📦 Paket Layanan V-Guard AI")
+    st.header("📦 Paket Layanan")
     p_cols = st.columns(4)
     pkgs = [("BASIC", "2.5jt"), ("MEDIUM", "7.5jt"), ("ENTERPRISE", "25jt"), ("CORPORATE", "50jt")]
     for i, p in enumerate(pkgs):
         with p_cols[i]:
-            st.markdown(f'<div class="package-item"><h3>{p[0]}</h3><p>Investasi:<br><b>{p[1]}</b></p></div>', unsafe_allow_html=True)
+            st.subheader(p[0])
+            st.write(f"Investasi: **{p[1]}**")
             st.write("✅ AI Audit\n✅ Deteksi Fraud")
 
-# --- FOLDER 4: REGISTRASI & INVOICE (REKENING BCA ERWIN SINAGA) ---
+# --- FOLDER 4: REGISTRASI & INVOICE (OTOMATIS WA) ---
 elif menu == "4. 📝 Registrasi & Invoice":
     st.header("📝 Registrasi & Penawaran Klien")
     with st.form("reg_form"):
@@ -77,18 +77,14 @@ elif menu == "4. 📝 Registrasi & Invoice":
         n_bis = c1.text_input("Nama Bisnis:")
         p_pil = c2.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
         h_pen = c2.number_input("Harga Penawaran (Rp):", value=2500000)
-        wa_no = c2.text_input("No. WA Klien (Gunakan 62...):")
+        wa_no = c2.text_input("No. WA Klien (Contoh: 62812...):")
         btn_reg = st.form_submit_button("Simpan & Buat Invoice")
         
         if btn_reg and n_pel:
-            st.session_state.db_nasabah.append({
-                "Waktu": datetime.now().strftime("%Y-%m-%d"), 
-                "Pelanggan": n_pel, "Bisnis": n_bis, 
-                "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu"
-            })
+            st.session_state.db_nasabah.append({"Waktu": datetime.now().strftime("%Y-%m-%d"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu"})
             st.success("✅ Data Berhasil Disimpan!")
             
-            # Invoice Formal dengan Rekening BCA Bapak
+            # Konten Invoice Formal
             inv_msg = f"""*INVOICE V-GUARD AI SYSTEMS*
             
 Yth. {n_pel} ({n_bis}),
@@ -99,12 +95,11 @@ Berikut rincian biaya aktivasi sistem:
 
 *INSTRUKSI PEMBAYARAN:*
 Transfer ke Rekening Resmi Founder:
-🏦 *Bank:* BCA
-💳 *No. Rekening:* 3450074658
+🏦 *Bank:* [Isi Nama Bank Bapak]
+💳 *No. Rekening:* [Isi No Rek Bapak]
 👤 *Atas Nama:* ERWIN SINAGA
 
-Mohon lampirkan bukti transfer untuk aktivasi sistem.
-Salam, Erwin Sinaga (Founder)."""
+Mohon konfirmasi bukti transfer untuk aktivasi sistem. Salam, Erwin Sinaga."""
             
             st.markdown(f'<div class="invoice-output">{inv_msg}</div>', unsafe_allow_html=True)
             
@@ -112,23 +107,23 @@ Salam, Erwin Sinaga (Founder)."""
             wa_encoded = urllib.parse.quote(inv_msg)
             st.link_button("🚀 KIRIM KE WHATSAPP KLIEN", f"https://wa.me/{wa_no}?text={wa_encoded}")
 
-# --- FOLDER 5: ADMIN & TOTAL ASSET ---
+# --- FOLDER 5: ADMIN & TOTAL ASSET (PROFESSIONALISM) ---
 elif menu == "5. 🔐 Admin Dashboard":
     st.header("🔐 Admin Intelligence Control")
     pw = st.text_input("Password Admin:", type="password")
     if pw == "w1nbju8282":
         df = pd.DataFrame(st.session_state.db_nasabah)
         
-        # Dashboard Akumulasi Penyelamatan Aset
-        total_terlindungi = df['Harga'].sum() * 15 
+        # Statistik Total Penyelamatan Aset (Simulasi Bisnis)
+        total_omzet_klien = df['Harga'].sum() * 20 # Estimasi omzet terlindungi
         st.markdown(f"""<div class="stat-card">
-            <p style="margin:0; font-size:16px; opacity:0.8;">ESTIMASI TOTAL ASET TERLINDUNGI</p>
-            <h1 style="margin:0; font-size:42px;">Rp {total_terlindungi:,.0f}</h1>
+            <p style="margin:0;">TOTAL NILAI ASET TERLINDUNGI</p>
+            <h2 style="margin:0;">Rp {total_omzet_klien:,.0f}</h2>
         </div>""", unsafe_allow_html=True)
         
-        st.subheader("📋 Database Nasabah Terdaftar")
+        st.subheader("📋 Database Nasabah")
         st.table(df)
         st.line_chart(np.random.randn(10, 2))
 
 # 4. FOOTER
-st.markdown('<div class="footer">© 2026 V-Guard AI Systems | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">© 2026 V-Guard AI Systems | Intelligence by Erwin Sinaga</div>', unsafe_allow_html=True)
