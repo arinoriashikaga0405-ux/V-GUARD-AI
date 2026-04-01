@@ -3,72 +3,89 @@ import os
 import pandas as pd
 from datetime import datetime, timedelta
 
-# 1. SETUP AWAL
-st.set_page_config(page_title="V-Guard AI")
+# 1. SETUP
+st.set_page_config(page_title="V-Guard AI", layout="wide")
 
 if 'db_nasabah' not in st.session_state:
     dt = datetime.now().date()
-    jt_val = dt + timedelta(days=5)
     st.session_state.db_nasabah = [
         {
             "ID": 101, "Tgl": "2026-03-01", 
-            "Pelanggan": "Siska", 
-            "Bisnis": "Cafe Maju", 
-            "Paket": "SMART", "Harga": 2500000, 
-            "Jatuh_Tempo": str(jt_val),
-            "Status": "🟢 AKTIF", "Score": 98
+            "Bisnis": "Cafe Maju", "Paket": "SMART", 
+            "Harga": 2500000, "Jatuh_Tempo": str(dt + timedelta(days=5)),
+            "Status": "🟢 AKTIF"
         }
     ]
 
 if 'admin_in' not in st.session_state:
     st.session_state.admin_in = False
 
-WA = "628212190885"
 PWD = "w1nbju8282"
 
 def format_rp(n):
     v = "{:,.0f}".format(float(n))
     return "Rp " + v.replace(",", ".")
 
-# 2. STYLE & SIDEBAR
-st.markdown("""
-<style>
-    .alarm { background: red; color: white; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; }
-    .notif { background: orange; padding: 10px; border-radius: 5px; color: black; margin-bottom: 5px; }
-</style>
-""", unsafe_allow_html=True)
-
+# 2. SIDEBAR
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg")
     st.write("**Erwin Sinaga**")
-    st.write("Senior Business Leader")
     st.write("---")
-    m = st.radio("Menu:", ["Profil", "ROI", "Paket", "Admin"])
-    st.link_button("Chat Support", "https://wa.me/" + WA)
+    m = st.radio("Menu:", ["Profil", "ROI", "Admin"])
 
-# 3. LOGIKA HALAMAN
+# 3. HALAMAN
 if m == "Profil":
     st.header("Profil Founder")
-    st.write("Bapak Erwin Sinaga merupakan Senior Business Leader berpengalaman lebih dari satu dekade di industri perbankan dan aset manajemen. Beliau ahli dalam identifikasi celah kebocoran finansial. V-Guard AI dibangun untuk perlindungan aset yang transparan dan berbasis teknologi mutakhir bagi pemilik bisnis.")
+    st.write("Bapak Erwin Sinaga merupakan Senior Business Leader yang berfokus pada perlindungan aset bisnis melalui teknologi V-Guard AI.")
 
 elif m == "ROI":
     st.header("Analisis ROI")
-    st.info("Visi: Audit AI Real-time.")
     oz = st.number_input("Omzet (Rp):", value=100000000)
     bc = oz * 0.07
-    st.error("Bocor (7%): " + format_rp(bc))
-    sv = bc - 2500000
-    st.success("Save: " + format_rp(sv))
-
-elif m == "Paket":
-    st.header("Paket Layanan")
-    c1, c2 = st.columns(2)
-    c1.info("BASIC: 1.5jt")
-    c2.success("SMART: 2.5jt")
+    st.error("Potensi Bocor: " + format_rp(bc))
+    st.success("Save via V-Guard: " + format_rp(bc - 2500000))
 
 elif m == "Admin":
     if not st.session_state.admin_in:
-        p = st.text_input("Pass:", type="password")
+        p = st.text_input("Password:", type="password")
         if st.button("Login"):
+            if p == PWD:
+                st.session_state.admin_in = True
+                st.rerun()
+            else:
+                st.error("Salah!")
+    else:
+        if st.button("🔒 Keluar"):
+            st.session_state.admin_in = False
+            st.rerun()
+        
+        st.warning("🚨 FRAUD ALERT DETECTED!")
+        
+        # Cek Jatuh Tempo H-7
+        now = datetime.now().date()
+        for k in st.session_state.db_nasabah:
+            d_jt = datetime.strptime(k['Jatuh_Tempo'], "%Y-%m-%d").date()
+            if (d_jt - now).days <= 7:
+                st.error("⚠️ JATUH TEMPO: " + k["Bisnis"] + " (" + k["Jatuh_Tempo"] + ")")
+
+        t1, t2 = st.tabs(["🆕 VCS Input", "📊 Data Klien"])
+        with t1:
+            with st.form("vcs"):
+                bk = st.text_input("Nama Bisnis")
+                hk = st.number_input("Harga", value=2500000)
+                jt = st.date_input("Jatuh Tempo")
+                if st.form_submit_button("Simpan"):
+                    st.session_state.db_nasabah.append({
+                        "ID": 105, "Tgl": str(now), "Bisnis": bk, 
+                        "Paket": "VCS", "Harga": hk, 
+                        "Jatuh_Tempo": str(jt), "Status": "🟢 AKTIF"
+                    })
+                    st.rerun()
+        with t2:
+            st.table(pd.DataFrame(st.session_state.db_nasabah))
+            st.metric("Integrity Score", "99.2%")
+
+st.write("---")
+st.caption("© 2026 V-Guard AI | Erwin Sinaga")
