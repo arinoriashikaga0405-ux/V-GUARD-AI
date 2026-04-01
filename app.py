@@ -19,144 +19,128 @@ if 'audit_logs' not in st.session_state:
 def add_log(msg):
     st.session_state.audit_logs.insert(0, f"{datetime.now().strftime('%Y-%m-%d %H:%M')} - {msg}")
 
-# 2. CSS CUSTOM PREMIUM (MODERN & CLEAN)
+# 2. CSS CUSTOM PREMIUM
 st.markdown("""
 <style>
     .status-connected { color: #28a745; font-weight: bold; font-size: 14px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; border: 1px solid #f0f0f0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-    .vision-card { background: #f8f9fa; padding: 20px; border-left: 5px solid #0d6efd; border-radius: 10px; margin-bottom: 20px; }
     .stat-card { background: linear-gradient(135deg, #0d6efd 0%, #003d99 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
-    .pkg-box { background: white; padding: 20px; border: 1px solid #eee; border-radius: 15px; text-align: center; transition: 0.3s; }
-    .pkg-box:hover { border-color: #0d6efd; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    .log-container { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; height: 180px; overflow-y: scroll; border: 1px solid #333; }
-    .alarm-box { background: #ff4b4b; color: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; animation: blinker 1.5s linear infinite; }
-    @keyframes blinker { 50% { opacity: 0; } }
+    .due-alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-left: 5px solid #ffc107; margin-bottom: 10px; font-weight: bold; }
+    .log-container { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 12px; height: 180px; overflow-y: scroll; }
 </style>
 """, unsafe_allow_html=True)
 
 # 3. SIDEBAR
 with st.sidebar:
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
+    if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     st.title("🛡️ V-Guard AI")
     st.markdown('<p class="status-connected">● Intelligence Active</p>', unsafe_allow_html=True)
-    menu = st.radio("Navigasi:", [
-        "1. 👤 Profil Founder", 
-        "2. 🎯 Visi, Misi & ROI", 
-        "3. 📦 Paket Unggulan", 
-        "4. 📝 Registrasi & Invoice",
-        "5. 🔐 Admin Control Center"
-    ])
+    menu = st.radio("Navigasi:", ["1. 👤 Profil Founder", "2. 🎯 Visi & ROI", "3. 📦 Paket Unggulan", "4. 📝 Registrasi & Invoice", "5. 🔐 Admin Control Center"])
     st.write("---")
     st.link_button("💬 Chat Support", "https://wa.me/628212190885")
 
-# --- NAVIGASI 1: PROFIL FOUNDER ---
+# --- FOLDER 1: PROFIL FOUNDER (REVISI: MIN 150 KATA) ---
 if menu == "1. 👤 Profil Founder":
     col1, col2 = st.columns([1, 2.5])
     with col1:
         if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with col2:
         st.markdown(f"""<div class="profile-box">
-        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengukir rekam jejak profesional impresif selama lebih dari sepuluh tahun di industri perbankan dan manajemen aset nasional. Sebagai mantan CEO dan CSO, beliau bertanggung jawab penuh atas mitigasi risiko operasional dan perlindungan aset korporasi skala besar. Pengalaman mendalam ini memberikan beliau perspektif tajam dalam mengidentifikasi titik lemah sistem konvensional yang sering menjadi celah fraud. <br><br>
-        V-Guard AI lahir dari dedikasi beliau untuk menghadirkan teknologi pengawasan AI otonom 24/7. Bapak Erwin memastikan setiap inovasi memberikan nilai ekonomi nyata serta ketenangan pikiran (peace of mind) bagi para pengusaha dalam mengelola aset berharga mereka secara profesional dan aman.
+        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengabdikan dedikasi dan keahlian strategisnya selama lebih dari sepuluh tahun di pusat industri perbankan serta sektor manajemen aset berskala nasional. Sepanjang perjalanan karier profesionalnya yang gemilang, beliau dikenal sebagai figur yang memiliki ketajaman luar biasa dalam memetakan dinamika pasar serta memahami kompleksitas tata kelola finansial modern. Pengalaman panjang beliau di garis depan industri keuangan tidak hanya membentuk karakter kepemimpinan yang tangguh, tetapi juga melahirkan intuisi yang mendalam dalam mendeteksi ancaman terhadap keberlanjutan bisnis dari sudut pandang keamanan data dan integritas operasional. <br><br>
+        V-Guard AI didirikan oleh Bapak Erwin Sinaga sebagai wujud nyata dari visi beliau untuk membawa standar keamanan tingkat tinggi ke tangan para pelaku usaha di seluruh Indonesia. Beliau sangat meyakini bahwa di era digital saat ini, setiap pemilik bisnis—tanpa memandang skala operasionalnya—berhak mendapatkan perlindungan aset yang berbasis teknologi masa depan. Melalui kepemimpinan strategisnya, V-Guard AI bertransformasi menjadi benteng pertahanan digital yang tidak hanya berfungsi sebagai alat pengawasan, melainkan sebagai mitra terpercaya yang menjamin akurasi audit serta transparansi data secara mutlak. Dedikasi Bapak Erwin dalam mengawal setiap fase pengembangan produk bertujuan untuk memastikan bahwa setiap inovasi yang dihadirkan mampu memberikan nilai ekonomi nyata, efisiensi jangka panjang, serta ketenangan pikiran (peace of mind) bagi para pengusaha dalam mengelola aset berharga mereka secara profesional, modern, dan aman dari segala bentuk manipulasi sistemik.
         </div>""", unsafe_allow_html=True)
 
-# --- NAVIGASI 2: VISI, MISI & ROI ---
-elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("🎯 Strategi & Analisis ROI")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("""<div class="vision-card"><h3>Visi</h3><p>Menjadi mitra pertahanan digital terdepan di Indonesia melalui AI.</p></div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown("""<div class="vision-card"><h3>Misi</h3><p>Eliminasi fraud & transparansi operasional total 24/7.</p></div>""", unsafe_allow_html=True)
-    
-    st.subheader("📊 Kalkulator Penghematan")
-    omzet = st.number_input("Input Omzet Bulanan Klien (Rp):", value=500000000, step=10000000)
-    st.success(f"🛡️ Potensi Kebocoran yang Dicegah: **Rp {omzet * 0.045:,.0f}** / bulan.")
-
-# --- NAVIGASI 3: PAKET UNGGULAN ---
-elif menu == "3. 📦 Paket Unggulan":
-    st.header("📦 Paket Produk Unggulan")
-    p_cols = st.columns(4)
-    pkgs = [
-        {"n": "BASIC", "p": "2.5jt", "f": "Audit Harian"},
-        {"n": "MEDIUM", "p": "7.5jt", "f": "AI CCTV Cloud"},
-        {"n": "ENTERPRISE", "p": "25jt", "f": "Fraud Analytics"},
-        {"n": "CORPORATE", "p": "50jt", "f": "Custom AI Model"}
-    ]
-    for i, p in enumerate(pkgs):
-        with p_cols[i]:
-            st.markdown(f"""<div class="pkg-box"><h3>{p['n']}</h3><h2 style="color:#0d6efd;">{p['p']}</h2><hr><p>{p['f']}</p></div>""", unsafe_allow_html=True)
-
-# --- NAVIGASI 4: REGISTRASI & INVOICE ---
+# --- FOLDER 4: REGISTRASI (PERTAHANKAN) ---
 elif menu == "4. 📝 Registrasi & Invoice":
     st.header("📝 Registrasi Klien Baru")
     with st.form("reg_form"):
         c1, c2 = st.columns(2)
-        n_pel = c1.text_input("Nama Pelanggan:")
+        n_pel = c1.text_input("Nama PIC:")
         n_bis = c1.text_input("Nama Bisnis:")
-        p_pil = c2.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+        p_pil = c2.selectbox("Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
         h_pen = c2.number_input("Harga (Rp):", value=2500000)
-        wa_no = st.text_input("No. WhatsApp (62...):")
-        if st.form_submit_button("Simpan & Buat Invoice"):
+        wa_no = st.text_input("WhatsApp (62...):")
+        if st.form_submit_button("Generate Invoice"):
             new_id = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
             due = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
             st.session_state.db_nasabah.append({"ID": new_id, "Waktu": datetime.now().strftime("%Y-%m-%d"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu", "Jatuh_Tempo": due})
-            add_log(f"Registrasi: {n_bis} (#{new_id})")
-            msg = f"*INVOICE V-GUARD AI*\nYth. {n_pel}\nBCA: 3450074658\nA/n: ERWIN SINAGA"
-            st.code(msg)
-            st.link_button("🚀 Kirim Invoice WA", f"https://wa.me/{wa_no}?text={urllib.parse.quote(msg)}")
+            add_log(f"Invoice Dibuat: {n_bis}")
+            st.code(f"INVOICE V-GUARD AI\nYth. {n_pel}\nBCA: 3450074658\nA/n: ERWIN SINAGA")
 
-# --- NAVIGASI 5: ADMIN CONTROL CENTER (FULL SUITE) ---
+# --- FOLDER 5: ADMIN CONTROL CENTER (FULL SUITE) ---
 elif menu == "5. 🔐 Admin Control Center":
     st.header("🔐 Admin Intelligence Control")
     pw = st.text_input("Sandi Otoritas Admin:", type="password")
     if pw == "w1nbju8282":
         df = pd.DataFrame(st.session_state.db_nasabah)
         
-        # 1. Dashboard Statistik Real-time
-        col_s1, col_s2, col_s3 = st.columns(3)
+        # 1. Statistik & Jatuh Tempo Alert
+        col_s1, col_s2 = st.columns(2)
         col_s1.markdown(f'<div class="stat-card"><p>TOTAL REVENUE</p><h3>Rp {df["Harga"].sum():,.0f}</h3></div>', unsafe_allow_html=True)
         col_s2.markdown(f'<div class="stat-card"><p>CLIENT BASE</p><h3>{len(df)} Database</h3></div>', unsafe_allow_html=True)
-        with col_s3:
-            if st.checkbox("🚨 Simulasi Alarm Fraud"):
-                st.markdown('<div class="alarm-box">ALARM: FRAUD DETECTED!</div>', unsafe_allow_html=True)
-                add_log("ALERT: Simulasi Fraud Aktif")
 
-        # 2. Smart Filter & Search & Export
+        st.write("---")
+        st.subheader("📅 Notifikasi Jatuh Tempo (Billing Alert)")
+        today = datetime.now().strftime("%Y-%m-%d")
+        due_df = df[df['Jatuh_Tempo'] <= today]
+        if not due_df.empty:
+            for _, r in due_df.iterrows():
+                st.markdown(f'<div class="due-alert">⚠️ {r["Bisnis"]} JATUH TEMPO! Segera tagih (Rp {r["Harga"]:,.0f})</div>', unsafe_allow_html=True)
+        else: st.success("✅ Semua billing aman.")
+
+        # 2. Fitur Tambah Akun Manual (Jika sudah bayar)
+        st.write("---")
+        with st.expander("➕ Tambah Akun Klien Secara Manual (Aktivasi Langsung)"):
+            with st.form("manual_add"):
+                ma1, ma2 = st.columns(2)
+                m_pic = ma1.text_input("Nama PIC Klien:")
+                m_bis = ma1.text_input("Nama Bisnis Klien:")
+                m_pkt = ma2.selectbox("Paket Aktivasi:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+                m_hrg = ma2.number_input("Nilai Investasi (Rp):", value=2500000)
+                if st.form_submit_button("Simpan & Aktifkan Sekarang"):
+                    nid = st.session_state.db_nasabah[-1]["ID"] + 1
+                    due_m = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
+                    st.session_state.db_nasabah.append({"ID": nid, "Waktu": today, "Pelanggan": m_pic, "Bisnis": m_bis, "Paket": m_pkt, "Harga": m_hrg, "Status": "🟢 AKTIF", "Jatuh_Tempo": due_m})
+                    add_log(f"Manual Akun Dibuat & Aktif: {m_bis}")
+                    st.rerun()
+
+        # 3. Smart Search & Export
         st.write("---")
         c_search, c_export = st.columns([3, 1])
-        s_query = c_search.text_input("🔍 Cari Klien/Bisnis (Hitungan Detik):")
-        c_export.download_button("📥 Export CSV (Excel)", df.to_csv(index=False).encode('utf-8'), f"Report_{datetime.now().strftime('%Y%m%d')}.csv", "text/csv")
+        s_query = c_search.text_input("🔍 Cari Database Klien:")
+        c_export.download_button("📥 Export CSV (Excel)", df.to_csv(index=False).encode('utf-8'), "VGuard_Report.csv", "text/csv")
 
-        # 3. Manajemen Status & Undangan WA
-        st.subheader("📋 Manajemen Klien & Aktivasi")
+        # 4. Manajemen Status & Delete
         f_df = df[df['Pelanggan'].str.contains(s_query, case=False) | df['Bisnis'].str.contains(s_query, case=False)]
         for i, row in f_df.iterrows():
-            with st.expander(f"{row['Status']} | {row['Bisnis']} - PIC: {row['Pelanggan']}"):
+            with st.expander(f"{row['Status']} | {row['Bisnis']}"):
                 col_i1, col_i2 = st.columns([2, 1])
-                with col_i1:
-                    st.write(f"ID: #{row['ID']} | Paket: {row['Paket']} | Harga: Rp {row['Harga']:,.0f}")
-                    # WhatsApp Automation
-                    undangan = f"*UNDANGAN AKTIVASI V-GUARD AI*\n\nAkun untuk *{row['Bisnis']}* telah siap.\nStatus: {row['Status']}\n\nSalam, Erwin Sinaga."
-                    st.link_button("🚀 Kirim Undangan Aktivasi WA", f"https://wa.me/62?text={urllib.parse.quote(undangan)}")
-                with col_i2:
-                    if row['Status'] == "🔴 Menunggu":
-                        if st.button("🟢 Aktifkan Akun", key=f"act_{row['ID']}"):
-                            for item in st.session_state.db_nasabah:
-                                if item['ID'] == row['ID']: item['Status'] = "🟢 AKTIF"
-                            add_log(f"Aktivasi: {row['Bisnis']}")
-                            st.rerun()
-                    if st.button("🗑️ Hapus Data", key=f"del_{row['ID']}"):
-                        st.session_state.db_nasabah = [item for item in st.session_state.db_nasabah if item['ID'] != row['ID']]
-                        add_log(f"Hapus: {row['Bisnis']}")
+                col_i1.write(f"ID: #{row['ID']} | Tempo: {row['Jatuh_Tempo']} | Harga: Rp {row['Harga']:,.0f}")
+                if row['Status'] == "🔴 Menunggu":
+                    if col_i2.button("🟢 Aktifkan Akun", key=f"act_{row['ID']}"):
+                        for item in st.session_state.db_nasabah:
+                            if item['ID'] == row['ID']: item['Status'] = "🟢 AKTIF"
+                        add_log(f"Akun Diaktifkan: {row['Bisnis']}")
                         st.rerun()
+                if col_i2.button("🗑️ Hapus Data", key=f"del_{row['ID']}"):
+                    st.session_state.db_nasabah = [item for item in st.session_state.db_nasabah if item['ID'] != row['ID']]
+                    add_log(f"Data Dihapus: {row['Bisnis']}")
+                    st.rerun()
 
-        # 4. Log Audit (History Aktivitas)
+        # 5. Log Audit
         st.write("---")
-        st.subheader("📜 Log Audit Keamanan")
+        st.subheader("📜 Log Audit Operasional")
         st.markdown(f'<div class="log-container">{"<br>".join(st.session_state.audit_logs)}</div>', unsafe_allow_html=True)
     elif pw != "": st.error("Sandi Salah!")
+
+# --- MENU VISI/PAKET (TETAP RAPI) ---
+elif menu == "2. 🎯 Visi & ROI":
+    st.header("🎯 Strategi & ROI")
+    omzet = st.number_input("Omzet (Rp):", value=500000000)
+    st.success(f"Pencegahan Kebocoran: Rp {omzet * 0.045:,.0f}/bln")
+elif menu == "3. 📦 Paket Unggulan":
+    st.header("📦 Paket Produk")
+    st.write("BASIC | MEDIUM | ENTERPRISE | CORPORATE")
 
 st.markdown('<div class="footer">© 2026 V-Guard AI Systems | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
