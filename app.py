@@ -4,7 +4,7 @@ import os
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS CUSTOM (TAMPILAN BERSIH & KONTRAS) ---
+# --- 2. CSS CUSTOM (PREMIUM DARK MODE & CLEAN INTERFACE) ---
 st.markdown("""
     <style>
     .main { background-color: #0e1117; }
@@ -13,12 +13,13 @@ st.markdown("""
         margin-bottom: 20px; min-height: 480px; color: #c9d1d9;
     }
     .package-title { color: #58a6ff; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; }
-    .price-tag { font-size: 1.2rem; color: #ffffff; font-weight: bold; margin: 15px 0; padding: 10px; border-top: 1px solid #333; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
+    .price-tag { font-size: 1.3rem; color: #ffffff; font-weight: bold; margin: 15px 0; padding: 10px; border-top: 1px solid #333; }
+    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; border: none; }
+    .stButton>button:hover { background-color: #2ea043; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR PROFIL ---
+# --- 3. SIDEBAR PROFIL (DENGAN FOTO PROTEKSI) ---
 with st.sidebar:
     st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
     foto_path = "erwin.jpg"
@@ -27,7 +28,7 @@ with st.sidebar:
         except: st.info("Profil: Erwin Sinaga")
     st.markdown(f"<div style='text-align:center;'><b>Erwin Sinaga</b><br><small>Founder & CEO V-Guard AI</small></div>", unsafe_allow_html=True)
     st.markdown("---")
-    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Layanan & Investasi", "Portal Klien", "Admin Control Center"])
+    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center"])
 
 # --- 4. LOGIKA MENU ---
 
@@ -36,8 +37,7 @@ if menu == "Visi & Misi":
     st.header("Visi & Misi V-Guard AI Intelligence")
     col_v1, col_v2 = st.columns([1, 2])
     with col_v1:
-        if os.path.exists("erwin.jpg"): 
-            st.image("erwin.jpg", caption="Erwin Sinaga - Founder V-Guard AI")
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", caption="Erwin Sinaga - Founder V-Guard AI")
     with col_v2:
         st.markdown("""
         <div style="text-align: justify; color: #c9d1d9; line-height: 1.8;">
@@ -49,74 +49,80 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-# MENU 2: LAYANAN (HARGA MINIMAL 750RB)
-elif menu == "Layanan & Investasi":
-    st.header("🛡️ Produk & Layanan (Klik Nama untuk Order)")
+# MENU 2: PRODUK & LAYANAN (HARGA MINIMAL 1JT, TANPA INSTRUKSI TAMBAHAN)
+elif menu == "Produk & Layanan":
+    st.header("🛡️ Produk & Layanan V-Guard AI")
     wa_base = "https://wa.me/6282122190885?text=Halo%20Pak%20Erwin,%20saya%20order%20"
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        st.markdown("<div class='package-card'><div class='package-title'>📦 V-LITE</div>• AI Fraud Dasar<br>• Laporan Bulanan PDF<br>• Notifikasi Standar<div class='price-tag'>Rp 750.000 / bln</div>", unsafe_allow_html=True)
+        st.markdown("<div class='package-card'><div class='package-title'>📦 V-LITE</div>• AI Fraud Dasar<br>• Laporan Bulanan PDF<br>• Notifikasi Standar<div class='price-tag'>Rp 1.000.000 / bln</div>", unsafe_allow_html=True)
         st.link_button("Pilih V-LITE", f"{wa_base}V-LITE")
         st.markdown("</div>", unsafe_allow_html=True)
     with c2:
-        st.markdown("<div class='package-card'><div class='package-title'>🛡️ V-PRO</div>• Real-Time Monitoring<br>• VCS Integrasi Bank<br>• Audit Harian Otomatis<div class='price-tag'>Rp 1.500.000 / bln</div>", unsafe_allow_html=True)
+        st.markdown("<div class='package-card'><div class='package-title'>🛡️ V-PRO</div>• Real-Time Monitoring<br>• VCS Integrasi Bank<br>• Audit Harian Otomatis<div class='price-tag'>Rp 2.500.000 / bln</div>", unsafe_allow_html=True)
         st.link_button("Pilih V-PRO", f"{wa_base}V-PRO")
         st.markdown("</div>", unsafe_allow_html=True)
     with c3:
-        st.markdown("<div class='package-card'><div class='package-title'>👁️ V-SIGHT</div>• CCTV AI Behavior<br>• Visual Audit Kasir<br>• Deteksi Stok Real-time<div class='price-tag'>Rp 2.500.000 / bln</div>", unsafe_allow_html=True)
+        st.markdown("<div class='package-card'><div class='package-title'>👁️ V-SIGHT</div>• CCTV AI Behavior<br>• Visual Audit Kasir<br>• Deteksi Stok Real-time<div class='price-tag'>Rp 5.000.000 / bln</div>", unsafe_allow_html=True)
         st.link_button("Pilih V-SIGHT", f"{wa_base}V-SIGHT")
         st.markdown("</div>", unsafe_allow_html=True)
     with c4:
-        st.markdown("<div class='package-card'><div class='package-title'>🏢 V-ENTERPRISE</div>• Multi-Cabang Central<br>• Digital Forensik AI<br>• Dedicated Server<div class='price-tag'>Hubungi CEO</div>", unsafe_allow_html=True)
-        st.link_button("Hubungi Kami", f"{wa_base}V-ENTERPRISE")
+        st.markdown("<div class='package-card'><div class='package-title'>🏢 V-ENTERPRISE</div>• Multi-Cabang Central<br>• Digital Forensik AI<br>• Dedicated Server<div class='price-tag'>Rp 10.000.000 / bln</div>", unsafe_allow_html=True)
+        st.link_button("Pilih V-ENTERPRISE", f"{wa_base}V-ENTERPRISE")
         st.markdown("</div>", unsafe_allow_html=True)
 
-# MENU 3: PORTAL KLIEN (FORM ORDER & LOGIN USER BERLANGGANAN)
+# MENU 3: ANALISIS ROI KERUGIAN
+elif menu == "Analisis ROI Kerugian":
+    st.header("📊 Analisis Kerugian vs ROI")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10000000)
+        leak = st.slider("Estimasi Kebocoran / Fraud (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bln")
+    with col_b:
+        biaya = st.selectbox("Pilih Paket Layanan", [1000000, 2500000, 5000000, 10000000])
+        saved = loss - biaya
+        st.success(f"Profit Diselamatkan: Rp {saved:,.0f} / bln")
+        st.metric("ROI Investasi", f"{(saved/biaya)*100 if saved>0 else 0:.0f}%")
+
+# MENU 4: PORTAL KLIEN (ORDER & LOGIN USER)
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     col_order, col_login = st.columns(2)
-    
     with col_order:
         st.subheader("📝 Form Order Baru")
         with st.container(border=True):
-            nama_u = st.text_input("Nama Usaha")
-            paket_u = st.selectbox("Pilih Paket / Harga", [
-                "V-LITE - Rp 750.000/bln", 
-                "V-PRO - Rp 1.500.000/bln", 
-                "V-SIGHT - Rp 2.500.000/bln", 
-                "V-ENTERPRISE - Custom"
-            ])
+            st.text_input("Nama Usaha")
+            st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
             st.file_uploader("Upload KTP Pemilik", type=['jpg', 'png', 'pdf'])
-            if st.button("Kirim Data Order"):
-                st.success(f"Order {paket_u} untuk {nama_u} terkirim!")
-                st.info("Konfirmasi manual ke WA: 082122190885")
-
+            st.button("Kirim Data Order")
     with col_login:
-        st.subheader("🔑 User Berlangganan")
+        st.subheader("🔑 Login User Berlangganan")
         with st.container(border=True):
-            user_id = st.text_input("Nama User / ID")
-            user_pass = st.text_input("Password User", type="password")
-            if st.button("Masuk Ke Sistem"):
-                if user_pass == "vguardklien2026":
-                    st.success(f"Akses Diterima. Selamat Datang {user_id}!")
-                else:
-                    st.error("Password Salah.")
+            u_id = st.text_input("Nama User / ID")
+            u_pw = st.text_input("Password", type="password")
+            if st.button("Masuk"):
+                if u_pw == "vguardklien2026": st.success(f"Selamat Datang {u_id}")
+                else: st.error("Password Salah")
 
-# MENU 4: ADMIN CONTROL CENTER (VCS & INTERNAL)
+# MENU 5: ADMIN (CORE BRAIN + VCS + USER BARU + ALARM + INVOICE)
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
-    if st.text_input("Administrator Password", type="password") == "adminvguard2026":
-        tab1, tab2, tab3 = st.tabs(["📊 VCS Dashboard", "👤 Registrasi Internal", "🧠 AI Core"])
-        with tab1:
-            st.metric("Saldo Kasir", "Rp 45.200.000")
-            st.metric("Saldo Bank (VCS Sinkron)", "Rp 45.200.000", delta="100% Sinkron")
-            st.success("Audit MindBridge: Clear")
-        with tab2:
-            st.write("Form Pendaftaran Klien Baru oleh Admin.")
-            st.text_input("Input ID Klien Baru")
-            st.button("Daftarkan Akun")
-        with tab3:
-            st.info("Integrasi YOLO Vision & Gemini AI Aktif.")
+    st.header("🔒 Admin Control Center - The Core Brain")
+    if st.text_input("Admin Password", type="password") == "adminvguard2026":
+        t1, t2, t3 = st.tabs(["📊 VCS Dashboard", "👤 Akun User Baru", "🚨 Alarm & Notifikasi"])
+        with t1:
+            st.metric("Total Kasir", "Rp 125.450.000")
+            st.metric("Dana Bank (VCS Sinkron)", "Rp 125.450.000", delta="Sinkron 100%")
+        with t2:
+            st.subheader("Registrasi User Baru")
+            st.text_input("ID Klien Baru")
+            st.selectbox("Set Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.button("Aktifkan Akun")
+        with t3:
+            st.warning("📅 Invoice H-7 Otomatis: AKTIF")
+            st.error("🚨 Alarm Fraud Digital: AKTIF")
+            st.info("V-Guard Core Brain: MindBridge & YOLO Vision Online")
     elif st.session_state.get('p_admin') != "": st.warning("Masukkan Password Admin.")
 
 # --- 5. FOOTER ---
