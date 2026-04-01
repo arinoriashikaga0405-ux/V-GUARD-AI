@@ -3,7 +3,6 @@ import os
 import pandas as pd
 from datetime import datetime
 import google.generativeai as genai
-from io import BytesIO
 
 # --- 1. CONFIG & ENGINE AI ---
 K_V = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
@@ -27,7 +26,7 @@ if 'auth' not in st.session_state: st.session_state.auth = False
 st.markdown("""
 <style>
     .fraud-header { background-color: #ff7675; color: white; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 18px; }
-    .service-card { background-color: #ffffff; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; }
+    .service-card { background-color: #ffffff; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; height: 380px; }
     .service-card:hover { border: 1px solid #1e3a8a; transform: translateY(-3px); }
     .price-tag { font-size: 22px; font-weight: bold; color: #1e3a8a; margin: 10px 0; }
     .feature-list { text-align: left; font-size: 13px; margin-bottom: 15px; min-height: 150px; line-height: 1.6; }
@@ -49,25 +48,55 @@ with st.sidebar:
 
 if nav == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
-    c1, c2 = st.columns([1, 2])
+    c1, c2 = st.columns([1, 2.5])
     with c1:
         if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with c2:
-        st.write("""Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel.""")
+        # PROFIL 200 KATA
+        st.write("""Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. Beliau memahami bahwa di era digital saat ini, integritas data dan keamanan aset adalah fondasi utama bagi setiap unit bisnis untuk dapat tumbuh secara berkelanjutan.
+
+Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel dan pengawasan yang tak terputus. Di bawah kepemimpinan beliau, V-Guard AI tidak hanya sekadar alat audit, melainkan mitra strategis bagi UKM dan korporasi dalam menjaga setiap rupiah aset berharga mereka dari ancaman internal maupun eksternal yang merugikan.""")
+
+elif nav == "2. 🎯 Visi, Misi & ROI":
+    st.header("Visi, Misi & Analisis Kerugian")
+    st.info("**Visi:** Menjadi pelopor global dalam penyediaan infrastruktur audit digital berbasis AI yang menjamin keamanan aset dan integritas finansial bagi setiap pelaku bisnis.")
+    st.success("**Misi:** Mengintegrasikan teknologi kecerdasan buatan dalam sistem pengawasan harian guna mendeteksi fraud sejak dini, memitigasi risiko operasional, dan memberikan laporan audit yang transparan bagi pemilik usaha.")
+    st.write("---")
+    st.subheader("📊 Simulasi ROI & Penyelamatan Aset")
+    oz = st.number_input("Input Total Omzet Bulanan (Rp):", value=100000000)
+    leakage = oz * 0.07
+    st.error(f"Potensi Kerugian Akibat Kebocoran (7%): Rp {leakage:,.0f}")
+    
+    biaya_vguard = 2500000
+    saving = leakage - biaya_vguard
+    st.success(f"Estimasi Dana yang Diselamatkan: Rp {saving:,.0f}")
+    st.caption("Logika: V-Guard membantu menutup celah kebocoran yang rata-rata terjadi sebesar 7% dari omzet bisnis konvensional.")
 
 elif nav == "3. 💎 Layanan Produk":
     st.header("Paket Layanan Unggulan V-Guard AI")
     c1, c2, c3 = st.columns(3)
     wa = "https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20"
     with c1:
-        st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Mingguan<br>• Alarm Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
-        st.link_button("🚀 Pesan Basic", wa + "BASIC")
+        st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
+        st.link_button("🚀 Pesan Sekarang", wa + "BASIC")
     with c2:
-        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• Semua Fitur Basic<br>• Integrasi VCS System<br>• Audit AI Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
-        st.link_button("🔥 Pesan Smart", wa + "SMART")
+        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
+        st.link_button("🔥 Pesan Sekarang", wa + "SMART")
     with c3:
-        st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div><div class="feature-list">• Semua Fitur Smart<br>• Forensik Data Digital<br>• Konsul Strategis<br>• Proteksi Multi-Cabang<br>• Risk Analysis<br>• Support 24/7</div></div>', unsafe_allow_html=True)
-        st.link_button("💎 Pesan Pro", wa + "PRO")
+        st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div><div class="feature-list">• Semua Fitur Smart<br>• Digital Forensik<br>• Konsultasi Strategis<br>• Proteksi Multi-Cabang<br>• Risk Analysis<br>• Support 24/7</div></div>', unsafe_allow_html=True)
+        st.link_button("💎 Pesan Sekarang", wa + "PRO")
+
+elif nav == "4. 📝 Registrasi & Upload":
+    st.header("Pendaftaran Klien Baru")
+    with st.form("reg_form"):
+        col1, col2 = st.columns(2)
+        nama = col1.text_input("Nama Pelanggan:")
+        bisnis = col1.text_input("Nama Usaha:")
+        jenis = col2.text_input("Bidang Usaha:")
+        paket = col2.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
+        file = st.file_uploader("Upload Data Nasabah (CSV/Excel/KTP):")
+        if st.form_submit_button("Kirim Pendaftaran Ke V-Guard"):
+            st.success("Terima kasih! Data pendaftaran Anda telah kami terima.")
 
 elif nav == "5. 🔐 Akses Terbatas":
     if not st.session_state.auth:
@@ -78,54 +107,41 @@ elif nav == "5. 🔐 Akses Terbatas":
                 st.rerun()
     else:
         st.markdown('<div class="fraud-header">🚨 PERINGATAN: INDIKASI FRAUD TERDETEKSI PADA TITIK TRANSAKSI HARIAN</div>', unsafe_allow_html=True)
-        t1, t2, t3, t4 = st.tabs(["📊 Database & CSV", "📉 Audit Gemini", "📽️ Monitoring", "🧾 Billing"])
+        t1, t2, t3, t4 = st.tabs(["📊 Database & CSV", "📉 Audit Gemini AI", "📽️ Monitoring CCTV", "🧾 Billing & Laba"])
         
         with t1:
-            st.subheader("Manajemen Data CSV")
-            col_csv1, col_csv2 = st.columns(2)
-            
-            with col_csv1:
-                st.write("📤 **Import Data (CSV)**")
-                u_file = st.file_uploader("Upload file CSV nasabah", type=['csv'])
+            st.subheader("Manajemen Data Database")
+            c_csv1, c_csv2 = st.columns(2)
+            with c_csv1:
+                u_file = st.file_uploader("Upload CSV untuk update database masal", type=['csv'])
                 if u_file:
                     df_up = pd.read_csv(u_file)
-                    if st.button("Masukkan ke Database"):
+                    if st.button("Simpan CSV ke Database"):
                         st.session_state.db_n = df_up.to_dict('records')
-                        st.success("Data berhasil diupdate!")
-            
-            with col_csv2:
-                st.write("📥 **Export Data (CSV)**")
-                df_curr = pd.DataFrame(st.session_state.db_n)
-                csv_data = df_curr.to_csv(index=False).encode('utf-8')
-                st.download_button("Download Database CSV", data=csv_data, file_name="database_vguard.csv", mime='text/csv')
-            
-            st.write("---")
-            st.subheader("Data Nasabah Aktif")
+                        st.success("Database diperbarui!")
+            with c_csv2:
+                df_exp = pd.DataFrame(st.session_state.db_n)
+                st.download_button("Download Database CSV", data=df_exp.to_csv(index=False).encode('utf-8'), file_name="vguard_db.csv", mime='text/csv')
             st.table(pd.DataFrame(st.session_state.db_n))
             
         with t2:
-            st.subheader("📉 Audit Google Studio Gemini")
-            st.line_chart(pd.DataFrame({'Fraud': [1,2,0.5,0.5], 'Save': [2,2.5,3.5,4]}, index=['W1','W2','W3','W4']))
-            if st.button("Tarik Laporan Full"): st.write("Processing...")
+            st.subheader("Laporan Audit Gemini AI Studio")
+            st.line_chart(pd.DataFrame({'Fraud': [1.2, 0.8, 2.5, 0.4], 'Recovery': [2, 3, 2.5, 4]}, index=['M1','M2','M3','M4']))
+            if st.button("Tarik Audit Lengkap"): st.write("Menganalisis data...")
+            
+        with t3:
+            st.info("Koneksi aman ke sistem monitoring cabang aktif.")
+            st.warning("Menunggu feed visual dari unit VCS.")
             
         with t4:
-            st.subheader("🧾 Laba Bersih (60%)")
+            st.subheader("Perhitungan Profit Sharing (60%)")
             total = sum([float(str(x['Harga']).replace('Rp','').replace('.','')) for x in st.session_state.db_n])
-            st.metric("Total Revenue", f"Rp {total:,.0f}")
-            st.metric("Profit Sharing (60%)", f"Rp {total * 0.6:,.0f}")
+            st.metric("Total Revenue Kontrak", f"Rp {total:,.0f}")
+            st.metric("Profit V-Guard (60%)", f"Rp {total * 0.6:,.0f}")
             
-        if st.button("LOGOUT"):
+        if st.button("KELUAR / LOGOUT"):
             st.session_state.auth = False
             st.rerun()
 
-# Note: Menu 2 & 4 dipertahankan sesuai kode sebelumnya
-elif nav == "2. 🎯 Visi, Misi & ROI":
-    st.header("Visi, Misi & ROI")
-    st.info("Visi: Standar emas audit AI.")
-    oz = st.number_input("Omzet (Rp):", value=100000000)
-    st.error(f"Potensi Bocor: Rp {oz*0.07:,.0f}")
-
-elif nav == "4. 📝 Registrasi & Upload":
-    st.header("Pendaftaran")
-    st.text_input("Nama Pelanggan:")
-    st.button("Kirim")
+st.write("---")
+st.caption("© 2026 V-Guard AI | Secured by Erwin Sinaga")
