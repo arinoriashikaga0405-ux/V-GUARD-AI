@@ -1,12 +1,8 @@
 import streamlit as st
-import hashlib
-from datetime import datetime
 import os
 
-# --- 1. CONFIG & UI (LOCKED) ---
-WHATSAPP_NUMBER = "6282122190885" 
-
-st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", page_icon="🛡️", layout="wide")
+# --- 1. SETTINGS & STYLE (LOCKED) ---
+st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", layout="wide")
 
 st.markdown("""
     <style>
@@ -15,11 +11,9 @@ st.markdown("""
     .product-card {
         background: linear-gradient(145deg, #1e293b, #0f172a);
         padding: 20px; border-radius: 20px; border: 1px solid #334155;
-        height: 100%; display: flex; flex-direction: column; justify-content: space-between;
-        margin-bottom: 20px;
+        height: 100%; margin-bottom: 20px;
     }
-    .price-tag { color: #34d399; font-size: 24px; font-weight: bold; margin: 5px 0; }
-    .feature-list { font-size: 12px; color: #cbd5e1; text-align: left; line-height: 1.5; }
+    .price-tag { color: #34d399; font-size: 24px; font-weight: bold; }
     .wa-btn {
         display: block; text-align: center; background-color: #059669; color: white !important;
         padding: 10px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px;
@@ -31,17 +25,19 @@ st.markdown("""
 # --- 2. SIDEBAR (LOCKED) ---
 with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
+    # Menampilkan foto profil
     if os.path.exists("erwin.jpg"): 
         st.image("erwin.jpg", use_column_width=True)
     st.markdown('<p style="text-align:center; font-weight:800; font-size:22px; color:white;">Erwin Sinaga</p>', unsafe_allow_html=True)
     st.markdown('<p style="text-align:center; color:#38bdf8; font-size:13px; margin-top:-10px;">Founder & CEO V-Guard AI</p>', unsafe_allow_html=True)
     st.divider()
-    # Pastikan pilihan menu sama persis dengan kondisi if/elif di bawah
-    menu = st.radio("MENU UTAMA:", ["Home", "Produk & Investasi", "Portal Klien", "Admin Panel"])
+    
+    # Definisi Menu yang SANGAT PRESISI
+    menu = st.radio("MENU UTAMA:", ["HOME", "PRODUK & LAYANAN", "PORTAL KLIEN", "ADMIN PANEL"])
 
-# --- 3. LOGIKA HALAMAN ---
+# --- 3. LOGIKA HALAMAN (SYNCHRONIZED) ---
 
-if menu == "Home":
+if menu == "HOME":
     st.title("🛡️ V-Guard AI Intelligence")
     st.subheader("Digitizing Trust, Eliminating Leakage")
     st.divider()
@@ -70,6 +66,29 @@ if menu == "Home":
         """, unsafe_allow_html=True)
         st.caption("— **Erwin Sinaga**, Founder V-Guard AI Intelligence")
 
-elif menu == "Produk & Investasi":
-    st.title("🛡️ Detail Layanan & Investasi V-Guard AI")
+elif menu == "PRODUK & LAYANAN":
+    st.title("🛡️ Detail Layanan & Investasi")
     st.divider()
+    
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown('<div class="product-card"><h3>V-LITE</h3><div class="price-tag">Rp 1.5M</div><p>SME/UMKM</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with c2:
+        st.markdown('<div class="product-card"><h3>V-PRO</h3><div class="price-tag">Rp 3.5M</div><p>Resto & Cafe</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with c3:
+        st.markdown('<div class="product-card"><h3>V-SIGHT</h3><div class="price-tag">Rp 5.0M</div><p>Toko Emas</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with c4:
+        st.markdown('<div class="product-card"><h3>V-ENTERPRISE</h3><div class="price-tag">CUSTOM</div><p>Korporasi</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+
+elif menu == "PORTAL KLIEN":
+    st.title("🔑 Portal Order Pelanggan")
+    st.divider()
+    
+    with st.form("portal_form"):
+        st.subheader("Pendaftaran Paket Baru")
+        nomor_order = datetime.now().strftime("%Y%m%d%H%M")
+        st.info(f"Order ID: VG-{nomor_order}")
+        
+        c_1, c_2 = st.columns(2)
+        with c_1:
+            nama_p =
