@@ -26,10 +26,10 @@ if 'auth' not in st.session_state: st.session_state.auth = False
 st.markdown("""
 <style>
     .fraud-header { background-color: #ff7675; color: white; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 18px; }
-    .service-card { background-color: #ffffff; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; height: 380px; }
+    .service-card { background-color: #ffffff; padding: 20px; border-radius: 15px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; height: 420px; }
     .service-card:hover { border: 1px solid #1e3a8a; transform: translateY(-3px); }
     .price-tag { font-size: 22px; font-weight: bold; color: #1e3a8a; margin: 10px 0; }
-    .feature-list { text-align: left; font-size: 13px; margin-bottom: 15px; min-height: 150px; line-height: 1.6; }
+    .feature-list { text-align: left; font-size: 13px; margin-bottom: 15px; min-height: 160px; line-height: 1.6; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -38,7 +38,7 @@ with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg")
-    # PERUBAHAN NAMA SESUAI INSTRUKSI
+    # NAMA SESUAI INSTRUKSI TERAKHIR
     st.markdown("**Erwin Sinaga - Senior Business Leader**")
     st.write("---")
     nav = st.radio("Navigasi Utama:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 💎 Layanan Produk", "4. 📝 Registrasi & Upload", "5. 🔐 Akses Terbatas"])
@@ -53,7 +53,6 @@ if nav == "1. 👤 Profil Founder":
     with c1:
         if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with c2:
-        # PROFIL 200 KATA TETAP DIPERTAHANKAN
         st.write("""Bapak **Erwin Sinaga** adalah seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. Beliau memahami bahwa di era digital saat ini, integritas data dan keamanan aset adalah fondasi utama bagi setiap unit bisnis untuk dapat tumbuh secara berkelanjutan.
 
 Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan.
@@ -76,8 +75,26 @@ elif nav == "3. 💎 Layanan Produk":
     st.header("Paket Layanan Unggulan V-Guard AI")
     c1, c2, c3 = st.columns(3)
     wa = "https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20"
+    
     with c1:
         st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
         st.link_button("🚀 Pesan Sekarang", wa + "BASIC")
     with c2:
-        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class
+        # PERBAIKAN SYNTAX ERROR DI BARIS INI
+        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
+        st.link_button("🔥 Pesan Sekarang", wa + "SMART")
+    with c3:
+        st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div><div class="feature-list">• Semua Fitur Smart<br>• Digital Forensik<br>• Konsultasi Strategis<br>• Proteksi Multi-Cabang<br>• Risk Analysis<br>• Support 24/7</div></div>', unsafe_allow_html=True)
+        st.link_button("💎 Pesan Sekarang", wa + "PRO")
+
+elif nav == "4. 📝 Registrasi & Upload":
+    st.header("Pendaftaran Klien Baru")
+    with st.form("reg_form"):
+        col1, col2 = st.columns(2)
+        col1.text_input("Nama Pelanggan:")
+        col1.text_input("Nama Usaha:")
+        col2.text_input("Bidang Usaha:")
+        col2.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
+        st.file_uploader("Upload Data Nasabah (CSV/Excel/KTP):")
+        if st.form_submit_button("Kirim Pendaftaran Ke V-Guard"):
+            st.success("Terima kasih! Data
