@@ -7,8 +7,14 @@ import os
 WHATSAPP_NUMBER = "6282122190885" 
 ADMIN_PWD_HASH = hashlib.sha256("w1nbju8282".encode()).hexdigest()
 
+# Database Sederhana untuk Lisensi Client Aktif (Contoh: Client ID)
+# Bapak bisa menambah daftar ID di sini nanti
+CLIENT_LICENSES = ["VGUARD-2026-001", "VGUARD-VIP-ERWIN", "VGUARD-PRO-JAYA"]
+
 if 'auth_vguard' not in st.session_state:
     st.session_state['auth_vguard'] = False
+if 'client_authenticated' not in st.session_state:
+    st.session_state['client_authenticated'] = False
 
 # --- 2. PREMIUM UI DESIGN ---
 st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", page_icon="🛡️", layout="wide")
@@ -29,6 +35,10 @@ st.markdown("""
         padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold;
     }
     .visi-teks { line-height: 1.8; text-align: justify; color: #cbd5e1; }
+    .locked-card { 
+        background-color: #1e293b; padding: 40px; border-radius: 15px; 
+        border: 2px dashed #334155; text-align: center;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -43,7 +53,6 @@ with st.sidebar:
     st.divider()
 
     nav_options = ["🏠 Home", "📦 Produk & Investasi", "🔑 Portal Klien", "🔐 Admin Panel"]
-    # Menu Ekosistem hanya muncul jika Bapak sudah login di Admin Panel
     if st.session_state['auth_vguard']:
         nav_options.insert(1, "🧠 Ekosistem 9 AI Engine")
 
@@ -57,7 +66,7 @@ def get_wa_url(paket, harga):
     msg = f"Halo Pak Erwin, saya ingin daftar V-Guard paket {paket} (Investasi {harga})."
     return f"https://wa.me/{WHATSAPP_NUMBER}?text={msg.replace(' ', '%20')}"
 
-# --- 📂 FOLDER 1: HOME (NARASI VISI MISI UTUH) ---
+# --- 📂 FOLDER 1: HOME (VISI MISI UTUH) ---
 if menu == "🏠 Home":
     st.title("🛡️ V-Guard AI Intelligence")
     st.subheader("Digitizing Trust, Eliminating Leakage")
@@ -67,11 +76,9 @@ if menu == "🏠 Home":
     with col_a:
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", use_column_width=True)
-            st.caption("<center>Erwin Sinaga</center>", unsafe_allow_html=True)
     
     with col_b:
         st.header("Visi & Misi")
-        # NARASI 200 KATA TANPA DIKURANGI SATU KATA PUN
         st.markdown("""
         <div class="visi-teks">
         Sebagai seorang <b>Senior Business Leader</b> dengan pengalaman lebih dari satu dekade di industri perbankan dan pengelolaan aset, 
@@ -91,87 +98,86 @@ if menu == "🏠 Home":
         bekerja secara jujur dan optimal untuk masa depan bisnis Anda.
         </div>
         """, unsafe_allow_html=True)
-        st.markdown("<br>", unsafe_allow_html=True)
         st.caption("— **Erwin Sinaga**, Founder V-Guard AI Intelligence")
 
 # --- 📂 FOLDER 2: PRODUK ---
 elif menu == "📦 Produk & Investasi":
     st.title("🛡️ 4 Produk Utama V-Guard")
     p1, p2, p3, p4 = st.columns(4)
-    
     products = [
-        ("V-LITE", "1.5M", "250rb", "• AI Fraud Dasar<br>• Laporan PDF WA<br>• Notifikasi Stok"),
-        ("V-PRO", "3.5M", "750rb", "• Real-Time Monitor<br>• VCS Automate<br>• Audit Closing AI"),
-        ("V-SIGHT", "5.0M", "1.2jt", "• Behavior Visual<br>• Video Audit Struk<br>• Secure Cloud"),
-        ("V-ENTERPRISE", "CUSTOM", "Custom", "• Multi-Cabang Central<br>• Forensik Digital<br>• ERP Integration")
+        ("V-LITE", "1.5M", "250rb", "• AI Fraud Dasar<br>• Laporan PDF WA"),
+        ("V-PRO", "3.5M", "750rb", "• Real-Time Monitor<br>• VCS Automate"),
+        ("V-SIGHT", "5.0M", "1.2jt", "• Behavior Visual<br>• Video Audit Struk"),
+        ("V-ENTERPRISE", "CUSTOM", "Custom", "• Multi-Cabang Central<br>• Custom ERP")
     ]
-    
     cols = [p1, p2, p3, p4]
     for i, (name, price, monthly, desc) in enumerate(products):
         with cols[i]:
-            st.markdown(f"""
-            <div class="product-card">
-                <h3>{name}</h3>
-                <div class="price-tag">Rp {price}</div>
-                <small>Bulanan: {monthly}</small>
-                <hr style="border-color:#334155;">
-                <p style="font-size:12px; color:#cbd5e1;">{desc}</p>
-                <br>
-                <a href="{get_wa_url(name, price)}" class="wa-btn">Daftar Sekarang</a>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f'<div class="product-card"><h3>{name}</h3><div class="price-tag">Rp {price}</div><small>Bulanan: {monthly}</small><hr><p style="font-size:12px; color:#cbd5e1;">{desc}</p><br><a href="{get_wa_url(name, price)}" class="wa-btn">Daftar Sekarang</a></div>', unsafe_allow_html=True)
 
-# --- 📂 FOLDER 3: PORTAL KLIEN (NAMA, PAKET, HARGA) ---
+# --- 📂 FOLDER 3: PORTAL KLIEN (TERKUNCI) ---
 elif menu == "🔑 Portal Klien":
-    st.title("🔑 Form Pendaftaran Pelanggan")
-    with st.container():
-        st.info("Formulir aktivasi layanan V-Guard AI.")
+    st.title("🔑 Portal Khusus Pelanggan")
+    
+    tab_reg, tab_active = st.tabs(["📝 Pendaftaran Baru", "🔓 Akses Client Aktif"])
+    
+    with tab_reg:
+        st.subheader("Form Aktivasi Layanan")
         c_p1, c_p2 = st.columns(2)
         with c_p1:
-            st.text_input("Nama Lengkap Pelanggan")
-            st.text_input("Nama Bisnis / Toko")
+            st.text_input("Nama Lengkap Pelanggan", key="reg_nama")
+            st.text_input("Nama Bisnis / Toko", key="reg_bisnis")
         with c_p2:
             st.selectbox("Paket yang Dipilih", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.text_input("Harga Investasi (Rp)")
-        
-        st.divider()
+            st.text_input("Harga Investasi (Rp)", key="reg_harga")
         if st.button("🚀 Kirim Data Pendaftaran"):
-            st.success("Data pendaftaran berhasil terkirim. Admin kami akan segera memverifikasi.")
+            st.success("Data diterima. Admin akan memberikan ID Lisensi setelah pembayaran diverifikasi.")
 
-# --- 📂 FOLDER 4: EKOSISTEM (HANYA MUNCUL SETELAH LOGIN) ---
-elif menu == "🧠 Ekosistem 9 AI Engine":
-    st.header("🧠 Engine Status (Confidential)")
-    st.write("Mengorkestrasikan Gemini, MindBridge, YOLO, Alteryx, DataRobot, dll.")
-    st.progress(100)
+    with tab_active:
+        if not st.session_state['client_authenticated']:
+            st.markdown("""
+            <div class="locked-card">
+                <h2 style="color:#64ffda;">🔓 Area Terproteksi</h2>
+                <p>Khusus pelanggan yang sudah melakukan pembayaran.<br>Masukkan ID Lisensi V-Guard Anda untuk membuka dashboard audit AI.</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            client_key = st.text_input("Masukkan ID Lisensi Pelanggan", type="password")
+            if st.button("Buka Dashboard"):
+                if client_key in CLIENT_LICENSES:
+                    st.session_state['client_authenticated'] = True
+                    st.rerun()
+                else:
+                    st.error("ID Lisensi tidak valid atau belum aktif. Hubungi Admin Pak Erwin.")
+        else:
+            st.success("✅ Akses Diterima. Selamat Datang di Dashboard Audit Anda.")
+            st.subheader("📊 Laporan Real-Time & Audit AI")
+            st.info("Menampilkan hasil orkestrasi 9 Engine AI untuk bisnis Anda.")
+            # Di sini nanti bisa Bapak isi dengan dashboard grafik atau hasil audit
+            if st.button("🔒 Keluar Dashboard"):
+                st.session_state['client_authenticated'] = False
+                st.rerun()
 
-# --- 📂 FOLDER 5: ADMIN PANEL (FOLDER KIRIM KE AI DI SINI) ---
+# --- 📂 FOLDER 4: ADMIN PANEL ---
 elif menu == "🔐 Admin Panel":
     st.header("🔐 CEO Command Center")
     if not st.session_state['auth_vguard']:
         pwd = st.text_input("Sandi Founder", type="password")
-        if st.button("Login"):
+        if st.button("Login Admin"):
             if hashlib.sha256(pwd.encode()).hexdigest() == ADMIN_PWD_HASH:
                 st.session_state['auth_vguard'] = True
                 st.rerun()
             else: st.error("Akses Ditolak.")
     else:
-        st.success("Selamat Datang, Pak Erwin Sinaga.")
-        
-        # FITUR KIRIM KE AI (KHUSUS ADMIN)
-        st.divider()
+        st.success("Selamat Datang, Pak Erwin.")
         st.subheader("📁 Folder Internal: Kirim ke Engine AI")
-        with st.expander("Klik untuk Proses Audit"):
-            target_aud = st.text_input("Nama Client Audit")
-            file_aud = st.file_uploader("Upload Data (VCS/Excel/Video)", type=['csv','xlsx','mp4'])
-            if st.button("🚀 JALANKAN AUDIT AI"):
-                if file_aud:
-                    st.info(f"Memproses audit {target_aud} melalui 9 Engine AI...")
-                    st.success("Audit Selesai. Hasil telah dienkripsi.")
-                else: st.warning("Pilih file terlebih dahulu.")
-
-        if st.button("Logout"):
+        with st.expander("Klik untuk Proses Audit Client"):
+            st.file_uploader("Upload Data (VCS/Excel)", type=['csv','xlsx'])
+            if st.button("🚀 JALANKAN AUDIT"): st.info("Memproses...")
+        
+        if st.button("Logout Admin"):
             st.session_state['auth_vguard'] = False
             st.rerun()
 
 st.divider()
-st.markdown(f'<p style="text-align:center; color:#64748b; font-size:12px;">🛡️ V-Guard AI Intelligence | @{datetime.now().year} | Erwin Sinaga</p>', unsafe_allow_html=True)
+st.markdown(f'<p style="text-align:center; color:#64748b; font-size:12px;">🛡️ V-Guard AI | @{datetime.now().year} | Erwin Sinaga</p>', unsafe_allow_html=True)
