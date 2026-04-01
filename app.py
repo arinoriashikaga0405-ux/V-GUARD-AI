@@ -5,10 +5,11 @@ import os
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 
-# --- 2. STATUS LOGIN ---
-if 'cl_in' not in st.session_state: st.session_state.cl_in = False
+# --- 2. PENYIMPANAN STATUS (Agar Admin Tidak Ter-Logout Sendiri) ---
+if 'admin_authed' not in st.session_state:
+    st.session_state.admin_authed = False
 
-# --- 3. SIDEBAR (Navigasi Bersih) ---
+# --- 3. SIDEBAR (URUTAN NAVIGASI STATIS) ---
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"):
@@ -16,6 +17,7 @@ with st.sidebar:
     st.caption("Erwin Sinaga — Founder")
     st.write("---")
     
+    # Urutan Navigasi Sesuai SOP Bapak
     menu = [
         "Profil Kepemimpinan", 
         "Visi dan Misi",
@@ -26,9 +28,7 @@ with st.sidebar:
     ]
     nav = st.radio("Navigasi Utama:", menu)
     st.write("---")
-    # Link WA dengan baris pendek agar tidak terputus
-    wa_link = "https://wa.me/628212190885"
-    st.markdown(f'<a href="{wa_link}" target="_blank" style="background-color:#25d366;color:white;padding:10px;border-radius:8px;text-decoration:none;display:block;text-align:center;font-weight:bold;">💬 Hubungi Admin</a>', unsafe_allow_html=True)
+    st.markdown('<a href="https://wa.me/628212190885" target="_blank" style="background-color:#25d366;color:white;padding:10px;border-radius:8px;text-decoration:none;display:block;text-align:center;font-weight:bold;">💬 Hubungi Admin</a>', unsafe_allow_html=True)
 
 # --- 4. LOGIKA MENU ---
 
@@ -40,7 +40,6 @@ if nav == "Profil Kepemimpinan":
             st.image("erwin.jpg", caption="Erwin Sinaga — Founder")
     with col2:
         with st.container(border=True):
-            # Narasi 200 Kata Profesional
             st.write("""
             Bapak **Erwin Sinaga** adalah sosok **Founder** di balik **V-Guard AI Intelligence**, sebuah platform inovatif yang lahir dari dedikasi mendalam terhadap keamanan aset dan transparansi bisnis. Beliau memiliki rekam jejak profesional yang prestisius selama lebih dari satu dekade, menempati berbagai posisi strategis dan manajerial senior di industri perbankan serta manajemen aset nasional. Pengalaman panjang tersebut telah membentuk ketajaman analitis beliau dalam mengidentifikasi berbagai pola risiko finansial dan celah operasional yang sering kali luput dari sistem pengawasan konvensional.
 
@@ -49,74 +48,49 @@ if nav == "Profil Kepemimpinan":
 
 elif nav == "Visi dan Misi":
     st.header("Visi dan Misi Perusahaan")
-    st.write("---")
     v1, v2 = st.columns(2)
     with v1:
-        st.info("### 🎯 Visi")
-        st.write("Menjadi pelopor global dalam teknologi audit digital berbasis AI yang menjamin transparansi dan keamanan aset mutlak bagi setiap pelaku bisnis.")
+        st.info("### 🎯 Visi\nMenjadi pelopor global teknologi audit digital berbasis AI yang menjamin transparansi mutlak.")
     with v2:
-        st.success("### 🚀 Misi")
-        st.write("""
-        1. Memberikan proteksi aset melalui deteksi fraud real-time.
-        2. Mendukung UMKM dan Korporasi dalam efisiensi operasional.
-        3. Mewujudkan tata kelola bisnis yang bersih dan bebas dari kebocoran finansial.
-        """)
+        st.success("### 🚀 Misi\n1. Proteksi aset via Fraud Detection.\n2. Efisiensi operasional.\n3. Bisnis bebas kebocoran.")
 
 elif nav == "Daftar Produk Utama":
-    st.header("Daftar Produk Utama & Analisis ROI")
-    
-    # ROI Calculator
+    st.header("Daftar Produk & Analisis ROI")
     with st.expander("📊 Simulasi ROI (Return on Investment)", expanded=True):
-        oz = st.number_input("Omzet Bulanan (Rp):", value=100000000)
+        oz = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000)
         rugi = oz * 0.07
-        c_r1, c_r2 = st.columns(2)
-        c_r1.metric("Potensi Rugi (7%)", f"Rp {rugi:,.0f}")
-        c_r2.metric("Aset Aman V-Guard", f"Rp {rugi*0.9:,.0f}")
-
-    st.write("---")
-    wa_pesan = "https://wa.me/628212190885?text=Pesan%20"
-    c1, c2 = st.columns(2)
+        st.metric("Potensi Rugi Tanpa AI (7%)", f"Rp {rugi:,.0f}")
+        st.metric("Aset Aman V-Guard AI", f"Rp {rugi*0.9:,.0f}")
     
+    st.write("---")
+    c1, c2 = st.columns(2)
     with c1:
         with st.container(border=True):
-            st.subheader("📦 V-LITE (Basic)")
-            st.write("- Alarm Fraud: Notif WA\n- Invoice: Digital Notif\n- Laba Rugi: Bulanan\n- Audit: Self-Audit")
+            st.subheader("📦 V-LITE")
+            st.write("- **Alarm Fraud:** WA\n- **Invoice:** Digital\n- **Laba Rugi:** Bulanan\n- **Audit:** Self-Audit")
             st.write("**Pasang: 1jt | Bulan: 1jt**")
-            st.link_button("Pesan V-LITE", wa_pesan + "VLITE")
-
         with st.container(border=True):
-            st.subheader("👁️ V-SIGHT (Visual)")
-            st.write("- Alarm Fraud: Real-Time + Foto\n- Invoice: Sync Struk & Video\n- Laba Rugi: ROI Analisis\n- Audit: Perilaku Visual")
+            st.subheader("👁️ V-SIGHT")
+            st.write("- **Alarm Fraud:** Real-Time + Foto\n- **Invoice:** Sync Video\n- **Laba Rugi:** ROI Analisis\n- **Audit:** Visual AI")
             st.write("**Pasang: 3.5jt | Bulan: 4.5jt**")
-            st.link_button("Pesan V-SIGHT", wa_pesan + "VSIGHT")
-
     with c2:
         with st.container(border=True):
-            st.subheader("🚀 V-PRO (Standard)")
-            st.write("- Alarm Fraud: Real-Time Push\n- Invoice: Auto-Invoice & Stok\n- Laba Rugi: Harian (P&L)\n- Audit: Audit AI Otomatis")
+            st.subheader("🚀 V-PRO")
+            st.write("- **Alarm Fraud:** Real-Time Push\n- **Invoice:** Auto-Sync\n- **Laba Rugi:** Harian\n- **Audit:** AI Otomatis")
             st.write("**Pasang: 2jt | Bulan: 2.5jt**")
-            st.link_button("Pesan V-PRO", wa_pesan + "VPRO")
-
         with st.container(border=True):
             st.subheader("🏢 V-ENTERPRISE")
-            st.write("- Alarm Fraud: Investigasi Tim\n- Invoice: Custom API\n- Laba Rugi: Konsolidasi Cabang\n- Audit: Forensik Digital")
+            st.write("- **Alarm Fraud:** Tim Investigasi\n- **Invoice:** Custom API\n- **Laba Rugi:** Multi-Cabang\n- **Audit:** Forensik")
             st.write("**Pasang: Custom | Bulan: 10jt++**")
-            st.link_button("Hubungi Admin", wa_pesan + "ENTERPRISE")
 
 elif nav == "Register Pelanggan":
     st.header("Pendaftaran Pelanggan Baru")
-    with st.form("f_reg"):
-        st.text_input("Nama Pemilik:")
-        st.text_input("Nama Usaha:")
-        st.selectbox("Menu Harga & Paket:", [
-            "V-LITE (Pasang 1jt - Bulan 1jt)",
-            "V-PRO (Pasang 2jt - Bulan 2.5jt)",
-            "V-SIGHT (Pasang 3.5jt - Bulan 4.5jt)",
-            "V-ENTERPRISE (Custom)"
-        ])
-        st.file_uploader("Upload KTP Pemilik:", type=["jpg", "png", "jpeg"])
-        if st.form_submit_button("Kirim Pendaftaran"):
-            st.success("Terkirim! Admin akan segera memproses.")
+    with st.form("reg_form"):
+        st.text_input("Nama Lengkap:")
+        st.selectbox("Pilih Menu Harga & Paket:", ["V-LITE (1jt)", "V-PRO (2.5jt)", "V-SIGHT (4.5jt)", "V-ENTERPRISE"])
+        st.file_uploader("Upload KTP:", type=["jpg", "png", "jpeg"])
+        if st.form_submit_button("Kirim"):
+            st.success("Terkirim!")
 
 elif nav == "Dashboard Login":
     st.header("Portal Klien")
@@ -125,12 +99,25 @@ elif nav == "Dashboard Login":
     st.button("Masuk")
 
 elif nav == "Admin Panel":
-    st.header("Executive Control Panel")
-    pwd = st.text_input("Sandi Otoritas:", type="password")
-    if st.button("Buka Data"):
-        if pwd == "w1nbju8282":
-            st.success("Selamat Datang Founder Bapak Erwin Sinaga.")
-        else: st.error("Akses Ditolak")
+    st.header("🛡️ CEO Executive Panel")
+    
+    if not st.session_state.admin_authed:
+        pwd = st.text_input("Sandi Otoritas:", type="password")
+        if st.button("Buka Data"):
+            if pwd == "w1nbju8282":
+                st.session_state.admin_authed = True
+                st.rerun()
+            else: st.error("Sandi Salah!")
+    else:
+        st.success("Akses Diterima, Selamat Datang Bapak Erwin Sinaga.")
+        if st.button("Logout Admin"):
+            st.session_state.admin_authed = False
+            st.rerun()
+        
+        st.write("---")
+        # Dashboard Admin Aktif
+        st.subheader("📈 Ringkasan Perusahaan")
+        st.info("Total Pelanggan Aktif: 12 | Pendapatan: Rp 32.500.000")
 
 st.write("---")
 st.caption("© 2026 V-Guard AI Intelligence | Erwin Sinaga — Founder")
