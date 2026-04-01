@@ -1,22 +1,18 @@
 import streamlit as st
 import os
 import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
 import urllib.parse
 
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database & Log Audit
+# Inisialisasi Database
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
-        {"ID": 101, "Waktu": "2026-03-01 08:00", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "MEDIUM", "Harga": 7500000, "Status": "🟢 AKTIF", "Jatuh_Tempo": "2026-04-01"}
+        {"ID": 101, "Waktu": "2026-03-25 08:00", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "MEDIUM", "Harga": 7500000, "Status": "🟢 AKTIF", "Jatuh_Tempo": "2026-04-25"}
     ]
-if 'audit_logs' not in st.session_state:
-    st.session_state.audit_logs = [f"{datetime.now().strftime('%Y-%m-%d %H:%M')} - System Initialized"]
-
-def add_log(msg):
-    st.session_state.audit_logs.insert(0, f"{datetime.now().strftime('%Y-%m-%d %H:%M')} - {msg}")
 
 # 2. CSS CUSTOM PREMIUM
 st.markdown("""
@@ -26,7 +22,8 @@ st.markdown("""
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; border: 1px solid #f0f0f0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
     .finance-card { background: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
     .due-alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-left: 5px solid #ffc107; margin-bottom: 10px; font-weight: bold; }
-    .log-container { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 12px; height: 200px; overflow-y: scroll; }
+    .fraud-alert { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; border-left: 5px solid #dc3545; margin-bottom: 10px; font-weight: bold; animation: blinker 1.5s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0.5; } }
 </style>
 """, unsafe_allow_html=True)
 
@@ -39,7 +36,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", "https://wa.me/628212190885")
 
-# --- FOLDER 1: PROFIL FOUNDER (MIN 150 KATA) ---
+# --- FOLDER 1: PROFIL FOUNDER ---
 if menu == "1. 👤 Profil Founder":
     st.markdown(f"""<div class="profile-box">
     <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengabdikan dedikasi dan keahlian strategisnya selama lebih dari sepuluh tahun di pusat industri perbankan serta sektor manajemen aset berskala nasional. Sepanjang perjalanan karier profesionalnya yang gemilang, beliau dikenal sebagai figur yang memiliki ketajaman luar biasa dalam memetakan dinamika pasar serta memahami kompleksitas tata kelola finansial modern. Pengalaman panjang beliau di garis depan industri keuangan tidak hanya membentuk karakter kepemimpinan yang tangguh, tetapi juga melahirkan intuisi yang mendalam dalam mendeteksi ancaman terhadap keberlanjutan bisnis dari sudut pandang keamanan data dan integritas operasional. <br><br>
@@ -60,93 +57,83 @@ elif menu == "4. 📝 Registrasi & Invoice":
             new_id = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
             due = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
             st.session_state.db_nasabah.append({"ID": new_id, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu", "Jatuh_Tempo": due})
-            add_log(f"Invoice Terbit: {n_bis}")
-            # PERBAIKAN: Menggunakan Triple Quotes agar tidak Error
             inv_text = f"""INVOICE V-GUARD AI
 Yth. {n_pel}
 Bisnis: {n_bis}
 Total Investasi: Rp {h_pen:,.0f}
 
-Pembayaran via Transfer:
 BCA: 3450074658
 A/n: ERWIN SINAGA"""
             st.code(inv_text)
-            st.link_button("🚀 Kirim Invoice WA", f"https://wa.me/{wa_no}?text={urllib.parse.quote(inv_text)}")
+            st.link_button("🚀 Kirim WA", f"https://wa.me/{wa_no}?text={urllib.parse.quote(inv_text)}")
 
 # --- FOLDER 5: ADMIN CONTROL CENTER ---
 elif menu == "5. 🔐 Admin Control Center":
-    st.header("🔐 Admin Intelligence Control")
+    st.header("🔐 Admin Control & Weekly Finance")
     pw = st.text_input("Sandi Otoritas Admin:", type="password")
     if pw == "w1nbju8282":
         df = pd.DataFrame(st.session_state.db_nasabah)
         
-        # 1. LABA RUGI MINGGUAN
-        st.subheader("📊 Laporan Keuangan & Laba Rugi")
+        # 1. LAPORAN LABA RUGI PER MINGGU
+        st.subheader("📊 Laporan Laba Rugi (Per Minggu)")
         c_fin1, c_fin2, c_fin3 = st.columns(3)
         total_rev = df["Harga"].sum()
-        ops_cost = total_rev * 0.15
+        ops_cost = total_rev * 0.15 # Estimasi biaya operasional
         net_profit = total_rev - ops_cost
-        c_fin1.markdown(f'<div class="finance-card"><p>Gross Revenue</p><h3 style="color:#0d6efd;">Rp {total_rev:,.0f}</h3></div>', unsafe_allow_html=True)
-        c_fin2.markdown(f'<div class="finance-card"><p>Ops Cost (15%)</p><h3 style="color:#dc3545;">-Rp {ops_cost:,.0f}</h3></div>', unsafe_allow_html=True)
+        
+        c_fin1.markdown(f'<div class="finance-card"><p>Omzet Mingguan</p><h3 style="color:#0d6efd;">Rp {total_rev:,.0f}</h3></div>', unsafe_allow_html=True)
+        c_fin2.markdown(f'<div class="finance-card"><p>Biaya Ops (Server/AI)</p><h3 style="color:#dc3545;">-Rp {ops_cost:,.0f}</h3></div>', unsafe_allow_html=True)
         c_fin3.markdown(f'<div class="finance-card"><p><b>LABA BERSIH MINGGUAN</b></p><h3 style="color:#28a745;">Rp {net_profit:,.0f}</h3></div>', unsafe_allow_html=True)
 
-        # 2. BILLING ALERT (JATUH TEMPO)
+        # 2. ALARM INDIKASI FRAUD & BILLING
         st.write("---")
-        today = datetime.now().strftime("%Y-%m-%d")
-        due_df = df[df['Jatuh_Tempo'] <= today]
-        if not due_df.empty:
-            st.subheader("📅 Peringatan Billing")
-            for _, r in due_df.iterrows():
-                st.markdown(f'<div class="due-alert">⚠️ {r["Bisnis"]} JATUH TEMPO! Segera Tagih Rp {r["Harga"]:,.0f}</div>', unsafe_allow_html=True)
+        col_warn1, col_warn2 = st.columns(2)
+        
+        with col_warn1:
+            st.subheader("🚨 Alarm Indikasi Fraud")
+            # Logika Fraud: Jika ada transaksi di atas 10jt atau ID ganjil (Simulasi)
+            fraud_hits = df[df['Harga'] > 10000000]
+            if not fraud_hits.empty:
+                for _, r in fraud_hits.iterrows():
+                    st.markdown(f'<div class="fraud-alert">🚩 FRAUD DETECTED: Transaksi Tak Wajar di {r["Bisnis"]}!</div>', unsafe_allow_html=True)
+            else: st.success("✅ Tidak ada indikasi fraud sistem.")
+
+        with col_warn2:
+            st.subheader("📅 Billing Alert")
+            today = datetime.now().strftime("%Y-%m-%d")
+            due_df = df[df['Jatuh_Tempo'] <= today]
+            if not due_df.empty:
+                for _, r in due_df.iterrows():
+                    st.markdown(f'<div class="due-alert">⚠️ {r["Bisnis"]} JATUH TEMPO!</div>', unsafe_allow_html=True)
+            else: st.success("✅ Semua tagihan lancar.")
 
         # 3. TAMBAH AKUN MANUAL
-        with st.expander("➕ Tambah Akun & Aktivasi Langsung"):
+        st.write("---")
+        with st.expander("➕ Tambah Akun & Aktivasi Manual"):
             with st.form("manual_add"):
                 m1, m2 = st.columns(2)
                 m_pic = m1.text_input("PIC Klien:")
                 m_bis = m1.text_input("Nama Bisnis:")
                 m_pkt = m2.selectbox("Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
-                m_hrg = m2.number_input("Harga Investasi (Rp):", value=2500000)
+                m_hrg = m2.number_input("Harga (Rp):", value=2500000)
                 if st.form_submit_button("Simpan & Aktifkan"):
                     nid = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
                     due_m = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
                     st.session_state.db_nasabah.append({"ID": nid, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": m_pic, "Bisnis": m_bis, "Paket": m_pkt, "Harga": m_hrg, "Status": "🟢 AKTIF", "Jatuh_Tempo": due_m})
-                    add_log(f"Akun Manual Dibuat: {m_bis}")
                     st.rerun()
 
-        # 4. SMART SEARCH & AUDIT
+        # 4. MANAJEMEN DATABASE
         st.write("---")
-        s_col1, s_col2 = st.columns([3, 1])
-        s_query = s_col1.text_input("🔍 Cari Database Klien:")
-        s_col2.download_button("📥 Export CSV (Excel)", df.to_csv(index=False).encode('utf-8'), "VGuard_Audit.csv", "text/csv")
-        
+        s_query = st.text_input("🔍 Cari Klien:")
         f_df = df[df['Pelanggan'].str.contains(s_query, case=False) | df['Bisnis'].str.contains(s_query, case=False)]
-        for i, row in f_df.iterrows():
-            with st.expander(f"{row['Status']} | {row['Bisnis']}"):
-                st.write(f"ID: #{row['ID']} | Tempo: {row['Jatuh_Tempo']} | Harga: Rp {row['Harga']:,.0f}")
-                st.info(f"Audit Trail: Terdaftar pada {row['Waktu']}")
-                c_act1, c_act2 = st.columns(2)
-                if row['Status'] == "🔴 Menunggu":
-                    if c_act1.button("🟢 Aktifkan", key=f"a_{row['ID']}"):
-                        for item in st.session_state.db_nasabah:
-                            if item['ID'] == row['ID']: item['Status'] = "🟢 AKTIF"
-                        add_log(f"Aktivasi Sukses: {row['Bisnis']}")
-                        st.rerun()
-                if c_act2.button("🗑️ Hapus Data", key=f"d_{row['ID']}"):
-                    st.session_state.db_nasabah = [item for item in st.session_state.db_nasabah if item['ID'] != row['ID']]
-                    add_log(f"Data Dihapus: {row['Bisnis']}")
-                    st.rerun()
-
-        # 5. LAPORAN AUDIT GLOBAL
-        st.write("---")
-        st.subheader("📜 Laporan Audit Aktivitas Sistem")
-        st.markdown(f'<div class="log-container">{"<br>".join(st.session_state.audit_logs)}</div>', unsafe_allow_html=True)
+        st.dataframe(f_df, use_container_width=True)
+        
     elif pw != "": st.error("Sandi Salah!")
 
-# --- MENU LAINNYA ---
+# --- LAINNYA ---
 elif menu == "2. 🎯 Visi & ROI":
     st.header("🎯 Strategi ROI")
-    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
+    omzet = st.number_input("Omzet (Rp):", value=500000000)
     st.success(f"Pencegahan Kebocoran: Rp {omzet * 0.045:,.0f}/bln")
 elif menu == "3. 📦 Paket Unggulan":
     st.header("📦 Paket Produk")
