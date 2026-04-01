@@ -18,7 +18,7 @@ VISI_MISI_LENGKAP = (
     "pikiran (<i>peace of mind</i>), dan memastikan setiap rupiah yang Anda investasikan bekerja secara jujur dan optimal untuk masa depan bisnis Anda."
 )
 
-# --- 2. CONFIG & STYLE (LOCKED) ---
+# --- 2. CONFIG & STYLE ---
 st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", layout="wide")
 
 st.markdown("""
@@ -31,7 +31,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (NO ICONS) ---
+# --- 3. SIDEBAR ---
 st.sidebar.markdown("<h2 style='text-align:center;'>Erwin Sinaga</h2>", unsafe_allow_html=True)
 st.sidebar.markdown("<p style='text-align:center; color:#38bdf8;'>Founder & CEO V-Guard AI</p>", unsafe_allow_html=True)
 st.sidebar.divider()
@@ -49,12 +49,39 @@ if menu == "Home":
 
 elif menu == "Produk & Investasi":
     st.title("🛡️ Layanan & Investasi")
-    # Menggunakan layout sederhana agar tidak error
+    # Menggunakan kolom tanpa 'with' agar lebih aman dari IndentationError
     col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown("<div class='card'><h3>V-LITE</h3><p class='price'>Rp 1.5M</p><p>UMKM</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown("<div class='card'><h3>V-PRO</h3><p class='price'>Rp 3.5M</p><p>Resto</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
-    with col3:
-        st.markdown("<div class='card'><h3>V-SIGHT</h3><p class='price'>Rp 5.0M</p><p>Toko Emas</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
-    with col4:
+    col1.markdown("<div class='card'><h3>V-LITE</h3><p class='price'>Rp 1.5M</p><p>UMKM</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
+    col2.markdown("<div class='card'><h3>V-PRO</h3><p class='price'>Rp 3.5M</p><p>Resto</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
+    col3.markdown("<div class='card'><h3>V-SIGHT</h3><p class='price'>Rp 5.0M</p><p>Toko Emas</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
+    col4.markdown("<div class='card'><h3>V-ENTERPRISE</h3><p class='price'>CUSTOM</p><p>Korporasi</p><a href='#' class='btn'>Daftar</a></div>", unsafe_allow_html=True)
+    
+    st.divider()
+    st.subheader("📈 Kalkulator ROI")
+    omzet = st.number_input("Input Omzet Bulanan (Rp):", value=500000000, step=10000000)
+    st.error(f"Potensi Kebocoran (5%): Rp {omzet*0.05:,.0f} / Bulan")
+    st.success(f"Target Penyelamatan V-Guard (90%): Rp {(omzet*0.05)*0.9:,.0f} / Bulan")
+
+elif menu == "Portal Klien":
+    st.title("🔑 Portal Order")
+    with st.form("form_order_vguard"):
+        st.write("Lengkapi data pemesanan paket:")
+        nama_pelanggan = st.text_input("Nama Lengkap Pelanggan")
+        nama_usaha = st.text_input("Nama Usaha / Bisnis")
+        paket_pilihan = st.selectbox("Pilih Paket Layanan", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+        upload_berkas = st.file_uploader("Upload Dokumen (KTP/Bukti Bayar)", type=['jpg','png','pdf'])
+        
+        # Tombol submit dalam form
+        submitted = st.form_submit_button("KIRIM PENGAJUAN")
+        if submitted:
+            if nama_pelanggan and nama_usaha:
+                st.success(f"Berhasil! Order untuk {nama_usaha} telah diterima.")
+            else:
+                st.warning("Mohon isi Nama Pelanggan dan Nama Usaha.")
+
+elif menu == "Admin Panel":
+    st.title("🔐 CEO Command Center")
+    st.info("Akses terbatas.")
+
+st.sidebar.divider()
+st.sidebar.caption("V-Guard AI © 2026")
