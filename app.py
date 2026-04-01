@@ -15,16 +15,14 @@ except:
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 
 # --- 2. DATABASE & SESSION STATE ---
-# Database Klien (Tampilan di Admin)
 if 'db_n' not in st.session_state:
     st.session_state.db_n = [
-        {"ID": "CL-001", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "SMART", "Status": "🟢 AKTIF"},
-        {"ID": "CL-002", "Pelanggan": "Jaya", "Bisnis": "Bengkel Berkah", "Paket": "BASIC", "Status": "🔴 Menunggu"}
+        {"ID": 101, "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Usaha": "F&B", "Paket": "SMART", "Harga": 2500000, "Status": "🟢 AKTIF"},
+        {"ID": 102, "Waktu": "2026-03-28", "Pelanggan": "Jaya", "Bisnis": "Bengkel Berkah", "Usaha": "Otomotif", "Paket": "BASIC", "Harga": 1500000, "Status": "🔴 Menunggu"}
     ]
 
-# Database Login (User & Pass untuk Klien)
 if 'user_creds' not in st.session_state:
-    st.session_state.user_creds = {"siska": "12345", "jaya": "12345"}
+    st.session_state.user_creds = {"admin": "w1nbju8282"}
 
 if 'auth_vguard' not in st.session_state:
     st.session_state.auth_vguard = False
@@ -32,11 +30,14 @@ if 'auth_vguard' not in st.session_state:
 if 'client_logged_in' not in st.session_state:
     st.session_state.client_logged_in = False
 
-# --- 3. CSS PREMIUM ---
+# --- 3. CSS PREMIUM (UKURAN DISESUAIKAN) ---
 st.markdown("""
 <style>
-    .fraud-header { background-color: #ff7675; color: white; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 18px; }
-    .client-box { background-color: #f0f2f6; padding: 25px; border-radius: 15px; border-left: 10px solid #1e3a8a; }
+    .fraud-header { background-color: #ff7675; color: white; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 16px; }
+    .service-card { background-color: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align: center; height: 380px; }
+    .client-box { background-color: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 5px solid #1e3a8a; margin-bottom: 15px; }
+    .stTabs [data-baseweb="tab-list"] { gap: 10px; }
+    .stTabs [data-baseweb="tab"] { background-color: #f0f2f6; border-radius: 5px 5px 0 0; padding: 8px 15px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -63,75 +64,81 @@ if nav == "1. 👤 Profil Founder":
 
 Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan.
 
-Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel dan pengawasan yang tak terputus. Visi besar beliau adalah untuk mendemokratisasikan keamanan bisnis bagi semua kalangan, memastikan bahwa UKM pun memiliki akses ke teknologi proteksi setingkat korporasi. Di bawah kepemimpinan beliau, V-Guard AI terus berinovasi untuk mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, menjadikannya mitra strategis yang tak tergantikan dalam menjaga setiap rupiah aset berharga pelanggan dari ancaman internal maupun eksternal yang merugikan.""")
+Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel dan pengawasan yang tak terputus. Visi besar beliau adalah untuk mendemokratisasikan keamanan bisnis bagi semua kalangan, memastikan bahwa UKM pun memiliki akses ke teknologi proteksi setingkat korporasi. Di bawah kepemimpinan beliau, V-Guard AI terus berinnovasi untuk mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, menjadikannya mitra strategis yang tak tergantikan dalam menjaga setiap rupiah aset berharga pelanggan dari ancaman internal maupun eksternal yang merugikan.""")
 
 elif nav == "2. 🎯 Visi, Misi & ROI":
     st.header("Visi, Misi & Analisis Kerugian")
     st.info("**Visi:** Menjadi pelopor global dalam penyediaan infrastruktur audit digital berbasis AI.")
     st.success("**Misi:** Mengintegrasikan AI untuk deteksi fraud real-time.")
+    st.write("---")
+    st.subheader("📊 Simulasi ROI & Penyelamatan Aset")
     oz = st.number_input("Input Total Omzet Bulanan (Rp):", value=100000000)
     leakage = oz * 0.07
-    st.error(f"Potensi Kerugian (7%): Rp {leakage:,.0f}")
-    st.success(f"Estimasi Penyelamatan: Rp {leakage - 2500000:,.0f}")
+    st.error(f"Potensi Kerugian Akibat Kebocoran (7%): Rp {leakage:,.0f}")
+    biaya_vguard = 2500000
+    st.success(f"Estimasi Dana yang Diselamatkan: Rp {leakage - biaya_vguard:,.0f}")
 
 elif nav == "3. 💎 Layanan Produk":
-    st.header("Paket Layanan V-Guard AI")
-    st.columns(3) # UI kolom paket... (disingkat untuk hemat ruang, isi tetap sama)
+    st.header("Paket Layanan Unggulan V-Guard AI")
+    c1, c2, c3 = st.columns(3)
+    wa = "https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20"
+    with c1:
+        st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
+        st.link_button("🚀 Pesan Sekarang", wa + "BASIC")
+    with c2:
+        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
+        st.link_button("🔥 Pesan Sekarang", wa + "SMART")
+    with c3:
+        st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div><div class="feature-list">• Semua Fitur Smart<br>• Digital Forensik<br>• Konsultasi Strategis<br>• Proteksi Multi-Cabang<br>• Risk Analysis<br>• Support 24/7</div></div>', unsafe_allow_html=True)
+        st.link_button("💎 Pesan Sekarang", wa + "PRO")
 
 elif nav == "4. 📝 Registrasi & Upload":
     if not st.session_state.client_logged_in:
-        t1, t2 = st.tabs(["📝 Pendaftaran Klien", "🔑 Login Dashboard Klien"])
+        t1, t2 = st.tabs(["📝 Form Pendaftaran", "🔑 Login Akun Klien"])
         with t1:
-            with st.form("reg"):
+            with st.form("reg_form"):
                 st.text_input("Nama Pelanggan:")
-                st.selectbox("Paket:", ["BASIC", "SMART", "PRO"])
-                st.form_submit_button("Daftar Sekarang")
+                st.text_input("Nama Usaha:")
+                st.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
+                st.form_submit_button("Kirim Pendaftaran")
         with t2:
-            u = st.text_input("User ID:")
-            p = st.text_input("Password:", type="password")
-            if st.button("LOGIN KLIEN"):
-                if u in st.session_state.user_creds and st.session_state.user_creds[u] == p:
+            u_id = st.text_input("User ID Klien:")
+            u_pw = st.text_input("Password:", type="password")
+            if st.button("MASUK DASHBOARD KLIEN"):
+                if u_id in st.session_state.user_creds and st.session_state.user_creds[u_id] == u_pw:
                     st.session_state.client_logged_in = True
                     st.rerun()
-                else: st.error("ID atau Password salah.")
+                else: st.error("Akses ditolak.")
     else:
-        st.header("🛡️ Dashboard Mitra V-Guard")
+        st.header("🛡️ Dashboard Mitra V-Guard AI")
         st.markdown('<div class="client-box"><h3>Tugas Harian Anda</h3>• Upload CSV Penjualan<br>• Update Absensi<br>• Cek Koneksi CCTV</div>', unsafe_allow_html=True)
-        if st.button("🚪 Keluar"):
+        st.file_uploader("Unggah Laporan CSV Harian", key="cl_up")
+        if st.sidebar.button("🚪 Keluar Akun Klien"):
             st.session_state.client_logged_in = False
             st.rerun()
 
 elif nav == "5. 🔐 Akses Terbatas":
     if not st.session_state.auth_vguard:
-        pw = st.text_input("Kode Keamanan Admin:", type="password")
-        if st.button("BUKA PANEL ADMIN"):
-            if pw == "w1nbju8282":
-                st.session_state.auth_vguard = True
-                st.rerun()
+        c_log1, c_log2, c_log3 = st.columns([1, 2, 1])
+        with c_log2:
+            st.subheader("🔐 Area Pengawasan Eksekutif")
+            pw = st.text_input("Masukkan Kode Keamanan Admin:", type="password")
+            if st.button("BUKA AKSES EKSEKUTIF"):
+                if pw == "w1nbju8282":
+                    st.session_state.auth_vguard = True
+                    st.rerun()
     else:
-        st.title("👨‍💼 Panel Eksekutif Pak Erwin")
-        tab_db, tab_user, tab_audit = st.tabs(["📊 Database Klien", "👤 Buat Akun Klien", "📉 Audit AI"])
+        st.markdown('<div class="fraud-header">🚨 PERINGATAN: INDIKASI FRAUD TERDETEKSI PADA TITIK TRANSAKSI HARIAN</div>', unsafe_allow_html=True)
         
-        with tab_db:
-            st.subheader("Data Kontrak Aktif")
-            st.table(pd.DataFrame(st.session_state.db_n))
-            
-        with tab_user:
-            st.subheader("Registrasi Akun Baru (Aktivasi)")
-            with st.form("add_user"):
-                new_u = st.text_input("Buat User ID Klien:")
-                new_p = st.text_input("Buat Password Klien:")
-                if st.form_submit_button("AKTIFKAN AKUN KLIEN"):
-                    st.session_state.user_creds[new_u] = new_p
-                    st.success(f"Akun '{new_u}' telah aktif. Silakan berikan akses ini ke klien.")
-                    
-        with tab_audit:
-            st.write("Analisis Fraud Terkini...")
-            st.line_chart([10, 20, 15, 5])
-            
-        if st.button("🔐 KELUAR ADMIN"):
-            st.session_state.auth_vguard = False
-            st.rerun()
-
-st.write("---")
-st.caption("© 2026 V-Guard AI | Secured by Erwin Sinaga")
+        t1, t2, t3, t4, t5 = st.tabs(["📊 Database", "📉 Audit AI", "📽️ VCS Visual", "🧾 Billing & Laba", "👤 Aktivasi Akun"])
+        
+        with t1:
+            c1, c2 = st.columns([2, 1])
+            with c1:
+                st.subheader("Database Transaksi")
+                st.table(pd.DataFrame(st.session_state.db_n))
+            with c2:
+                st.subheader("Manajemen CSV")
+                st.file_uploader("Upload Data Baru", type=['csv'])
+                df_exp = pd.DataFrame(st.session_state.db_n)
+                st.download_button("Download Database", data=df_exp.to_csv(index=False).encode('utf-8'), file_name="vguard_db.csv", mime='text/csv')
