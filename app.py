@@ -4,7 +4,7 @@ import os
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# --- 2. CSS CUSTOM (PREMIUM DARK MODE & CLEAN INTERFACE) ---
+# --- 2. CSS CUSTOM (PREMIUM DARK MODE) ---
 st.markdown("""
     <style>
     .main { background-color: #0e1117; }
@@ -19,14 +19,14 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR PROFIL (DENGAN FOTO PROTEKSI) ---
+# --- 3. SIDEBAR PROFIL ---
 with st.sidebar:
     st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
     foto_path = "erwin.jpg"
     if os.path.exists(foto_path):
         try: st.image(foto_path, use_container_width=True)
-        except: st.info("Profil: Erwin Sinaga")
-    st.markdown(f"<div style='text-align:center;'><b>Erwin Sinaga</b><br><small>Founder & CEO V-Guard AI</small></div>", unsafe_allow_html=True)
+        except: st.info("Founder & CEO")
+    st.markdown("<div style='text-align:center;'><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
     st.markdown("---")
     menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center"])
 
@@ -37,22 +37,23 @@ if menu == "Visi & Misi":
     st.header("Visi & Misi V-Guard AI Intelligence")
     col_v1, col_v2 = st.columns([1, 2])
     with col_v1:
-        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", caption="Erwin Sinaga - Founder V-Guard AI")
+        if os.path.exists("erwin.jpg"): 
+            st.image("erwin.jpg", caption="Founder & CEO V-Guard AI")
     with col_v2:
         st.markdown("""
         <div style="text-align: justify; color: #c9d1d9; line-height: 1.8;">
-        Sebagai seorang Senior Business Leader dengan pengalaman lebih dari satu dekade di industri perbankan dan pengelolaan aset, saya memahami bahwa pondasi pertumbuhan bisnis bukanlah sekadar inovasi produk, melainkan kepastian data dan eliminasi kebocoran internal (internal fraud). Dalam perjalanan profesional saya, saya sering mengamati bagaimana bisnis yang sangat potensial hancur bukan karena persaingan pasar, melainkan karena kelemahan sistem pengawasan internal. Kepercayaan atau <i>trust</i> tidak lagi cukup jika hanya berdasarkan janji atau intuisi semata; kepercayaan harus bisa diukur, diverifikasi secara matematis, dan didigitalisasi melalui teknologi kecerdasan buatan. Inilah alasan utama saya mendirikan V-Guard AI Intelligence sebagai benteng pertahanan bagi para pemilik bisnis di Indonesia agar aset mereka terlindungi sepenuhnya dari tindakan tidak bertanggung jawab.<br><br>
+        Berangkat dari pengalaman luas sebagai pemimpin bisnis senior selama lebih dari sepuluh tahun di sektor perbankan dan manajemen aset, saya menyadari bahwa tantangan terbesar dalam pertumbuhan usaha bukanlah sekadar kompetisi pasar, melainkan risiko kebocoran internal (internal fraud) yang seringkali tidak terdeteksi. Dalam perjalanan profesional tersebut, saya sering mengamati bagaimana bisnis yang sangat potensial hancur bukan karena faktor eksternal, melainkan karena kelemahan sistem pengawasan internal yang bisa dimanipulasi. Kepercayaan konvensional yang hanya berlandaskan komitmen verbal kini tidak lagi memadai dalam ekosistem ekonomi digital yang kompleks. Diperlukan sebuah sistem di mana kepercayaan tersebut dapat diukur, diverifikasi secara matematis, dan didigitalisasi untuk menciptakan transparansi mutlak bagi setiap pemilik modal.<br><br>
         
-        <b>Visi Kami:</b> Menjadi standar global dalam penyediaan ekosistem <i>Digital Trust</i> yang otonom, transparan, dan tak tergoyahkan. Kami bercita-cita membangun dunia di mana setiap interaksi bisnis didasari oleh bukti otentik yang dapat diverifikasi secara instan. Kami ingin menghilangkan segala bentuk ambiguitas dalam transaksi dan memastikan bahwa integritas data menjadi aset yang paling berharga bagi setiap organisasi, mulai dari skala UMKM hingga korporasi multinasional. Kami percaya bahwa transparansi adalah hak mutlak setiap pemilik modal, dan teknologi kami hadir untuk menjamin hak tersebut terwujud tanpa kompromi sedikitpun di setiap lini operasional perusahaan. Kami berkomitmen untuk terus berinovasi dalam menciptakan lingkungan bisnis yang sehat dan bebas dari manipulasi data.<br><br>
+        <b>Visi Kami:</b> Menjadi standar global utama dalam penyediaan ekosistem <i>Digital Trust</i> yang sepenuhnya otonom, transparan, dan tidak dapat dimanipulasi oleh pihak mana pun. Kami bertekad membangun dunia bisnis di mana setiap interaksi dan transaksi didasari oleh bukti otentik yang dapat diverifikasi secara instan. Kami bercita-cita untuk menghilangkan segala bentuk ambiguitas operasional dan memastikan bahwa integritas data menjadi pilar utama serta aset yang paling berharga bagi setiap organisasi, mulai dari sektor UMKM hingga korporasi besar, demi menciptakan iklim usaha yang bersih, sehat, dan memiliki tingkat kepercayaan digital yang tinggi di kancah persaingan global.<br><br>
         
-        <b>Misi Kami:</b> Melaksanakan filosofi 'Eliminating Leakage' dengan dedikasi tinggi melalui integrasi kecerdasan buatan (AI) tingkat lanjut dan teknologi Computer Vision yang canggih. Kami berkomitmen untuk membangun sistem pertahanan prediktif yang mampu mendeteksi dan menghentikan pola kecurangan sebelum menjadi kerugian finansial yang signifikan bagi klien kami. Melalui prinsip 'Digitizing Trust', kami mengubah setiap titik data mentah menjadi bukti otentik yang tidak dapat dimanipulasi oleh oknum internal maupun eksternal. Kami berdedikasi untuk memberikan ketenangan pikiran bagi setiap pengusaha melalui audit otomatis yang jujur dan real-time, demi terciptanya masa depan ekonomi Indonesia yang lebih bersih, efisien, dan memiliki tingkat kepercayaan digital yang tinggi di kancah persaingan global.
+        <b>Misi Kami:</b> Kami berdedikasi untuk mengimplementasikan filosofi 'Eliminating Leakage' secara disiplin melalui integrasi mendalam antara kecerdasan buatan (AI) prediktif dan teknologi Computer Vision mutakhir. Misi kami adalah membangun sistem pertahanan berlapis yang mampu mengidentifikasi serta menghentikan pola kecurangan sebelum berkembang menjadi kerugian finansial yang nyata bagi klien kami. Melalui prinsip 'Digitizing Trust', kami berkomitmen mengubah data mentah menjadi bukti digital yang sah dan permanen. Kami hadir untuk memberikan ketenangan pikiran bagi setiap pengusaha melalui sistem audit otomatis yang jujur, akurat, dan bekerja secara <i>real-time</i> selama 24 jam penuh untuk memastikan setiap rupiah aset Anda terlindungi dengan sempurna.
         </div>
         """, unsafe_allow_html=True)
 
-# MENU 2: PRODUK & LAYANAN (HARGA MINIMAL 1JT, TANPA INSTRUKSI TAMBAHAN)
+# MENU 2: PRODUK & LAYANAN (HARGA MINIMAL 1JT, TANPA INFO KONTAK PRIBADI)
 elif menu == "Produk & Layanan":
     st.header("🛡️ Produk & Layanan V-Guard AI")
-    wa_base = "https://wa.me/6282122190885?text=Halo%20Pak%20Erwin,%20saya%20order%20"
+    wa_base = "https://wa.me/?text=Halo,%20saya%20ingin%20order%20"
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.markdown("<div class='package-card'><div class='package-title'>📦 V-LITE</div>• AI Fraud Dasar<br>• Laporan Bulanan PDF<br>• Notifikasi Standar<div class='price-tag'>Rp 1.000.000 / bln</div>", unsafe_allow_html=True)
@@ -73,58 +74,28 @@ elif menu == "Produk & Layanan":
 
 # MENU 3: ANALISIS ROI KERUGIAN
 elif menu == "Analisis ROI Kerugian":
-    st.header("📊 Analisis Kerugian vs ROI")
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
     with col_a:
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10000000)
         leak = st.slider("Estimasi Kebocoran / Fraud (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
-        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bln")
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
     with col_b:
-        biaya = st.selectbox("Pilih Paket Layanan", [1000000, 2500000, 5000000, 10000000])
+        biaya = st.selectbox("Pilih Rencana Investasi Paket", [1000000, 2500000, 5000000, 10000000])
         saved = loss - biaya
-        st.success(f"Profit Diselamatkan: Rp {saved:,.0f} / bln")
-        st.metric("ROI Investasi", f"{(saved/biaya)*100 if saved>0 else 0:.0f}%")
+        st.success(f"Profit yang Diselamatkan: Rp {saved:,.0f} / bln")
+        st.metric("Estimasi ROI", f"{(saved/biaya)*100 if saved>0 else 0:.0f}%")
 
-# MENU 4: PORTAL KLIEN (ORDER & LOGIN USER)
+# MENU 4: PORTAL KLIEN
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     col_order, col_login = st.columns(2)
     with col_order:
         st.subheader("📝 Form Order Baru")
         with st.container(border=True):
-            st.text_input("Nama Usaha")
-            st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.file_uploader("Upload KTP Pemilik", type=['jpg', 'png', 'pdf'])
-            st.button("Kirim Data Order")
-    with col_login:
-        st.subheader("🔑 Login User Berlangganan")
-        with st.container(border=True):
-            u_id = st.text_input("Nama User / ID")
-            u_pw = st.text_input("Password", type="password")
-            if st.button("Masuk"):
-                if u_pw == "vguardklien2026": st.success(f"Selamat Datang {u_id}")
-                else: st.error("Password Salah")
-
-# MENU 5: ADMIN (CORE BRAIN + VCS + USER BARU + ALARM + INVOICE)
-elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center - The Core Brain")
-    if st.text_input("Admin Password", type="password") == "adminvguard2026":
-        t1, t2, t3 = st.tabs(["📊 VCS Dashboard", "👤 Akun User Baru", "🚨 Alarm & Notifikasi"])
-        with t1:
-            st.metric("Total Kasir", "Rp 125.450.000")
-            st.metric("Dana Bank (VCS Sinkron)", "Rp 125.450.000", delta="Sinkron 100%")
-        with t2:
-            st.subheader("Registrasi User Baru")
-            st.text_input("ID Klien Baru")
-            st.selectbox("Set Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.button("Aktifkan Akun")
-        with t3:
-            st.warning("📅 Invoice H-7 Otomatis: AKTIF")
-            st.error("🚨 Alarm Fraud Digital: AKTIF")
-            st.info("V-Guard Core Brain: MindBridge & YOLO Vision Online")
-    elif st.session_state.get('p_admin') != "": st.warning("Masukkan Password Admin.")
-
-# --- 5. FOOTER ---
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026 | Founder: Erwin Sinaga | WA: 082122190885</small></center>", unsafe_allow_html=True)
+            nama_u = st.text_input("Nama Usaha / Perusahaan")
+            paket_u = st.selectbox("Paket yang Dipilih", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.file_uploader("Upload KTP Pemilik Bisnis", type=['jpg', 'png', 'pdf'])
+            if st.button("Kirim Data Registrasi"):
+                st.success("Data telah masuk ke sistem. Sil
