@@ -15,7 +15,7 @@ if 'db_nasabah' not in st.session_state:
 if 'admin_akses_terbuka' not in st.session_state:
     st.session_state.admin_akses_terbuka = False
 
-# DATA KUNCI OTORITAS
+# DATA KUNCI (SOP)
 WA_NUMBER = "628212190885"
 ADMIN_PASSWORD = "w1nbju8282"
 
@@ -92,7 +92,7 @@ elif menu == "3. 📦 Paket Unggulan":
 # --- MENU 4: REGISTRASI & UPLOAD ---
 elif menu == "4. 📝 Registrasi & Upload":
     st.header("Formulir Pendaftaran Klien")
-    with st.form("standard_vguard_final_form"):
+    with st.form("standard_vguard_form"):
         c1, c2 = st.columns(2)
         with c1:
             st.text_input("Nama Pelanggan:")
@@ -101,19 +101,4 @@ elif menu == "4. 📝 Registrasi & Upload":
             st.text_input("Jenis Usaha (F&B, Retail, dsb):")
             st.selectbox("Pilih Paket Layanan:", ["BASIC", "SMART", "PRO", "ELITE"])
         st.file_uploader("Upload Dokumen Pendukung (KTP/SKU):", type=['jpg', 'png', 'pdf'])
-        if st.form_submit_button("Kirim Pendaftaran Ke V-Guard"):
-            st.success("Data berhasil terkirim. Tim V-Guard akan segera memproses pendaftaran Anda.")
-
-# --- MENU 5: AKSES TERBATAS ---
-elif menu == "5. 🔐 Akses Terbatas":
-    if not st.session_state.admin_akses_terbuka:
-        st.markdown("<h2 style='text-align: center;'>🔐 Otoritas Login Admin</h2>", unsafe_allow_html=True)
-        cl, cm, cr = st.columns([1, 2, 1])
-        with cm:
-            sandi = st.text_input("Masukkan Sandi Keamanan:", type="password")
-            if st.button("Masuk Ke Panel Kontrol"):
-                if sandi == ADMIN_PASSWORD:
-                    st.session_state.admin_akses_terbuka = True
-                    st.rerun()
-                else:
-                    st.error("Akses Ditolak!
+        if st.form_submit_button("Kirim Pendaftaran Ke V
