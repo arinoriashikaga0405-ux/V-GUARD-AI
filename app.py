@@ -7,7 +7,7 @@ import urllib.parse
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database Klien
+# Inisialisasi Database Klien (Session State)
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
         {
@@ -36,15 +36,36 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 3. SIDEBAR NAVIGATION
+# 3. SIDEBAR NAVIGATION (PERBAIKAN ERROR BARIS 50)
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", caption="Founder V-Guard AI", use_container_width=True)
     st.title("🛡️ V-Guard AI")
     st.markdown('<p class="status-connected">● System Online</p>', unsafe_allow_html=True)
-    menu = st.radio("Navigasi:", [
+    
+    # Memastikan semua string navigasi tertutup dengan benar
+    list_menu = [
         "1. 👤 Profil Founder", 
         "2. 🎯 Visi & ROI", 
         "3. 📦 Paket Unggulan", 
         "4. 📝 Registrasi & Capture", 
-        "5.
+        "5. 🔐 Admin Control Center",
+        "6. 📜 Laporan Audit Klien"
+    ]
+    menu = st.radio("Navigasi Utama:", list_menu)
+    st.write("---")
+    st.link_button("💬 Chat Support", "https://wa.me/628212190885")
+
+# --- MENU 1: PROFIL FOUNDER ---
+if menu == "1. 👤 Profil Founder":
+    st.header("Profil Kepemimpinan")
+    col1, col2 = st.columns([1, 2.5])
+    with col1:
+        if os.path.exists("erwin.jpg"): 
+            st.image("erwin.jpg", use_container_width=True)
+    with col2:
+        profil_html = """<b>Bapak Erwin Sinaga</b> merupakan Pemimpin Bisnis Senior dengan pengalaman lebih dari 10 tahun di industri perbankan dan manajemen aset nasional. Beliau mendirikan V-Guard AI untuk memberikan solusi pengawasan berbasis AI yang menjamin transparansi finansial dan keamanan aset bagi para pelaku usaha di Indonesia. Dedikasi beliau adalah menghadirkan teknologi masa depan yang memberikan ketenangan pikiran dan nilai ekonomi nyata bagi setiap klien."""
+        st.markdown(f'<div class="profile-box">{profil_html}</div>', unsafe_allow_html=True)
+
+# --- MENU 4: REGISTRASI & CAPTURE (WA & BUKTI BAYAR) ---
+elif menu ==
