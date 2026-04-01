@@ -14,7 +14,6 @@ except:
 
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Database Sesi
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
         {"ID": 101, "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "SMART", "Harga": 2500000, "Status": "🟢 AKTIF"},
@@ -44,7 +43,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", f"https://wa.me/{WA_NUMBER}")
 
-# --- MENU 1: PROFIL FOUNDER ---
+# --- MENU 1: PROFIL FOUNDER (150+ KATA, NO CEO/CSO) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     c1, c2 = st.columns([1, 2.2])
@@ -52,9 +51,13 @@ if menu == "1. 👤 Profil Founder":
         if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with c2:
         st.subheader("Bapak Erwin Sinaga")
-        st.write("Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang telah mengabdikan lebih dari satu dekade karir profesionalnya untuk mendalami seluk-beluk operasional bisnis dan efisiensi organisasi di skala nasional. Dengan keahlian mendalam dalam navigasi industri finansial, beliau memiliki kemampuan analitis yang tajam dalam mengidentifikasi titik-titik rawan kebocoran aset yang seringkali luput dari pengawasan manajemen konvensional. Dedikasi beliau terhadap prinsip integritas dan akuntabilitas menjadi pilar utama di balik berdirinya V-Guard AI, sebuah platform yang mengintegrasikan kecerdasan buatan untuk memberikan perlindungan berlapis bagi para pengusaha di Indonesia. Beliau fokus pada misi besar untuk mendemokrasikan fungsi audit internal agar dapat diakses oleh semua skala bisnis, mulai dari UMKM hingga korporasi besar. Berdomisili di Tangerang, beliau aktif menjembatani kesenjangan antara teknologi digital dengan kebutuhan nyata di lapangan.")
+        st.write("""
+        Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang telah mengabdikan lebih dari satu dekade karir profesionalnya untuk mendalami seluk-beluk operasional bisnis dan efisiensi organisasi di skala nasional. Dengan keahlian mendalam dalam navigasi industri finansial, beliau memiliki kemampuan analitis yang tajam dalam mengidentifikasi titik-titik rawan kebocoran aset yang seringkali luput dari pengawasan manajemen konvensional. Dedikasi beliau terhadap prinsip integritas dan akuntabilitas menjadi pilar utama di balik berdirinya V-Guard AI, sebuah platform yang mengintegrasikan kecerdasan buatan untuk memberikan perlindungan berlapis bagi para pengusaha di Indonesia. 
 
-# --- MENU 2: ROI ---
+        Beliau fokus pada misi besar untuk mendemokrasikan fungsi audit internal agar dapat diakses oleh semua skala bisnis, mulai dari UMKM hingga korporasi besar. Berdomisili di Tangerang, beliau aktif menjembatani kesenjangan antara teknologi digital dengan kebutuhan nyata di lapangan, memastikan bahwa setiap fitur yang dikembangkan dalam V-Guard AI mampu memberikan solusi konkret bagi efisiensi modal klien. Visi jangka panjang beliau adalah membangun ekosistem bisnis yang lebih sehat di Indonesia, di mana setiap rupiah investasi terjaga dengan aman dan setiap transaksi dapat dipertanggungjawabkan secara transparan, guna mendorong pertumbuhan ekonomi yang berkelanjutan bagi seluruh mitra yang bekerja sama dengannya melalui pendekatan berbasis teknologi yang adaptif dan solutif bagi tantangan masa depan.
+        """)
+
+# --- MENU 2, 3, 4 (PERTAHANKAN) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("Analisis Strategis")
     st.info("**Visi:** Benteng pertahanan digital utama bagi ekosistem bisnis Indonesia.")
@@ -62,7 +65,6 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
     omzet = st.number_input("Omzet Bulanan (Rp):", value=100000000)
     st.metric("Potensi Hemat (7%)", f"Rp {omzet * 0.07:,.0f}")
 
-# --- MENU 3: PAKET UNGGULAN (KEMBALI DENGAN FITUR LENGKAP) ---
 elif menu == "3. 📦 Paket Unggulan":
     st.header("Layanan V-Guard AI")
     cols = st.columns(4)
@@ -77,39 +79,42 @@ elif menu == "3. 📦 Paket Unggulan":
             st.markdown(f'<div class="product-card"><div class="pkg-title">{n}</div><p><b>Rp {p}/bln</b></p><div class="pkg-feat">{f}</div></div>', unsafe_allow_html=True)
             st.link_button("Pilih Paket", f"https://wa.me/{WA_NUMBER}?text=Paket%20{n}")
 
-# --- MENU 4: REGISTRASI ---
 elif menu == "4. 📝 Registrasi & Capture":
-    st.header("Pendaftaran Klien Baru")
-    with st.form("reg_form"):
-        st.text_input("Nama Pelanggan (Pemilik):")
+    st.header("Pendaftaran Klien")
+    with st.form("reg"):
+        st.text_input("Nama Pelanggan:")
         st.text_input("Nama Bisnis:")
         st.selectbox("Paket:", ["BASIC", "SMART", "PRO", "ELITE"])
-        if st.form_submit_button("Kirim Pendaftaran"): st.success("Data Terkirim!")
+        if st.form_submit_button("Kirim"): st.success("Data Terkirim!")
 
-# --- MENU 5: ADMIN DASHBOARD (ALARM, INVOICE, CSV) ---
+# --- MENU 5: ADMIN CONTROL (DENGAN PASSWORD) ---
 elif menu == "5. 🔐 Admin Control Center":
-    st.header("📊 Dashboard Admin")
-    df = pd.DataFrame(st.session_state.db_nasabah)
-    for _, r in df[df['Harga'] > 1000000].iterrows():
-        st.markdown(f'<div class="fraud-alert">🚨 ALARM FRAUD: {r["Bisnis"]} (Rp {r["Harga"]:,.0f})</div>', unsafe_allow_html=True)
-    for _, r in df[df['Status'] == "🔴 Menunggu"].iterrows():
-        st.markdown(f'<div class="invoice-box">💰 INVOICE PENDING: {r["Pelanggan"]}</div>', unsafe_allow_html=True)
-    st.download_button("📥 Download Laporan CSV", df.to_csv(index=False).encode('utf-8'), "Laporan.csv", "text/csv")
-    st.dataframe(df, use_container_width=True)
+    st.header("🔐 Panel Kendali Admin")
+    pw_admin = st.text_input("Masukkan Sandi Admin:", type="password")
+    if pw_admin == "w1nbju8282":
+        st.success("Akses Admin Diterima")
+        df = pd.DataFrame(st.session_state.db_nasabah)
+        for _, r in df[df['Harga'] > 1000000].iterrows():
+            st.markdown(f'<div class="fraud-alert">🚨 ALARM FRAUD: {r["Bisnis"]} (Rp {r["Harga"]:,.0f})</div>', unsafe_allow_html=True)
+        for _, r in df[df['Status'] == "🔴 Menunggu"].iterrows():
+            st.markdown(f'<div class="invoice-box">💰 PIUTANG: {r["Pelanggan"]}</div>', unsafe_allow_html=True)
+        st.download_button("📥 Download CSV", df.to_csv(index=False).encode('utf-8'), "Laporan.csv", "text/csv")
+        st.dataframe(df, use_container_width=True)
+    elif pw_admin != "": st.error("Sandi Admin Salah!")
 
-# --- MENU 6: LAPORAN AUDIT (PASSWORD + AI) ---
+# --- MENU 6: LAPORAN AUDIT (DENGAN PASSWORD) ---
 elif menu == "6. 📜 Laporan Audit Klien":
     st.header("📜 Laporan Audit Terenkripsi")
-    pw = st.text_input("Masukkan Sandi Otoritas:", type="password")
-    if pw == "w1nbju8282":
+    pw_audit = st.text_input("Masukkan Sandi Otoritas:", type="password")
+    if pw_audit == "w1nbju8282":
         st.success("Akses Diterima")
         st.table(pd.DataFrame(st.session_state.db_nasabah)[["ID", "Bisnis", "Status", "Pelanggan"]])
         if st.button("🤖 Jalankan Analisis Pakar Gemini"):
             if ai_ok:
                 with st.spinner("Menganalisis..."):
-                    res = model.generate_content(f"Berikan saran singkat untuk data audit: {st.session_state.db_nasabah}")
-                    st.info(f"**Saran Strategis Gemini:**\n\n{res.text}")
+                    res = model.generate_content(f"Analisis data audit ini: {st.session_state.db_nasabah}")
+                    st.info(res.text)
             else: st.error("AI Belum Terhubung")
-    elif pw != "": st.error("Sandi Salah!")
+    elif pw_audit != "": st.error("Sandi Salah!")
 
 st.markdown('<div class="footer">© 2026 V-Guard AI | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
