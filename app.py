@@ -45,18 +45,8 @@ st.markdown("""
 # --- 4. SIDEBAR ---
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
+    # Bagian yang tadi menyebabkan error sudah diperbaiki di bawah ini:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg")
     st.markdown("**Erwin Sinaga - Senior Business Leader**")
     st.write("---")
-    nav = st.radio("Navigasi Utama:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 💎 Layanan Produk", "4. 📝 Registrasi & Upload", "5. 🔐 Akses Terbatas"])
-    st.write("---")
-    st.caption("© 2026 V-Guard AI Intelligence")
-
-# --- 5. LOGIKA HALAMAN ---
-
-if nav == "1. 👤 Profil Founder":
-    st.header("Profil Kepemimpinan")
-    c1, c2 = st.columns([1, 2.5])
-    with c1:
-        if os.path.exists("er
