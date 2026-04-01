@@ -3,40 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V-GUARD AI Dashboard</title>
+    <title>V-GUARD AI - Cyber Security Solution</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background-color: #0a192f; color: #ccd6f6; font-family: 'Segoe UI', sans-serif; }
-        .hero-section { padding: 60px 0; border-bottom: 1px solid #233554; text-align: center; }
+        .hero-section { padding: 80px 0; border-bottom: 1px solid #233554; text-align: center; }
         .profile-img { 
             width: 180px; height: 180px; border-radius: 50%; 
-            border: 4px solid #64ffda; object-fit: cover; margin-bottom: 20px;
+            border: 4px solid #64ffda; object-fit: cover; margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(2,12,27,0.5);
         }
         h1, h2, h3 { color: #64ffda; }
         .feature-card { 
-            background: #112240; padding: 25px; border-radius: 12px; height: 100%; 
+            background: #112240; padding: 30px; border-radius: 12px; height: 100%; 
             border: 1px solid transparent; transition: 0.3s; 
         }
         .feature-card:hover { border-color: #64ffda; transform: translateY(-10px); }
-        .feature-card i { font-size: 2.5rem; color: #64ffda; margin-bottom: 15px; }
+        .feature-card i { font-size: 2.5rem; color: #64ffda; margin-bottom: 20px; }
         .btn-cyber { 
-            border: 1px solid #64ffda; color: #64ffda; padding: 10px 25px; 
-            text-decoration: none; border-radius: 4px; display: inline-block;
+            border: 1px solid #64ffda; color: #64ffda; padding: 12px 30px; 
+            text-decoration: none; border-radius: 4px; font-weight: bold;
+            display: inline-block;
         }
+        .btn-cyber:hover { background: rgba(100, 255, 218, 0.1); }
     </style>
 </head>
 <body>
 
 <div class="hero-section">
     <div class="container">
-        <img src="{{ url_for('static', filename='erwin.jpg') }}" alt="Founder V-GUARD" class="profile-img">
+        <img src="https://raw.githubusercontent.com/arinoriashikaga0405-ux/V-GUARD-AI/main/erwin.jpg" alt="Erwin Sinaga" class="profile-img">
         
         <h1>V-GUARD AI</h1>
-        <div class="mt-4" style="max-width: 700px; margin: 0 auto;">
+        <div class="mt-4 mx-auto" style="max-width: 700px;">
             <h3>Visi & Misi</h3>
             <p><strong>Visi:</strong> Menjadi pionir keamanan digital berbasis AI yang adaptif untuk menjamin kedaulatan data bisnis global.</p>
-            <p><strong>Misi:</strong> Memberikan proteksi siber proaktif dan manajemen keamanan cerdas bagi SME melalui dashboard terintegrasi.</p>
+            <p><strong>Misi:</strong> Menghadirkan proteksi siber proaktif dan manajemen keamanan cerdas bagi SME melalui dashboard terintegrasi.</p>
         </div>
     </div>
 </div>
@@ -44,17 +47,44 @@
 <section class="py-5 container">
     <h2 class="text-center mb-5">Fitur Layanan Produk</h2>
     <div class="row g-4 text-center">
-        <div class="col-md-3"><div class="feature-card"><i class="fas fa-shield-virus"></i><h4>AI Threat Detection</h4><p class="small">Deteksi otomatis 24/7.</p></div></div>
-        <div class="col-md-3"><div class="feature-card"><i class="fas fa-user-robot"></i><h4>Automatic Response</h4><p class="small">Mitigasi instan serangan.</p></div></div>
-        <div class="col-md-3"><div class="feature-card"><i class="fas fa-chart-line"></i><h4>Predictive Analysis</h4><p class="small">Analisis celah keamanan.</p></div></div>
-        <div class="col-md-3"><div class="feature-card"><i class="fas fa-microchip"></i><h4>Endpoint Protection</h4><p class="small">Proteksi seluruh perangkat.</p></div></div>
+        <div class="col-md-3">
+            <div class="feature-card">
+                <i class="fas fa-shield-halved"></i>
+                <h4>AI Threat Detection</h4>
+                <p class="small text-secondary">Deteksi ancaman otomatis 24/7 menggunakan kecerdasan buatan.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="feature-card">
+                <i class="fas fa-robot"></i>
+                <h4>Automatic Response</h4>
+                <p class="small text-secondary">Mitigasi instan yang langsung bekerja saat serangan terdeteksi.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h4>Predictive Analysis</h4>
+                <p class="small text-secondary">Analisis mendalam untuk menemukan celah keamanan sistem.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="feature-card">
+                <i class="fas fa-network-wired"></i>
+                <h4>Endpoint Protection</h4>
+                <p class="small text-secondary">Proteksi menyeluruh untuk setiap perangkat dalam jaringan.</p>
+            </div>
+        </div>
     </div>
 </section>
 
 <div class="container text-center py-5">
-    <a href="/portal-klien" class="btn-cyber">Portal Klien</a>
-    <a href="/admin-dashboard" class="btn-cyber">Admin Dashboard</a>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="/portal-klien" class="btn-cyber">Portal Klien</a>
+        <a href="/admin-dashboard" class="btn-cyber">Admin Dashboard</a>
+    </div>
 </div>
 
+<footer class="text-center py-4 text-secondary"><small>&copy; 2026 V-GUARD AI</small></footer>
 </body>
 </html>
