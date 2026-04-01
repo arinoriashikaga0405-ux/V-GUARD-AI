@@ -107,7 +107,7 @@ elif menu == "4. 📝 Registrasi & Upload":
         st.file_uploader("Upload Bukti Pembayaran:", type=['jpg', 'png'])
         st.form_submit_button("Kirim Pendaftaran")
 
-# --- MENU 5: AKSES TERBATAS (FIXED ERROR) ---
+# --- MENU 5: AKSES TERBATAS (FIXED ERROR & NEW FEATURES) ---
 elif menu == "5. 🔐 Akses Terbatas":
     if not st.session_state.admin_akses_terbuka:
         st.markdown("<h2 style='text-align: center;'>🔐 Verifikasi Otoritas Admin</h2>", unsafe_allow_html=True)
@@ -130,4 +130,36 @@ elif menu == "5. 🔐 Akses Terbatas":
                 st.rerun()
         
         st.write("---")
-        t1, t2, t3 = st.tabs(["📊 Database & Tamb
+        # PERBAIKAN BARIS TABS (SINGLE LINE)
+        t1, t2, t3 = st.tabs(["📊 Database", "🚨 Audit & Rugi Laba", "🧾 Billing"])
+        
+        with t1:
+            st.subheader("Manajemen Database Klien")
+            with st.expander("➕ Tambah Klien Baru Secara Manual"):
+                with st.form("form_add"):
+                    n_k = st.text_input("Nama Klien:")
+                    b_k = st.text_input("Bisnis:")
+                    p_k = st.selectbox("Paket:", ["BASIC", "SMART", "PRO", "ELITE"])
+                    h_k = st.number_input("Harga Deal (Rp):", value=1500000)
+                    if st.form_submit_button("Simpan Data Klien"):
+                        st.session_state.db_nasabah.append({"ID": 100 + len(st.session_state.db_nasabah)+1, "Waktu": str(datetime.now().date()), "Pelanggan": n_k, "Bisnis": b_k, "Paket": p_k, "Harga": h_k, "Status": "🟢 AKTIF"})
+                        st.rerun()
+            
+            df_disp = pd.DataFrame(st.session_state.db_nasabah).copy()
+            df_disp['Harga'] = df_disp['Harga'].apply(format_rp)
+            st.table(df_disp)
+
+        with t2:
+            st.subheader("Laporan Mingguan Klien")
+            list_k = [d['Pelanggan'] for d in st.session_state.db_nasabah]
+            sel = st.selectbox("Pilih Klien untuk Laporan Audit:", list_k)
+            st.info(f"📋 **Hasil Audit Mingguan: {sel}**")
+            st.warning(f"📉 **Penyelamatan Dana: {format_rp(750000)}**")
+            st.button(f"Kirim Laporan Mingguan ke {sel}")
+
+        with t3:
+            st.subheader("Billing System")
+            if st.button("Kirim Notifikasi Invoice WhatsApp"):
+                st.success("Notifikasi terkirim ke semua klien!")
+
+st.markdown('<div class="footer">© 2026 V-Guard AI | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
