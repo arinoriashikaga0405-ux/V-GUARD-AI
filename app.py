@@ -7,10 +7,10 @@ import urllib.parse
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database, Log & Riwayat Audit
+# Inisialisasi Database & Log Audit
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
-        {"ID": 101, "Waktu": "2026-03-01", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "MEDIUM", "Harga": 7500000, "Status": "🟢 AKTIF", "Jatuh_Tempo": "2026-04-01"}
+        {"ID": 101, "Waktu": "2026-03-01 08:00", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "MEDIUM", "Harga": 7500000, "Status": "🟢 AKTIF", "Jatuh_Tempo": "2026-04-01"}
     ]
 if 'audit_logs' not in st.session_state:
     st.session_state.audit_logs = [f"{datetime.now().strftime('%Y-%m-%d %H:%M')} - System Initialized"]
@@ -24,11 +24,9 @@ st.markdown("""
     .status-connected { color: #28a745; font-weight: bold; font-size: 14px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; border: 1px solid #f0f0f0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-    .stat-card { background: linear-gradient(135deg, #0d6efd 0%, #003d99 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 10px; }
     .finance-card { background: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
     .due-alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-left: 5px solid #ffc107; margin-bottom: 10px; font-weight: bold; }
-    .log-container { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; height: 200px; overflow-y: scroll; }
-    .audit-note { font-size: 11px; color: #666; font-style: italic; }
+    .log-container { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 12px; height: 200px; overflow-y: scroll; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -41,7 +39,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", "https://wa.me/628212190885")
 
-# --- FOLDER 1: PROFIL FOUNDER (MIN 150 KATA) ---
+# --- FOLDER 1: PROFIL FOUNDER ---
 if menu == "1. 👤 Profil Founder":
     st.markdown(f"""<div class="profile-box">
     <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengabdikan dedikasi dan keahlian strategisnya selama lebih dari sepuluh tahun di pusat industri perbankan serta sektor manajemen aset berskala nasional. Sepanjang perjalanan karier profesionalnya yang gemilang, beliau dikenal sebagai figur yang memiliki ketajaman luar biasa dalam memetakan dinamika pasar serta memahami kompleksitas tata kelola finansial modern. Pengalaman panjang beliau di garis depan industri keuangan tidak hanya membentuk karakter kepemimpinan yang tangguh, tetapi juga melahirkan intuisi yang mendalam dalam mendeteksi ancaman terhadap keberlanjutan bisnis dari sudut pandang keamanan data dan integritas operasional. <br><br>
@@ -63,4 +61,4 @@ elif menu == "4. 📝 Registrasi & Invoice":
             due = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
             st.session_state.db_nasabah.append({"ID": new_id, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu", "Jatuh_Tempo": due})
             add_log(f"Invoice Terbit: {n_bis} (ID: {new_id})")
-            st.code(f"INVOICE V-GUARD AI\nYth.
+            inv_text = f"INVOICE V-GUARD AI\nYth. {n_pel}\nBisnis: {n_bis}\nTotal: Rp {h_pen:,.0f}\nBCA: 3450074658\nA/n: ERWIN
