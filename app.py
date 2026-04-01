@@ -41,25 +41,5 @@ st.markdown("""
 # --- 3. SIDEBAR (LOCKED: NO ICON) ---
 with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
-    if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_column_width=True)
-    st.markdown('<p style="text-align:center; font-weight:800; font-size:22px; color:white;">Erwin Sinaga</p>', unsafe_allow_html=True)
-    st.markdown('<p style="text-align:center; color:#38bdf8; font-size:13px; margin-top:-10px;">Founder & CEO V-Guard AI</p>', unsafe_allow_html=True)
-    st.divider()
-    menu = st.radio("MENU UTAMA:", ["Home", "Produk & Investasi", "Portal Klien", "Admin Panel"])
-
-# --- 🏠 HALAMAN: HOME (RESTORED 200 WORDS VISI MISI) ---
-if menu == "Home":
-    st.title("🛡️ V-Guard AI Intelligence")
-    st.subheader("Digitizing Trust, Eliminating Leakage")
-    st.divider()
-    
-    col_img, col_text = st.columns([1, 2])
-    with col_img:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_column_width=True)
-    with col_text:
-        st.header("Visi & Misi")
-        st.markdown("""
-        <div class="visi-teks">
-        Sebagai seorang <b>Senior Business Leader</b> dengan pengalaman lebih dari satu dekade di industri perbankan dan pengelolaan aset, 
-        saya memahami bahwa pondasi pertumbuhan bisnis
+    if os.path.exists("erwin.jpg"): 
+        st.image("erwin.jpg",
