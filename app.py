@@ -5,11 +5,11 @@ import os
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 
-# --- 2. SESSION STATE (Kunci Folder Admin & Login) ---
+# --- 2. SESSION STATE (Kunci Folder Admin) ---
 if 'admin_authed' not in st.session_state:
     st.session_state.admin_authed = False
 
-# --- 3. SIDEBAR (Urutan Navigasi Statis) ---
+# --- 3. SIDEBAR (Urutan Navigasi Tetap) ---
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"):
@@ -54,8 +54,7 @@ elif nav == "Visi dan Misi":
         st.success("### 🚀 Misi\n1. Proteksi aset via Fraud Detection.\n2. Efisiensi operasional UMKM.\n3. Tata kelola bisnis bebas kebocoran.")
 
 elif nav == "Daftar Produk Utama":
-    st.header("Solusi Keamanan Aset V-Guard AI")
-    
+    st.header("Solusi Keamanan Aset")
     with st.expander("📊 Simulasi ROI (Return on Investment)", expanded=True):
         oz = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=100000000)
         rugi = oz * 0.07
@@ -64,106 +63,78 @@ elif nav == "Daftar Produk Utama":
 
     st.write("---")
     c1, c2 = st.columns(2)
-    
     with c1:
         with st.container(border=True):
             st.subheader("📦 V-LITE (UMKM)")
-            st.write("""
-            **Target:** Warung modern, laundry, toko retail tunggal.
-            - **AI Fraud Dasar:** Deteksi pembatalan (void) mencurigakan.
-            - **Laporan Bulanan PDF:** Ringkasan performa via WhatsApp.
-            - **Notifikasi Standar:** Peringatan selisih stok signifikan.
-            - **Akses 1 User:** Login khusus pemilik usaha.
-            """)
-            st.write("💰 **Pasang:** Rp 1.000.000 | **Bulan:** Rp 1.000.000")
+            st.write("**Pasang: Rp 1jt | Bulan: Rp 1jt**")
+            st.write("- AI Fraud Dasar (Void Detection)\n- Laporan Bulanan PDF via WA\n- Notifikasi Selisih Stok")
             st.link_button("Pesan V-LITE", "https://wa.me/628212190885?text=Pesan%20VLITE")
 
         with st.container(border=True):
             st.subheader("👁️ V-SIGHT (CCTV AI)")
-            st.write("""
-            **Target:** Toko Emas, Gudang Logistik, Bisnis Aset Fisik Mahal.
-            - **AI Behavior Visual:** Membaca gerak mencurigakan via CCTV.
-            - **Visual Audit:** Sinkronisasi struk belanja dengan rekaman video.
-            - **Deteksi Fisik:** Sensor hitung orang/barang otomatis.
-            - **Penyimpanan Cloud:** Rekaman aman di server V-Guard.
-            """)
-            st.write("💰 **Pasang:** Rp 3.500.000 | **Bulan:** Rp 4.500.000")
+            st.write("**Pasang: Rp 3.5jt | Bulan: Rp 4.5jt**")
+            st.write("- AI Behavior Visual Monitoring\n- Visual Audit (Struk vs Video)\n- Sensor Hitung Objek/Orang")
             st.link_button("Pesan V-SIGHT", "https://wa.me/628212190885?text=Pesan%20VSIGHT")
 
     with c2:
         with st.container(border=True):
             st.subheader("🚀 V-PRO (Retail & Resto)")
-            st.write("""
-            **Target:** Restoran, Cafe, Minimarket mobilitas tinggi.
-            - **Real-Time Monitoring:** Notifikasi instan transaksi aneh.
-            - **VCS Integrasi:** Sinkronisasi Stok, Kasir, dan Bank.
-            - **Audit Harian Otomatis:** Laporan 'Closing' anti-manipulasi.
-            - **Prioritas Support:** Bantuan teknis prioritas.
-            """)
-            st.write("💰 **Pasang:** Rp 2.000.000 | **Bulan:** Rp 2.500.000")
+            st.write("**Pasang: Rp 2jt | Bulan: Rp 2.5jt**")
+            st.write("- Real-Time Monitoring HP\n- VCS Integrasi (Stok/Kas/Bank)\n- Audit Harian Anti-Manipulasi")
             st.link_button("Pesan V-PRO", "https://wa.me/628212190885?text=Pesan%20VPRO")
 
         with st.container(border=True):
-            st.subheader("🏢 V-ENTERPRISE (Corporate)")
-            st.write("""
-            **Target:** Franchise banyak cabang atau Pabrik.
-            - **Multi-Cabang Centralized:** Satu dashboard pantau ratusan toko.
-            - **Forensik Digital Full:** Investigasi mendalam indikasi korupsi.
-            - **Dedicated Server:** Keamanan tingkat tinggi (Military Grade).
-            - **Custom API:** Terhubung langsung ke Software Akuntansi/ERP.
-            """)
-            st.write("💰 **Pasang:** Custom | **Bulan:** Mulai 10jt++")
+            st.subheader("🏢 V-ENTERPRISE")
+            st.write("**Pasang: Custom | Bulan: Mulai 10jt**")
+            st.write("- Dashboard Multi-Cabang Central\n- Forensik Digital Full Investigasi\n- Dedicated Private Server")
             st.link_button("Hubungi Admin", "https://wa.me/628212190885?text=Pesan%20ENTERPRISE")
 
 elif nav == "Register Pelanggan":
-    st.header("Pendaftaran Pelanggan & Jadwal Sinkronisasi")
+    st.header("Pendaftaran Pelanggan Baru")
     with st.form("reg_form"):
-        st.text_input("Nama Lengkap Pemilik:")
-        st.text_input("Nama Usaha:")
-        u_type = st.selectbox("Jenis Usaha:", ["Retail", "Restoran/Cafe", "Laundry/Jasa", "Gudang/Distribusi"])
-        st.selectbox("Paket Pilihan:", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+        st.text_input("Nama Pemilik:")
+        u_type = st.selectbox("Jenis Usaha:", ["Retail", "Restoran/Cafe", "Laundry/Jasa", "Gudang"])
+        st.selectbox("Pilih Paket:", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
         
-        # Smart Scheduling Anti-Overload
         jam = "22:00" if u_type == "Retail" else "23:00" if u_type == "Restoran/Cafe" else "00:00"
-        st.warning(f"Slot Jadwal Upload/Sinkronisasi Data Anda: Jam {jam} WIB (Anti-Overload Server)")
+        st.warning(f"Jadwal Sinkronisasi Data: Jam {jam} WIB")
         
-        if st.form_submit_button("Daftar & Hubungkan WhatsApp"):
-            st.success(f"Pendaftaran Berhasil! Silakan klik tombol di sidebar untuk konfirmasi ke Bapak Erwin.")
+        if st.form_submit_button("Daftar Sekarang"):
+            st.success(f"Pendaftaran Berhasil! Slot server Anda: {jam} WIB.")
 
 elif nav == "Dashboard Login":
-    st.header("Portal Klien V-Guard AI")
-    st.info("Fitur: VCS Terintegrasi, CCTV Live AI, & Laporan Laba Rugi")
+    st.header("Portal Klien")
+    st.info("Akses VCS, CCTV Live, & Laporan Laba Rugi")
     st.text_input("User ID:")
     st.text_input("Password:", type="password")
-    if st.button("Masuk"):
-        st.warning("Portal sedang sinkronisasi dengan server.")
+    st.button("Masuk")
 
 elif nav == "Admin Panel":
-    st.header("🛡️ CEO Executive Panel (Pak Erwin)")
+    # MENGHAPUS TULISAN CEO EXECUTIVE PANEL DAN MENGUNCI AKSES
     if not st.session_state.admin_authed:
-        pwd = st.text_input("Sandi Otoritas:", type="password")
-        if st.button("Buka Data Strategis"):
-            if pwd == "w1nbju8282":
-                st.session_state.admin_authed = True
-                st.rerun()
-            else: st.error("Akses Ditolak!")
+        st.header("🛡️ Restricted Access")
+        with st.container(border=True):
+            pwd = st.text_input("Sandi Otoritas:", type="password", help="Hanya untuk Founder")
+            if st.button("Verifikasi Identitas"):
+                if pwd == "w1nbju8282":
+                    st.session_state.admin_authed = True
+                    st.rerun()
+                else: st.error("Akses Ditolak!")
     else:
-        st.success("Akses Diterima. Selamat Datang, Founder.")
-        if st.button("Logout (Kunci Panel)"):
+        st.header("🛡️ Central Management")
+        if st.button("Logout & Kunci Panel"):
             st.session_state.admin_authed = False
             st.rerun()
         
         st.write("---")
-        t1, t2, t3 = st.tabs(["🚨 Alarm & Audit", "📊 Laporan Rugi Laba", "⚙️ Manajemen VCS"])
+        t1, t2, t3 = st.tabs(["🚨 Alarm & Audit", "📊 Laba Rugi", "⚙️ Server VCS"])
         with t1:
-            st.error("🚨 Alarm Fraud: Transaksi Void Terdeteksi di Toko-01 (18:45)")
-            st.info("Hasil Audit Forensik: Integritas data 99.2%")
+            st.error("🚨 Alarm Fraud: Transaksi Void Terdeteksi di Unit-01 (18:45)")
         with t2:
-            st.metric("Total Profit Seluruh Cabang", "Rp 85.400.000", "+12%")
-            st.write("Laporan rugi laba otomatis dikirim ke klien setiap tanggal 1.")
+            st.metric("Total Profit Seluruh Unit", "Rp 85.400.000", "+12%")
         with t3:
-            st.subheader("Pengaturan Jam Upload (VCS)")
+            st.subheader("Manajemen Slot Upload")
             st.table(pd.DataFrame({"Jenis Usaha": ["Retail", "Resto", "Jasa"], "Slot Jam": ["22:00", "23:00", "00:00"]}))
 
 st.write("---")
-st.caption("© 2026 V-Guard AI Intelligence | Erwin Sinaga — Founder")
+st.caption("© 2026 V-Guard AI Intelligence | Founder")
