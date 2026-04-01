@@ -64,7 +64,7 @@ if nav == "1. 👤 Profil Founder":
 
 Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan.
 
-Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel dan pengawasan yang tak terputus. Visi besar beliau adalah untuk mendemokratisasikan keamanan bisnis bagi semua kalangan, memastikan bahwa UKM pun memiliki akses ke teknologi proteksi setingkat korporasi. Di bawah kepemimpinan beliau, V-Guard AI terus berinnovasi untuk mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, menjadikannya mitra strategis yang tak tergantikan dalam menjaga setiap rupiah aset berharga pelanggan dari ancaman internal maupun eksternal yang merugikan.""")
+Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel dan pengawasan yang tak terputus. Visi besar beliau adalah untuk mendemokratisasikan keamanan bisnis bagi semua kalangan, memastikan bahwa UKM pun memiliki akses ke teknologi proteksi setingkat korporasi. Di bawah kepemimpinan beliau, V-Guard AI terus berinovasi untuk mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, menjadikannya mitra strategis yang tak tergantikan dalam menjaga setiap rupiah aset berharga pelanggan dari ancaman internal maupun eksternal yang merugikan.""")
 
 elif nav == "2. 🎯 Visi, Misi & ROI":
     st.header("Visi, Misi & Analisis Kerugian")
@@ -81,92 +81,4 @@ elif nav == "2. 🎯 Visi, Misi & ROI":
 elif nav == "3. 💎 Layanan Produk":
     st.header("Paket Layanan Unggulan V-Guard AI")
     c1, c2, c3 = st.columns(3)
-    wa = "https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20"
-    with c1:
-        st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
-        st.link_button("🚀 Pesan Sekarang", wa + "BASIC")
-    with c2:
-        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
-        st.link_button("🔥 Pesan Sekarang", wa + "SMART")
-    with c3:
-        st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div><div class="feature-list">• Semua Fitur Smart<br>• Digital Forensik<br>• Konsultasi Strategis<br>• Proteksi Multi-Cabang<br>• Risk Analysis<br>• Support 24/7</div></div>', unsafe_allow_html=True)
-        st.link_button("💎 Pesan Sekarang", wa + "PRO")
-
-elif nav == "4. 📝 Registrasi & Upload":
-    # FOLDER TAMBAH AKUN / DASHBOARD KLIEN LOGIN
-    t_reg, t_dash = st.tabs(["📝 Form Pendaftaran", "🔑 Dashboard Akun Klien"])
-    
-    with t_reg:
-        st.header("Pendaftaran Klien Baru")
-        with st.form("reg_form"):
-            col1, col2 = st.columns(2)
-            col1.text_input("Nama Pelanggan:")
-            col1.text_input("Nama Usaha:")
-            col2.text_input("Bidang Usaha:")
-            col2.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
-            st.file_uploader("Upload Data Nasabah (CSV/Excel/KTP):")
-            if st.form_submit_button("Kirim Pendaftaran Ke V-Guard"):
-                st.success("Terima kasih! Data pendaftaran Anda telah kami terima.")
-
-    with t_dash:
-        # HALAMAN DASHBOARD SETELAH KLIEN LOGIN (INSTRUKSI SYARAT DATA)
-        st.header("Selamat Datang di Ekosistem V-Guard AI")
-        st.info("Status Akun: ✅ AKTIF & TERPROTEKSI")
-        
-        with st.container():
-            st.subheader("📋 Tugas Harian Anda")
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                st.write("✅ **Data Transaksi**")
-                st.caption("Kirim laporan penjualan harian paling lambat pukul 23:59.")
-                st.write("✅ **Absensi Karyawan**")
-                st.caption("Update daftar shift kasir yang bertugas hari ini.")
-                
-            with col2:
-                st.write("✅ **Update Stok**")
-                st.caption("Catat sisa stok fisik untuk dicocokkan dengan uang masuk.")
-                st.write("✅ **Koneksi CCTV**")
-                st.caption("Pastikan feed visual terhubung untuk audit otomatis.")
-
-        st.button("Mulai Unggah Laporan Hari Ini 🚀")
-
-elif nav == "5. 🔐 Akses Terbatas":
-    if not st.session_state.auth_vguard:
-        st.subheader("🔐 Area Pengawasan Eksekutif")
-        pw = st.text_input("Masukkan Kode Keamanan:", type="password")
-        if st.button("BUKA AKSES"):
-            if pw == "w1nbju8282":
-                st.session_state.auth_vguard = True
-                st.rerun()
-            else:
-                st.error("Kode Keamanan Salah.")
-    else:
-        st.markdown('<div class="fraud-header">🚨 PERINGATAN: INDIKASI FRAUD TERDETEKSI PADA TITIK TRANSAKSI HARIAN</div>', unsafe_allow_html=True)
-        t1, t2, t3, t4 = st.tabs(["📊 Database & CSV", "📉 Audit Gemini AI", "📽️ Monitoring CCTV", "🧾 Billing & Laba"])
-        
-        with t1:
-            st.subheader("Manajemen Data Database")
-            c_csv1, c_csv2 = st.columns(2)
-            with c_csv1:
-                u_file = st.file_uploader("Upload CSV", type=['csv'])
-                if u_file:
-                    df_up = pd.read_csv(u_file)
-                    if st.button("Simpan Database"):
-                        st.session_state.db_n = df_up.to_dict('records')
-                        st.success("Berhasil!")
-            with c_csv2:
-                df_exp = pd.DataFrame(st.session_state.db_n)
-                st.download_button("Download CSV", data=df_exp.to_csv(index=False).encode('utf-8'), file_name="vguard_db.csv", mime='text/csv')
-            st.table(pd.DataFrame(st.session_state.db_n))
-            
-        with t2:
-            st.subheader("Laporan Audit Gemini AI Studio")
-            st.line_chart(pd.DataFrame({'Fraud': [1.2, 0.8, 2.5, 0.4], 'Recovery': [2, 3, 2.5, 4]}, index=['M1','M2','M3','M4']))
-            
-        with t3:
-            st.warning("Menunggu feed visual unit VCS...")
-            
-        with t4:
-            st.subheader("Perhitungan Profit Sharing (60%)")
-            total = sum([float(str(x['Harga']).replace('Rp','').replace('.','').replace(',','')) for x in st.session_state.db_n
+    wa = "
