@@ -8,9 +8,16 @@ import urllib.parse
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database Sesi untuk Akun Klien
-if 'db_akun' not in st.session_state:
-    st.session_state.db_akun = []
+# Inisialisasi Database & Log Audit
+if 'db_nasabah' not in st.session_state:
+    st.session_state.db_nasabah = [
+        {"ID": 101, "Waktu": "2026-04-01", "Pelanggan": "Admin System", "Bisnis": "V-Guard Core", "Paket": "CORPORATE", "Harga": 50000000, "Status": "🟢 AKTIF"}
+    ]
+if 'audit_logs' not in st.session_state:
+    st.session_state.audit_logs = [f"{datetime.now().strftime('%Y-%m-%d %H:%M')} - System Initialized"]
+
+def add_log(msg):
+    st.session_state.audit_logs.insert(0, f"{datetime.now().strftime('%Y-%m-%d %H:%M')} - {msg}")
 
 # 2. CSS CUSTOM PREMIUM
 st.markdown("""
@@ -19,8 +26,9 @@ st.markdown("""
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: white; border-radius: 15px; border: 1px solid #f0f0f0; box-shadow: 2px 2px 8px rgba(0,0,0,0.02); }
     .vision-box { background: #fdfdfd; padding: 25px; border-left: 5px solid #007bff; border-radius: 10px; margin-bottom: 25px; }
+    .stat-card { background: linear-gradient(135deg, #0d6efd 0%, #003d99 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
     .package-card { background: white; padding: 20px; border-radius: 15px; border: 1px solid #eee; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); height: 250px; }
-    .invoice-output { background: #f8f9fa; padding: 20px; border-left: 8px solid #007bff; border-radius: 5px; font-family: monospace; white-space: pre-wrap; font-size: 14px; margin-top: 15px; }
+    .log-container { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; height: 200px; overflow-y: scroll; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -35,7 +43,7 @@ with st.sidebar:
         "2. 🎯 Visi, Misi & ROI", 
         "3. 📦 Paket Unggulan", 
         "4. 📝 Registrasi & Invoice",
-        "5. 🔐 Admin: Buat Akun Klien"
+        "5. 🔐 Admin Control Center"
     ])
     st.write("---")
     st.link_button("💬 Chat Support", "https://wa.me/628212190885")
@@ -56,96 +64,89 @@ if menu == "1. 👤 Profil Founder":
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("🎯 Strategi & Analisis ROI")
     st.markdown("""<div class="vision-box">
-        <h3>Visi Perusahaan</h3>
-        <p>Menjadi mitra pertahanan digital terdepan di Indonesia yang menjamin transparansi operasional total melalui inovasi kecerdasan buatan.</p>
-        <h3>Misi Strategis</h3>
-        <ul>
-            <li>Mengeliminasi potensi kebocoran aset bisnis secara sistemik melalui AI Audit.</li>
-            <li>Menyediakan laporan transparansi real-time bagi pemilik bisnis.</li>
-            <li>Memberikan rasa aman melalui deteksi fraud otomatis 24/7.</li>
-        </ul>
+        <h3>Visi Perusahaan</h3><p>Menjadi mitra pertahanan digital terdepan di Indonesia yang menjamin transparansi operasional total melalui inovasi AI.</p>
+        <h3>Misi Strategis</h3><ul><li>Eliminasi potensi kebocoran aset secara sistemik.</li><li>Laporan transparansi real-time 24/7.</li></ul>
     </div>""", unsafe_allow_html=True)
-    st.subheader("📊 Simulasi Penghematan (ROI)")
-    omzet = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=500000000, step=10000000)
+    omzet = st.number_input("Input Omzet Bulanan Bisnis (Rp):", value=500000000)
     st.success(f"🛡️ Estimasi Kebocoran yang Dicegah: **Rp {omzet * 0.045:,.0f}** / bulan.")
 
 # --- FOLDER 3: PAKET UNGGULAN ---
 elif menu == "3. 📦 Paket Unggulan":
-    st.header("📦 4 Paket Produk Unggulan V-Guard AI")
+    st.header("📦 Paket Produk Unggulan")
     p_cols = st.columns(4)
-    pkgs = [
-        {"n": "BASIC", "p": "2.5jt", "f": "AI Audit Harian & Laporan Mingguan"},
-        {"n": "MEDIUM", "p": "7.5jt", "f": "AI CCTV Cloud & Deteksi Antrean"},
-        {"n": "ENTERPRISE", "p": "25jt", "f": "Multi-Branch Support & Fraud Analytics"},
-        {"n": "CORPORATE", "p": "50jt", "f": "Custom AI Model & Dedicated Manager"}
-    ]
+    pkgs = [("BASIC", "2.5jt"), ("MEDIUM", "7.5jt"), ("ENTERPRISE", "25jt"), ("CORPORATE", "50jt")]
     for i, p in enumerate(pkgs):
         with p_cols[i]:
-            st.markdown(f"""<div class="package-card">
-                <h3>{p['n']}</h3>
-                <h2 style="color:#007bff;">{p['p']}</h2>
-                <p style="font-size:14px; color:#666;">{p['f']}</p>
-            </div>""", unsafe_allow_html=True)
+            st.markdown(f'<div class="package-card"><h3>{p[0]}</h3><h2 style="color:#007bff;">{p[1]}</h2><p>AI Audit & Protection</p></div>', unsafe_allow_html=True)
 
 # --- FOLDER 4: REGISTRASI & INVOICE ---
 elif menu == "4. 📝 Registrasi & Invoice":
     st.header("📝 Registrasi & Penawaran")
     with st.form("reg_form"):
         c1, c2 = st.columns(2)
-        n_pel = c1.text_input("Nama Pelanggan (PIC):")
+        n_pel = c1.text_input("Nama Pelanggan:")
         n_bis = c1.text_input("Nama Bisnis:")
         p_pil = c2.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
         h_pen = c2.number_input("Harga Investasi (Rp):", value=2500000)
-        wa_no = st.text_input("Nomor WhatsApp Klien (Contoh: 62812...):")
-        
-        if st.form_submit_button("Generate Invoice"):
-            if n_pel and wa_no:
-                inv_msg = f"*INVOICE V-GUARD AI*\n\nYth. {n_pel} ({n_bis}),\n\nBiaya aktivasi sistem:\n- Paket: {p_pil}\n- Nilai: Rp {h_pen:,.0f}\n\n*PEMBAYARAN:* \nBCA: 3450074658\nA/n: ERWIN SINAGA"
-                st.markdown(f'<div class="invoice-output">{inv_msg}</div>', unsafe_allow_html=True)
-                st.link_button("🚀 Kirim Invoice via WhatsApp", f"https://wa.me/{wa_no}?text={urllib.parse.quote(inv_msg)}")
-            else:
-                st.warning("Mohon lengkapi Nama Pelanggan dan Nomor WhatsApp.")
+        wa_no = st.text_input("WhatsApp Klien (62...):")
+        if st.form_submit_button("Generate & Simpan"):
+            nid = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
+            st.session_state.db_nasabah.append({"ID": nid, "Waktu": datetime.now().strftime("%Y-%m-%d"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu"})
+            add_log(f"Registrasi Baru: {n_bis} (#{nid})")
+            msg = f"*INVOICE V-GUARD AI*\n\nYth. {n_pel}\nBCA: 3450074658\nA/n: ERWIN SINAGA"
+            st.code(msg)
+            st.link_button("🚀 Kirim WA", f"https://wa.me/{wa_no}?text={urllib.parse.quote(msg)}")
 
-# --- FOLDER 5: ADMIN BUAT AKUN ---
-elif menu == "5. 🔐 Admin: Buat Akun Klien":
-    st.header("🔐 Panel Aktivasi Akun Klien")
+# --- FOLDER 5: ADMIN CONTROL CENTER (FULL FEATURES) ---
+elif menu == "5. 🔐 Admin Control Center":
+    st.header("🔐 Admin Intelligence Control")
     pw = st.text_input("Sandi Otoritas Admin:", type="password")
     
     if pw == "w1nbju8282":
-        with st.form("buat_akun"):
-            st.subheader("➕ Buat Akun & Siapkan Undangan")
-            ca1, ca2 = st.columns(2)
-            k_nama = ca1.text_input("Nama PIC Klien:")
-            k_bisnis = ca1.text_input("Nama Bisnis Klien:")
-            k_wa = ca2.text_input("Nomor WA (Contoh: 62812...):")
-            k_paket = ca2.selectbox("Paket Aktivasi:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
-            
-            submit_akun = st.form_submit_button("Buat Akun & Siapkan Undangan")
-            
-            if submit_akun and k_nama and k_wa:
-                st.session_state.db_akun.append({
-                    "Nama": k_nama, "Bisnis": k_bisnis, "WA": k_wa, "Paket": k_paket
-                })
-                st.success(f"Akun untuk {k_bisnis} berhasil didaftarkan!")
-                
-                undangan = f"""*UNDANGAN AKTIVASI V-GUARD AI*
-                
-Selamat! Akun V-Guard AI untuk *{k_bisnis}* telah disiapkan.
+        df = pd.DataFrame(st.session_state.db_nasabah)
+        
+        # Dashboard Statistik
+        col_s1, col_s2 = st.columns(2)
+        col_s1.markdown(f'<div class="stat-card"><p>TOTAL REVENUE</p><h3>Rp {df["Harga"].sum():,.0f}</h3></div>', unsafe_allow_html=True)
+        col_s2.markdown(f'<div class="stat-card"><p>TOTAL CLIENTS</p><h3>{len(df)} Perusahaan</h3></div>', unsafe_allow_html=True)
 
-Detail Akun:
-- PIC: {k_nama}
-- Paket: {k_paket} Intelligence
+        # Alat Kerja: Cari & Export
+        st.write("---")
+        c_search, c_export = st.columns([3, 1])
+        s_query = c_search.text_input("🔍 Cari Klien/Bisnis:")
+        c_export.download_button("📥 Export Excel (CSV)", df.to_csv(index=False).encode('utf-8'), f"VGuard_Data_{datetime.now().strftime('%Y%m%d')}.csv", "text/csv")
 
-Silakan login melalui link akses yang telah kami sediakan untuk mulai mengamankan aset bisnis Anda secara real-time.
-
-Terima kasih atas kepercayaan Anda.
-Salam, 
-*Erwin Sinaga (Founder V-Guard AI)*"""
+        # Database Management
+        st.subheader("📋 Database & Aktivasi Akun")
+        filtered_df = df[df['Pelanggan'].str.contains(s_query, case=False) | df['Bisnis'].str.contains(s_query, case=False)]
+        
+        for i, row in filtered_df.iterrows():
+            with st.expander(f"{row['Status']} | #{row['ID']} - {row['Bisnis']}"):
+                col_i1, col_i2 = st.columns([2, 1])
+                col_i1.write(f"**PIC:** {row['Pelanggan']} | **Paket:** {row['Paket']} | **Investasi:** Rp {row['Harga']:,.0f}")
                 
-                st.info("Klik tombol di bawah untuk mengirim undangan:")
-                st.link_button("🚀 KIRIM UNDANGAN KE WHATSAPP KLIEN", f"https://wa.me/{k_wa}?text={urllib.parse.quote(undangan)}")
+                # Fitur Kirim Undangan WA
+                undangan = f"*UNDANGAN AKTIVASI V-GUARD AI*\n\nSelamat! Akun untuk *{row['Bisnis']}* telah siap.\nStatus: {row['Status']}\n\nSalam, Erwin Sinaga."
+                col_i1.link_button("🚀 Kirim Undangan Aktivasi ke WA", f"https://wa.me/62?text={urllib.parse.quote(undangan)}")
+                
+                if row['Status'] == "🔴 Menunggu":
+                    if col_i2.button("🟢 Aktifkan Akun", key=f"act_{row['ID']}"):
+                        idx = df[df['ID'] == row['ID']].index[0]
+                        st.session_state.db_nasabah[idx]['Status'] = "🟢 AKTIF"
+                        add_log(f"Akun Diaktifkan: {row['Bisnis']}")
+                        st.rerun()
+                
+                if col_i2.button("🗑️ Hapus Data", key=f"del_{row['ID']}"):
+                    idx = df[df['ID'] == row['ID']].index[0]
+                    st.session_state.db_nasabah.pop(idx)
+                    add_log(f"Data Dihapus: {row['Bisnis']}")
+                    st.rerun()
+
+        # Log Audit
+        st.subheader("📜 Log Audit Aktivitas")
+        st.markdown(f'<div class="log-container">{"<br>".join(st.session_state.audit_logs)}</div>', unsafe_allow_html=True)
     elif pw != "":
-        st.error("Kata sandi salah.")
+        st.error("Akses Ditolak.")
 
 # 4. FOOTER
 st.markdown('<div class="footer">© 2026 V-Guard AI Systems | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
