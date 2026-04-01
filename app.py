@@ -7,7 +7,7 @@ import urllib.parse
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database
+# Inisialisasi Database (Session State agar data tidak hilang saat refresh)
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
         {"ID": 101, "Waktu": "2026-03-25 08:00", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "MEDIUM", "Harga": 7500000, "Status": "🟢 AKTIF", "Jatuh_Tempo": "2026-04-25"}
@@ -19,10 +19,8 @@ st.markdown("""
     .status-connected { color: #28a745; font-weight: bold; font-size: 14px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }
     .profile-box { text-align: justify; line-height: 1.8; padding: 25px; background: #ffffff; border-radius: 15px; border: 1px solid #f0f0f0; box-shadow: 2px 2px 12px rgba(0,0,0,0.05); }
-    .vision-card { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 20px; border-radius: 12px; border-left: 5px solid #0d6efd; height: 100%; }
     .finance-card { background: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
     .fraud-alert { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; border-left: 5px solid #dc3545; margin-bottom: 10px; font-weight: bold; animation: blinker 1.5s linear infinite; }
-    .due-alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-left: 5px solid #ffc107; margin-bottom: 10px; font-weight: bold; }
     @keyframes blinker { 50% { opacity: 0.5; } }
 </style>
 """, unsafe_allow_html=True)
@@ -48,119 +46,104 @@ if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     col1, col2 = st.columns([1, 2.5])
     with col1:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_container_width=True)
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with col2:
-        st.markdown(f"""<div class="profile-box">
-        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengabdikan dedikasi dan keahlian strategisnya selama lebih dari sepuluh tahun di pusat industri perbankan serta sektor manajemen aset berskala nasional. Sepanjang perjalanan karier profesionalnya yang gemilang, beliau dikenal sebagai figur yang memiliki ketajaman luar biasa dalam memetakan dinamika pasar serta memahami kompleksitas tata kelola finansial modern. Pengalaman panjang beliau di garis depan industri keuangan tidak hanya membentuk karakter kepemimpinan yang tangguh, tetapi juga melahirkan intuisi yang mendalam dalam mendeteksi ancaman terhadap keberlanjutan bisnis dari sudut pandang keamanan data dan integritas operasional. <br><br>
-        V-Guard AI didirikan oleh Bapak Erwin Sinaga sebagai wujud nyata dari visi beliau untuk membawa standar keamanan tingkat tinggi ke tangan para pelaku usaha di seluruh Indonesia. Beliau sangat meyakini bahwa di era digital saat ini, setiap pemilik bisnis—tanpa memandang skala operasionalnya—berhak mendapatkan perlindungan aset yang berbasis teknologi masa depan. Melalui kepemimpinan strategisnya, V-Guard AI bertransformasi menjadi benteng pertahanan digital yang tidak hanya berfungsi sebagai alat pengawasan, melainkan sebagai mitra terpercaya yang menjamin akurasi audit serta transparansi data secara mutlak. Dedikasi Bapak Erwin dalam mengawal setiap fase pengembangan produk bertujuan untuk memastikan bahwa setiap inovasi yang dihadirkan mampu memberikan nilai ekonomi nyata, efisiensi jangka panjang, serta ketenangan pikiran bagi para pengusaha dalam mengelola aset berharga mereka secara profesional, modern, dan aman dari segala bentuk manipulasi sistemik.
+        st.markdown("""<div class="profile-box">
+        <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior yang telah mengabdikan dedikasi strategisnya selama lebih dari sepuluh tahun di pusat industri perbankan serta sektor manajemen aset berskala nasional. Pengalaman panjang beliau di garis depan industri keuangan tidak hanya membentuk karakter kepemimpinan yang tangguh, tetapi juga melahirkan intuisi yang mendalam dalam mendeteksi ancaman terhadap keberlanjutan bisnis. <br><br>
+        V-Guard AI didirikan sebagai wujud nyata dari visi beliau untuk membawa standar keamanan tingkat tinggi ke tangan para pelaku usaha. Melalui kepemimpinan strategisnya, V-Guard AI bertransformasi menjadi benteng pertahanan digital yang menjamin akurasi audit serta transparansi data secara mutlak. Dedikasi Bapak Erwin bertujuan untuk memastikan bahwa setiap inovasi mampu memberikan nilai ekonomi nyata, efisiensi jangka panjang, serta ketenangan pikiran bagi para pengusaha dalam mengelola aset berharga mereka secara profesional dan aman.
         </div>""", unsafe_allow_html=True)
-
-# --- NAVIGASI 2: VISI, MISI & ROI ---
-elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("🎯 Strategi Bisnis & ROI")
-    cv1, cv2 = st.columns(2)
-    with cv1:
-        st.markdown("""<div class="vision-card"><h3>Visi Utama</h3><p>Menjadi standar emas pertahanan digital nasional yang mengintegrasikan AI untuk mengeliminasi kebocoran finansial.</p></div>""", unsafe_allow_html=True)
-    with cv2:
-        st.markdown("""<div class="vision-card"><h3>Misi Strategis</h3><p>1. Pengawasan otonom 24/7.<br>2. Transparansi audit mutlak.<br>3. Teknologi AI untuk semua skala bisnis.</p></div>""", unsafe_allow_html=True)
-    
-    st.write("---")
-    st.subheader("📊 Kalkulator ROI")
-    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
-    leakage = omzet * 0.045
-    st.success(f"🛡️ Potensi Penyelamatan Aset: **Rp {leakage:,.0f}** / Bulan.")
 
 # --- NAVIGASI 3: PAKET UNGGULAN ---
 elif menu == "3. 📦 Paket Unggulan":
-    st.header("📦 Solusi Paket V-Guard AI")
+    st.header("📦 Solusi Keamanan V-Guard AI")
     st.markdown("""
-    | Paket | Harga Investasi | Fitur Utama |
-    | :--- | :--- | :--- |
-    | **BASIC** | Rp 2.500.000 | Audit Harian & Alarm Dasar |
-    | **MEDIUM** | Rp 7.500.000 | AI CCTV & Notifikasi Cloud |
-    | **ENTERPRISE** | Rp 25.000.000 | Full Fraud Analytics |
-    | **CORPORATE** | Rp 50.000.000 | Custom AI & 24/7 Support |
+    | Fitur | BASIC (2.5jt) | MEDIUM (7.5jt) | ENTERPRISE (25jt) |
+    | :--- | :---: | :---: | :---: |
+    | Audit Harian | ✅ | ✅ | ✅ |
+    | AI CCTV Integration | ❌ | ✅ | ✅ |
+    | Fraud Analytics | ❌ | ❌ | ✅ |
+    | Support 24/7 | Email | WA Group | Dedicated Manager |
     """)
 
-# --- NAVIGASI 4: REGISTRASI & INVOICE ---
+# --- NAVIGASI 4: REGISTRASI & INVOICE (FITUR CAPTURE & WA) ---
 elif menu == "4. 📝 Registrasi & Invoice":
-    st.header("📝 Registrasi & Penagihan")
+    st.header("📝 Registrasi Klien & Capture Pembayaran")
     with st.form("reg_form"):
         c1, c2 = st.columns(2)
         n_pel = c1.text_input("Nama PIC:")
         n_bis = c1.text_input("Nama Bisnis:")
-        p_pil = c2.selectbox("Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
-        h_pen = c2.number_input("Harga (Rp):", value=2500000)
-        wa_no = st.text_input("WhatsApp (62...):")
-        if st.form_submit_button("Buat Invoice"):
+        p_pil = c2.selectbox("Pilih Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+        h_pen = c2.number_input("Harga Investasi (Rp):", value=2500000)
+        wa_no = st.text_input("WhatsApp (Contoh: 628123...)")
+        upload_bukti = st.file_uploader("📸 Capture/Unggah Bukti Bayar (Optional)", type=['png', 'jpg', 'jpeg'])
+        
+        if st.form_submit_button("Generate & Kirim Invoice"):
             new_id = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
             due = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
             st.session_state.db_nasabah.append({"ID": new_id, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu", "Jatuh_Tempo": due})
-            inv_text = f"""INVOICE V-GUARD AI\nYth. {n_pel}\nBisnis: {n_bis}\nTotal: Rp {h_pen:,.0f}\n\nBCA: 3450074658\nA/n: ERWIN SINAGA"""
-            st.code(inv_text)
-            st.link_button("🚀 Kirim WA", f"https://wa.me/{wa_no}?text={urllib.parse.quote(inv_text)}")
+            
+            inv_msg = f"INVOICE V-GUARD AI\nYth. {n_pel}\nBisnis: {n_bis}\nTotal: Rp {h_pen:,.0f}\n\nBCA: 3450074658\nA/n: ERWIN SINAGA"
+            st.code(inv_msg)
+            st.link_button("🚀 Kirim Invoice ke WhatsApp", f"https://wa.me/{wa_no}?text={urllib.parse.quote(inv_msg)}")
+            st.success("Data berhasil tersimpan di sistem audit.")
 
-# --- NAVIGASI 5: ADMIN CONTROL CENTER ---
+# --- NAVIGASI 5: ADMIN CONTROL CENTER (FULL FEATURES) ---
 elif menu == "5. 🔐 Admin Control Center":
-    st.header("🔐 Admin Intelligence Control")
+    st.header("🔐 Control Center & Weekly Report")
     pw = st.text_input("Sandi Otoritas:", type="password")
     if pw == "w1nbju8282":
         df = pd.DataFrame(st.session_state.db_nasabah)
         
-        # Dashboard Laba Rugi
-        st.subheader("📊 Laba Rugi Mingguan")
+        # 1. LAPORAN RUGI LABA MINGGUAN
+        st.subheader("📊 Laporan Keuangan Mingguan")
         c1, c2, c3 = st.columns(3)
-        rev = df["Harga"].sum()
-        ops = rev * 0.15
-        profit = rev - ops
-        c1.markdown(f'<div class="finance-card"><p>Omzet</p><h3>Rp {rev:,.0f}</h3></div>', unsafe_allow_html=True)
-        c2.markdown(f'<div class="finance-card"><p>Ops (15%)</p><h3>-Rp {ops:,.0f}</h3></div>', unsafe_allow_html=True)
-        c3.markdown(f'<div class="finance-card"><p><b>Net Profit</b></p><h3>Rp {profit:,.0f}</h3></div>', unsafe_allow_html=True)
+        total_rev = df["Harga"].sum()
+        ops_cost = total_rev * 0.15
+        net_profit = total_rev - ops_cost
+        c1.markdown(f'<div class="finance-card"><p>Omzet</p><h3>Rp {total_rev:,.0f}</h3></div>', unsafe_allow_html=True)
+        c2.markdown(f'<div class="finance-card"><p>Biaya Ops (15%)</p><h3>-Rp {ops_cost:,.0f}</h3></div>', unsafe_allow_html=True)
+        c3.markdown(f'<div class="finance-card"><p><b>Laba Bersih</b></p><h3 style="color:green;">Rp {net_profit:,.0f}</h3></div>', unsafe_allow_html=True)
 
-        # Alarm Fraud & Billing
+        # 2. ALARM FRAUD & SEARCH
         st.write("---")
-        ca1, ca2 = st.columns(2)
-        with ca1:
-            st.subheader("🚨 Deteksi Fraud")
-            if not df[df['Harga'] > 10000000].empty:
-                st.markdown('<div class="fraud-alert">🚩 Deteksi Transaksi >10jt!</div>', unsafe_allow_html=True)
-            else: st.success("Sistem Aman.")
-        with ca2:
-            st.subheader("📅 Status Billing")
-            today = datetime.now().strftime("%Y-%m-%d")
-            if not df[df['Jatuh_Tempo'] <= today].empty:
-                st.markdown('<div class="due-alert">⚠️ Ada Invoice Jatuh Tempo!</div>', unsafe_allow_html=True)
-            else: st.success("Penagihan Lancar.")
+        if not df[df['Harga'] > 10000000].empty:
+            st.markdown('<div class="fraud-alert">🚨 ALARM: Deteksi Transaksi Nilai Tinggi Terdeteksi!</div>', unsafe_allow_html=True)
+        
+        s_col1, s_col2 = st.columns([3, 1])
+        search = s_col1.text_input("🔍 Pencarian Cepat (Nama Bisnis/PIC):")
+        s_col2.download_button("📥 Export CSV", df.to_csv(index=False).encode('utf-8'), "Audit_VGuard.csv", "text/csv")
 
-        # Tambah Akun & Database
-        st.write("---")
-        with st.expander("➕ Tambah Akun Manual"):
-            with st.form("manual"):
-                m_pic = st.text_input("PIC:")
-                m_bis = st.text_input("Bisnis:")
-                m_hrg = st.number_input("Nilai:", value=2500000)
-                if st.form_submit_button("Aktifkan Langsung"):
-                    nid = st.session_state.db_nasabah[-1]["ID"] + 1
-                    due_m = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
-                    st.session_state.db_nasabah.append({"ID": nid, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": m_pic, "Bisnis": m_bis, "Paket": "MANUAL", "Harga": m_hrg, "Status": "🟢 AKTIF", "Jatuh_Tempo": due_m})
-                    st.rerun()
-
-        st.subheader("🔍 Database Klien")
-        s_query = st.text_input("Cari PIC/Bisnis:")
-        f_df = df[df['Pelanggan'].str.contains(s_query, case=False) | df['Bisnis'].str.contains(s_query, case=False)]
+        # 3. DATABASE & TOMBOL AKTIFKAN
+        st.subheader("📋 Laporan Audit Klien")
+        f_df = df[df['Pelanggan'].str.contains(search, case=False) | df['Bisnis'].str.contains(search, case=False)]
+        
         for i, row in f_df.iterrows():
-            with st.expander(f"{row['Status']} | {row['Bisnis']}"):
-                st.write(f"ID: #{row['ID']} | Rp {row['Harga']:,.0f} | Tempo: {row['Jatuh_Tempo']}")
-                c_a1, c_a2 = st.columns(2)
+            with st.expander(f"{row['Status']} | {row['Bisnis']} - {row['Pelanggan']}"):
+                st.write(f"**Audit Info:** Terdaftar pada {row['Waktu']}")
+                st.write(f"**Paket:** {row['Paket']} | **Harga:** Rp {row['Harga']:,.0f}")
+                st.write(f"**Jatuh Tempo:** {row['Jatuh_Tempo']}")
+                
+                b1, b2, b3 = st.columns(3)
                 if row['Status'] == "🔴 Menunggu":
-                    if c_a1.button("🟢 Aktifkan", key=f"a_{row['ID']}"):
-                        for it in st.session_state.db_nasabah:
-                            if it['ID'] == row['ID']: it['Status'] = "🟢 AKTIF"
+                    if b1.button("🟢 Aktifkan", key=f"act_{row['ID']}"):
+                        for item in st.session_state.db_nasabah:
+                            if item['ID'] == row['ID']: item['Status'] = "🟢 AKTIF"
                         st.rerun()
-                if c_a2.button("🗑️ Hapus", key=f"d_{row['ID']}"):
-                    st.session_state.db_nasabah = [it for it in st.session_state.db_nasabah if it['ID'] != row['ID']]
+                
+                if b2.button("🗑️ Hapus", key=f"del_{row['ID']}"):
+                    st.session_state.db_nasabah = [x for x in st.session_state.db_nasabah if x['ID'] != row['ID']]
                     st.rerun()
-    elif pw != "": st.error("Akses Ditolak.")
+                
+                # WA Follow up
+                re_wa = f"Halo {row['Pelanggan']}, Status layanan V-Guard AI Anda saat ini: {row['Status']}."
+                b3.link_button("💬 Chat Klien", f"https://wa.me/62?text={urllib.parse.quote(re_wa)}")
+                
+    elif pw != "": st.error("Sandi Salah.")
+
+# --- MENU LAIN ---
+elif menu == "2. 🎯 Visi, Misi & ROI":
+    st.header("🎯 Strategi ROI")
+    omzet_klien = st.number_input("Omzet Bulanan Klien (Rp):", value=500000000)
+    st.success(f"Potensi Penyelamatan Aset (Fraud Prevention): Rp {omzet_klien * 0.045:,.0f} / Bulan")
 
 st.markdown('<div class="footer">© 2026 V-Guard AI Systems | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
