@@ -1,51 +1,85 @@
-elif nav == "Daftar 4 Produk Utama":
-    st.header("Paket Perlindungan Aset V-Guard AI")
-    st.write("Sistem Pertahanan Bisnis Terpadu dengan Fitur Audit & Alarm Fraud.")
-    
-    col1, col2 = st.columns(2)
-    
+import streamlit as st
+import pandas as pd
+import os
+
+# --- 1. KONFIGURASI ---
+st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
+
+# --- 2. DATABASE SEDERHANA ---
+if 'cl_in' not in st.session_state: st.session_state.cl_in = False
+
+# --- 3. SIDEBAR (Tanpa Angka) ---
+with st.sidebar:
+    st.title("🛡️ V-GUARD AI")
+    if os.path.exists("erwin.jpg"):
+        st.image("erwin.jpg", use_container_width=True)
+    st.caption("Erwin Sinaga — Founder")
+    st.write("---")
+    menu = [
+        "Profil Kepemimpinan & ROI", 
+        "Daftar 4 Produk Utama", 
+        "Register Pelanggan", 
+        "Dashboard Login", 
+        "Admin Panel"
+    ]
+    nav = st.radio("Navigasi Utama:", menu)
+    st.write("---")
+    st.markdown('<a href="https://wa.me/628212190885" target="_blank" style="background-color:#25d366;color:white;padding:10px;border-radius:8px;text-decoration:none;display:block;text-align:center;font-weight:bold;">💬 Hubungi Admin</a>', unsafe_allow_html=True)
+
+# --- 4. LOGIKA MENU (Struktur IF-ELIF Lengkap) ---
+
+if nav == "Profil Kepemimpinan & ROI":
+    st.header("Profil Kepemimpinan")
+    col1, col2 = st.columns([1, 2])
     with col1:
+        if os.path.exists("erwin.jpg"):
+            st.image("erwin.jpg", caption="Erwin Sinaga — Founder")
+    with col2:
         with st.container(border=True):
-            st.subheader("📦 V-LITE (UMKM)")
             st.write("""
-            - **Alarm Fraud:** Notifikasi WA Berkala
-            - **Invoice:** Digital Notifikasi Standar
-            - **Laporan:** Rugi Laba Bulanan
-            - **Audit:** Laporan Mandiri (Self-Audit)
+            Bapak **Erwin Sinaga** adalah sosok **Founder** di balik **V-Guard AI Intelligence**. 
+            Beliau memiliki rekam jejak profesional selama lebih dari satu dekade di industri perbankan 
+            dan manajemen aset nasional. Pengalaman ini membentuk ketajaman analitis beliau dalam 
+            mendeteksi kebocoran finansial yang luput dari sistem konvensional. 
+            
+            V-Guard AI dibangun sebagai benteng pertahanan digital untuk memberikan ketenangan 
+            pikiran bagi pemilik usaha melalui audit real-time berbasis AI yang transparan dan disiplin.
             """)
-            st.write("**Pasang:** Rp 500rb | **Bulanan:** Rp 1.5jt")
+    
+    st.write("---")
+    st.subheader("Visi, Misi & Analisis ROI")
+    v1, v2 = st.columns(2)
+    with v1: st.info("**Visi:** Pelopor audit digital AI global.")
+    with v2: st.success("**Misi:** Proteksi aset UMKM & Fraud Detection.")
+    
+    oz = st.number_input("Input Omzet Bulanan (Rp):", value=100000000)
+    rugi = oz * 0.07
+    st.metric("Potensi Rugi Tanpa AI (7%)", f"Rp {rugi:,.0f}")
+    st.metric("Aset Aman Dengan V-Guard AI", f"Rp {rugi*0.9:,.0f}")
+
+elif nav == "Daftar 4 Produk Utama":
+    st.header("Solusi Keamanan Aset V-Guard AI")
+    st.info("Fitur Utama: Alarm Fraud, Invoice Notif, Laba-Rugi, & Audit Otomatis")
+    
+    c1, c2 = st.columns(2)
+    with c1:
+        with st.container(border=True):
+            st.subheader("📦 V-LITE (Basic)")
+            st.write("**Fitur Utama:**\n- Alarm Fraud: Notif WA\n- Invoice: Digital Notif\n- Laporan: Laba Rugi Bulanan\n- Audit: Laporan Self-Audit")
+            st.write("💰 **Pasang:** 1jt | **Bulan:** 1jt")
             st.link_button("Pesan V-LITE", "https://wa.me/628212190885?text=Pesan%20V-LITE")
 
         with st.container(border=True):
-            st.subheader("👁️ V-SIGHT (CCTV AI)")
-            st.write("""
-            - **Alarm Fraud:** Real-Time + Bukti Foto/Video
-            - **Invoice:** Sinkronisasi Struk & Rekaman
-            - **Laporan:** Analisis Rugi Laba & ROI Aset
-            - **Audit:** Audit Perilaku Visual AI
-            """)
-            st.write("**Pasang:** Rp 2.5jt | **Bulanan:** Rp 4jt")
+            st.subheader("👁️ V-SIGHT (Visual)")
+            st.write("**Fitur Utama:**\n- Alarm Fraud: Real-Time + Foto\n- Invoice: Sync Struk & Video\n- Laporan: Analisis ROI Aset\n- Audit: Perilaku Visual AI")
+            st.write("💰 **Pasang:** 3.5jt | **Bulan:** 4.5jt")
             st.link_button("Pesan V-SIGHT", "https://wa.me/628212190885?text=Pesan%20V-SIGHT")
 
-    with col2:
+    with c2:
         with st.container(border=True):
-            st.subheader("🚀 V-PRO (Retail)")
-            st.write("""
-            - **Alarm Fraud:** Real-Time Push Notification
-            - **Invoice:** Auto-Invoice & Update Stok
-            - **Laporan:** Rugi Laba Harian (Daily P&L)
-            - **Audit:** Laporan Audit AI Otomatis
-            """)
-            st.write("**Pasang:** Rp 1jt | **Bulanan:** Rp 2.5jt")
+            st.subheader("🚀 V-PRO (Standard)")
+            st.write("**Fitur Utama:**\n- Alarm Fraud: Real-Time Push\n- Invoice: Auto-Invoice & Stok\n- Laporan: Laba Rugi Harian\n- Audit: Audit AI Otomatis")
+            st.write("💰 **Pasang:** 2jt | **Bulan:** 2.5jt")
             st.link_button("Pesan V-PRO", "https://wa.me/628212190885?text=Pesan%20V-PRO")
 
-        with st.container(border=True):
-            st.subheader("🏢 V-ENTERPRISE")
-            st.write("""
-            - **Alarm Fraud:** Investigasi Tim Khusus
-            - **Invoice:** Custom API & Billing
-            - **Laporan:** Konsolidasi Laba Multi-Cabang
-            - **Audit:** Investigasi Forensik Digital
-            """)
-            st.write("**Pasang:** Custom | **Bulanan:** Mulai Rp 10jt")
-            st.link_button("Hubungi Admin", "https://wa.me/628212190885?text=Pesan%20ENTERPRISE")
+        with st.
