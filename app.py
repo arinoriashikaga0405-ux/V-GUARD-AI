@@ -3,14 +3,9 @@ import hashlib
 from datetime import datetime
 import os
 
-# --- 1. CONFIG & KEAMANAN (LOCKED) ---
+# --- 1. CONFIG & UI (LOCKED) ---
 WHATSAPP_NUMBER = "6282122190885" 
-ADMIN_PWD_HASH = hashlib.sha256("w1nbju8282".encode()).hexdigest()
 
-if 'auth_vguard' not in st.session_state:
-    st.session_state['auth_vguard'] = False
-
-# --- 2. PREMIUM UI DESIGN (ASLI & RAPI) ---
 st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", page_icon="🛡️", layout="wide")
 
 st.markdown("""
@@ -21,6 +16,7 @@ st.markdown("""
         background: linear-gradient(145deg, #1e293b, #0f172a);
         padding: 20px; border-radius: 20px; border: 1px solid #334155;
         height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+        margin-bottom: 20px;
     }
     .price-tag { color: #34d399; font-size: 24px; font-weight: bold; margin: 5px 0; }
     .feature-list { font-size: 12px; color: #cbd5e1; text-align: left; line-height: 1.5; }
@@ -32,7 +28,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (LOCKED) ---
+# --- 2. SIDEBAR (LOCKED) ---
 with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     if os.path.exists("erwin.jpg"): 
@@ -40,9 +36,11 @@ with st.sidebar:
     st.markdown('<p style="text-align:center; font-weight:800; font-size:22px; color:white;">Erwin Sinaga</p>', unsafe_allow_html=True)
     st.markdown('<p style="text-align:center; color:#38bdf8; font-size:13px; margin-top:-10px;">Founder & CEO V-Guard AI</p>', unsafe_allow_html=True)
     st.divider()
+    # Pastikan pilihan menu sama persis dengan kondisi if/elif di bawah
     menu = st.radio("MENU UTAMA:", ["Home", "Produk & Investasi", "Portal Klien", "Admin Panel"])
 
-# --- 4. HALAMAN: HOME (VISI MISI 200 KATA) ---
+# --- 3. LOGIKA HALAMAN ---
+
 if menu == "Home":
     st.title("🛡️ V-Guard AI Intelligence")
     st.subheader("Digitizing Trust, Eliminating Leakage")
@@ -72,6 +70,6 @@ if menu == "Home":
         """, unsafe_allow_html=True)
         st.caption("— **Erwin Sinaga**, Founder V-Guard AI Intelligence")
 
-# --- 5. HALAMAN: PRODUK & INVESTASI ---
 elif menu == "Produk & Investasi":
-    st
+    st.title("🛡️ Detail Layanan & Investasi V-Guard AI")
+    st.divider()
