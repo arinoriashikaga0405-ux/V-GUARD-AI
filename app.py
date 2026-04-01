@@ -24,8 +24,10 @@ with st.sidebar:
     st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
     foto_path = "erwin.jpg"
     if os.path.exists(foto_path):
-        try: st.image(foto_path, use_container_width=True)
-        except: st.info("Founder & CEO")
+        try:
+            st.image(foto_path, use_container_width=True)
+        except:
+            st.info("Founder & CEO")
     st.markdown("<div style='text-align:center;'><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
     st.markdown("---")
     menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center"])
@@ -80,4 +82,56 @@ elif menu == "Analisis ROI Kerugian":
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10000000)
         leak = st.slider("Estimasi Kebocoran / Fraud (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
-        st.error(f"Potensi Kerugian: Rp {loss:,.0f
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
+    with col_b:
+        biaya = st.selectbox("Pilih Rencana Investasi Paket", [1000000, 2500000, 5000000, 10000000])
+        saved = loss - biaya
+        st.success(f"Profit yang Diselamatkan: Rp {saved:,.0f} / bln")
+        roi_val = (saved/biaya)*100 if saved > 0 else 0
+        st.metric("ROI Investasi", f"{roi_val:.0f}%")
+
+# MENU 4: PORTAL KLIEN
+elif menu == "Portal Klien":
+    st.header("Portal Klien V-Guard AI")
+    col_order, col_login = st.columns(2)
+    with col_order:
+        st.subheader("📝 Form Order Baru")
+        with st.container(border=True):
+            nama_u = st.text_input("Nama Usaha / Perusahaan")
+            paket_u = st.selectbox("Paket yang Dipilih", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.file_uploader("Upload KTP Pemilik Bisnis", type=['jpg', 'png', 'pdf'])
+            if st.button("Kirim Data Registrasi"):
+                st.success("Data telah masuk ke sistem. Silakan tunggu verifikasi admin.")
+    with col_login:
+        st.subheader("🔑 User Berlangganan")
+        with st.container(border=True):
+            u_id = st.text_input("Username / ID Klien")
+            u_pw = st.text_input("Password Akses", type="password")
+            if st.button("Masuk Ke Dashboard"):
+                if u_pw == "vguardklien2026":
+                    st.success(f"Selamat Datang {u_id}")
+                else:
+                    st.error("Password Salah atau Akun Belum Aktif.")
+
+# MENU 5: ADMIN CONTROL CENTER
+elif menu == "Admin Control Center":
+    st.header("🔒 Admin Control Center - The Core Brain")
+    admin_input = st.text_input("Administrator Password", type="password")
+    if admin_input == "adminvguard2026":
+        t1, t2, t3 = st.tabs(["📊 VCS Dashboard", "👤 Kelola User Baru", "🚨 Alarm & Notifikasi"])
+        with t1:
+            st.metric("Total Kasir", "Rp 125.450.000")
+            st.metric("Dana Bank (VCS Sinkron)", "Rp 125.450.000", delta="Sinkron 100%")
+        with t2:
+            st.text_input("ID Klien Baru")
+            st.selectbox("Set Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.button("Aktifkan Akun")
+        with t3:
+            st.warning("📅 Invoice H-7 Otomatis: AKTIF")
+            st.error("🚨 Alarm Fraud Digital: AKTIF")
+    elif admin_input != "":
+        st.error("Password Salah.")
+
+# --- 5. FOOTER ---
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026 | Built for Digital Trust Integrity</small></center>", unsafe_allow_html=True)
