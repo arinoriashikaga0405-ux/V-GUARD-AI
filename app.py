@@ -64,21 +64,4 @@ if nav == "1. 👤 Profil Founder":
 
 Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan.
 
-Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel dan pengawasan yang tak terputus. Visi besar beliau adalah untuk mendemokratisasikan keamanan bisnis bagi semua kalangan, memastikan bahwa UKM pun memiliki akses ke teknologi proteksi setingkat korporasi. Di bawah kepemimpinan beliau, V-Guard AI terus berinovasi untuk mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, menjadikannya mitra strategis yang tak tergantikan dalam menjaga setiap rupiah aset berharga pelanggan dari ancaman internal maupun eksternal yang merugikan.""")
-
-elif nav == "2. 🎯 Visi, Misi & ROI":
-    st.header("Visi, Misi & Analisis Kerugian")
-    st.info("**Visi:** Menjadi pelopor global dalam penyediaan infrastruktur audit digital berbasis AI yang menjamin keamanan aset dan integritas finansial bagi setiap pelaku bisnis.")
-    st.success("**Misi:** Mengintegrasikan teknologi kecerdasan buatan dalam sistem pengawasan harian guna mendeteksi fraud sejak dini, memitigasi risiko operasional, dan memberikan laporan audit yang transparan bagi pemilik usaha.")
-    st.write("---")
-    st.subheader("📊 Simulasi ROI & Penyelamatan Aset")
-    oz = st.number_input("Input Total Omzet Bulanan (Rp):", value=100000000)
-    leakage = oz * 0.07
-    st.error(f"Potensi Kerugian Akibat Kebocoran (7%): Rp {leakage:,.0f}")
-    biaya_vguard = 2500000
-    st.success(f"Estimasi Dana yang Diselamatkan: Rp {leakage - biaya_vguard:,.0f}")
-
-elif nav == "3. 💎 Layanan Produk":
-    st.header("Paket Layanan Unggulan V-Guard AI")
-    c1, c2, c3 = st.columns(3)
-    wa = "
+Beliau percaya bahwa ekosistem
