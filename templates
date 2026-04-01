@@ -7,54 +7,49 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0a192f; color: #ccd6f6; font-family: 'Segoe UI', Roboto, sans-serif; }
-        .hero-section { padding: 80px 0; border-bottom: 1px solid #233554; text-align: center; }
+        body { background-color: #0a192f; color: #ccd6f6; font-family: 'Segoe UI', sans-serif; }
+        .hero-section { padding: 60px 0; border-bottom: 1px solid #233554; text-align: center; }
         .profile-img { 
-            width: 180px; 
-            height: 180px; 
-            border-radius: 50%; 
-            border: 4px solid #64ffda; 
-            object-fit: cover; 
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+            width: 180px; height: 180px; border-radius: 50%; 
+            border: 4px solid #64ffda; object-fit: cover; margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(2,12,27,0.7);
         }
-        h1, h2, h3 { color: #64ffda; font-weight: 700; }
+        h1, h2, h3 { color: #64ffda; }
         .feature-card { 
-            background: #112240; 
-            padding: 30px; 
-            border-radius: 12px; 
-            height: 100%; 
-            border: 1px solid transparent; 
-            transition: all 0.3s ease; 
+            background: #112240; padding: 25px; border-radius: 12px; height: 100%; 
+            border: 1px solid transparent; transition: 0.3s; 
         }
-        .feature-card:hover { 
-            border-color: #64ffda; 
-            transform: translateY(-10px); 
-            background: #172a45;
+        .feature-card:hover { border-color: #64ffda; transform: translateY(-10px); }
+        .feature-card i { font-size: 2.5rem; color: #64ffda; margin-bottom: 15px; }
+        .btn-cyber { 
+            border: 1px solid #64ffda; color: #64ffda; padding: 10px 25px; 
+            text-decoration: none; border-radius: 4px; transition: 0.3s;
         }
-        .feature-card i { font-size: 2.5rem; color: #64ffda; margin-bottom: 20px; }
-        .btn-outline-cyber { 
-            border: 1px solid #64ffda; 
-            color: #64ffda; 
-            padding: 12px 30px; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-weight: 600;
-            transition: 0.3s;
-            display: inline-block;
-        }
-        .btn-outline-cyber:hover { 
-            background: rgba(100, 255, 218, 0.1); 
-            color: #64ffda; 
-        }
-        .text-misi { color: #8892b0; max-width: 700px; margin: 0 auto; }
+        .btn-cyber:hover { background: rgba(100, 255, 218, 0.1); }
+        .misi-box { max-width: 700px; margin: 0 auto; color: #8892b0; }
     </style>
 </head>
 <body>
 
 <div class="hero-section">
     <div class="container">
-        <img src="https://raw.githubusercontent.com/arinoriashikaga0405-ux/V-GUARD-AI/main/erwin.jpg" alt="Founder V-GUARD" class="profile-img">
-        <h1 class="display-5">V-GUARD AI</h1>
+        <img src="https://raw.githubusercontent.com/arinoriashikaga0405-ux/V-GUARD-AI/main/erwin.jpg" alt="Erwin Sinaga" class="profile-img">
+        <h1 class="display-5 fw-bold">V-GUARD AI</h1>
         
-        <div
+        <div class="mt-4 misi-box">
+            <h3>Visi & Misi</h3>
+            <p><strong>Visi:</strong> Menjadi pionir keamanan digital berbasis AI yang adaptif untuk menjamin kedaulatan data bisnis global.</p>
+            <p><strong>Misi:</strong> Memberikan proteksi siber proaktif melalui teknologi deteksi cerdas serta menyederhanakan manajemen keamanan untuk SME melalui dashboard terintegrasi yang efisien.</p>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Fitur Layanan Produk</h2>
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <i class="fas fa-shield-virus"></i>
+                    <h4>AI Threat Detection</h4>
+                    <p class="small text-
