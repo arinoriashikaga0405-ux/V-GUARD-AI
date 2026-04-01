@@ -4,35 +4,37 @@ import pandas as pd
 from datetime import datetime, timedelta
 import google.generativeai as genai
 
-# --- 1. CONFIG & API ---
-# Ganti dengan API KEY Bapak
-MY_KEY = "MASUKKAN_API_KEY_BAPAK"
+# --- 1. SETTING API ---
+# Isi API KEY di sini
+KEY = "MASUKKAN_API_KEY_BAPAK"
 try:
-    genai.configure(api_key=MY_KEY)
-    ai_model = genai.GenerativeModel('gemini-1.5-flash')
+    genai.configure(api_key=KEY)
+    ai = genai.GenerativeModel('gemini-1.5-flash')
 except:
     pass
 
-st.set_page_config(page_title="V-Guard AI", layout="wide")
+st.set_page_config(page_title="V-Guard AI")
 
-# --- 2. DATA PROFIL (SOP 150 KATA) ---
-TEKS_PROFIL = """Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. 
-
-Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel."""
-
-# --- 3. DATABASE SESSION ---
+# --- 2. DATA STRUKTUR ---
 if 'db' not in st.session_state:
-    hari_ini = datetime.now().date()
-    jt = str(hari_ini + timedelta(days=5))
+    skrg = datetime.now().date()
+    jt_awal = str(skrg + timedelta(days=5))
     st.session_state.db = [{
-        "ID": 101, "Bisnis": "Cafe Maju", 
-        "Harga": 2500000, "Jatuh_Tempo": jt
+        "ID": 101, 
+        "Bisnis": "Cafe Maju", 
+        "Harga": 2500000, 
+        "Tempo": jt_awal
     }]
 
 if 'login' not in st.session_state:
     st.session_state.login = False
 
-# --- 4. FUNGSI FORMAT ---
+# --- 3. TEKS PROFIL (SOP) ---
+T_PROFIL = """Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. 
+
+Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel."""
+
+# --- 4. FUNGSI ---
 def rp(n):
     v = "{:,.0f}".format(float(n)).replace(",", ".")
     return "Rp " + v
@@ -44,24 +46,21 @@ with st.sidebar:
         st.image("erwin.jpg")
     st.write("**Erwin Sinaga**")
     st.write("---")
-    menu = st.radio("Menu:", ["Profil", "ROI", "Admin"])
-    st.write("---")
-    st.link_button("Chat Support", "https://wa.me/628212190885")
+    m = st.radio("Menu:", ["Profil", "ROI", "Admin"])
 
-# --- 6. LOGIKA HALAMAN ---
-if menu == "Profil":
+# --- 6. HALAMAN ---
+if m == "Profil":
     st.header("Profil Founder")
-    st.write(TEKS_PROFIL)
+    st.write(T_PROFIL)
 
-elif menu == "ROI":
-    st.header("Analisis ROI")
-    st.info("Visi: Audit AI Real-time. Misi: Mencegah kebocoran.")
-    oz = st.number_input("Omzet (Rp):", value=100000000)
+elif m == "ROI":
+    st.header("ROI & Strategi")
+    oz = st.number_input("Omzet:", value=100000000)
     bc = oz * 0.07
     st.error("Bocor (7%): " + rp(bc))
     st.success("Save: " + rp(bc - 2500000))
 
-elif menu == "Admin":
+elif m == "Admin":
     if not st.session_state.login:
         p = st.text_input("Sandi:", type="password")
         if st.button("Masuk"):
@@ -73,21 +72,36 @@ elif menu == "Admin":
             st.session_state.login = False
             st.rerun()
         
-        st.error("🚨 FRAUD ALERT: ANOMALI TERDETEKSI!")
+        st.error("🚨 FRAUD ALERT DETECTED!")
         
-        # Notif H-7
-        skrg = datetime.now().date()
+        # Cek Jatuh Tempo
+        tday = datetime.now().date()
         for k in st.session_state.db:
-            d_jt = datetime.strptime(k['Jatuh_Tempo'], "%Y-%m-%d").date()
-            if (d_jt - skrg).days <= 7:
-                st.warning("⚠️ JATUH TEMPO: " + k["Bisnis"] + " ("+ k['Jatuh_Tempo'] +")")
+            d_jt = datetime.strptime(k['Tempo'], "%Y-%m-%d").date()
+            if (d_jt - tday).days <= 7:
+                st.warning("⚠️ JATUH TEMPO: " + k["Bisnis"])
 
-        t1, t2, t3 = st.tabs(["VCS Input", "Database", "Gemini Audit"])
+        t1, t2 = st.tabs(["VCS Input", "Audit Gemini"])
         with t1:
             with st.form("vcs"):
-                bn = st.text_input("Bisnis")
+                bn = st.text_input("Nama Bisnis")
                 hr = st.number_input("Harga", value=2500000)
-                tg = st.date_input("Jatuh Tempo")
+                tg = st.date_input("Tempo")
                 if st.form_submit_button("Simpan"):
-                    st.session_state.db.append({
-                        "ID":
+                    # Pecah dictionary agar tidak kena SyntaxError
+                    baru = {}
+                    baru["ID"] = 105
+                    baru["Bisnis"] = bn
+                    baru["Harga"] = hr
+                    baru["Tempo"] = str(tg)
+                    st.session_state.db.append(baru)
+                    st.rerun()
+        with t2:
+            st.table(pd.DataFrame(st.session_state.db))
+            txt = st.text_area("Data Audit:")
+            if st.button("Proses AI"):
+                if KEY != "MASUKKAN_API_KEY_BAPAK":
+                    res = ai.generate_content(txt)
+                    st.write(res.text)
+
+st.caption("© 2026 V-Guard AI |
