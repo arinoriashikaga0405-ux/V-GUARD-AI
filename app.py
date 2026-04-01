@@ -4,8 +4,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import google.generativeai as genai
 
-# --- 1. SETTING API ---
-# Isi API KEY di sini
+# --- 1. API SETUP ---
 KEY = "MASUKKAN_API_KEY_BAPAK"
 try:
     genai.configure(api_key=KEY)
@@ -15,15 +14,13 @@ except:
 
 st.set_page_config(page_title="V-Guard AI")
 
-# --- 2. DATA STRUKTUR ---
+# --- 2. SESSION DATA ---
 if 'db' not in st.session_state:
     skrg = datetime.now().date()
-    jt_awal = str(skrg + timedelta(days=5))
+    jt = str(skrg + timedelta(days=5))
     st.session_state.db = [{
-        "ID": 101, 
-        "Bisnis": "Cafe Maju", 
-        "Harga": 2500000, 
-        "Tempo": jt_awal
+        "ID": 101, "Bisnis": "Cafe Maju", 
+        "Harga": 2500000, "Tempo": jt
     }]
 
 if 'login' not in st.session_state:
@@ -34,7 +31,7 @@ T_PROFIL = """Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang m
 
 Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel."""
 
-# --- 4. FUNGSI ---
+# --- 4. FORMAT RP ---
 def rp(n):
     v = "{:,.0f}".format(float(n)).replace(",", ".")
     return "Rp " + v
@@ -47,6 +44,8 @@ with st.sidebar:
     st.write("**Erwin Sinaga**")
     st.write("---")
     m = st.radio("Menu:", ["Profil", "ROI", "Admin"])
+    st.write("---")
+    st.caption("© 2026 V-Guard AI")
 
 # --- 6. HALAMAN ---
 if m == "Profil":
@@ -54,7 +53,7 @@ if m == "Profil":
     st.write(T_PROFIL)
 
 elif m == "ROI":
-    st.header("ROI & Strategi")
+    st.header("Analisis ROI")
     oz = st.number_input("Omzet:", value=100000000)
     bc = oz * 0.07
     st.error("Bocor (7%): " + rp(bc))
@@ -81,27 +80,10 @@ elif m == "Admin":
             if (d_jt - tday).days <= 7:
                 st.warning("⚠️ JATUH TEMPO: " + k["Bisnis"])
 
-        t1, t2 = st.tabs(["VCS Input", "Audit Gemini"])
+        t1, t2 = st.tabs(["VCS Input", "Database"])
         with t1:
             with st.form("vcs"):
-                bn = st.text_input("Nama Bisnis")
+                bn = st.text_input("Bisnis")
                 hr = st.number_input("Harga", value=2500000)
                 tg = st.date_input("Tempo")
-                if st.form_submit_button("Simpan"):
-                    # Pecah dictionary agar tidak kena SyntaxError
-                    baru = {}
-                    baru["ID"] = 105
-                    baru["Bisnis"] = bn
-                    baru["Harga"] = hr
-                    baru["Tempo"] = str(tg)
-                    st.session_state.db.append(baru)
-                    st.rerun()
-        with t2:
-            st.table(pd.DataFrame(st.session_state.db))
-            txt = st.text_area("Data Audit:")
-            if st.button("Proses AI"):
-                if KEY != "MASUKKAN_API_KEY_BAPAK":
-                    res = ai.generate_content(txt)
-                    st.write(res.text)
-
-st.caption("© 2026 V-Guard AI |
+                if st.form_submit
