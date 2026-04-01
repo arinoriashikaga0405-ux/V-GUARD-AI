@@ -14,7 +14,7 @@ except:
 
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Database Sesi
+# Inisialisasi Database & Login Session
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
         {"ID": 101, "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "SMART", "Harga": 2500000, "Status": "🟢 AKTIF"},
@@ -59,7 +59,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", f"https://wa.me/{WA_NUMBER}")
 
-# --- MENU 1: PROFIL FOUNDER (TETAP) ---
+# --- MENU 1: PROFIL FOUNDER (DIPERBAIKI >150 KATA, TANPA KATA CEO/CSO) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     c1, c2 = st.columns([1, 2.2])
@@ -67,15 +67,39 @@ if menu == "1. 👤 Profil Founder":
         if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
     with c2:
         st.subheader("Bapak Erwin Sinaga")
-        st.write("""Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang telah mengabdikan lebih dari satu dekade karir profesionalnya untuk mendalami seluk-beluk operasional bisnis dan efisiensi organisasi di skala nasional. Dengan keahlian mendalam dalam navigasi industri finansial, beliau memiliki kemampuan analitis yang tajam dalam mengidentifikasi titik-titik rawan kebocoran aset yang seringkali luput dari pengawasan manajemen konvensional. Dedikasi beliau terhadap prinsip integritas dan akuntabilitas menjadi pilar utama di balik berdirinya V-Guard AI, sebuah platform yang mengintegrasikan kecerdasan buatan untuk memberikan perlindungan berlapis bagi para pengusaha di Indonesia.""")
+        st.write("""
+        Bapak Erwin Sinaga adalah seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir.
 
-# --- MENU 2: ROI (TETAP) ---
+        Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel. Dengan visi besar untuk mendemokrasikan keamanan bisnis bagi semua kalangan, mulai dari tingkat UMKM hingga skala korporasi, beliau terus berinovasi dalam mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, memastikan setiap investasi klien terjaga dengan standar perlindungan berlapis dan efisiensi yang terukur secara nyata.
+        """)
+
+# --- MENU 2: VISI, MISI & ROI KERUGIAN (DIPERBAIKI) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("Analisis Strategis")
-    omzet = st.number_input("Omzet Bulanan (Rp):", value=100000000)
-    st.metric("Potensi Efisiensi (7%)", f"Rp {omzet * 0.07:,.0f}")
+    st.header("Analisis Strategis & Proteksi Kerugian")
+    
+    st.markdown("### 👁️ Visi & Misi")
+    st.info("**Visi:** Menjadi standar emas dalam teknologi pengawasan bisnis digital di Indonesia untuk menciptakan ekosistem usaha yang bebas dari kebocoran finansial.")
+    st.success("**Misi:** Menyediakan instrumen audit berbasis kecerdasan buatan yang mampu mendeteksi indikasi kecurangan secara real-time dan memberikan perlindungan aset yang terjangkau bagi para pengusaha.")
+    
+    st.write("---")
+    st.markdown("### 📉 Kalkulator Potensi Kerugian & ROI")
+    st.write("Gunakan alat ini untuk melihat seberapa besar kebocoran yang bisa kami cegah dari omzet bisnis Bapak.")
+    
+    omzet = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000, step=1000000)
+    
+    c_roi1, c_roi2 = st.columns(2)
+    with c_roi1:
+        potensi_bocor = omzet * 0.07
+        st.error(f"**Estimasi Kerugian/Kebocoran (7%):** Rp {potensi_bocor:,.0f}")
+        st.caption("Rata-rata bisnis mengalami kebocoran operasional sebesar 5-10% tanpa sistem audit AI.")
+        
+    with c_roi2:
+        biaya_vguard = 2500000 # Contoh ambil paket Smart
+        roi_value = potensi_bocor - biaya_vguard
+        st.metric("Dana yang Berhasil Diselamatkan", f"Rp {roi_value:,.0f}", delta="ROI Positif")
+        st.caption("Hasil setelah dikurangi biaya langganan V-Guard AI.")
 
-# --- MENU 3: PAKET UNGGULAN (DENGAN DETAIL FITUR) ---
+# --- MENU 3: PAKET UNGGULAN (KUNCI - TIDAK BERUBAH) ---
 elif menu == "3. 📦 Paket Unggulan":
     st.header("Layanan V-Guard AI")
     cols = st.columns(4)
@@ -87,72 +111,4 @@ elif menu == "3. 📦 Paket Unggulan":
     ]
     for i, (n, p, f) in enumerate(p_data):
         with cols[i]:
-            st.markdown(f"""
-            <div class="product-card">
-                <div class="pkg-title">{n}</div>
-                <p style="color: #d32f2f; font-size: 20px;"><b>Rp {p}</b></p>
-                <div class="feature-text">{f}</div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button(f"Pilih {n}", f"https://wa.me/{WA_NUMBER}?text=Saya%20tertarik%20Paket%20{n}")
-
-# --- MENU 4: REGISTRASI (NAMA, PAKET, HARGA) ---
-elif menu == "4. 📝 Registrasi & Upload":
-    st.header("Formulir Pendaftaran Klien")
-    with st.form("reg_klien"):
-        col1, col2 = st.columns(2)
-        with col1:
-            nama_user = st.text_input("Nama Lengkap Pelanggan:")
-            nama_toko = st.text_input("Nama Bisnis/Usaha:")
-        with col2:
-            pkt_pilih = st.selectbox("Pilih Jenis Paket:", ["BASIC (1.5jt)", "SMART (2.5jt)", "PRO (5jt)", "ELITE (Custom)"])
-            harga_pkt = st.text_input("Konfirmasi Harga (Rp):")
-        
-        st.file_uploader("Upload KTP (JPG/PNG):", type=['jpg', 'png'])
-        st.file_uploader("Upload Bukti Pembayaran:", type=['jpg', 'png'])
-        
-        if st.form_submit_button("Kirim Pendaftaran"):
-            st.success(f"Pendaftaran {nama_user} untuk paket {pkt_pilih} berhasil dikirim!")
-
-# --- MENU 5: AKSES TERBATAS (DENGAN FITUR VCS, ALARM, INVOICE, CCTV & LOGOUT) ---
-elif menu == "5. 🔐 Akses Terbatas":
-    if not st.session_state.admin_akses_terbuka:
-        st.markdown("<h2 style='text-align: center;'>🔐 Verifikasi Otoritas Admin</h2>", unsafe_allow_html=True)
-        cols_l = st.columns([1, 2, 1])
-        with cols_l[1]:
-            sandi = st.text_input("Masukkan Sandi Keamanan:", type="password", key="sandi_admin")
-            if st.button("Buka Panel Admin"):
-                if sandi == "w1nbju8282":
-                    st.session_state.admin_akses_terbuka = True
-                    st.rerun()
-                else:
-                    st.error("Sandi Salah!")
-    else:
-        # LOGOUT DI POJOK KANAN ATAS
-        h1, h2 = st.columns([5, 1])
-        with h1: st.header("⚙️ Operasional V-Guard AI")
-        with h2:
-            if st.button("🔒 LOGOUT"):
-                st.session_state.admin_akses_terbuka = False
-                st.rerun()
-        
-        st.write("---")
-        t1, t2, t3 = st.tabs(["📊 Kelola Akun", "🚨 Monitoring (VCS/Alarm/CCTV)", "🧾 Invoice & Billing"])
-        
-        with t1:
-            st.dataframe(pd.DataFrame(st.session_state.db_nasabah), use_container_width=True)
-
-        with t2:
-            st.subheader("Pantauan Lapangan")
-            c_a, c_b, c_c = st.columns(3)
-            with c_a: st.info("🖥️ **VCS System**"); st.button("Aktifkan Visual Control")
-            with c_b: st.error("🔔 **Alarm Fraud**"); st.button("Lihat Indikasi Fraud")
-            with c_c: st.warning("📹 **CCTV Monitor**"); st.button("Buka Kamera")
-
-        with t3:
-            st.subheader("🧾 Invoice Management")
-            st.info("Kirim Notifikasi Tagihan ke Pelanggan")
-            if st.button("Kirim Notifikasi Invoice via WA"):
-                st.success("Notifikasi sedang dikirim ke database pelanggan.")
-
-st.markdown('<div class="footer">© 2026 V-Guard AI | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
+            st.markdown(f"""<div class="product-card"><div class="pkg-title">{n}</div><p style="color: #d32f2f; font-size: 20px;"><b>Rp {p}</b></p
