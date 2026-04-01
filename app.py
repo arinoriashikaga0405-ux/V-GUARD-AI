@@ -6,7 +6,7 @@ from datetime import datetime
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database & Login State
+# Inisialisasi Database
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
         {"ID": 101, "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Paket": "MEDIUM", "Harga": 7500000, "Status": "🟢 AKTIF", "Log": "System Initialized"}
@@ -15,36 +15,33 @@ if 'db_nasabah' not in st.session_state:
 if 'admin_auth' not in st.session_state:
     st.session_state.admin_auth = False
 
-# Variabel Kontak
 WA_NUMBER = "628212190885"
 
-# 2. CSS CUSTOM (Memasukkan teks ke dalam kotak & Desain Sidebar)
+# 2. CSS CUSTOM (Memasukkan Teks ke Kotak & Perbaikan Visual)
 st.markdown(f"""
 <style>
     .footer {{ position: fixed; left: 0; bottom: 0; width: 100%; background: #ffffff; text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid #ddd; z-index: 999; }}
-    
-    /* KOTAK PAKET LAYANAN */
     .product-card {{
         background-color: #f8f9fa;
         border: 1px solid #e0e0e0;
         border-radius: 15px;
         padding: 25px;
         text-align: center;
-        min-height: 400px;
+        min-height: 420px;
         transition: 0.3s;
         border-top: 8px solid #1E3A8A;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }}
-    .product-card:hover {{
-        transform: translateY(-5px);
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
-    }}
-    .package-title {{ font-size: 24px; font-weight: bold; color: #1E3A8A; margin-bottom: 10px; }}
+    .product-card:hover {{ transform: translateY(-5px); box-shadow: 0px 4px 15px rgba(0,0,0,0.1); }}
+    .package-title {{ font-size: 26px; font-weight: bold; color: #1E3A8A; margin-bottom: 5px; }}
     .price-tag {{ font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; }}
-    .feature-list {{ text-align: left; font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 20px; }}
+    .feature-list {{ text-align: left; font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 15px; flex-grow: 1; }}
 </style>
 """, unsafe_allow_html=True)
 
-# 3. SIDEBAR (Tampilkan Semua Folder Seperti Awal)
+# 3. SIDEBAR (Semua Folder Kembali Seperti Awal)
 with st.sidebar:
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", caption="Founder V-Guard AI", use_container_width=True)
@@ -60,7 +57,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", f"https://wa.me/{WA_NUMBER}")
 
-# --- MENU 1: PROFIL FOUNDER ---
+# --- MENU 1: PROFIL FOUNDER (Min 150 Kata) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     c1, c2 = st.columns([1, 2])
@@ -77,8 +74,12 @@ if menu == "1. 👤 Profil Founder":
         Sebagai arsitek utama V-Guard AI, Bapak Erwin Sinaga fokus pada misi besar untuk mendemokrasikan fungsi audit internal 
         agar dapat diakses oleh semua skala bisnis, mulai dari UMKM hingga korporasi besar. Berdomisili di Tangerang, beliau aktif 
         menjembatani kesenjangan antara teknologi AI dengan kebutuhan nyata di lapangan, memastikan bahwa setiap rupiah investasi 
-        terjaga dengan aman dan memberikan hasil maksimal bagi pertumbuhan ekonomi nasional.
+        terjaga dengan aman dan memberikan hasil maksimal bagi pertumbuhan ekonomi nasional. Visi beliau adalah menciptakan 
+        transparansi mutlak dalam setiap transaksi bisnis.
         """)
 
 # --- MENU 2: VISI & ROI ---
-elif
+elif menu == "2. 🎯 Visi & ROI":
+    st.header("Visi, Misi & Analisis ROI")
+    st.info("**Visi:** Menjadi benteng pertahanan digital utama bagi ekosistem bisnis di Indonesia.")
+    st.success("**Misi:** Meminimalisir keboc
