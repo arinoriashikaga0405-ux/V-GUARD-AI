@@ -14,9 +14,9 @@ if 'db_nasabah' not in st.session_state:
 if 'admin_akses_terbuka' not in st.session_state:
     st.session_state.admin_akses_terbuka = False
 
+# NOMOR WHATSAPP FOUNDER (SOP)
 WA_NUMBER = "628212190885"
 
-# FUNGSI FORMAT RUPIAH SESUAI SOP
 def format_rp(angka):
     try:
         return f"Rp {float(angka):,.0f}".replace(",", ".")
@@ -63,12 +63,18 @@ if menu == "1. 👤 Profil Founder":
         st.write("""
         Bapak Erwin Sinaga adalah seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir.
 
-        Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel. Dengan visi besar untuk mendemokrasikan keamanan bisnis bagi semua kalangan, mulai dari tingkat UMKM hingga skala korporasi, beliau terus berinovasi dalam mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, memastikan setiap investasi klien terjaga dengan standar perlindungan berlapis dan efisiensi yang terukur secara nyata.
+        Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel. Dengan visi besar untuk mendemokrasikan keamanan bisnis bagi semua kalangan, mulai dari tingkat UMKM hingga skala korporasi, beliau terus berinnovasi dalam mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, memastikan setiap investasi klien terjaga dengan standar perlindungan berlapis dan efisiensi yang terukur secara nyata.
         """)
 
-# --- MENU 2: ROI (LOCK SOP 7%) ---
+# --- MENU 2: VISI, MISI & ROI (DIKEMBALIKAN) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
-    st.header("Analisis Strategis & Proteksi Kerugian")
+    st.header("Strategi & Analisis Proteksi")
+    
+    st.info("**Visi:** Menjadi standar emas dalam teknologi pengawasan bisnis digital di Indonesia.")
+    st.success("**Misi:** Menyediakan instrumen audit AI untuk mendeteksi indikasi kecurangan secara real-time dan transparan.")
+    
+    st.write("---")
+    st.markdown("### 📉 Kalkulator Potensi Kerugian & ROI")
     omzet = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000, step=1000000)
     c_roi1, c_roi2 = st.columns(2)
     with c_roi1:
@@ -78,7 +84,7 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
         hasil_roi = pot_bocor - 2500000
         st.metric("Dana Berhasil Diselamatkan", format_rp(hasil_roi), delta="ROI Positif")
 
-# --- MENU 3: PAKET (LOCK SOP) ---
+# --- MENU 3: PAKET UNGGULAN (LINK WA FOUNDER) ---
 elif menu == "3. 📦 Paket Unggulan":
     st.header("Layanan V-Guard AI")
     cols = st.columns(4)
@@ -91,37 +97,26 @@ elif menu == "3. 📦 Paket Unggulan":
     for i, (n, p, f) in enumerate(p_data):
         with cols[i]:
             st.markdown(f'<div class="product-card"><div class="pkg-title">{n}</div><p style="color: #d32f2f; font-size: 20px;"><b>Rp {p}</b></p><div class="feature-text">{f}</div></div>', unsafe_allow_html=True)
+            # LINK WA FOUNDER
+            st.link_button(f"Pesan Paket {n}", f"https://wa.me/{WA_NUMBER}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20{n}")
 
-# --- MENU 4: REGISTRASI (LOCK SOP) ---
+# --- MENU 4 & 5 (TETAP STABIL SESUAI SOP) ---
 elif menu == "4. 📝 Registrasi & Upload":
     st.header("Formulir Pendaftaran Klien")
     with st.form("reg_form"):
-        col1, col2 = st.columns(2)
-        with col1:
-            st.text_input("Nama Lengkap Pelanggan:")
-            st.text_input("Nama Bisnis/Usaha:")
-        with col2:
-            st.selectbox("Pilih Jenis Paket:", ["BASIC (1.5jt)", "SMART (2.5jt)", "PRO (5jt)", "ELITE (Custom)"])
-            st.text_input("Konfirmasi Harga (Rp):")
-        st.file_uploader("Upload KTP (JPG/PNG):", type=['jpg', 'png'])
-        st.file_uploader("Upload Bukti Pembayaran:", type=['jpg', 'png'])
+        st.text_input("Nama Lengkap Pelanggan:")
+        st.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO", "ELITE"])
         st.form_submit_button("Kirim Pendaftaran")
 
-# --- MENU 5: AKSES TERBATAS (FIXED ERROR & NEW FEATURES) ---
 elif menu == "5. 🔐 Akses Terbatas":
     if not st.session_state.admin_akses_terbuka:
-        st.markdown("<h2 style='text-align: center;'>🔐 Verifikasi Otoritas Admin</h2>", unsafe_allow_html=True)
-        cols_l = st.columns([1, 2, 1])
-        with cols_l[1]:
-            sandi = st.text_input("Masukkan Sandi Keamanan:", type="password")
-            if st.button("Buka Panel Admin"):
-                if sandi == "w1nbju8282":
-                    st.session_state.admin_akses_terbuka = True
-                    st.rerun()
-                else:
-                    st.error("Sandi Salah!")
+        st.markdown("<h2 style='text-align: center;'>🔐 Verifikasi Admin</h2>", unsafe_allow_html=True)
+        sandi = st.text_input("Sandi Keamanan:", type="password")
+        if st.button("Buka Panel"):
+            if sandi == "w1nbju8282":
+                st.session_state.admin_akses_terbuka = True
+                st.rerun()
     else:
-        # HEADER & LOGOUT (SOP)
         h1, h2 = st.columns([5, 1])
         with h1: st.header("⚙️ Operasional V-Guard AI")
         with h2:
@@ -130,36 +125,9 @@ elif menu == "5. 🔐 Akses Terbatas":
                 st.rerun()
         
         st.write("---")
-        # PERBAIKAN BARIS TABS (SINGLE LINE)
-        t1, t2, t3 = st.tabs(["📊 Database", "🚨 Audit & Rugi Laba", "🧾 Billing"])
+        t1, t2, t3 = st.tabs(["📊 Database", "🚨 Audit Mingguan", "🧾 Billing"])
         
         with t1:
-            st.subheader("Manajemen Database Klien")
-            with st.expander("➕ Tambah Klien Baru Secara Manual"):
-                with st.form("form_add"):
+            with st.expander("➕ Tambah Klien Baru"):
+                with st.form("add_k"):
                     n_k = st.text_input("Nama Klien:")
-                    b_k = st.text_input("Bisnis:")
-                    p_k = st.selectbox("Paket:", ["BASIC", "SMART", "PRO", "ELITE"])
-                    h_k = st.number_input("Harga Deal (Rp):", value=1500000)
-                    if st.form_submit_button("Simpan Data Klien"):
-                        st.session_state.db_nasabah.append({"ID": 100 + len(st.session_state.db_nasabah)+1, "Waktu": str(datetime.now().date()), "Pelanggan": n_k, "Bisnis": b_k, "Paket": p_k, "Harga": h_k, "Status": "🟢 AKTIF"})
-                        st.rerun()
-            
-            df_disp = pd.DataFrame(st.session_state.db_nasabah).copy()
-            df_disp['Harga'] = df_disp['Harga'].apply(format_rp)
-            st.table(df_disp)
-
-        with t2:
-            st.subheader("Laporan Mingguan Klien")
-            list_k = [d['Pelanggan'] for d in st.session_state.db_nasabah]
-            sel = st.selectbox("Pilih Klien untuk Laporan Audit:", list_k)
-            st.info(f"📋 **Hasil Audit Mingguan: {sel}**")
-            st.warning(f"📉 **Penyelamatan Dana: {format_rp(750000)}**")
-            st.button(f"Kirim Laporan Mingguan ke {sel}")
-
-        with t3:
-            st.subheader("Billing System")
-            if st.button("Kirim Notifikasi Invoice WhatsApp"):
-                st.success("Notifikasi terkirim ke semua klien!")
-
-st.markdown('<div class="footer">© 2026 V-Guard AI | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
