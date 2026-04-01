@@ -2,115 +2,71 @@ import streamlit as st
 import pandas as pd
 import os
 
-# --- 1. SETTING HALAMAN ---
-st.set_page_config(page_title="V-Guard AI", layout="wide")
+# --- 1. KONFIGURASI ---
+st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 
-# --- 2. DATA KOMUNIKASI ---
-HP = "628212190885"
-LINK_WA = f"https://wa.me/{HP}"
+# --- 2. DATA KONTAK ---
+num_wa = "628212190885"
+wa_link = f"https://wa.me/{num_wa}?text=Halo%20CEO%20V-Guard%20AI,"
 
-# --- 3. DATABASE SESSION ---
+# --- 3. DATABASE ---
 if 'user_creds' not in st.session_state:
     st.session_state.user_creds = [
-        {"User ID": "admin", "Password": "w1nbju8282", "Level": "Admin", "Paket": "MASTER"},
+        {"User ID": "admin", "Password": "w1nbju8282", "Level": "CEO", "Paket": "MASTER"},
         {"User ID": "siska", "Password": "p", "Level": "Klien", "Paket": "SMART"}
     ]
 if 'cl_in' not in st.session_state: st.session_state.cl_in = False
 
-# --- 4. SIDEBAR (FOTO & IDENTITAS) ---
+# --- 4. CSS TAMPILAN PREMIUM ---
+st.markdown("""
+<style>
+    .stApp { background-color: #f8fafc; }
+    .ceo-card { background-color: white; padding: 25px; border-radius: 15px; border-left: 5px solid #0f172a; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .metric-box { background-color: white; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0; }
+    .price-card { background-color: white; padding: 25px; border-radius: 15px; text-align: center; border: 1px solid #e2e8f0; transition: 0.3s; }
+    .price-card:hover { border: 2px solid #0f172a; transform: translateY(-5px); }
+    .wa-btn { background-color: #25d366; color: white !important; padding: 10px; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: bold; }
+</style>
+""", unsafe_allow_html=True)
+
+# --- 5. SIDEBAR ---
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
-    # Mencari foto di folder VGUARD_AI_APP
     if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
+        st.image("erwin.jpg", caption="Founder & CEO")
+    else:
+        st.info("Simpan foto Bapak dengan nama erwin.jpg")
     
-    # Perbaikan tampilan teks agar rapi
-    st.subheader("Erwin Sinaga")
-    st.write("**Senior Business Leader**")
+    st.markdown("### **Erwin Sinaga**")
+    st.markdown("**Founder & CEO**")
     st.write("---")
-    
-    nav = st.radio("Pilih Menu:", [
-        "1. Profil Founder", 
-        "2. Visi Misi ROI", 
-        "3. Produk Layanan", 
-        "4. Dashboard", 
-        "5. Admin"
-    ])
+    nav = st.radio("Navigasi Utama:", ["Profil Founder", "Visi Misi & ROI", "Layanan & Biaya", "Dashboard", "Admin"])
     st.write("---")
-    st.link_button("💬 Hubungi WhatsApp", LINK_WA)
+    st.markdown(f'<a href="{wa_link}" class="wa-btn">💬 WhatsApp CEO</a>', unsafe_allow_html=True)
 
-# --- 5. LOGIKA MENU ---
+# --- 6. LOGIKA MENU ---
 
-if nav == "1. Profil Founder":
+if nav == "Profil Founder":
     st.header("Profil Kepemimpinan")
-    with st.container(border=True):
-        st.write("""Bapak **Erwin Sinaga** adalah Senior Business Leader dengan pengalaman lebih dari 10 tahun. 
-        Keahlian utama beliau terletak pada kemampuan analitis dalam mengidentifikasi celah kebocoran finansial bisnis. 
-        V-Guard AI dibangun untuk menjamin transparansi mutlak bagi pemilik bisnis melalui audit real-time.""")
+    with st.container():
+        st.markdown('<div class="ceo-card">', unsafe_allow_html=True)
+        st.write("""Bapak **Erwin Sinaga** adalah **Founder & CEO V-Guard AI** yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. 
 
-elif nav == "2. Visi Misi ROI":
-    st.header("Visi, Misi & ROI")
+Sebagai pemimpin tertinggi di V-Guard AI, beliau memahami bahwa di era digital saat ini, integritas data dan keamanan aset adalah fondasi utama bagi setiap unit bisnis untuk dapat tumbuh secara berkelanjutan. Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien bagi pelaku UMKM maupun korporasi nasional.""")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+elif nav == "Visi Misi & ROI":
+    st.header("Strategi Perlindungan Aset")
     c1, c2 = st.columns(2)
-    with c1: st.info("**Visi:** Menjadi pelopor audit digital berbasis AI.")
-    with c2: st.success("**Misi:** Deteksi fraud real-time & proteksi aset UMKM.")
+    with c1: st.info("**👁️ Visi CEO:** Menjadi pelopor global audit digital berbasis AI.")
+    with c2: st.success("**🚀 Misi CEO:** Deteksi fraud real-time & proteksi aset UMKM.")
+    
     st.write("---")
+    st.subheader("Simulasi ROI Kerugian Klien")
     oz = st.number_input("Input Omzet Bulanan (Rp):", value=100000000)
-    st.error(f"Potensi Kerugian (7%): Rp {oz * 0.07:,.0f}")
-
-elif nav == "3. Produk Layanan":
-    st.header("Layanan & Pemesanan")
-    ca, cb, cc = st.columns(3)
-    with ca:
-        with st.container(border=True):
-            st.subheader("BASIC")
-            st.write("Rp 1.500.000")
-            st.link_button("Pesan BASIC", f"{LINK_WA}?text=Pesan%20BASIC")
-    with cb:
-        with st.container(border=True):
-            st.subheader("SMART")
-            st.write("Rp 2.500.000")
-            st.link_button("Pesan SMART", f"{LINK_WA}?text=Pesan%20SMART")
-    with cc:
-        with st.container(border=True):
-            st.subheader("PRO")
-            st.write("Rp 5.000.000")
-            st.link_button("Pesan PRO", f"{LINK_WA}?text=Pesan%20PRO")
-
-elif nav == "4. Dashboard":
-    tab1, tab2 = st.tabs(["📝 Registrasi", "🔑 Login"])
-    with tab1:
-        # Perbaikan form: Tombol submit ditambahkan agar tidak error
-        with st.form("form_pendaftaran"):
-            st.text_input("Nama:")
-            st.text_input("Usaha:")
-            st.selectbox("Paket:", ["BASIC", "SMART", "PRO"])
-            st.text_input("Harga Kesepakatan:")
-            if st.form_submit_button("KIRIM PENDAFTARAN"):
-                st.success("Data berhasil terkirim!")
-
-    with tab2:
-        if not st.session_state.cl_in:
-            u = st.text_input("User ID:")
-            p = st.text_input("Password:", type="password")
-            if st.button("MASUK"):
-                user = next((c for c in st.session_state.user_creds if c["User ID"] == u and c["Password"] == p), None)
-                if user:
-                    st.session_state.cl_in = True
-                    st.session_state.current_user = user
-                    st.rerun()
-                else: st.error("Login Gagal")
-        else:
-            st.info(f"Akun Aktif: {st.session_state.current_user['User ID']}")
-            if st.button("Keluar"):
-                st.session_state.cl_in = False
-                st.rerun()
-
-elif nav == "5. Admin":
-    pw = st.text_input("Password Admin:", type="password")
-    if st.button("BUKA PANEL"):
-        if pw == "w1nbju8282":
-            st.table(pd.DataFrame(st.session_state.user_creds))
-        else: st.error("Akses Ditolak")
-
-st.write("---")
-st.caption("© 2026 V-Guard AI | Erwin Sinaga")
+    rugi = oz * 0.07
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(f'<div class="metric-box"><p>Potensi Kerugian (7%)</p><h2 style="color:red">Rp {rugi:,.0f}</h2></div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown(f'<div class="metric-box"><p>Aset Terselamatkan AI</p><h2 style="color:green">Rp {rugi*0.9:,.0
