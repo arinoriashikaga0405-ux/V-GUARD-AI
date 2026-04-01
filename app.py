@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from datetime import datetime
 
-# 1. KONFIGURASI HALAMAN & STATE
+# 1. KONFIGURASI HALAMAN & STATE (LOCKED SOP)
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
 if 'db_nasabah' not in st.session_state:
@@ -18,7 +18,10 @@ WA_NUMBER = "628212190885"
 
 # FUNGSI FORMAT RUPIAH SESUAI SOP
 def format_rp(angka):
-    return f"Rp {angka:,.0f}".replace(",", ".")
+    try:
+        return f"Rp {float(angka):,.0f}".replace(",", ".")
+    except:
+        return str(angka)
 
 # 2. CSS CUSTOM (STABIL)
 st.markdown("""
@@ -49,7 +52,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", f"https://wa.me/{WA_NUMBER}")
 
-# --- MENU 1: PROFIL FOUNDER (KEMBALI KE NARASI >150 KATA & TANPA CEO/CSO) ---
+# --- MENU 1: PROFIL FOUNDER (SOP: >150 KATA, NO CEO/CSO) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     c1, c2 = st.columns([1, 2.2])
@@ -75,7 +78,7 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
         hasil_roi = pot_bocor - 2500000
         st.metric("Dana Berhasil Diselamatkan", format_rp(hasil_roi), delta="ROI Positif")
 
-# --- MENU 3: PAKET (LOCK FITUR LENGKAP) ---
+# --- MENU 3: PAKET (LOCK SOP) ---
 elif menu == "3. 📦 Paket Unggulan":
     st.header("Layanan V-Guard AI")
     cols = st.columns(4)
@@ -95,17 +98,16 @@ elif menu == "4. 📝 Registrasi & Upload":
     with st.form("reg_form"):
         col1, col2 = st.columns(2)
         with col1:
-            nama_p = st.text_input("Nama Lengkap Pelanggan:")
-            nama_b = st.text_input("Nama Bisnis/Usaha:")
+            st.text_input("Nama Lengkap Pelanggan:")
+            st.text_input("Nama Bisnis/Usaha:")
         with col2:
-            pkt_p = st.selectbox("Pilih Jenis Paket:", ["BASIC (1.5jt)", "SMART (2.5jt)", "PRO (5jt)", "ELITE (Custom)"])
-            hrg_p = st.text_input("Konfirmasi Harga (Rp):")
+            st.selectbox("Pilih Jenis Paket:", ["BASIC (1.5jt)", "SMART (2.5jt)", "PRO (5jt)", "ELITE (Custom)"])
+            st.text_input("Konfirmasi Harga (Rp):")
         st.file_uploader("Upload KTP (JPG/PNG):", type=['jpg', 'png'])
         st.file_uploader("Upload Bukti Pembayaran:", type=['jpg', 'png'])
-        if st.form_submit_button("Kirim Pendaftaran"):
-            st.success(f"Pendaftaran untuk {nama_p} berhasil!")
+        st.form_submit_button("Kirim Pendaftaran")
 
-# --- MENU 5: AKSES TERBATAS (DENGAN PENAMBAHAN FITUR BARU SESUAI SOP) ---
+# --- MENU 5: AKSES TERBATAS (FIXED ERROR) ---
 elif menu == "5. 🔐 Akses Terbatas":
     if not st.session_state.admin_akses_terbuka:
         st.markdown("<h2 style='text-align: center;'>🔐 Verifikasi Otoritas Admin</h2>", unsafe_allow_html=True)
@@ -119,7 +121,7 @@ elif menu == "5. 🔐 Akses Terbatas":
                 else:
                     st.error("Sandi Salah!")
     else:
-        # HEADER & LOGOUT POJOK KANAN ATAS (SOP)
+        # HEADER & LOGOUT (SOP)
         h1, h2 = st.columns([5, 1])
         with h1: st.header("⚙️ Operasional V-Guard AI")
         with h2:
@@ -128,4 +130,4 @@ elif menu == "5. 🔐 Akses Terbatas":
                 st.rerun()
         
         st.write("---")
-        t1, t2, t3 = st.tabs(["📊 Database & Tambah Klien
+        t1, t2, t3 = st.tabs(["📊 Database & Tamb
