@@ -54,10 +54,62 @@ with st.sidebar:
         st.image("erwin.jpg")
     st.markdown("**Erwin Sinaga - Senior Business Leader**")
     st.write("---")
-    nav = st.radio("Navigasi Utama:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 💎 Layanan Produk", "4. 📝 Registrasi & Upload", "5. 🔐 Akses Terbatas"])
+    # Nama menu harus persis dengan kondisi if-elif di bawah
+    nav = st.radio("Navigasi Utama:", ["1. Profil Founder", "2. Visi Misi ROI", "3. Layanan Produk", "4. Registrasi Upload", "5. Akses Terbatas"])
     st.write("---")
     st.caption("© 2026 V-Guard AI Intelligence")
 
 # --- 5. LOGIKA HALAMAN ---
 
-if nav == "1.
+if nav == "1. Profil Founder":
+    st.header("Profil Kepemimpinan")
+    c1, c2 = st.columns([1, 2.5])
+    with c1:
+        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
+    with c2:
+        st.write("""Bapak **Erwin Sinaga** adalah seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. Beliau memahami bahwa di era digital saat ini, integritas data dan keamanan aset adalah fondasi utama bagi setiap unit bisnis untuk dapat tumbuh secara berkelanjutan.
+
+Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan mendesak para pengusaha akan sistem perlindungan aset yang berbasis teknologi kecerdasan buatan mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif dan efisien. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan.""")
+
+elif nav == "2. Visi Misi ROI":
+    st.header("Visi, Misi & Analisis Kerugian")
+    st.info("**Visi:** Menjadi pelopor global dalam penyediaan infrastruktur audit digital berbasis AI.")
+    st.success("**Misi:** Mengintegrasikan AI untuk deteksi fraud real-time.")
+    oz = st.number_input("Input Total Omzet Bulanan (Rp):", value=100000000)
+    leakage = oz * 0.07
+    st.error(f"Potensi Kerugian Akibat Kebocoran (7%): Rp {leakage:,.0f}")
+    st.success(f"Estimasi Penyelamatan: Rp {leakage - 2500000:,.0f}")
+
+elif nav == "3. Layanan Produk":
+    st.header("Paket Layanan Unggulan V-Guard AI")
+    c1, c2, c3 = st.columns(3)
+    with c1: st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div>• AI Monitor Dasar<br>• Laporan Bulanan<br>• Alarm Fraud</div>', unsafe_allow_html=True)
+    with c2: st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div>• Monitoring Pro<br>• VCS System<br>• Audit Real-Time</div>', unsafe_allow_html=True)
+    with c3: st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div>• Forensik Digital<br>• Multi-Cabang<br>• Support 24/7</div>', unsafe_allow_html=True)
+
+elif nav == "4. Registrasi Upload":
+    if not st.session_state.client_logged_in:
+        t1, t2 = st.tabs(["📝 Form Pendaftaran", "🔑 Dashboard Akun Klien"])
+        with t2:
+            u = st.text_input("User ID:")
+            p = st.text_input("Password:", type="password")
+            if st.button("LOGIN KLIEN"):
+                user_data = next((c for c in st.session_state.user_creds if c["User ID"] == u and c["Password"] == p), None)
+                if user_data:
+                    st.session_state.client_logged_in = True
+                    st.session_state.current_user = user_data
+                    st.rerun()
+                else: st.error("Akses ditolak.")
+    else:
+        st.header("Selamat Datang di Ekosistem V-Guard AI")
+        p_u = st.session_state.current_user.get("Paket", "N/A")
+        st.markdown('<div class="status-box">Status Akun: ✅ AKTIF & TERPROTEKSI</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="package-box">📦 Paket Layanan: {p_u}</div>', unsafe_allow_html=True)
+        st.subheader("📋 Tugas Harian Anda")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("**✅ Data Transaksi**\n\nKirim laporan penjualan harian.")
+            st.markdown("**✅ Absensi Karyawan**\n\nUpdate shift kasir.")
+        with c2:
+            st.markdown("**✅ Update Stok**\n\nCatat sisa stok fisik.")
+            st.markdown("**✅ Koneksi CCTV**\n\
