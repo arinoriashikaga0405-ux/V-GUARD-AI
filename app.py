@@ -35,7 +35,7 @@ st.markdown(f"""
         border-radius: 15px; 
         padding: 20px; 
         text-align: center; 
-        min-height: 500px; 
+        min-height: 520px; 
         border-top: 8px solid #1E3A8A; 
     }}
     .pkg-title {{ font-size: 24px; font-weight: bold; color: #1E3A8A; margin-bottom: 10px; }}
@@ -59,7 +59,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", f"https://wa.me/{WA_NUMBER}")
 
-# --- MENU 1: PROFIL FOUNDER (DIPERBAIKI >150 KATA, TANPA KATA CEO/CSO) ---
+# --- MENU 1: PROFIL FOUNDER (NARASI BARU >150 KATA, TANPA CEO/CSO) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     c1, c2 = st.columns([1, 2.2])
@@ -73,42 +73,29 @@ if menu == "1. 👤 Profil Founder":
         Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan. Beliau percaya bahwa ekosistem bisnis yang sehat hanya dapat tercipta melalui sistem yang akuntabel. Dengan visi besar untuk mendemokrasikan keamanan bisnis bagi semua kalangan, mulai dari tingkat UMKM hingga skala korporasi, beliau terus berinovasi dalam mengembangkan instrumen pengawasan yang adaptif terhadap tantangan ekonomi masa depan, memastikan setiap investasi klien terjaga dengan standar perlindungan berlapis dan efisiensi yang terukur secara nyata.
         """)
 
-# --- MENU 2: VISI, MISI & ROI KERUGIAN (DIPERBAIKI) ---
+# --- MENU 2: VISI, MISI & ROI (TAMPILAN BARU) ---
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("Analisis Strategis & Proteksi Kerugian")
-    
-    st.markdown("### 👁️ Visi & Misi")
-    st.info("**Visi:** Menjadi standar emas dalam teknologi pengawasan bisnis digital di Indonesia untuk menciptakan ekosistem usaha yang bebas dari kebocoran finansial.")
-    st.success("**Misi:** Menyediakan instrumen audit berbasis kecerdasan buatan yang mampu mendeteksi indikasi kecurangan secara real-time dan memberikan perlindungan aset yang terjangkau bagi para pengusaha.")
+    st.info("**Visi:** Menjadi standar emas dalam teknologi pengawasan bisnis digital di Indonesia.")
+    st.success("**Misi:** Menyediakan instrumen audit AI untuk mendeteksi indikasi kecurangan secara real-time.")
     
     st.write("---")
     st.markdown("### 📉 Kalkulator Potensi Kerugian & ROI")
-    st.write("Gunakan alat ini untuk melihat seberapa besar kebocoran yang bisa kami cegah dari omzet bisnis Bapak.")
-    
     omzet = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000, step=1000000)
     
     c_roi1, c_roi2 = st.columns(2)
     with c_roi1:
-        potensi_bocor = omzet * 0.07
-        st.error(f"**Estimasi Kerugian/Kebocoran (7%):** Rp {potensi_bocor:,.0f}")
-        st.caption("Rata-rata bisnis mengalami kebocoran operasional sebesar 5-10% tanpa sistem audit AI.")
-        
+        pot_bocor = omzet * 0.07
+        st.error(f"**Estimasi Kebocoran (7%):** Rp {pot_bocor:,.0f}")
     with c_roi2:
-        biaya_vguard = 2500000 # Contoh ambil paket Smart
-        roi_value = potensi_bocor - biaya_vguard
-        st.metric("Dana yang Berhasil Diselamatkan", f"Rp {roi_value:,.0f}", delta="ROI Positif")
-        st.caption("Hasil setelah dikurangi biaya langganan V-Guard AI.")
+        biaya_v = 2500000
+        hasil_roi = pot_bocor - biaya_v
+        st.metric("Dana Berhasil Diselamatkan", f"Rp {hasil_roi:,.0f}", delta="ROI Positif")
 
-# --- MENU 3: PAKET UNGGULAN (KUNCI - TIDAK BERUBAH) ---
+# --- MENU 3: PAKET (STABIL - TIDAK BERUBAH) ---
 elif menu == "3. 📦 Paket Unggulan":
     st.header("Layanan V-Guard AI")
     cols = st.columns(4)
     p_data = [
         ("BASIC", "1.5jt", "• Monitor Transaksi Harian<br>• Laporan Mingguan Manual<br>• Alarm Indikasi Fraud Dasar<br>• Support Layanan Jam Kerja"), 
-        ("SMART", "2.5jt", "• Fraud AI Detection Aktif<br>• Notifikasi WA Real-time<br>• Alarm Indikasi Fraud Pintar<br>• Dashboard Pantauan Mobile"), 
-        ("PRO", "5jt", "• VCS (Visual Control System)<br>• Integrasi CCTV AI<br>• Notifikasi Invoice Otomatis<br>• Laporan Audit PDF AI"), 
-        ("ELITE", "Custom", "• Full System V-Guard AI<br>• On-site Audit Berkala<br>• Kustomisasi Alarm Khusus<br>• Prioritas Layanan 24/7")
-    ]
-    for i, (n, p, f) in enumerate(p_data):
-        with cols[i]:
-            st.markdown(f"""<div class="product-card"><div class="pkg-title">{n}</div><p style="color: #d32f2f; font-size: 20px;"><b>Rp {p}</b></p
+        ("SMART", "2.5jt", "• Fraud AI Detection
