@@ -2,14 +2,14 @@ import streamlit as st
 import pandas as pd
 import os
 
-# --- 1. SETTING ---
+# --- 1. SETTING HALAMAN ---
 st.set_page_config(page_title="V-Guard AI", layout="wide")
 
-# --- 2. DATA WHATSAPP ---
+# --- 2. DATA KOMUNIKASI ---
 HP = "628212190885"
 LINK_WA = f"https://wa.me/{HP}"
 
-# --- 3. DATABASE ---
+# --- 3. DATABASE SESSION ---
 if 'user_creds' not in st.session_state:
     st.session_state.user_creds = [
         {"User ID": "admin", "Password": "w1nbju8282", "Level": "Admin", "Paket": "MASTER"},
@@ -17,26 +17,25 @@ if 'user_creds' not in st.session_state:
     ]
 if 'cl_in' not in st.session_state: st.session_state.cl_in = False
 
-# --- 4. SIDEBAR ---
+# --- 4. SIDEBAR (FOTO & IDENTITAS) ---
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
+    # Mencari foto di folder VGUARD_AI_APP
     if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", caption="Erwin Sinaga")
-    else:
-        st.info("Simpan file foto dengan nama erwin.jpg")
+        st.image("erwin.jpg", use_container_width=True)
     
-    st.markdown("### **Erwin Sinaga**")
-    st.caption("Senior Business Leader")
+    # Perbaikan tampilan teks agar rapi
+    st.subheader("Erwin Sinaga")
+    st.write("**Senior Business Leader**")
     st.write("---")
     
-    menu = [
+    nav = st.radio("Pilih Menu:", [
         "1. Profil Founder", 
         "2. Visi Misi ROI", 
         "3. Produk Layanan", 
         "4. Dashboard", 
         "5. Admin"
-    ]
-    nav = st.radio("Pilih Menu:", menu)
+    ])
     st.write("---")
     st.link_button("💬 Hubungi WhatsApp", LINK_WA)
 
@@ -45,28 +44,18 @@ with st.sidebar:
 if nav == "1. Profil Founder":
     st.header("Profil Kepemimpinan")
     with st.container(border=True):
-        # Teks dipotong per baris agar tidak error copy-paste
-        t1 = "Bapak Erwin Sinaga adalah Senior Business Leader dengan pengalaman "
-        t2 = "lebih dari 10 tahun di industri perbankan dan aset manajemen. "
-        t3 = "Keahlian beliau adalah mendeteksi kebocoran finansial bisnis. "
-        t4 = "V-Guard AI dibangun untuk memberikan transparansi mutlak "
-        t5 = "bagi pengusaha melalui audit real-time berbasis kecerdasan buatan. "
-        t6 = "Berdomisili di Tangerang, beliau fokus membantu UMKM dan korporasi "
-        t7 = "dalam mengamankan aset dari risiko kerugian modal secara signifikan."
-        st.write(t1 + t2 + t3 + t4 + t5 + t6 + t7)
+        st.write("""Bapak **Erwin Sinaga** adalah Senior Business Leader dengan pengalaman lebih dari 10 tahun. 
+        Keahlian utama beliau terletak pada kemampuan analitis dalam mengidentifikasi celah kebocoran finansial bisnis. 
+        V-Guard AI dibangun untuk menjamin transparansi mutlak bagi pemilik bisnis melalui audit real-time.""")
 
 elif nav == "2. Visi Misi ROI":
     st.header("Visi, Misi & ROI")
     c1, c2 = st.columns(2)
-    with c1: st.info("**Visi:** Pelopor audit digital AI global.")
-    with c2: st.success("**Misi:** Deteksi fraud & proteksi UMKM.")
-    
+    with c1: st.info("**Visi:** Menjadi pelopor audit digital berbasis AI.")
+    with c2: st.success("**Misi:** Deteksi fraud real-time & proteksi aset UMKM.")
     st.write("---")
-    with st.container(border=True):
-        oz = st.number_input("Omzet Bulanan (Rp):", value=100000000)
-        rugi = oz * 0.07
-        st.error(f"Potensi Rugi (7%): Rp {rugi:,.0f}")
-        st.success(f"Aset Terselamatkan: Rp {rugi * 0.85:,.0f}")
+    oz = st.number_input("Input Omzet Bulanan (Rp):", value=100000000)
+    st.error(f"Potensi Kerugian (7%): Rp {oz * 0.07:,.0f}")
 
 elif nav == "3. Produk Layanan":
     st.header("Layanan & Pemesanan")
@@ -75,24 +64,53 @@ elif nav == "3. Produk Layanan":
         with st.container(border=True):
             st.subheader("BASIC")
             st.write("Rp 1.500.000")
-            st.write("- Monitor Dasar\n- Laporan Bulanan")
             st.link_button("Pesan BASIC", f"{LINK_WA}?text=Pesan%20BASIC")
     with cb:
         with st.container(border=True):
             st.subheader("SMART")
             st.write("Rp 2.500.000")
-            st.write("- Real-Time\n- VCS System")
             st.link_button("Pesan SMART", f"{LINK_WA}?text=Pesan%20SMART")
     with cc:
         with st.container(border=True):
             st.subheader("PRO")
             st.write("Rp 5.000.000")
-            st.write("- Forensik Full\n- Multi Cabang")
             st.link_button("Pesan PRO", f"{LINK_WA}?text=Pesan%20PRO")
 
 elif nav == "4. Dashboard":
     tab1, tab2 = st.tabs(["📝 Registrasi", "🔑 Login"])
     with tab1:
-        with st.form("f_reg"):
+        # Perbaikan form: Tombol submit ditambahkan agar tidak error
+        with st.form("form_pendaftaran"):
             st.text_input("Nama:")
             st.text_input("Usaha:")
+            st.selectbox("Paket:", ["BASIC", "SMART", "PRO"])
+            st.text_input("Harga Kesepakatan:")
+            if st.form_submit_button("KIRIM PENDAFTARAN"):
+                st.success("Data berhasil terkirim!")
+
+    with tab2:
+        if not st.session_state.cl_in:
+            u = st.text_input("User ID:")
+            p = st.text_input("Password:", type="password")
+            if st.button("MASUK"):
+                user = next((c for c in st.session_state.user_creds if c["User ID"] == u and c["Password"] == p), None)
+                if user:
+                    st.session_state.cl_in = True
+                    st.session_state.current_user = user
+                    st.rerun()
+                else: st.error("Login Gagal")
+        else:
+            st.info(f"Akun Aktif: {st.session_state.current_user['User ID']}")
+            if st.button("Keluar"):
+                st.session_state.cl_in = False
+                st.rerun()
+
+elif nav == "5. Admin":
+    pw = st.text_input("Password Admin:", type="password")
+    if st.button("BUKA PANEL"):
+        if pw == "w1nbju8282":
+            st.table(pd.DataFrame(st.session_state.user_creds))
+        else: st.error("Akses Ditolak")
+
+st.write("---")
+st.caption("© 2026 V-Guard AI | Erwin Sinaga")
