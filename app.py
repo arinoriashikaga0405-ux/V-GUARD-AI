@@ -5,7 +5,13 @@ import os
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 
-# --- 2. DATABASE USER & SESSION ---
+# --- 2. LINK WHATSAPP (Dipisah agar tidak error) ---
+num = "628212190885"
+wa_basic = f"https://wa.me/{num}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20Paket%20BASIC"
+wa_smart = f"https://wa.me/{num}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20Paket%20SMART"
+wa_pro = f"https://wa.me/{num}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20Paket%20PRO"
+
+# --- 3. DATABASE USER ---
 if 'user_creds' not in st.session_state:
     st.session_state.user_creds = [
         {"User ID": "admin", "Password": "w1nbju8282", "Level": "Eksekutif", "Paket": "MASTER"},
@@ -13,20 +19,18 @@ if 'user_creds' not in st.session_state:
     ]
 if 'cl_in' not in st.session_state: st.session_state.cl_in = False
 
-# --- 3. SIDEBAR (FOTO & WHATSAPP) ---
+# --- 4. SIDEBAR ---
 with st.sidebar:
     st.title("V-GUARD AI")
-    # Pastikan file foto Bapak bernama 'erwin.jpg' ada di folder yang sama dengan app.py
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", caption="Erwin Sinaga")
     else:
-        st.warning("Foto 'erwin.jpg' tidak ditemukan di folder.")
+        st.warning("Foto 'erwin.jpg' tidak ditemukan.")
     
     st.markdown("### **Erwin Sinaga**")
     st.caption("Senior Business Leader")
     st.write("---")
     
-    # Navigasi Tanpa Emoji untuk menghindari SyntaxError
     nav = st.radio("Menu Utama:", [
         "Profil Founder", 
         "Visi Misi dan ROI", 
@@ -34,11 +38,10 @@ with st.sidebar:
         "Register dan Dashboard", 
         "Akses Admin"
     ])
-    
     st.write("---")
-    st.link_button("Hubungi Saya (WhatsApp)", "https://wa.me/628212190885")
+    st.link_button("Hubungi Saya (WhatsApp)", f"https://wa.me/{num}")
 
-# --- 4. LOGIKA MENU ---
+# --- 5. LOGIKA MENU ---
 
 if nav == "Profil Founder":
     st.header("Profil Kepemimpinan")
@@ -50,44 +53,38 @@ Beliau memahami bahwa di era digital saat ini, integritas data dan keamanan aset
 elif nav == "Visi Misi dan ROI":
     st.header("Visi, Misi & Analisis ROI")
     c1, c2 = st.columns(2)
-    with c1:
-        st.info("**Visi Kami**\n\nMenjadi pelopor global audit digital berbasis AI yang menjamin transparansi mutlak.")
-    with c2:
-        st.success("**Misi Kami**\n\nIntegrasi AI deteksi fraud real-time & pemberdayaan UMKM dengan sistem aman.")
-    
+    with c1: st.info("**Visi:** Menjadi pelopor audit digital berbasis AI.")
+    with c2: st.success("**Misi:** Deteksi fraud real-time & pemberdayaan UMKM.")
     st.write("---")
-    st.subheader("Simulasi ROI Kerugian Klien")
     with st.container(border=True):
-        oz = st.number_input("Masukkan Total Omzet Bulanan (Rp):", value=100000000)
-        leakage = oz * 0.07
-        st.error(f"Potensi Kerugian Akibat Kebocoran (7%): Rp {leakage:,.0f}")
-        st.success(f"Penyelamatan Aset Bulanan: Rp {leakage * 0.85:,.0f}")
+        oz = st.number_input("Omzet Bulanan (Rp):", value=100000000)
+        leak = oz * 0.07
+        st.error(f"Potensi Kerugian (7%): Rp {leak:,.0f}")
+        st.success(f"Penyelamatan Aset: Rp {leak * 0.85:,.0f}")
 
 elif nav == "Produk dan Layanan":
     st.header("Paket Layanan & Pemesanan")
-    st.write("Silakan pilih paket. Tombol akan langsung terhubung ke WhatsApp Bapak.")
-    
-    # Link WhatsApp Otomatis
-    wa_base = "https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20"
-    
     col_a, col_b, col_c = st.columns(3)
     with col_a:
         with st.container(border=True):
             st.subheader("BASIC")
-            st.write("**Rp 1.500.000**")
-            st.write("- AI Monitor Dasar\n- Laporan Bulanan")
-            st.link_button("Pesan Paket BASIC", wa_base + "Paket%20BASIC")
-            
+            st.write("**Rp 1.500.000**\n\n- Monitor Dasar\n- Laporan Bulanan")
+            st.link_button("Pesan BASIC", wa_basic)
     with col_b:
         with st.container(border=True):
             st.subheader("SMART")
-            st.write("**Rp 2.500.000**")
-            st.write("- Monitoring Real-Time\n- VCS System Integrasi")
-            st.link_button("Pesan Paket SMART", wa_base + "Paket%20SMART")
-            
+            st.write("**Rp 2.500.000**\n\n- Monitoring Real-Time\n- VCS System")
+            st.link_button("Pesan SMART", wa_smart)
     with col_c:
         with st.container(border=True):
             st.subheader("PRO")
-            st.write("**Rp 5.000.000**")
-            st.write("- Forensik Digital Full\n- Multi-Cabang Sinkron")
-            st.link_button("Pesan Paket PRO", wa_base + "Paket%
+            st.write("**Rp 5.000.000**\n\n- Forensik Full\n- Multi Cabang")
+            st.link_button("Pesan PRO", wa_pro)
+
+elif nav == "Register dan Dashboard":
+    t1, t2 = st.tabs(["Form Pendaftaran", "Login Klien"])
+    with t1:
+        with st.form("reg"):
+            st.text_input("Nama Pelanggan:")
+            st.text_input("Jenis Usaha:")
+            st
