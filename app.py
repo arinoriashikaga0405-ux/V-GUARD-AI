@@ -23,7 +23,7 @@ if 'db_nasabah' not in st.session_state:
         }
     ]
 
-# 2. CSS CUSTOM PREMIUM (Tampilan Bersih & Rapi)
+# 2. CSS CUSTOM PREMIUM
 st.markdown("""
 <style>
     .status-connected { color: #28a745; font-weight: bold; font-size: 14px; }
@@ -47,18 +47,4 @@ with st.sidebar:
         "2. 🎯 Visi & ROI", 
         "3. 📦 Paket Unggulan", 
         "4. 📝 Registrasi & Capture", 
-        "5. 🔐 Admin Control Center",
-        "6. 📜 Laporan Audit Klien"
-    ])
-    st.write("---")
-    st.link_button("💬 Chat Support", "https://wa.me/628212190885")
-
-# --- MENU 1: PROFIL FOUNDER ---
-if menu == "1. 👤 Profil Founder":
-    st.header("Profil Kepemimpinan")
-    col1, col2 = st.columns([1, 2.5])
-    with col1:
-        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
-    with col2:
-        st.markdown("""<div class="profile-box">
-        <b>B
+        "5.
