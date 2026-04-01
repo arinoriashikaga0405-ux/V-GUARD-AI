@@ -1,96 +1,117 @@
 import streamlit as st
 import pandas as pd
-from cryptography.fernet import Fernet
 import hashlib
 import time
+from datetime import datetime
 
-# 🔐 1. KONFIGURASI KEAMANAN
-def encrypt_ktp(data):
-    # Menggunakan key statis untuk demo, di produksi gunakan .env
-    key = b'8-8zY_z_5P2_z_f8_z_z_z_z_z_z_z_z_z_z_z_z_z=' 
-    f = Fernet(key)
-    return f.encrypt(data)
-
+# --- 1. KONFIGURASI KEAMANAN ---
 ADMIN_PWD_HASH = hashlib.sha256("w1nbju8282".encode()).hexdigest()
 
-# 🏢 2. TAMPILAN DASHBOARD
-st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
+# --- 2. SETUP HALAMAN & TEMA ---
+st.set_page_config(
+    page_title="V-Guard AI Intelligence | Erwin Sinaga",
+    page_icon="🛡️",
+    layout="wide"
+)
 
-# Sidebar
-st.sidebar.title("🛡️ V-GUARD AI")
-menu = st.sidebar.radio("Navigasi", ["Home", "Produk & Layanan", "Portal Klien", "Admin Panel"])
+# Custom CSS untuk tampilan Premium Corporate
+st.markdown("""
+    <style>
+    .main { background-color: #0a192f; color: #e6f1ff; }
+    .stButton>button { 
+        background-color: #64ffda; color: #0a192f; 
+        font-weight: bold; border-radius: 8px; width: 100%;
+    }
+    .stMetric { background-color: #112240; padding: 15px; border-radius: 10px; }
+    h1, h2, h3 { color: #ccd6f6; }
+    </style>
+    """, unsafe_allow_html=True)
 
-# --- HALAMAN HOME ---
-if menu == "Home":
-    st.title("V-Guard AI Intelligence")
-    st.subheader("Digitizing Trust, Eliminating Leakage")
-    
+# --- 3. SIDEBAR NAVIGATION ---
+st.sidebar.image("https://via.placeholder.com/150", caption="V-Guard AI System")
+st.sidebar.title("Navigation Center")
+menu = st.sidebar.radio("Menu Utama", ["🏠 Home & Vision", "📦 Produk & Layanan", "🔑 Portal Klien", "🔐 Admin Panel (CEO Only)"])
+
+# --- HALAMAN HOME & VISION ---
+if menu == "Home & Vision":
+    st.title("🛡️ V-Guard AI Intelligence")
+    st.markdown("### *Digitizing Trust, Eliminating Leakage*")
+    st.divider()
+
     col1, col2 = st.columns([1, 2])
+    
     with col1:
-        st.info("Founder: Erwin Sinaga")
-    with col2:
-        st.markdown("""
-        ### Visi & Misi (Digitizing Trust)
-        Sebagai Senior Business Leader, saya mendirikan V-Guard untuk memastikan 
-        setiap rupiah aset Anda aman. Kami mengubah data menjadi bukti otentik 
-        dengan akurasi 99.9%.
-        """)
+        # Foto Profil Founder (Placeholder - Silakan ganti URL dengan foto Bapak)
+        st.image("https://via.placeholder.com/400x500.png?text=Erwin+Sinaga+Founder", caption="Erwin Sinaga - Founder & CEO")
+        st.info("📍 Berdomisili: Tangerang, Indonesia")
 
-# --- HALAMAN PRODUK ---
-elif menu == "Produk & Layanan":
-    st.header("Katalog Layanan V-Guard")
-    items = [
-        {"Paket": "V-LITE", "Target": "UMKM", "Fitur": "Anti-Void, WA Report"},
-        {"Paket": "V-PRO", "Target": "Retail/Resto", "Fitur": "Real-time, VCS Sync"},
-        {"Paket": "V-SIGHT", "Target": "Aset Tinggi", "Fitur": "CCTV AI Behavior"},
-        {"Paket": "V-ENTERPRISE", "Target": "Korporasi", "Fitur": "Multi-Branch, Forensik"}
-    ]
-    st.table(pd.DataFrame(items))
+    with col2:
+        st.header("Visi & Misi Founder")
+        st.markdown(f"""
+        **“Sebagai seorang Senior Business Leader dengan pengalaman lebih dari satu dekade di industri perbankan dan aset, 
+        saya memahami bahwa musuh terbesar pertumbuhan bisnis bukanlah kompetisi, melainkan ketidakpastian data dan kebocoran internal.”**
+
+        Di dunia yang bergerak serba cepat, kepercayaan (trust) tidak lagi cukup jika hanya berdasarkan janji; kepercayaan harus bisa diukur, 
+        diverifikasi, dan didigitalisasi. Inilah alasan saya mendirikan **V-Guard AI Intelligence**.
+
+        Visi kami adalah menjadi standar global dalam **Digital Trust**. Kami percaya bahwa setiap pemilik bisnis—mulai dari tokoh retail 
+        mandiri hingga korporasi multinasional—berhak mendapatkan transparansi mutlak atas aset mereka. Melalui prinsip **'Digitizing Trust'**, 
+        kami mengubah data mentah dari CCTV, mesin kasir, laporan stok (VCS), dan mutasi bank menjadi bukti otentik yang tidak dapat dimanipulasi.
+
+        Misi utama kami, **'Eliminating Leakage'**, dijalankan dengan mengintegrasikan ekosistem AI tercanggih di dunia (Gemini, MindBridge, YOLO). 
+        Kami tidak hanya mendeteksi kecurangan saat sudah terjadi, tetapi membangun benteng pertahanan prediktif untuk menghentikan kebocoran 
+        sebelum menjadi kerugian finansial. V-Guard AI mengembalikan kendali penuh ke tangan Anda, memberikan ketenangan pikiran (*peace of mind*), 
+        dan memastikan setiap rupiah investasi Anda bekerja secara jujur dan optimal.
+        """)
+        st.caption("— Erwin Sinaga, Founder V-Guard AI")
+
+# --- HALAMAN PRODUK & LAYANAN ---
+elif menu == "📦 Produk & Layanan":
+    st.header("Solusi Ekosistem V-Guard AI")
+    st.write("Integrasi 9 Platform AI Terbaik Dunia untuk Akurasi 99.9%")
+    
+    c1, c2, c3, c4 = st.columns(4)
+    
+    with c1:
+        st.subheader("V-LITE")
+        st.write("Target: UMKM/Warung")
+        st.markdown("- Anti-Void Audit\n- WA Report Bulanan\n- Notifikasi Stok")
+        st.button("Pilih V-LITE", key="lite")
+
+    with c2:
+        st.subheader("V-PRO")
+        st.write("Target: Resto/Cafe")
+        st.markdown("- Real-Time Monitoring\n- VCS Sync (Bank-POS)\n- Audit Harian")
+        st.button("Pilih V-PRO", key="pro")
+
+    with c3:
+        st.subheader("V-SIGHT")
+        st.write("Target: Toko Emas/Gudang")
+        st.markdown("- CCTV AI Behavior\n- Visual Audit Match\n- Cloud Evidence")
+        st.button("Pilih V-SIGHT", key="sight")
+
+    with c4:
+        st.subheader("V-ENTERPRISE")
+        st.write("Target: Korporasi")
+        st.markdown("- Multi-Branch Dash\n- Digital Forensics\n- Custom ERP API")
+        st.button("Pilih V-ENTERPRISE", key="ent")
 
 # --- HALAMAN PORTAL KLIEN ---
-elif menu == "Portal Klien":
-    st.header("Portal Klien & Upload Data")
-    with st.form("upload_form"):
-        biz_name = st.text_input("Nama Bisnis")
-        file_vcs = st.file_uploader("Upload Data VCS (Excel/CSV)")
-        file_ktp = st.file_uploader("Upload KTP (KYC)", type=['jpg', 'png'])
-        submit = st.form_submit_button("Kirim Data")
-        
-        if submit:
-            st.success(f"Data {biz_name} terenkripsi AES-256 dan terkirim ke Founder.")
-
-# --- HALAMAN ADMIN PANEL ---
-elif menu == "Admin Panel":
-    st.header("CEO Executive Dashboard")
-    pwd_input = st.text_input("Masukkan Sandi Founder", type="password")
-    
-    if pwd_input:
-        input_hash = hashlib.sha256(pwd_input.encode()).hexdigest()
-        if input_hash == ADMIN_PWD_HASH:
-            st.success("Akses Diterima, Pak Erwin.")
+elif menu == "🔑 Portal Klien":
+    st.header("Client Secure Portal")
+    with st.container():
+        st.info("Silakan unggah data harian Anda untuk diproses oleh AI.")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            biz_name = st.text_input("Nama Perusahaan/Bisnis")
+            file_vcs = st.file_uploader("Upload Data VCS (Excel/CSV)")
+        with col_b:
+            file_ktp = st.file_uploader("Upload KTP (KYC Verification)", type=['jpg', 'png'])
             
-            t1, t2, t3 = st.tabs(["KYC & Invoice", "Audit Launchpad", "Revenue"])
-            
-            with t1:
-                st.subheader("Manajemen Invoice & KYC")
-                st.write("Antrean Verifikasi KTP Klien")
-                st.table(pd.DataFrame({'User': ['Toko Maju'], 'Status': ['Pending']}))
-                if st.button("Kirim Notifikasi Invoice Otomatis"):
-                    st.info("Notifikasi Invoice dikirim via WhatsApp ke seluruh klien.")
-
-            with t2:
-                st.subheader("Orchestration 9 AI")
-                if st.button("🚀 JALANKAN AUDIT 99.9% ACCURACY"):
-                    with st.spinner("Mensinkronkan Gemini, MindBridge, dan YOLO..."):
-                        time.sleep(2)
-                        st.success("Audit Selesai. Kebocoran Terdeteksi: 0.05%")
-            
-            with t3:
-                st.metric("Total Kerugian Dicegah", "Rp 125.500.000")
-        else:
-            st.error("Sandi Salah. Akses Ditolak.")
-    else:
-        st.warning("Silakan masukkan sandi untuk mengakses fitur Admin.")
-
-st.sidebar.markdown("---")
-st.sidebar.caption("© 2026 V-Guard AI - Founder Erwin Sinaga")
+        if st.button("🚀 Kirim Data untuk Audit"):
+            if file_ktp and biz_name:
+                with st.spinner("Mengenkripsi data dengan AES-256..."):
+                    time.sleep(2)
+                    st.success(f"Sukses! Data {biz_name} telah aman di server. Menunggu verifikasi Admin.")
+            else:
+                st
