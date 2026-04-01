@@ -3,51 +3,56 @@ import pandas as pd
 import hashlib
 import time
 import os
+from datetime import datetime
 
-# --- 1. KONFIGURASI KEAMANAN ---
+# --- 1. CONFIG: KEAMANAN (CEO ONLY) ---
 ADMIN_PWD_HASH = hashlib.sha256("w1nbju8282".encode()).hexdigest()
 
-# --- 2. SETUP HALAMAN ---
+# --- 2. SETUP TEMA & LAYOUT ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# Gaya Visual Corporate
+# Custom CSS Premium Corporate
 st.markdown("""
     <style>
     .main { background-color: #0a192f; color: #e6f1ff; }
-    .stButton>button { background-color: #64ffda; color: #0a192f; font-weight: bold; }
-    h1, h2, h3 { color: #ccd6f6; }
+    .stButton>button { background-color: #64ffda; color: #0a192f; font-weight: bold; border-radius: 8px; }
+    .stMetric { background-color: #112240; padding: 15px; border-radius: 10px; border: 1px solid #233554; }
+    h1, h2, h3 { color: #ccd6f6; font-family: 'Inter', sans-serif; }
+    .sidebar .sidebar-content { background-image: linear-gradient(#0a192f, #112240); }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR NAVIGATION (FOLDER MENU) ---
+# --- 3. SIDEBAR NAVIGATION (FOLDER SISTEM) ---
 st.sidebar.title("🛡️ V-GUARD MENU")
-menu = st.sidebar.radio("Pilih Folder:", [
-    "🏠 Home (Founder)", 
+menu = st.sidebar.radio("Folder Navigasi:", [
+    "🏠 Home (Founder Profil)", 
     "📜 Visi & Misi", 
     "📦 Produk & Layanan", 
-    "🔑 Portal Klien", 
-    "🔐 Admin Panel"
+    "🔑 Portal Klien (Upload Data)", 
+    "🔐 Admin Panel (Restricted)"
 ])
 
-# --- HALAMAN 1: HOME (FOTO & NARASI) ---
-if menu == "🏠 Home (Founder)":
-    st.title("Founder V-Guard AI Intelligence")
+# --- 📂 FOLDER 1: HOME (HALAMAN DEPAN) ---
+if menu == "🏠 Home (Founder Profil)":
+    st.title("V-Guard AI Intelligence")
     st.divider()
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        # Membaca file erwin.jpg dari GitHub
+        # Mencoba membaca file erwin.jpg dari repository GitHub
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_column_width=True)
         else:
-            st.warning("⚠️ File 'erwin.jpg' tidak ditemukan. Pastikan sudah diunggah ke GitHub.")
-            st.image("https://via.placeholder.com/400x500?text=Upload+erwin.jpg", use_column_width=True)
-    
+            st.warning("⚠️ File 'erwin.jpg' belum terdeteksi di GitHub.")
+            st.image("https://via.placeholder.com/400x500.png?text=Unggah+erwin.jpg+ke+GitHub", use_column_width=True)
+        
+        st.info("📍 Berdomisili: Tangerang, Indonesia")
+
     with col2:
         st.header("Digitizing Trust, Eliminating Leakage")
-        st.write("""
+        st.markdown(f"""
         Sebagai seorang **Senior Business Leader** dengan pengalaman lebih dari satu dekade di industri perbankan dan aset, 
-        saya memahami bahwa musuh terbesar pertumbuhan bisnis bukanlah kompetisi, melainkan ketidakpastian data dan kebocoran internal. 
+        saya memahami bahwa musuh terbesar pertumbuhan bisnis bukanlah kompetisi, melainkan **ketidakpastian data dan kebocoran internal**. 
         Di dunia yang bergerak serba cepat, kepercayaan (trust) tidak lagi cukup jika hanya berdasarkan janji; kepercayaan harus bisa diukur, 
         diverifikasi, dan didigitalisasi. Inilah alasan saya mendirikan **V-Guard AI Intelligence**.
 
@@ -57,49 +62,18 @@ if menu == "🏠 Home (Founder)":
 
         Misi utama kami, **'Eliminating Leakage'**, dijalankan dengan mengintegrasikan ekosistem AI tercanggih di dunia (Gemini, MindBridge, YOLO). 
         Kami tidak hanya mendeteksi kecurangan saat sudah terjadi, tetapi membangun benteng pertahanan prediktif untuk menghentikan kebocoran 
-        sebelum menjadi kerugian finansial. V-Guard AI mengembalikan kendali penuh ke tangan Anda, memberikan ketenangan pikiran, 
+        sebelum menjadi kerugian finansial. V-Guard AI mengembalikan kendali penuh ke tangan Anda, memberikan ketenangan pikiran (*peace of mind*), 
         dan memastikan setiap rupiah investasi Anda bekerja secara jujur dan optimal untuk masa depan bisnis Anda.
         """)
-        st.caption("— Erwin Sinaga, Founder V-Guard AI")
+        st.caption("— **Erwin Sinaga**, Founder V-Guard AI Intelligence")
 
-# --- HALAMAN 2: VISI & MISI ---
+# --- 📂 FOLDER 2: VISI & MISI ---
 elif menu == "📜 Visi & Misi":
-    st.header("Filosofi V-Guard")
-    st.info("**Visi:** Menjadi standar global 'Digital Trust' untuk keamanan finansial bisnis.")
-    st.success("**Misi:** Menghentikan kebocoran aset (Eliminating Leakage) melalui orkestrasi 9 AI Engine.")
-
-# --- HALAMAN 3: PRODUK & LAYANAN ---
-elif menu == "📦 Produk & Layanan":
-    st.header("Solusi AI Intelligence")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.subheader("V-LITE & V-PRO")
-        st.write("Solusi untuk UMKM dan Retail Menengah.")
-    with c2:
-        st.subheader("V-SIGHT & V-ENTERPRISE")
-        st.write("Keamanan Visual CCTV AI dan Solusi Korporasi.")
-
-# --- HALAMAN 4: PORTAL KLIEN ---
-elif menu == "🔑 Portal Klien":
-    st.header("Portal Client - Upload Data")
-    st.text_input("Nama Perusahaan")
-    st.file_uploader("Upload Data Audit (VCS/KTP)")
-    if st.button("Kirim ke Server"):
-        st.success("Data telah aman dienkripsi.")
-
-# --- HALAMAN 5: ADMIN PANEL (DIKUNCI) ---
-elif menu == "🔐 Admin Panel":
-    st.header("Executive Dashboard (CEO Only)")
-    pwd_input = st.text_input("Masukkan Sandi Founder", type="password")
+    st.header("Filosofi & Strategi V-Guard")
+    st.divider()
+    st.subheader("🎯 Visi")
+    st.info("Menjadi standar global dalam **Digital Trust** melalui transparansi data yang tidak dapat dimanipulasi.")
     
-    if pwd_input:
-        if hashlib.sha256(pwd_input.encode()).hexdigest() == ADMIN_PWD_HASH:
-            st.success("Selamat Datang, Pak Erwin.")
-            st.metric("Kebocoran Dicegah", "Rp 125.500.000", "12%")
-            if st.button("🚀 JALANKAN AUDIT GLOBAL"):
-                st.write("Proses Orkestrasi AI Sedang Berjalan...")
-        else:
-            st.error("Sandi Salah. Akses Ditolak.")
-
-st.sidebar.markdown("---")
-st.sidebar.caption("V-Guard AI v1.0 | Founder: Erwin Sinaga")
+    st.subheader("🚀 Misi")
+    st.success("1. **Digitizing Trust:** Mengubah aset fisik dan laporan manual menjadi data digital terverifikasi.\n"
+               "2. **Eliminating Leakage:** Meng
