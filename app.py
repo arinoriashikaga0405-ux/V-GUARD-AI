@@ -38,10 +38,15 @@ with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg")
-    # NAMA SESUAI INSTRUKSI TERAKHIR
     st.markdown("**Erwin Sinaga - Senior Business Leader**")
     st.write("---")
-    nav = st.radio("Navigasi Utama:", ["1. 👤 Profil Founder", "2. 🎯 Visi, Misi & ROI", "3. 💎 Layanan Produk", "4. 📝 Registrasi & Upload", "5. 🔐 Akses Terbatas"])
+    nav = st.radio("Navigasi Utama:", [
+        "1. 👤 Profil Founder", 
+        "2. 🎯 Visi, Misi & ROI", 
+        "3. 💎 Layanan Produk", 
+        "4. 📝 Registrasi & Upload", 
+        "5. 🔐 Akses Terbatas"
+    ])
     st.write("---")
     st.caption("© 2026 V-Guard AI Intelligence")
 
@@ -80,7 +85,6 @@ elif nav == "3. 💎 Layanan Produk":
         st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
         st.link_button("🚀 Pesan Sekarang", wa + "BASIC")
     with c2:
-        # PERBAIKAN SYNTAX ERROR DI BARIS INI
         st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
         st.link_button("🔥 Pesan Sekarang", wa + "SMART")
     with c3:
@@ -97,4 +101,55 @@ elif nav == "4. 📝 Registrasi & Upload":
         col2.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
         st.file_uploader("Upload Data Nasabah (CSV/Excel/KTP):")
         if st.form_submit_button("Kirim Pendaftaran Ke V-Guard"):
-            st.success("Terima kasih! Data
+            st.success("Terima kasih! Data pendaftaran Anda telah kami terima.")
+
+elif nav == "5. 🔐 Akses Terbatas":
+    if not st.session_state.auth:
+        pw = st.text_input("Security Code:", type="password")
+        if st.button("LOGIN"):
+            if pw == "w1nbju8282":
+                st.session_state.auth = True
+                st.rerun()
+    else:
+        st.markdown('<div class="fraud-header">🚨 PERINGATAN: INDIKASI FRAUD TERDETEKSI PADA TITIK TRANSAKSI HARIAN</div>', unsafe_allow_html=True)
+        t1, t2, t3, t4 = st.tabs(["📊 Database & CSV", "📉 Audit Gemini AI", "📽️ Monitoring CCTV", "🧾 Billing & Laba"])
+        
+        with t1:
+            st.subheader("Manajemen Data Database")
+            c_csv1, c_csv2 = st.columns(2)
+            with c_csv1:
+                u_file = st.file_uploader("Upload CSV", type=['csv'])
+                if u_file:
+                    df_up = pd.read_csv(u_file)
+                    if st.button("Simpan ke Database"):
+                        st.session_state.db_n = df_up.to_dict('records')
+                        st.success("Database diperbarui!")
+            with c_csv2:
+                df_exp = pd.DataFrame(st.session_state.db_n)
+                st.download_button("Download CSV", data=df_exp.to_csv(index=False).encode('utf-8'), file_name="vguard_db.csv", mime='text/csv')
+            st.table(pd.DataFrame(st.session_state.db_n))
+            
+        with t2:
+            st.subheader("Laporan Audit Gemini AI Studio")
+            st.line_chart(pd.DataFrame({'Fraud': [1.2, 0.8, 2.5, 0.4], 'Recovery': [2, 3, 2.5, 4]}, index=['M1','M2','M3','M4']))
+            if st.button("Tarik Audit Lengkap"): st.write("Menganalisis data...")
+            
+        with t3:
+            st.info("Koneksi aman ke sistem monitoring cabang aktif.")
+            st.warning("Menunggu feed visual dari unit VCS.")
+            
+        with t4:
+            st.subheader("Perhitungan Profit Sharing (60%)")
+            try:
+                total = sum([float(str(x['Harga']).replace('Rp','').replace('.','').replace(',','')) for x in st.session_state.db_n])
+                st.metric("Total Revenue Kontrak", f"Rp {total:,.0f}")
+                st.metric("Profit V-Guard (60%)", f"Rp {total * 0.6:,.0f}")
+            except:
+                st.warning("Pastikan format harga di CSV benar (hanya angka).")
+            
+        if st.button("KELUAR / LOGOUT"):
+            st.session_state.auth = False
+            st.rerun()
+
+st.write("---")
+st.caption("© 2026 V-Guard AI | Secured by Erwin Sinaga")
