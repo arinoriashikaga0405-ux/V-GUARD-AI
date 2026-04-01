@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 import os
 
-# --- 1. SETTING & DATABASE ---
-st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
-
-if 'admin_authed' not in st.session_state: st.session_state.admin_authed = False
-if 'db_klien' not in st.session_state: st.session_state.db_klien = []
+# --- 1. KONFIGURASI ---
+st.set_page_config(page_title="V-Guard AI", layout="wide")
+if 'auth' not in st.session_state: st.session_state.auth = False
+if 'db' not in st.session_state: st.session_state.db = []
 
 # --- 2. SIDEBAR ---
 with st.sidebar:
@@ -14,80 +13,74 @@ with st.sidebar:
     if os.path.exists("erwin.jpg"): st.image("erwin.jpg")
     st.caption("Erwin Sinaga — Founder")
     st.write("---")
-    menu = ["Profil Kepemimpinan", "Visi dan Misi", "Daftar Produk Utama", 
-            "Register Pelanggan", "Dashboard Login", "Admin Panel"]
-    nav = st.radio("Navigasi:", menu)
+    m = ["Profil", "Visi Misi", "Produk", "Register", "Login", "Admin"]
+    nav = st.radio("Menu:", m)
     st.write("---")
     st.markdown("[💬 Hubungi Admin](https://wa.me/628212190885)")
 
-# --- 3. MODUL HALAMAN ---
+# --- 3. LOGIKA HALAMAN ---
 
-def hal_register():
-    st.header("Pendaftaran & Aktivasi Klien")
-    with st.form("form_reg"):
-        col1, col2 = st.columns(2)
-        with col1:
-            nama = st.text_input("Nama Sesuai KTP:")
-            usaha = st.text_input("Nama Usaha:")
-            st.file_uploader("Upload Foto KTP (Format JPG/PNG):")
-        with col2:
-            paket = st.selectbox("Pilih Paket Sistem:", [
-                "V-LITE (Rp 1jt/bln)", 
-                "V-PRO (Rp 2.5jt/bln)", 
-                "V-SIGHT (Rp 4.5jt/bln)", 
-                "V-ENTERPRISE (Custom)"
-            ])
-            st.info("Metode Bayar: Transfer Bank / VA")
-        
-        if st.form_submit_button("Kirim Data Pendaftaran"):
-            st.session_state.db_klien.append({
-                "Nama": nama, "Usaha": usaha, "Paket": paket, "Status": "Menunggu Verifikasi"
-            })
-            st.success("Data & KTP terkirim! Admin akan memverifikasi dalam 1x24 jam.")
+if nav == "Profil":
+    st.header("Profil Kepemimpinan")
+    # Teks dipecah agar tidak terpotong saat copy-paste
+    p1 = "Bapak **Erwin Sinaga** adalah Founder V-Guard AI Intelligence. "
+    p2 = "Beliau memiliki pengalaman 10+ tahun di perbankan dan aset manajemen. "
+    p3 = "Berdomisili di Tangerang, beliau membangun ekosistem AI global "
+    p4 = "untuk proteksi aset UMKM dan Korporasi dari kebocoran finansial."
+    st.write(p1 + p2 + p3 + p4)
 
-def hal_login():
-    st.header("Portal Dashboard Klien")
-    tab_log, tab_vcs = st.tabs(["🔑 Login Member", "📊 Upload Data VCS"])
-    
-    with tab_log:
-        st.text_input("Client ID / Email:")
-        st.text_input("Password:", type="password")
-        st.button("Masuk Ke Dashboard")
-    
-    with tab_vcs:
-        st.warning("Pastikan Anda sudah login untuk sinkronisasi AI.")
-        st.file_uploader("Upload File Transaksi (Excel/CSV):")
-        if st.button("Jalankan Audit AI"):
-            st.info("AI sedang mencocokkan data stok, kasir, dan bank...")
+elif nav == "Visi Misi":
+    st.header("Visi & Misi")
+    st.info("Pelopor Global Audit AI dengan Akurasi 99.9%")
 
-def hal_admin():
-    if not st.session_state.admin_authed:
-        st.header("🛡️ Restricted Access")
-        pwd = st.text_input("Sandi Otoritas Founder:", type="password")
-        if st.button("Masuk Admin"):
+elif nav == "Produk":
+    st.header("Daftar Produk & Harga")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.subheader("📦 V-LITE (UMKM)")
+        st.write("Pasang: 1jt | Bulanan: 1jt")
+    with c2:
+        st.subheader("🚀 V-PRO (Retail)")
+        st.write("Pasang: 2jt | Bulanan: 2.5jt")
+
+elif nav == "Register":
+    st.header("Register & Upload KTP")
+    with st.form("f_reg"):
+        n = st.text_input("Nama Sesuai KTP:")
+        u = st.text_input("Nama Usaha:")
+        pkt = st.selectbox("Pilih Paket:", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+        st.file_uploader("Upload KTP (JPG/PNG):")
+        if st.form_submit_button("Daftar & Aktivasi"):
+            st.session_state.db.append({"Nama": n, "Usaha": u, "Paket": pkt})
+            st.success("Data Terkirim ke Folder Admin!")
+
+elif nav == "Login":
+    st.header("Dashboard Login Klien")
+    st.text_input("Client ID:")
+    st.text_input("Password:", type="password")
+    st.file_uploader("Upload Data VCS (Excel/CSV):")
+    if st.button("Jalankan Audit AI"):
+        st.info("AI sedang memproses data...")
+
+elif nav == "Admin":
+    if not st.session_state.auth:
+        pwd = st.text_input("Sandi Founder:", type="password")
+        if st.button("Buka Panel"):
             if pwd == "w1nbju8282":
-                st.session_state.admin_authed = True
+                st.session_state.auth = True
                 st.rerun()
             else: st.error("Akses Ditolak!")
     else:
-        st.header("🛡️ CEO Executive Management")
-        if st.button("Keluar & Kunci Panel"):
-            st.session_state.admin_authed = False
+        st.header("🛡️ CEO Executive Panel")
+        if st.button("Logout"):
+            st.session_state.auth = False
             st.rerun()
-        
-        t1, t2, t3 = st.tabs(["👥 Verifikasi Klien", "📄 Data KTP", "🚨 Monitoring AI"])
+        t1, t2 = st.tabs(["👥 Verifikasi & KTP", "🚨 AI Monitor"])
         with t1:
-            if st.session_state.db_klien:
-                st.table(pd.DataFrame(st.session_state.db_klien))
-                if st.button("Aktivasi Semua Klien Baru"):
-                    st.success("Sistem Klien telah diaktifkan secara otomatis.")
+            if st.session_state.db: st.table(pd.DataFrame(st.session_state.db))
             else: st.write("Tidak ada pendaftar baru.")
         with t2:
-            st.write("Folder berkas KTP pelanggan tersimpan aman di server enkripsi.")
-        with t3:
-            st.metric("Fraud Alert", "0 Anomali", "Sistem Aman")
+            st.metric("Fraud Alert", "Aman")
 
-# --- 4. ROUTING ---
-if nav == "Profil Kepemimpinan":
-    st.header("Profil Kepemimpinan")
-    st.write("Bapak **Erwin Sinaga** (Founder) memimpin V-Guard AI dengan visi transparansi mutlak. Berdomisili di Tangerang, beliau mengintegrasikan teknologi AI global untuk memproteksi aset UM
+st.write("---")
+st.caption("© 2026 V-Guard AI | Founder")
