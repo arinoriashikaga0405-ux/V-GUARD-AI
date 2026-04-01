@@ -73,32 +73,4 @@ elif menu == "2. 🎯 Visi, Misi & ROI":
     st.info("**Visi:** Menjadi standar emas dalam teknologi pengawasan bisnis digital di Indonesia.")
     st.success("**Misi:** Menyediakan instrumen audit AI untuk mendeteksi indikasi kecurangan secara real-time.")
     st.write("---")
-    omzet = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000, step=1000000)
-    pot_bocor = omzet * 0.07
-    st.error(f"Estimasi Kebocoran (7%): {format_rp(pot_bocor)}")
-    st.markdown(f"### Dana Berhasil Diselamatkan \n ## {format_rp(pot_bocor - 2500000)}")
-    st.caption("🟢 ROI Positif - Sistem Keamanan V-Guard Terverifikasi")
-
-# --- MENU 3: PAKET UNGGULAN ---
-elif menu == "3. 📦 Paket Unggulan":
-    st.header("Layanan V-Guard AI")
-    cols = st.columns(4)
-    p_data = [("BASIC", "1.5jt"), ("SMART", "2.5jt"), ("PRO", "5jt"), ("ELITE", "Custom")]
-    for i, (n, p) in enumerate(p_data):
-        with cols[i]:
-            st.markdown(f'<div class="product-card"><div class="pkg-title">{n}</div><p style="color: #d32f2f; font-size: 20px;"><b>Rp {p}</b></p>• Monitoring AI Harian<br>• Visual Control System<br>• Laporan Audit Mingguan</div>', unsafe_allow_html=True)
-            st.link_button(f"Pesan {n}", f"https://wa.me/{WA_NUMBER}?text=Halo%20Pak%20Erwin,%20tertarik%20paket%20{n}")
-
-# --- MENU 4: REGISTRASI & UPLOAD ---
-elif menu == "4. 📝 Registrasi & Upload":
-    st.header("Formulir Pendaftaran Klien")
-    with st.form("standard_vguard_form"):
-        c1, c2 = st.columns(2)
-        with c1:
-            st.text_input("Nama Pelanggan:")
-            st.text_input("Nama Bisnis/Toko:")
-        with c2:
-            st.text_input("Jenis Usaha (F&B, Retail, dsb):")
-            st.selectbox("Pilih Paket Layanan:", ["BASIC", "SMART", "PRO", "ELITE"])
-        st.file_uploader("Upload Dokumen Pendukung (KTP/SKU):", type=['jpg', 'png', 'pdf'])
-        if st.form_submit_button("Kirim Pendaftaran Ke V
+    omzet = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000, step=10
