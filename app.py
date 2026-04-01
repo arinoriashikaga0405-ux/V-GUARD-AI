@@ -6,7 +6,7 @@ from datetime import datetime
 # 1. KONFIGURASI HALAMAN
 st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide", page_icon="🛡️")
 
-# Inisialisasi Database (Proteksi Struktur Data)
+# Inisialisasi Database (Pencegahan KeyError)
 if 'db_nasabah' not in st.session_state:
     st.session_state.db_nasabah = [
         {"ID": 101, "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Usaha": "F&B", "Paket": "SMART", "Harga": 2500000, "Status": "🟢 AKTIF"},
@@ -31,7 +31,6 @@ st.markdown("""
     .fraud-alarm { background-color: #ff4b4b; color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; animation: blinker 2s linear infinite; margin-bottom: 20px; }
     @keyframes blinker { 50% { opacity: 0.7; } }
     .audit-box { background: #f0f2f6; padding: 20px; border-radius: 10px; border-left: 10px solid #1E3A8A; margin-bottom: 15px; }
-    .stMetric { background: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -40,7 +39,7 @@ with st.sidebar:
     st.markdown("<h1 style='color: #1E3A8A; text-align: center;'>🛡️ V-GUARD AI</h1>", unsafe_allow_html=True)
     if os.path.exists("erwin.jpg"): 
         st.image("erwin.jpg", use_container_width=True)
-        st.markdown("<p style='text-align:center; font-weight:bold;'>Erwin Sinaga<br><span style='font-weight:normal; font-size:12px;'>Senior Business Leader</span></p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center; font-weight:bold;'>Erwin Sinaga<br><span style='font-size:12px;'>Senior Business Leader</span></p>", unsafe_allow_html=True)
     st.write("---")
     menu = st.radio("Navigasi Utama:", [
         "1. 👤 Profil Founder", 
@@ -52,7 +51,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", f"https://wa.me/{WA_NUMBER}")
 
-# --- MENU 1: PROFIL FOUNDER (NARASI 150 KATA) ---
+# --- MENU 1: PROFIL FOUNDER (150 KATA - LOCKED) ---
 if menu == "1. 👤 Profil Founder":
     st.header("Profil Kepemimpinan")
     c1, c2 = st.columns([1, 2.2])
@@ -68,10 +67,10 @@ Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guar
 elif menu == "2. 🎯 Visi, Misi & ROI":
     st.header("Strategi & Analisis Proteksi")
     st.info("**Visi:** Menjadi standar emas dalam teknologi pengawasan bisnis digital di Indonesia.")
-    omzet = st.number_input("Omzet Bulanan Bisnis (Rp):", value=100000000, step=1000000)
+    omzet = st.number_input("Omzet Bulanan (Rp):", value=100000000, step=1000000)
     bocor = omzet * 0.07
-    st.error(f"Estimasi Kebocoran (7%): {format_rp(bocor)}")
-    st.success(f"Dana Diselamatkan: {format_rp(bocor - 2500000)}")
+    st.error(f"Potensi Kebocoran (7%): {format_rp(bocor)}")
+    st.success(f"Penyelamatan Aset: {format_rp(bocor - 2500000)}")
 
 # --- MENU 3: PAKET UNGGULAN ---
 elif menu == "3. 📦 Paket Unggulan":
@@ -86,7 +85,7 @@ elif menu == "3. 📦 Paket Unggulan":
 # --- MENU 4: REGISTRASI & UPLOAD (LOCKED) ---
 elif menu == "4. 📝 Registrasi & Upload":
     st.header("Formulir Pendaftaran Klien")
-    with st.form("reg_vguard_fixed"):
+    with st.form("reg_vguard_final_fix"):
         c1, c2 = st.columns(2)
         with c1:
             st.text_input("Nama Pelanggan:")
@@ -94,14 +93,14 @@ elif menu == "4. 📝 Registrasi & Upload":
         with c2:
             st.text_input("Jenis Usaha:")
             st.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO", "ELITE"])
-        st.file_uploader("Upload Dokumen Pendukung (KTP/SKU):", type=['jpg','png','pdf'])
-        if st.form_submit_button("Kirim Pendaftaran Ke V-Guard"):
-            st.success("Aplikasi Berhasil Terkirim!")
+        st.file_uploader("Upload Dokumen Pendukung:", type=['jpg','png','pdf'])
+        if st.form_submit_button("Kirim Pendaftaran"):
+            st.success("Data Berhasil Terkirim!")
 
-# --- MENU 5: ADMIN (AUDIT GEMINI & RUGI LABA) ---
+# --- MENU 5: ADMIN (AUDIT & RUGI LABA - FIXED LINE 114) ---
 elif menu == "5. 🔐 Akses Terbatas":
     if not st.session_state.admin_akses_terbuka:
-        st.markdown("<h2 style='text-align: center;'>🔐 Otoritas Login Admin</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center;'>🔐 Otoritas Admin</h2>", unsafe_allow_html=True)
         pwd = st.text_input("Sandi Keamanan:", type="password")
         if st.button("Masuk"):
             if pwd == ADMIN_PASSWORD:
@@ -111,4 +110,52 @@ elif menu == "5. 🔐 Akses Terbatas":
                 st.error("Akses Ditolak!")
     else:
         h1, h2 = st.columns([5, 1])
-        with h1: st.header("Panel Operasional V
+        with h1: 
+            st.header("Panel Operasional Admin")
+        with h2:
+            if st.button("🔒 LOGOUT"):
+                st.session_state.admin_akses_terbuka = False
+                st.rerun()
+
+        st.markdown('<div class="fraud-alarm">🚨 ALARM: INDIKASI FRAUD TERDETEKSI!</div>', unsafe_allow_html=True)
+        
+        tab1, tab2, tab3 = st.tabs(["📊 Database", "📉 Audit Studio Gemini", "🧾 Laporan Rugi Laba"])
+        
+        with tab1:
+            with st.expander("+ Tambah Klien"):
+                with st.form("add_klien_fix"):
+                    nk = st.text_input("Nama"); bk = st.text_input("Bisnis")
+                    pk = st.selectbox("Paket", ["BASIC", "SMART", "PRO"])
+                    hk = st.number_input("Harga", value=1500000)
+                    if st.form_submit_button("Simpan"):
+                        st.session_state.db_nasabah.append({"ID": 103, "Waktu": str(datetime.now().date()), "Pelanggan": nk, "Bisnis": bk, "Usaha": "Retail", "Paket": pk, "Harga": hk, "Status": "🟢 AKTIF"})
+                        st.rerun()
+            df = pd.DataFrame(st.session_state.db_nasabah)
+            if 'Harga' in df.columns:
+                df_show = df.copy()
+                df_show['Harga'] = df_show['Harga'].apply(format_rp)
+                st.table(df_show)
+            else:
+                st.table(df)
+
+        with tab2:
+            st.subheader("Audit Intelligence (Google Studio)")
+            st.metric("Integrity Score", "98.5%", "+1.2%")
+            st.line_chart([10, 15, 8, 30, 25, 45])
+            st.markdown("""
+            <div class="audit-box">
+                <b>Status Audit Klien:</b> Gemini AI memverifikasi transaksi harian. 
+                Data stok dan kas sinkron 100%. Status: <b>VERIFIED ✅</b>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with tab3:
+            st.subheader("Laporan Rugi Laba AI")
+            st.area_chart({"Pemasukan": [70, 85, 100], "Pengeluaran": [40, 45, 42]})
+            data_rl = {
+                "Keterangan": ["Total Pemasukan", "Total Pengeluaran", "Laba Bersih"],
+                "Jumlah": [format_rp(120000000), format_rp(45000000), format_rp(75000000)]
+            }
+            st.table(pd.DataFrame(data_rl))
+
+st.markdown('<div class="footer">© 2026 V-Guard AI | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
