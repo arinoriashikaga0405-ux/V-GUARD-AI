@@ -82,4 +82,35 @@ elif nav == "Daftar 4 Produk Utama":
             st.write("💰 **Pasang:** 2jt | **Bulan:** 2.5jt")
             st.link_button("Pesan V-PRO", "https://wa.me/628212190885?text=Pesan%20V-PRO")
 
-        with st.
+        with st.container(border=True):
+            st.subheader("🏢 V-ENTERPRISE")
+            st.write("**Fitur Utama:**\n- Alarm Fraud: Investigasi Tim\n- Invoice: Custom Billing API\n- Laporan: Konsolidasi Cabang\n- Audit: Forensik Digital")
+            st.write("💰 **Pasang:** Custom | **Bulan:** 10jt++")
+            st.link_button("Hubungi Admin", "https://wa.me/628212190885?text=Pesan%20ENTERPRISE")
+
+elif nav == "Register Pelanggan":
+    st.header("Form Pendaftaran")
+    with st.form("f_reg"):
+        st.text_input("Nama Pemilik:")
+        st.text_input("Nama Usaha:")
+        st.selectbox("Pilih Produk:", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+        st.file_uploader("Upload KTP:", type=["jpg", "png", "jpeg"])
+        if st.form_submit_button("Daftar Sekarang"):
+            st.success("Terkirim ke Admin!")
+
+elif nav == "Dashboard Login":
+    st.header("Portal Klien")
+    st.text_input("User ID:")
+    st.text_input("Password:", type="password")
+    st.button("Masuk")
+
+elif nav == "Admin Panel":
+    st.header("Executive Panel")
+    pwd = st.text_input("Sandi Otoritas:", type="password")
+    if st.button("Buka Data"):
+        if pwd == "w1nbju8282":
+            st.success("Akses Diterima, Selamat Datang Founder.")
+        else: st.error("Sandi Salah")
+
+st.write("---")
+st.caption("© 2026 V-Guard AI Intelligence | Erwin Sinaga — Founder")
