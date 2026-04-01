@@ -96,4 +96,32 @@ elif nav == "5. Dashboard Login":
         u = st.text_input("User ID:")
         p = st.text_input("Password:", type="password")
         if st.button("Masuk"):
-            match = [c for c in st.session_state.user_creds if c["User ID"] == u
+            match = [c for c in st.session_state.user_creds if c["User ID"] == u and c["Password"] == p]
+            if match:
+                st.session_state.cl_in = True
+                st.session_state.current_user = match[0]
+                st.rerun()
+            else: st.error("Akses Ditolak")
+    else:
+        st.info(f"Login Sebagai: {st.session_state.current_user['User ID']}")
+        if st.button("Logout"):
+            st.session_state.cl_in = False
+            st.rerun()
+
+elif nav == "6. Admin & Google Studio API":
+    st.header("Executive Admin & API Gateway")
+    pwd = st.text_input("Sandi Otoritas:", type="password")
+    if st.button("Buka Data"):
+        if pwd == "w1nbju8282":
+            st.subheader("Link API untuk Google Studio")
+            st.code("https://api.vguard.ai/v1/erwin-founder/studio-sync", language="text")
+            
+            st.subheader("Data Pelanggan (JSON Format)")
+            st.write(st.session_state.reg_data)
+            
+            st.subheader("User System")
+            st.table(pd.DataFrame(st.session_state.user_creds))
+        else: st.error("Sandi Salah")
+
+st.write("---")
+st.caption("© 2026 V-Guard AI Intelligence | Erwin Sinaga — Founder")
