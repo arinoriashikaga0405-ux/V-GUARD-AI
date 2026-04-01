@@ -1,8 +1,12 @@
 import streamlit as st
+import hashlib
+from datetime import datetime
 import os
 
-# --- 1. SETTINGS & STYLE (LOCKED) ---
-st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", layout="wide")
+# --- 1. CONFIG & UI (LOCKED) ---
+WHATSAPP_NUMBER = "6282122190885" 
+
+st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", page_icon="🛡️", layout="wide")
 
 st.markdown("""
     <style>
@@ -11,9 +15,11 @@ st.markdown("""
     .product-card {
         background: linear-gradient(145deg, #1e293b, #0f172a);
         padding: 20px; border-radius: 20px; border: 1px solid #334155;
-        height: 100%; margin-bottom: 20px;
+        height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+        margin-bottom: 20px;
     }
-    .price-tag { color: #34d399; font-size: 24px; font-weight: bold; }
+    .price-tag { color: #34d399; font-size: 24px; font-weight: bold; margin: 5px 0; }
+    .feature-list { font-size: 12px; color: #cbd5e1; text-align: left; line-height: 1.5; }
     .wa-btn {
         display: block; text-align: center; background-color: #059669; color: white !important;
         padding: 10px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px;
@@ -25,19 +31,16 @@ st.markdown("""
 # --- 2. SIDEBAR (LOCKED) ---
 with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
-    # Menampilkan foto profil
     if os.path.exists("erwin.jpg"): 
         st.image("erwin.jpg", use_column_width=True)
     st.markdown('<p style="text-align:center; font-weight:800; font-size:22px; color:white;">Erwin Sinaga</p>', unsafe_allow_html=True)
     st.markdown('<p style="text-align:center; color:#38bdf8; font-size:13px; margin-top:-10px;">Founder & CEO V-Guard AI</p>', unsafe_allow_html=True)
     st.divider()
-    
-    # Definisi Menu yang SANGAT PRESISI
-    menu = st.radio("MENU UTAMA:", ["HOME", "PRODUK & LAYANAN", "PORTAL KLIEN", "ADMIN PANEL"])
+    menu = st.radio("MENU UTAMA:", ["Home", "Produk & Investasi", "Portal Klien", "Admin Panel"])
 
-# --- 3. LOGIKA HALAMAN (SYNCHRONIZED) ---
+# --- 3. LOGIKA HALAMAN ---
 
-if menu == "HOME":
+if menu == "Home":
     st.title("🛡️ V-Guard AI Intelligence")
     st.subheader("Digitizing Trust, Eliminating Leakage")
     st.divider()
@@ -66,29 +69,44 @@ if menu == "HOME":
         """, unsafe_allow_html=True)
         st.caption("— **Erwin Sinaga**, Founder V-Guard AI Intelligence")
 
-elif menu == "PRODUK & LAYANAN":
-    st.title("🛡️ Detail Layanan & Investasi")
+elif menu == "Produk & Investasi":
+    st.title("🛡️ Detail Layanan & Investasi V-Guard AI")
     st.divider()
+    col1, col2, col3, col4 = st.columns(4)
     
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
-        st.markdown('<div class="product-card"><h3>V-LITE</h3><div class="price-tag">Rp 1.5M</div><p>SME/UMKM</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="product-card"><h3>V-PRO</h3><div class="price-tag">Rp 3.5M</div><p>Resto & Cafe</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown('<div class="product-card"><h3>V-SIGHT</h3><div class="price-tag">Rp 5.0M</div><p>Toko Emas</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
-    with c4:
-        st.markdown('<div class="product-card"><h3>V-ENTERPRISE</h3><div class="price-tag">CUSTOM</div><p>Korporasi</p><hr><a href="https://wa.me/6282122190885" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with col1:
+        st.markdown(f'<div class="product-card"><h3>V-LITE</h3><div class="price-tag">Rp 1.5M</div><p>750rb/bln</p><hr><div class="feature-list">• AI Fraud Dasar<br>• Laporan WA<br>• Notifikasi</div><a href="https://wa.me/{WHATSAPP_NUMBER}" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown(f'<div class="product-card"><h3>V-PRO</h3><div class="price-tag">Rp 3.5M</div><p>1.2jt/bln</p><hr><div class="feature-list">• Real-Time Monitor<br>• VCS Integrasi<br>• Audit Harian</div><a href="https://wa.me/{WHATSAPP_NUMBER}" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with col3:
+        st.markdown(f'<div class="product-card"><h3>V-SIGHT</h3><div class="price-tag">Rp 5.0M</div><p>1.5jt/bln</p><hr><div class="feature-list">• AI Behavior<br>• Visual Audit<br>• Cloud Storage</div><a href="https://wa.me/{WHATSAPP_NUMBER}" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
+    with col4:
+        st.markdown(f'<div class="product-card"><h3>V-ENTERPRISE</h3><div class="price-tag">CUSTOM</div><p>Skala Besar</p><hr><div class="feature-list">• Multi-Cabang<br>• Forensik<br>• Custom API</div><a href="https://wa.me/{WHATSAPP_NUMBER}" class="wa-btn">Daftar</a></div>', unsafe_allow_html=True)
 
-elif menu == "PORTAL KLIEN":
-    st.title("🔑 Portal Order Pelanggan")
+elif menu == "Portal Klien":
+    st.title("🔑 Portal Order & Pelanggan")
     st.divider()
-    
-    with st.form("portal_form"):
-        st.subheader("Pendaftaran Paket Baru")
-        nomor_order = datetime.now().strftime("%Y%m%d%H%M")
-        st.info(f"Order ID: VG-{nomor_order}")
+    with st.form("form_order_vguard"):
+        st.write("Silakan lengkapi data pendaftaran:")
+        c_a, c_b = st.columns(2)
+        with c_a:
+            nama_p = st.text_input("Nama Pelanggan")
+            nama_u = st.text_input("Nama Usaha / Bisnis")
+        with c_b:
+            paket_p = st.selectbox("Pilih Paket", ["V-LITE (Rp 1.5M)", "V-PRO (Rp 3.5M)", "V-SIGHT (Rp 5.0M)", "V-ENTERPRISE (Custom)"])
+            dokumen = st.file_uploader("Upload Dokumen (KTP/Bukti Bayar)", type=['jpg','png','pdf'])
         
-        c_1, c_2 = st.columns(2)
-        with c_1:
-            nama_p =
+        # Tombol submit wajib ada di dalam form
+        submitted = st.form_submit_button("KIRIM ORDER SEKARANG")
+        if submitted:
+            if nama_p and nama_u:
+                st.success(f"Terima kasih Pak {nama_p}. Order untuk {nama_u} telah diterima!")
+            else:
+                st.error("Mohon isi Nama Pelanggan dan Nama Usaha.")
+
+elif menu == "Admin Panel":
+    st.title("🔐 Admin Panel")
+    st.info("Halaman khusus Founder.")
+
+st.divider()
+st.markdown(f'<p style="text-align:center; color:#64748b; font-size:12px;">🛡️ V-Guard AI | @{datetime.now().year} | Erwin Sinaga</p>', unsafe_allow_html=True)
