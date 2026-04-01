@@ -4,17 +4,20 @@ import hashlib
 from datetime import datetime
 import os
 
-# --- 1. CONFIG: IDENTITAS FOUNDER & KEAMANAN ---
+# --- 1. CONFIG: IDENTITAS & KEAMANAN ---
 WHATSAPP_NUMBER = "6282122190885" 
 ADMIN_PWD_HASH = hashlib.sha256("w1nbju8282".encode()).hexdigest()
 
-# --- 2. SETUP TEMA DASHBOARD PREMIUM ---
-st.set_page_config(page_title="V-Guard AI | Erwin Sinaga", page_icon="🛡️", layout="wide")
+# Cek Status Login untuk menyembunyikan Ekosistem
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
+
+# --- 2. SETUP TEMA DASHBOARD ---
+st.set_page_config(page_title="V-Guard AI | Founder Dashboard", page_icon="🛡️", layout="wide")
 
 st.markdown("""
     <style>
     .main { background-color: #0a192f; color: #e6f1ff; }
-    .stButton>button { background-color: #25D366; color: white; border-radius: 20px; font-weight: bold; }
     .price-box { 
         background-color: #112240; padding: 20px; border-radius: 15px; 
         border: 1px solid #233554; text-align: center; height: 100%;
@@ -23,50 +26,53 @@ st.markdown("""
         background-color: #0d1b2a; padding: 12px; border-left: 5px solid #64ffda;
         margin-bottom: 15px; border-radius: 8px;
     }
-    .price-tag { color: #64ffda; font-size: 24px; font-weight: bold; }
+    .price-tag { color: #64ffda; font-size: 22px; font-weight: bold; }
     .wa-link { 
         color: #25D366; font-weight: bold; text-decoration: none; 
         border: 2px solid #25D366; padding: 8px 15px; border-radius: 12px; 
-        display: inline-block; margin-top: 15px; transition: 0.3s;
+        display: inline-block; margin-top: 15px;
     }
-    .wa-link:hover { background-color: #25D366; color: white; }
+    /* Memperbaiki jarak antar elemen di sidebar */
+    [data-testid="stSidebarNav"] { padding-top: 20px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR: PROFIL & NAVIGASI ---
+# --- 3. SIDEBAR: LAYOUT RAPI ---
 with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
-    # Menampilkan foto Erwin Sinaga
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", width=160)
-    else:
-        st.markdown("<h1 style='text-align: center;'>👨‍💼</h1>", unsafe_allow_html=True)
-        
-    st.markdown("<h3 style='text-align: center;'>Erwin Sinaga</h3>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #8892b0;'>Founder & CEO V-Guard AI</p>", unsafe_allow_html=True)
-    st.divider()
-
-    menu = st.radio("FOLDER SISTEM:", [
-        "🏠 Home (Visi Founder)", 
-        "🧠 Ekosistem 9 AI Engine",
-        "📦 Produk & Investasi", 
-        "🔑 Portal Klien", 
-        "🔐 Admin Panel"
-    ])
     
+    # Foto & Nama Sejajar Sejajar (Rapi)
+    if os.path.exists("erwin.jpg"):
+        st.image("erwin.jpg", width=220)
+    
+    st.markdown("<h2 style='text-align: center; margin-top: -10px; color: white;'>Erwin Sinaga</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #8892b0; font-size: 14px;'>Founder & CEO V-Guard AI</p>", unsafe_allow_html=True)
+    st.markdown("<hr style='border: 0.5px solid #233554; margin: 20px 0;'>", unsafe_allow_html=True)
+
+    # Navigasi Folder
+    list_menu = ["🏠 Home", "📦 Produk & Investasi", "🔑 Portal Klien", "🔐 Admin Panel"]
+    
+    # Ekosistem 9 AI hanya muncul jika sudah login admin
+    if st.session_state['logged_in']:
+        list_menu.insert(1, "🧠 Ekosistem 9 AI Engine")
+
+    menu = st.radio("FOLDER SISTEM:", list_menu)
+    
+    st.markdown("<br><br>", unsafe_allow_html=True)
     st.divider()
-    st.markdown("### 🤖 V-Guard NLP Bot")
-    st.text_input("Interaksi Suara/Teks...", placeholder="Cek anomali hari ini?")
-    st.caption("AI Chatbot aktif untuk membantu audit Bapak.")
+    
+    # Relokasi Chatbot ke bagian paling bawah agar tidak mengganggu navigasi
+    st.markdown("### 🤖 V-Guard NLP")
+    st.text_input("Interaksi Teks...", placeholder="Cek audit...")
+    st.caption("AI Chatbot aktif di latar belakang.")
 
-# --- FUNGSI REDIRECT WHATSAPP ---
+# --- FUNGSI WHATSAPP ---
 def get_wa_url(paket):
-    msg = f"Halo Pak Erwin, saya tertarik dengan ekosistem V-Guard {paket}. Mohon info jadwal survei."
-    clean_msg = msg.replace(" ", "%20")
-    return f"https://wa.me/{WHATSAPP_NUMBER}?text={clean_msg}"
+    msg = f"Halo Pak Erwin, saya tertarik dengan V-Guard {paket}. Mohon info lanjut."
+    return f"https://wa.me/{WHATSAPP_NUMBER}?text={msg.replace(' ', '%20')}"
 
-# --- 📂 FOLDER 1: HOME (VISI 200 KATA UTUH) ---
-if menu == "🏠 Home (Visi Founder)":
+# --- 📂 FOLDER 1: HOME ---
+if menu == "🏠 Home":
     st.title("🛡️ V-Guard AI Intelligence")
     st.subheader("“Digitizing Trust, Eliminating Leakage”")
     st.divider()
@@ -74,13 +80,10 @@ if menu == "🏠 Home (Visi Founder)":
     col1, col2 = st.columns([1, 2])
     with col1:
         if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", caption="Erwin Sinaga", use_column_width=True)
-        else:
-            st.info("💡 Sistem siap. Pastikan erwin.jpg ada di repository.")
+            st.image("erwin.jpg", use_column_width=True)
             
     with col2:
-        st.header("Visi & Misi Founder")
-        # NARASI 200 KATA TANPA DIKURANGI SESUAI INSTRUKSI
+        st.header("Visi & Misi")
         st.markdown("""
         Sebagai seorang **Senior Business Leader** dengan pengalaman lebih dari satu dekade di industri perbankan dan pengelolaan aset, 
         saya memahami bahwa pondasi pertumbuhan bisnis bukanlah sekadar inovasi, melainkan **ketidakpastian data dan kebocoran internal**. 
@@ -100,61 +103,64 @@ if menu == "🏠 Home (Visi Founder)":
         """)
         st.caption("— **Erwin Sinaga**, Founder V-Guard AI Intelligence")
 
-# --- 📂 FOLDER 2: EKOSISTEM 9 AI ENGINE ---
+# --- 📂 FOLDER 2: EKOSISTEM (HIDDEN/PROTECTED) ---
 elif menu == "🧠 Ekosistem 9 AI Engine":
-    st.header("🧠 Integrasi Multi-Platform AI (99.9% Accuracy)")
-    st.write("V-Guard AI tidak bekerja sendiri, melainkan mengorkestrasikan teknologi terbaik dunia:")
+    st.header("🧠 Engine Integrasi (Confidential)")
+    st.info("Halaman ini bersifat rahasia dan hanya dapat diakses oleh Founder.")
     
     c_ai1, c_ai2 = st.columns(2)
     with c_ai1:
-        st.markdown('<div class="ai-card"><b>1. Google Gemini AI (Core Brain)</b><br>Menganalisis data audit kompleks menjadi laporan narasi yang mudah dipahami.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>2. MindBridge Analytics</b><br>Mendeteksi anomali transaksi keuangan & kecurangan akuntansi secara instan.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>3. DataRobot (Risk Alerting)</b><br>Prediksi risiko operasional di masa depan berdasarkan tren historis data.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>4. YOLO / Vision AI (Computer Vision)</b><br>"Mata Digital" yang memantau stok fisik & perilaku kasir secara real-time.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>5. Alteryx (Workflow Automation)</b><br>Mengotomatisasi seluruh alur kerja data dari CCTV ke laporan keuangan.</div>', unsafe_allow_html=True)
-
+        st.markdown('<div class="ai-card"><b>1. Google Gemini AI</b><br>Core Analisis data audit.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>2. MindBridge</b><br>Deteksi anomali finansial.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>3. DataRobot</b><br>Forecasting risiko kebocoran.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>4. YOLO / Vision AI</b><br>Monitoring visual stok & kasir.</div>', unsafe_allow_html=True)
     with c_ai2:
-        st.markdown('<div class="ai-card"><b>6. Workday Adaptive</b><br>Simulasi skenario finansial cerdas & peringatan penyimpangan biaya.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>7. Numeric.ai</b><br>Notifikasi ringkas kesehatan keuangan harian langsung ke smartphone.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>8. OCR AI (Optical Recognition)</b><br>Digitalisasi struk, nota, dan dokumen fisik secara otomatis tanpa input manual.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="ai-card"><b>9. NLP WhatsApp Bot</b><br>Bot cerdas yang melayani tanya jawab audit & notifikasi selisih stok via WA.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>5. Alteryx</b><br>Workflow automation.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>6. Workday Adaptive</b><br>Scenario-based alarms.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>7. Numeric.ai</b><br>Financial notifications.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="ai-card"><b>8. OCR & NLP Bot</b><br>Digitalisasi struk & WhatsApp interaction.</div>', unsafe_allow_html=True)
 
-# --- 📂 FOLDER 3: PRODUK & INVESTASI ---
+# --- 📂 FOLDER 3: PRODUK ---
 elif menu == "📦 Produk & Investasi":
-    st.header("Layanan & Skema Investasi V-Guard")
-    st.divider()
-    
+    st.header("Layanan & Skema Investasi")
     p1, p2, p3, p4 = st.columns(4)
     with p1:
-        st.markdown(f'<div class="price-box"><b>V-LITE</b><br><small>UMKM / Toko</small><hr>Pasang: <span class="price-tag">Rp 1.5M</span><br>Bulanan: 250rb<br><a href="{get_wa_url("V-LITE")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="price-box"><b>V-LITE</b><br><small>UMKM</small><hr>Pasang: <br><span class="price-tag">Rp 1.5M</span><br>Bulanan: 250rb<br><a href="{get_wa_url("V-LITE")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
     with p2:
-        st.markdown(f'<div class="price-box"><b>V-PRO</b><br><small>Retail / Resto</small><hr>Pasang: <span class="price-tag">Rp 3.5M</span><br>Bulanan: 750rb<br><a href="{get_wa_url("V-PRO")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="price-box"><b>V-PRO</b><br><small>Retail/Resto</small><hr>Pasang: <br><span class="price-tag">Rp 3.5M</span><br>Bulanan: 750rb<br><a href="{get_wa_url("V-PRO")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
     with p3:
-        st.markdown(f'<div class="price-box"><b>V-SIGHT</b><br><small>Visual Audit</small><hr>Pasang: <span class="price-tag">Rp 5.0M</span><br>Bulanan: 1.2jt<br><a href="{get_wa_url("V-SIGHT")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="price-box"><b>V-SIGHT</b><br><small>Visual</small><hr>Pasang: <br><span class="price-tag">Rp 5.0M</span><br>Bulanan: 1.2jt<br><a href="{get_wa_url("V-SIGHT")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
     with p4:
         st.markdown(f'<div class="price-box"><b>V-ENTERPRISE</b><br><small>Corporate</small><hr><span class="price-tag">CUSTOM</span><br>Full Ecosystem<br><a href="{get_wa_url("V-ENTERPRISE")}" class="wa-link">💬 Chat WA</a></div>', unsafe_allow_html=True)
 
 # --- 📂 FOLDER 4: PORTAL KLIEN ---
 elif menu == "🔑 Portal Klien":
-    st.header("🔑 Portal Secure Upload")
-    with st.form("portal_upload"):
-        st.text_input("Nama Perusahaan / Toko")
-        st.file_uploader("Upload Data (VCS/KTP/Rekaman)", type=['csv', 'xlsx', 'jpg', 'png', 'mp4'])
-        if st.form_submit_button("🚀 Kirim ke AI Engine"):
-            st.success("Data berhasil dienkripsi dan masuk ke antrean audit.")
+    st.header("🔑 Client Upload Center")
+    with st.form("u_form"):
+        st.text_input("Nama Bisnis")
+        st.file_uploader("Data Audit")
+        if st.form_submit_button("🚀 Proses AI"):
+            st.success("Data masuk antrean audit.")
 
 # --- 📂 FOLDER 5: ADMIN PANEL ---
 elif menu == "🔐 Admin Panel":
     st.header("🔐 CEO Command Center")
-    pwd = st.text_input("Sandi Founder", type="password")
-    if pwd:
-        if hashlib.sha256(pwd.encode()).hexdigest() == ADMIN_PWD_HASH:
-            st.success("Akses Diterima. Selamat Datang, Pak Erwin.")
-            st.metric("Total Leakage Blocked", "Rp 125,500,000", "+12%")
-        else:
-            st.error("Sandi Salah. Akses Ditolak.")
+    if not st.session_state['logged_in']:
+        pwd = st.text_input("Sandi Founder", type="password")
+        if st.button("Login"):
+            if hashlib.sha256(pwd.encode()).hexdigest() == ADMIN_PWD_HASH:
+                st.session_state['logged_in'] = True
+                st.rerun()
+            else:
+                st.error("Akses Ditolak.")
+    else:
+        st.success("Mode Admin Aktif. Menu 'Ekosistem' kini muncul di navigasi.")
+        st.metric("Total Leakage Blocked", "Rp 125,500,000")
+        if st.button("Logout"):
+            st.session_state['logged_in'] = False
+            st.rerun()
 
-# --- FOOTER COPYRIGHT ---
+# --- FOOTER ---
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.divider()
 st.markdown(f'<div style="text-align:center; color:#8892b0; font-size:12px;">🛡️ <b>V-Guard AI Intelligence</b> | @copyright {datetime.now().year} | Erwin Sinaga. All Rights Reserved.</div>', unsafe_allow_html=True)
