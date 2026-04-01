@@ -22,7 +22,7 @@ st.markdown("""
         border-radius: 15px; 
         text-align: center; 
         border: 1px solid #e2e8f0; 
-        height: 350px; 
+        height: 360px; 
     }
 </style>
 """, unsafe_allow_html=True)
@@ -45,7 +45,7 @@ with st.sidebar:
     ]
     nav = st.radio("Navigasi Utama:", menu)
     st.write("---")
-    st.markdown('<a href="https://wa.me/628212190885" target="_blank" style="background-color: #25d366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: bold;">💬 Hubungi Admin</a>', unsafe_allow_html=True)
+    st.markdown('<a href="https://wa.me/628212190885" target="_blank" style="background-color: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: bold;">💬 Hubungi Admin</a>', unsafe_allow_html=True)
 
 # --- 5. LOGIKA MENU ---
 
@@ -58,12 +58,82 @@ if nav == "Profil Kepemimpinan & ROI":
     with col2:
         with st.container(border=True):
             st.write("""
-            Bapak **Erwin Sinaga** adalah **Founder V-Guard AI** yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem konvensional. 
-
-            Melalui dedikasi yang tinggi terhadap transparansi, beliau membangun V-Guard AI untuk memberikan rasa aman bagi pemilik bisnis melalui penerapan audit real-time yang mampu meminimalisir risiko kerugian modal secara signifikan bagi pelaku UMKM maupun korporasi nasional.
+            Bapak **Erwin Sinaga** adalah **Founder V-Guard AI**. Beliau memiliki 
+            pengalaman lebih dari satu dekade memimpin operasional di perbankan 
+            dan manajemen aset nasional. Keahlian beliau adalah mendeteksi 
+            kebocoran finansial yang tidak terdeteksi sistem biasa.
+            
+            V-Guard AI dibangun untuk memberikan transparansi dan rasa aman 
+            bagi pemilik bisnis melalui audit real-time berbasis AI, membantu 
+            UMKM dan korporasi meminimalisir risiko kerugian modal.
             """)
     
     st.write("---")
-    st.subheader("Visi, Misi & Analisis ROI")
+    st.subheader("Strategi Visi, Misi & ROI")
     v1, v2 = st.columns(2)
-    with v1: st.info("**V
+    # Teks dipendekkan agar tidak error saat di-paste
+    with v1: 
+        st.info("**Visi:** Pelopor audit digital AI global.")
+    with v2: 
+        st.success("**Misi:** Proteksi aset UMKM & Fraud Detection.")
+    
+    oz = st.number_input("Omzet Bulanan (Rp):", value=100000000)
+    rugi = oz * 0.07
+    st.metric("Potensi Rugi (7%)", f"Rp {rugi:,.0f}")
+    st.metric("Aset Aman AI", f"Rp {rugi*0.9:,.0f}")
+
+elif nav == "Daftar Harga Modern":
+    st.header("Price List V-Guard AI")
+    wa_adm = "https://wa.me/628212190885?text=Min,%20Paket%20"
+    c1, c2, c3 = st.columns(3)
+    
+    with c1:
+        st.markdown('<div class="pricing-card"><h3>BASIC</h3><h1>1.5jt</h1><p>✓ Monitor Dasar<br>✓ Laporan Bulanan</p></div>', unsafe_allow_html=True)
+        st.link_button("Pesan BASIC", wa_adm + "BASIC")
+    
+    with c2:
+        st.markdown('<div class="pricing-card" style="border:2px solid #1e3a8a"><h3>SMART</h3><h1>2.5jt</h1><p>✓ Real-Time Monitor<br>✓ VCS Integrasi</p></div>', unsafe_allow_html=True)
+        st.link_button("Pesan SMART", wa_adm + "SMART")
+    
+    with c3:
+        st.markdown('<div class="pricing-card"><h3>MASTER</h3><h1>PRO</h1><p>✓ Full Audit AI<br>✓ Multi-Cabang</p></div>', unsafe_allow_html=True)
+        st.link_button("Hubungi Admin", wa_adm + "MASTER")
+
+elif nav == "Register Pelanggan":
+    st.header("Pendaftaran Pelanggan")
+    with st.form("f_reg"):
+        st.text_input("Nama Pemilik:")
+        st.text_input("Nama Usaha:")
+        st.selectbox("Paket:", ["BASIC (1.5jt)", "SMART (2.5jt)", "MASTER"])
+        st.file_uploader("Upload KTP:", type=["jpg", "png", "jpeg"])
+        if st.form_submit_button("Daftar Sekarang"):
+            st.success("Terkirim ke Admin!")
+
+elif nav == "Dashboard Login":
+    st.header("Portal Klien")
+    if not st.session_state.cl_in:
+        u = st.text_input("User ID:")
+        p = st.text_input("Password:", type="password")
+        if st.button("Masuk"):
+            match = [c for c in st.session_state.user_creds if c["User ID"] == u and c["Password"] == p]
+            if match:
+                st.session_state.cl_in = True
+                st.session_state.current_user = match[0]
+                st.rerun()
+            else: st.error("Akses Ditolak")
+    else:
+        st.info(f"Login: {st.session_state.current_user['User ID']}")
+        if st.button("Logout"):
+            st.session_state.cl_in = False
+            st.rerun()
+
+elif nav == "Admin Panel":
+    st.header("CEO Control Panel")
+    pwd = st.text_input("Sandi:", type="password")
+    if st.button("Buka"):
+        if pwd == "w1nbju8282":
+            st.table(pd.DataFrame(st.session_state.user_creds))
+        else: st.error("Salah")
+
+st.write("---")
+st.caption("© 2026 V-Guard AI Intelligence | Erwin Sinaga — Founder")
