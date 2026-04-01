@@ -17,12 +17,15 @@ st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 # --- 2. DATABASE & SESSION STATE ---
 if 'db_n' not in st.session_state:
     st.session_state.db_n = [
-        {"ID": 101, "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Usaha": "F&B", "Paket": "SMART", "Harga": 2500000, "Status": "🟢 AKTIF"},
-        {"ID": 102, "Waktu": "2026-03-28", "Pelanggan": "Jaya", "Bisnis": "Bengkel Berkah", "Usaha": "Otomotif", "Paket": "BASIC", "Harga": 1500000, "Status": "🔴 Menunggu"}
+        {"ID": "CL-101", "Waktu": "2026-03-25", "Pelanggan": "Siska", "Bisnis": "Cafe Maju", "Usaha": "F&B", "Paket": "SMART", "Harga": 2500000, "Status": "🟢 AKTIF"},
+        {"ID": "CL-102", "Waktu": "2026-03-28", "Pelanggan": "Jaya", "Bisnis": "Bengkel Berkah", "Usaha": "Otomotif", "Paket": "BASIC", "Harga": 1500000, "Status": "🔴 Menunggu"}
     ]
 
 if 'user_creds' not in st.session_state:
-    st.session_state.user_creds = {"admin": "w1nbju8282"}
+    st.session_state.user_creds = [
+        {"User ID": "admin", "Password": "p", "Level": "Eksekutif"},
+        {"User ID": "siska", "Password": "p", "Level": "Klien"}
+    ]
 
 if 'auth_vguard' not in st.session_state:
     st.session_state.auth_vguard = False
@@ -30,14 +33,12 @@ if 'auth_vguard' not in st.session_state:
 if 'client_logged_in' not in st.session_state:
     st.session_state.client_logged_in = False
 
-# --- 3. CSS PREMIUM (UKURAN DISESUAIKAN) ---
+# --- 3. CSS PREMIUM ---
 st.markdown("""
 <style>
     .fraud-header { background-color: #ff7675; color: white; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 16px; }
-    .service-card { background-color: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align: center; height: 380px; }
-    .client-box { background-color: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 5px solid #1e3a8a; margin-bottom: 15px; }
-    .stTabs [data-baseweb="tab-list"] { gap: 10px; }
-    .stTabs [data-baseweb="tab"] { background-color: #f0f2f6; border-radius: 5px 5px 0 0; padding: 8px 15px; }
+    .service-card { background-color: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align: center; height: 400px; }
+    .client-box { background-color: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 5px solid #1e3a8a; margin-bottom: 20px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -81,64 +82,8 @@ elif nav == "2. 🎯 Visi, Misi & ROI":
 elif nav == "3. 💎 Layanan Produk":
     st.header("Paket Layanan Unggulan V-Guard AI")
     c1, c2, c3 = st.columns(3)
-    wa = "https://wa.me/628212190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20"
-    with c1:
-        st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div><div class="feature-list">• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div></div>', unsafe_allow_html=True)
-        st.link_button("🚀 Pesan Sekarang", wa + "BASIC")
-    with c2:
-        st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div><div class="feature-list">• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant<br>• Dashboard Klien</div></div>', unsafe_allow_html=True)
-        st.link_button("🔥 Pesan Sekarang", wa + "SMART")
-    with c3:
-        st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div><div class="feature-list">• Semua Fitur Smart<br>• Digital Forensik<br>• Konsultasi Strategis<br>• Proteksi Multi-Cabang<br>• Risk Analysis<br>• Support 24/7</div></div>', unsafe_allow_html=True)
-        st.link_button("💎 Pesan Sekarang", wa + "PRO")
+    with c1: st.markdown('<div class="service-card"><h3>📦 BASIC</h3><div class="price-tag">Rp 1.5jt</div>• AI Monitor Dasar<br>• Laporan Bulanan (PDF)<br>• Alarm Indikasi Fraud<br>• Support Chat</div>', unsafe_allow_html=True)
+    with c2: st.markdown('<div class="service-card" style="border: 2px solid #1e3a8a;"><h3>🚀 SMART</h3><div class="price-tag">Rp 2.5jt</div>• AI Monitoring Pro<br>• Integrasi VCS System<br>• Audit Real-Time<br>• Notif WA Instant</div>', unsafe_allow_html=True)
+    with c3: st.markdown('<div class="service-card"><h3>🛡️ PRO</h3><div class="price-tag">Rp 5.0jt</div>• Digital Forensik<br>• Konsultasi Strategis<br>• Proteksi Multi-Cabang<br>• Support 24/7</div>', unsafe_allow_html=True)
 
-elif nav == "4. 📝 Registrasi & Upload":
-    if not st.session_state.client_logged_in:
-        t1, t2 = st.tabs(["📝 Form Pendaftaran", "🔑 Login Akun Klien"])
-        with t1:
-            with st.form("reg_form"):
-                st.text_input("Nama Pelanggan:")
-                st.text_input("Nama Usaha:")
-                st.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
-                st.form_submit_button("Kirim Pendaftaran")
-        with t2:
-            u_id = st.text_input("User ID Klien:")
-            u_pw = st.text_input("Password:", type="password")
-            if st.button("MASUK DASHBOARD KLIEN"):
-                if u_id in st.session_state.user_creds and st.session_state.user_creds[u_id] == u_pw:
-                    st.session_state.client_logged_in = True
-                    st.rerun()
-                else: st.error("Akses ditolak.")
-    else:
-        st.header("🛡️ Dashboard Mitra V-Guard AI")
-        st.markdown('<div class="client-box"><h3>Tugas Harian Anda</h3>• Upload CSV Penjualan<br>• Update Absensi<br>• Cek Koneksi CCTV</div>', unsafe_allow_html=True)
-        st.file_uploader("Unggah Laporan CSV Harian", key="cl_up")
-        if st.sidebar.button("🚪 Keluar Akun Klien"):
-            st.session_state.client_logged_in = False
-            st.rerun()
-
-elif nav == "5. 🔐 Akses Terbatas":
-    if not st.session_state.auth_vguard:
-        c_log1, c_log2, c_log3 = st.columns([1, 2, 1])
-        with c_log2:
-            st.subheader("🔐 Area Pengawasan Eksekutif")
-            pw = st.text_input("Masukkan Kode Keamanan Admin:", type="password")
-            if st.button("BUKA AKSES EKSEKUTIF"):
-                if pw == "w1nbju8282":
-                    st.session_state.auth_vguard = True
-                    st.rerun()
-    else:
-        st.markdown('<div class="fraud-header">🚨 PERINGATAN: INDIKASI FRAUD TERDETEKSI PADA TITIK TRANSAKSI HARIAN</div>', unsafe_allow_html=True)
-        
-        t1, t2, t3, t4, t5 = st.tabs(["📊 Database", "📉 Audit AI", "📽️ VCS Visual", "🧾 Billing & Laba", "👤 Aktivasi Akun"])
-        
-        with t1:
-            c1, c2 = st.columns([2, 1])
-            with c1:
-                st.subheader("Database Transaksi")
-                st.table(pd.DataFrame(st.session_state.db_n))
-            with c2:
-                st.subheader("Manajemen CSV")
-                st.file_uploader("Upload Data Baru", type=['csv'])
-                df_exp = pd.DataFrame(st.session_state.db_n)
-                st.download_button("Download Database", data=df_exp.to_csv(index=False).encode('utf-8'), file_name="vguard_db.csv", mime='text/csv')
+elif nav == "4. 📝 Registrasi & Upload
