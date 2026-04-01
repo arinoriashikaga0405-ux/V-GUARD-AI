@@ -3,75 +3,72 @@ import os
 import pandas as pd
 from datetime import datetime, timedelta
 
-# 1. SETUP
-st.set_page_config(page_title="V-Guard AI", layout="wide")
+# 1. SETUP AWAL
+st.set_page_config(page_title="V-Guard AI")
 
 if 'db_nasabah' not in st.session_state:
-    today = datetime.now().date()
+    dt = datetime.now().date()
+    jt_val = dt + timedelta(days=5)
     st.session_state.db_nasabah = [
         {
-            "ID": 101, "Tgl": "2026-03-01", "Pelanggan": "Siska", 
-            "Bisnis": "Cafe Maju", "Paket": "SMART", "Harga": 2500000, 
-            "Jatuh_Tempo": (today + timedelta(days=5)).strftime("%Y-%m-%d"),
-            "Status": "🟢 AKTIF", "Audit_Score": 98
+            "ID": 101, "Tgl": "2026-03-01", 
+            "Pelanggan": "Siska", 
+            "Bisnis": "Cafe Maju", 
+            "Paket": "SMART", "Harga": 2500000, 
+            "Jatuh_Tempo": str(jt_val),
+            "Status": "🟢 AKTIF", "Score": 98
         }
     ]
 
-if 'admin_akses' not in st.session_state:
-    st.session_state.admin_akses = False
+if 'admin_in' not in st.session_state:
+    st.session_state.admin_in = False
 
-WA_NUMBER = "628212190885"
-ADMIN_PWD = "w1nbju8282"
+WA = "628212190885"
+PWD = "w1nbju8282"
 
-def format_rp(angka):
-    try:
-        val = "{:,.0f}".format(float(angka)).replace(",", ".")
-        return "Rp " + val
-    except:
-        return str(angka)
+def format_rp(n):
+    v = "{:,.0f}".format(float(n))
+    return "Rp " + v.replace(",", ".")
 
-# 2. UI STYLE
+# 2. STYLE & SIDEBAR
 st.markdown("""
 <style>
-    .alarm { background: #ff4b4b; color: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; animation: blink 1.5s linear infinite; }
-    @keyframes blink { 50% { opacity: 0.6; } }
-    .notif { background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 5px solid #ffc107; margin-bottom: 5px; color: black; }
-    .footer { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; padding: 10px; font-size: 10px; background: white; }
+    .alarm { background: red; color: white; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; }
+    .notif { background: orange; padding: 10px; border-radius: 5px; color: black; margin-bottom: 5px; }
 </style>
 """, unsafe_allow_html=True)
 
-# 3. SIDEBAR
 with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
-    st.markdown("**Erwin Sinaga**\n\nSenior Business Leader")
+        st.image("erwin.jpg")
+    st.write("**Erwin Sinaga**")
+    st.write("Senior Business Leader")
     st.write("---")
-    menu = st.radio("Navigasi:", ["Profil", "Visi & ROI", "Paket", "Registrasi", "Admin"])
-    st.write("---")
-    st.link_button("💬 Chat Support", "https://wa.me/" + WA_NUMBER)
+    m = st.radio("Menu:", ["Profil", "ROI", "Paket", "Admin"])
+    st.link_button("Chat Support", "https://wa.me/" + WA)
 
-# --- HALAMAN 1: PROFIL ---
-if menu == "Profil":
+# 3. LOGIKA HALAMAN
+if m == "Profil":
     st.header("Profil Founder")
-    st.write("""Bapak Erwin Sinaga merupakan seorang Senior Business Leader yang memiliki rekam jejak panjang selama lebih dari satu dekade dalam memimpin transformasi operasional dan strategi manajemen di industri perbankan serta manajemen aset nasional. Keahlian utama beliau terletak pada kemampuan analitis yang tajam dalam mengidentifikasi berbagai celah kebocoran finansial yang sering kali tidak terdeteksi oleh sistem pengawasan konvensional. 
+    st.write("Bapak Erwin Sinaga merupakan Senior Business Leader berpengalaman lebih dari satu dekade di industri perbankan dan aset manajemen. Beliau ahli dalam identifikasi celah kebocoran finansial. V-Guard AI dibangun untuk perlindungan aset yang transparan dan berbasis teknologi mutakhir bagi pemilik bisnis.")
 
-Melalui dedikasi yang tinggi terhadap integritas bisnis, beliau membangun V-Guard AI sebagai jawaban atas kebutuhan para pengusaha akan sistem perlindungan aset yang transparan dan berbasis teknologi mutakhir. Berdomisili di Tangerang, beliau kini mendedikasikan seluruh kompetensinya untuk menjembatani kebutuhan dunia usaha dengan solusi digital yang aplikatif. Fokus utama beliau adalah memberikan rasa aman bagi pemilik bisnis melalui penerapan audit berbasis kecerdasan buatan yang mampu meminimalisir risiko kerugian modal secara signifikan.""")
+elif m == "ROI":
+    st.header("Analisis ROI")
+    st.info("Visi: Audit AI Real-time.")
+    oz = st.number_input("Omzet (Rp):", value=100000000)
+    bc = oz * 0.07
+    st.error("Bocor (7%): " + format_rp(bc))
+    sv = bc - 2500000
+    st.success("Save: " + format_rp(sv))
 
-# --- HALAMAN 2: VISI & ROI ---
-elif menu == "Visi & ROI":
-    st.header("Visi, Misi & ROI")
-    st.info("Visi: Standar emas audit AI real-time.\nMisi: Mencegah kebocoran aset bisnis.")
-    st.write("---")
-    omzet = st.number_input("Omzet Bulanan (Rp):", value=100000000)
-    bocor = omzet * 0.07
-    st.error("Potensi Kebocoran (7%): " + format_rp(bocor))
-    save = bocor - 2500000
-    st.success("Dana Diselamatkan V-Guard: " + format_rp(save))
-
-# --- HALAMAN 3: PAKET ---
-elif menu == "Paket":
+elif m == "Paket":
     st.header("Paket Layanan")
-    c1, c2, c3 = st.columns(3)
-    c1.info("BASIC: 1.5jt\nMonitoring AI")
-    c2.success("SMART: 2
+    c1, c2 = st.columns(2)
+    c1.info("BASIC: 1.5jt")
+    c2.success("SMART: 2.5jt")
+
+elif m == "Admin":
+    if not st.session_state.admin_in:
+        p = st.text_input("Pass:", type="password")
+        if st.button("Login"):
