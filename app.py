@@ -9,8 +9,7 @@ st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 if 'user_creds' not in st.session_state:
     st.session_state.user_creds = [
         {"User ID": "admin", "Password": "w1nbju8282", "Level": "Eksekutif", "Paket": "MASTER"},
-        {"User ID": "siska", "Password": "p", "Level": "Klien", "Paket": "SMART"},
-        {"User ID": "jaya", "Password": "p", "Level": "Klien", "Paket": "BASIC"}
+        {"User ID": "siska", "Password": "p", "Level": "Klien", "Paket": "SMART"}
     ]
 
 if 'client_logged_in' not in st.session_state: st.session_state.client_logged_in = False
@@ -55,7 +54,7 @@ elif nav == "2. 🎯 Visi, Misi & ROI":
 
 elif nav == "3. 💎 Layanan Produk":
     st.header("Paket Layanan V-Guard AI")
-    st.write("Silakan pilih paket sesuai kebutuhan bisnis Anda.")
+    st.write("Pilih paket yang sesuai dengan skala bisnis Anda.")
 
 elif nav == "4. 📝 Registrasi & Dashboard":
     t1, t2 = st.tabs(["📝 Form Pendaftaran Baru", "🔑 Dashboard Akun Klien"])
@@ -65,12 +64,3 @@ elif nav == "4. 📝 Registrasi & Dashboard":
         with st.form("pendaftaran_baru"):
             c1, c2 = st.columns(2)
             with c1:
-                nama = st.text_input("Nama Pelanggan:")
-                usaha = st.text_input("Jenis Usaha (e.g. Cafe, Retail):")
-            with c2:
-                paket_pilih = st.selectbox("Pilih Paket:", ["BASIC", "SMART", "PRO"])
-                harga_paket = st.text_input("Harga Kesepakatan (Rp):", value="1,500,000")
-            
-            uploaded_ktp = st.file_uploader("Upload Foto KTP (JPG/PNG):", type=["jpg", "png", "jpeg"])
-            
-            if st.form_submit_button("KIRIM PEN
