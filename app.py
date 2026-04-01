@@ -32,7 +32,7 @@ with st.sidebar:
 
 # --- 4. LOGIKA MENU ---
 
-# MENU 1: VISI & MISI (NARASI PROFESIONAL 250+ KATA)
+# MENU 1: VISI & MISI (250+ KATA)
 if menu == "Visi & Misi":
     st.header("Visi & Misi V-Guard AI Intelligence")
     col_v1, col_v2 = st.columns([1, 2])
@@ -46,11 +46,11 @@ if menu == "Visi & Misi":
         
         <b>Visi Kami:</b> Menjadi standar global utama dalam penyediaan ekosistem <i>Digital Trust</i> yang sepenuhnya otonom, transparan, dan tidak dapat dimanipulasi oleh pihak mana pun. Kami bertekad membangun dunia bisnis di mana setiap interaksi dan transaksi didasari oleh bukti otentik yang dapat diverifikasi secara instan. Kami bercita-cita untuk menghilangkan segala bentuk ambiguitas operasional dan memastikan bahwa integritas data menjadi pilar utama serta aset yang paling berharga bagi setiap organisasi, mulai dari sektor UMKM hingga korporasi besar, demi menciptakan iklim usaha yang bersih, sehat, dan memiliki tingkat kepercayaan digital yang tinggi di kancah persaingan global.<br><br>
         
-        <b>Misi Kami:</b> Kami berdedikasi untuk mengimplementasikan filosofi 'Eliminating Leakage' secara disiplin melalui integrasi mendalam antara kecerdasan buatan (AI) prediktif dan teknologi Computer Vision mutakhir. Misi kami adalah membangun sistem pertahanan berlapis yang mampu mengidentifikasi serta menghentikan pola kecurangan sebelum berkembang menjadi kerugian finansial yang nyata bagi klien kami. Melalui prinsip 'Digitizing Trust', kami berkomitmen mengubah data mentah menjadi bukti digital yang sah dan permanen. Kami hadir untuk memberikan ketenangan pikiran bagi setiap pengusaha melalui sistem audit otomatis yang jujur, akurat, dan bekerja secara <i>real-time</i> selama 24 jam penuh untuk memastikan setiap rupiah aset Anda terlindungi dengan sempurna.
+        <b>Misi Kami:</b> Kami berdedikasi untuk mengimplementasikan filosofi 'Eliminating Leakage' secara disiplin melalui integrasi mendalam antara kecerdasan buatan (AI) tingkat lanjut dan teknologi Computer Vision mutakhir. Misi kami adalah membangun sistem pertahanan berlapis yang mampu mengidentifikasi serta menghentikan pola kecurangan sebelum berkembang menjadi kerugian finansial yang nyata bagi klien kami. Melalui prinsip 'Digitizing Trust', kami berkomitmen mengubah data mentah menjadi bukti digital yang sah dan permanen. Kami hadir untuk memberikan ketenangan pikiran bagi setiap pengusaha melalui sistem audit otomatis yang jujur, akurat, dan bekerja secara <i>real-time</i> selama 24 jam penuh untuk memastikan setiap rupiah aset Anda terlindungi dengan sempurna.
         </div>
         """, unsafe_allow_html=True)
 
-# MENU 2: PRODUK & LAYANAN (HARGA MINIMAL 1JT, TANPA INFO KONTAK PRIBADI)
+# MENU 2: PRODUK & LAYANAN
 elif menu == "Produk & Layanan":
     st.header("🛡️ Produk & Layanan V-Guard AI")
     wa_base = "https://wa.me/?text=Halo,%20saya%20ingin%20order%20"
@@ -80,22 +80,4 @@ elif menu == "Analisis ROI Kerugian":
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000, step=10000000)
         leak = st.slider("Estimasi Kebocoran / Fraud (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
-        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
-    with col_b:
-        biaya = st.selectbox("Pilih Rencana Investasi Paket", [1000000, 2500000, 5000000, 10000000])
-        saved = loss - biaya
-        st.success(f"Profit yang Diselamatkan: Rp {saved:,.0f} / bln")
-        st.metric("Estimasi ROI", f"{(saved/biaya)*100 if saved>0 else 0:.0f}%")
-
-# MENU 4: PORTAL KLIEN
-elif menu == "Portal Klien":
-    st.header("Portal Klien V-Guard AI")
-    col_order, col_login = st.columns(2)
-    with col_order:
-        st.subheader("📝 Form Order Baru")
-        with st.container(border=True):
-            nama_u = st.text_input("Nama Usaha / Perusahaan")
-            paket_u = st.selectbox("Paket yang Dipilih", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.file_uploader("Upload KTP Pemilik Bisnis", type=['jpg', 'png', 'pdf'])
-            if st.button("Kirim Data Registrasi"):
-                st.success("Data telah masuk ke sistem. Sil
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f
