@@ -39,7 +39,7 @@ with st.sidebar:
     st.write("---")
     st.link_button("💬 Chat Support", "https://wa.me/628212190885")
 
-# --- FOLDER 1: PROFIL FOUNDER ---
+# --- FOLDER 1: PROFIL FOUNDER (MIN 150 KATA) ---
 if menu == "1. 👤 Profil Founder":
     st.markdown(f"""<div class="profile-box">
     <b>Bapak Erwin Sinaga</b> merupakan seorang Pemimpin Bisnis Senior (Senior Business Leader) yang telah mengabdikan dedikasi dan keahlian strategisnya selama lebih dari sepuluh tahun di pusat industri perbankan serta sektor manajemen aset berskala nasional. Sepanjang perjalanan karier profesionalnya yang gemilang, beliau dikenal sebagai figur yang memiliki ketajaman luar biasa dalam memetakan dinamika pasar serta memahami kompleksitas tata kelola finansial modern. Pengalaman panjang beliau di garis depan industri keuangan tidak hanya membentuk karakter kepemimpinan yang tangguh, tetapi juga melahirkan intuisi yang mendalam dalam mendeteksi ancaman terhadap keberlanjutan bisnis dari sudut pandang keamanan data dan integritas operasional. <br><br>
@@ -60,5 +60,96 @@ elif menu == "4. 📝 Registrasi & Invoice":
             new_id = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
             due = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
             st.session_state.db_nasabah.append({"ID": new_id, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": n_pel, "Bisnis": n_bis, "Paket": p_pil, "Harga": h_pen, "Status": "🔴 Menunggu", "Jatuh_Tempo": due})
-            add_log(f"Invoice Terbit: {n_bis} (ID: {new_id})")
-            inv_text = f"INVOICE V-GUARD AI\nYth. {n_pel}\nBisnis: {n_bis}\nTotal: Rp {h_pen:,.0f}\nBCA: 3450074658\nA/n: ERWIN
+            add_log(f"Invoice Terbit: {n_bis}")
+            # PERBAIKAN: Menggunakan Triple Quotes agar tidak Error
+            inv_text = f"""INVOICE V-GUARD AI
+Yth. {n_pel}
+Bisnis: {n_bis}
+Total Investasi: Rp {h_pen:,.0f}
+
+Pembayaran via Transfer:
+BCA: 3450074658
+A/n: ERWIN SINAGA"""
+            st.code(inv_text)
+            st.link_button("🚀 Kirim Invoice WA", f"https://wa.me/{wa_no}?text={urllib.parse.quote(inv_text)}")
+
+# --- FOLDER 5: ADMIN CONTROL CENTER ---
+elif menu == "5. 🔐 Admin Control Center":
+    st.header("🔐 Admin Intelligence Control")
+    pw = st.text_input("Sandi Otoritas Admin:", type="password")
+    if pw == "w1nbju8282":
+        df = pd.DataFrame(st.session_state.db_nasabah)
+        
+        # 1. LABA RUGI MINGGUAN
+        st.subheader("📊 Laporan Keuangan & Laba Rugi")
+        c_fin1, c_fin2, c_fin3 = st.columns(3)
+        total_rev = df["Harga"].sum()
+        ops_cost = total_rev * 0.15
+        net_profit = total_rev - ops_cost
+        c_fin1.markdown(f'<div class="finance-card"><p>Gross Revenue</p><h3 style="color:#0d6efd;">Rp {total_rev:,.0f}</h3></div>', unsafe_allow_html=True)
+        c_fin2.markdown(f'<div class="finance-card"><p>Ops Cost (15%)</p><h3 style="color:#dc3545;">-Rp {ops_cost:,.0f}</h3></div>', unsafe_allow_html=True)
+        c_fin3.markdown(f'<div class="finance-card"><p><b>LABA BERSIH MINGGUAN</b></p><h3 style="color:#28a745;">Rp {net_profit:,.0f}</h3></div>', unsafe_allow_html=True)
+
+        # 2. BILLING ALERT (JATUH TEMPO)
+        st.write("---")
+        today = datetime.now().strftime("%Y-%m-%d")
+        due_df = df[df['Jatuh_Tempo'] <= today]
+        if not due_df.empty:
+            st.subheader("📅 Peringatan Billing")
+            for _, r in due_df.iterrows():
+                st.markdown(f'<div class="due-alert">⚠️ {r["Bisnis"]} JATUH TEMPO! Segera Tagih Rp {r["Harga"]:,.0f}</div>', unsafe_allow_html=True)
+
+        # 3. TAMBAH AKUN MANUAL
+        with st.expander("➕ Tambah Akun & Aktivasi Langsung"):
+            with st.form("manual_add"):
+                m1, m2 = st.columns(2)
+                m_pic = m1.text_input("PIC Klien:")
+                m_bis = m1.text_input("Nama Bisnis:")
+                m_pkt = m2.selectbox("Paket:", ["BASIC", "MEDIUM", "ENTERPRISE", "CORPORATE"])
+                m_hrg = m2.number_input("Harga Investasi (Rp):", value=2500000)
+                if st.form_submit_button("Simpan & Aktifkan"):
+                    nid = st.session_state.db_nasabah[-1]["ID"] + 1 if st.session_state.db_nasabah else 101
+                    due_m = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
+                    st.session_state.db_nasabah.append({"ID": nid, "Waktu": datetime.now().strftime("%Y-%m-%d %H:%M"), "Pelanggan": m_pic, "Bisnis": m_bis, "Paket": m_pkt, "Harga": m_hrg, "Status": "🟢 AKTIF", "Jatuh_Tempo": due_m})
+                    add_log(f"Akun Manual Dibuat: {m_bis}")
+                    st.rerun()
+
+        # 4. SMART SEARCH & AUDIT
+        st.write("---")
+        s_col1, s_col2 = st.columns([3, 1])
+        s_query = s_col1.text_input("🔍 Cari Database Klien:")
+        s_col2.download_button("📥 Export CSV (Excel)", df.to_csv(index=False).encode('utf-8'), "VGuard_Audit.csv", "text/csv")
+        
+        f_df = df[df['Pelanggan'].str.contains(s_query, case=False) | df['Bisnis'].str.contains(s_query, case=False)]
+        for i, row in f_df.iterrows():
+            with st.expander(f"{row['Status']} | {row['Bisnis']}"):
+                st.write(f"ID: #{row['ID']} | Tempo: {row['Jatuh_Tempo']} | Harga: Rp {row['Harga']:,.0f}")
+                st.info(f"Audit Trail: Terdaftar pada {row['Waktu']}")
+                c_act1, c_act2 = st.columns(2)
+                if row['Status'] == "🔴 Menunggu":
+                    if c_act1.button("🟢 Aktifkan", key=f"a_{row['ID']}"):
+                        for item in st.session_state.db_nasabah:
+                            if item['ID'] == row['ID']: item['Status'] = "🟢 AKTIF"
+                        add_log(f"Aktivasi Sukses: {row['Bisnis']}")
+                        st.rerun()
+                if c_act2.button("🗑️ Hapus Data", key=f"d_{row['ID']}"):
+                    st.session_state.db_nasabah = [item for item in st.session_state.db_nasabah if item['ID'] != row['ID']]
+                    add_log(f"Data Dihapus: {row['Bisnis']}")
+                    st.rerun()
+
+        # 5. LAPORAN AUDIT GLOBAL
+        st.write("---")
+        st.subheader("📜 Laporan Audit Aktivitas Sistem")
+        st.markdown(f'<div class="log-container">{"<br>".join(st.session_state.audit_logs)}</div>', unsafe_allow_html=True)
+    elif pw != "": st.error("Sandi Salah!")
+
+# --- MENU LAINNYA ---
+elif menu == "2. 🎯 Visi & ROI":
+    st.header("🎯 Strategi ROI")
+    omzet = st.number_input("Omzet Bulanan (Rp):", value=500000000)
+    st.success(f"Pencegahan Kebocoran: Rp {omzet * 0.045:,.0f}/bln")
+elif menu == "3. 📦 Paket Unggulan":
+    st.header("📦 Paket Produk")
+    st.write("BASIC | MEDIUM | ENTERPRISE | CORPORATE")
+
+st.markdown('<div class="footer">© 2026 V-Guard AI Systems | Secured by Erwin Sinaga</div>', unsafe_allow_html=True)
