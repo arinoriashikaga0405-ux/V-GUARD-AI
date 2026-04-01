@@ -12,10 +12,11 @@ GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 st.markdown("""
     <style>
     .main { background-color: #0e1117; }
-    .package-card { background-color: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 20px; min-height: 450px;}
+    .package-card { background-color: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 20px; min-height: 400px;}
     .stButton>button { width: 100%; border-radius: 5px; }
     .feature-list { font-size: 0.85rem; color: #8b949e; line-height: 1.4; }
-    .roi-section { background-color: #1c2128; padding: 30px; border-radius: 15px; border: 1px dashed #444c56; margin-top: 20px; }
+    .roi-section { background-color: #1c2128; padding: 20px; border-radius: 15px; border: 1px dashed #444c56; }
+    .status-box { background-color: #0d1117; padding: 15px; border-radius: 10px; border: 1px solid #238636; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -27,7 +28,8 @@ with st.sidebar:
     st.markdown("<div style='text-align:center;'><h3>Erwin Sinaga</h3><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
     st.markdown("---")
     
-    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Layanan & Investasi", "Portal Klien", "Order Berlangganan", "Admin Control Center"])
+    # MENU SESUAI INSTRUKSI (HAPUS ORDER BERLANGGANAN)
+    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Layanan & Investasi", "Portal Klien", "Admin Control Center"])
 
 # --- 1. VISI & MISI ---
 if menu == "Visi & Misi":
@@ -47,102 +49,91 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-# --- 2. LAYANAN & INVESTASI (PRODUK & ROI) ---
+# --- 2. LAYANAN & INVESTASI ---
 elif menu == "Layanan & Investasi":
     st.header("🛡️ Paket Layanan V-Guard AI")
-    
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        st.markdown("<div class='package-card'><h3>📦 V-LITE</h3><div class='feature-list'>• AI Fraud Dasar<br>• Laporan Bulanan PDF<br>• Notifikasi Standar<br>• Akses 1 User<br><br><b>Pemasangan:</b> Rp 1.500.000<br><b>Bulanan:</b> Rp 250.000</div></div>", unsafe_allow_html=True)
-        if st.button("Pilih V-LITE"): st.info("Silakan lanjut ke menu Order Berlangganan")
+        st.markdown("<div class='package-card'><h3>📦 V-LITE</h3><div class='feature-list'>• AI Fraud Dasar<br>• Laporan Bulanan PDF<br>• Notifikasi Standar<br><br><b>Pemasangan:</b> Rp 1.500.000<br><b>Bulanan:</b> Rp 250.000</div></div>", unsafe_allow_html=True)
     with c2:
-        st.markdown("<div class='package-card'><h3>🛡️ V-PRO</h3><div class='feature-list'>• Real-Time Monitoring<br>• VCS Integrasi<br>• Audit Harian Otomatis<br>• Prioritas Support<br><br><b>Pemasangan:</b> Rp 3.000.000<br><b>Bulanan:</b> Rp 750.000</div></div>", unsafe_allow_html=True)
-        if st.button("Pilih V-PRO"): st.info("Silakan lanjut ke menu Order Berlangganan")
+        st.markdown("<div class='package-card'><h3>🛡️ V-PRO</h3><div class='feature-list'>• Real-Time Monitoring<br>• VCS Integrasi<br>• Audit Harian Otomatis<br><br><b>Pemasangan:</b> Rp 3.000.000<br><b>Bulanan:</b> Rp 750.000</div></div>", unsafe_allow_html=True)
     with c3:
-        st.markdown("<div class='package-card'><h3>👁️ V-SIGHT</h3><div class='feature-list'>• AI Behavior Visual<br>• Visual Audit<br>• Deteksi Fisik<br>• Penyimpanan Cloud<br><br><b>Pemasangan:</b> Rp 5.000.000<br><b>Bulanan:</b> Rp 1.250.000</div></div>", unsafe_allow_html=True)
-        if st.button("Pilih V-SIGHT"): st.info("Silakan lanjut ke menu Order Berlangganan")
+        st.markdown("<div class='package-card'><h3>👁️ V-SIGHT</h3><div class='feature-list'>• AI Behavior Visual<br>• Visual Audit<br>• Penyimpanan Cloud<br><br><b>Pemasangan:</b> Rp 5.000.000<br><b>Bulanan:</b> Rp 1.250.000</div></div>", unsafe_allow_html=True)
     with c4:
-        st.markdown("<div class='package-card'><h3>🏢 V-ENTERPRISE</h3><div class='feature-list'>• Multi-Cabang Centralized<br>• Forensik Digital Full<br>• Dedicated Server<br>• Custom API Integration<br><br><b>Pemasangan:</b> Hubungi Admin<br><b>Bulanan:</b> Custom</div></div>", unsafe_allow_html=True)
-        st.link_button("Pilih V-ENTERPRISE", "https://wa.me/6282122190885?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20V-ENTERPRISE")
+        st.markdown("<div class='package-card'><h3>🏢 V-ENTERPRISE</h3><div class='feature-list'>• Multi-Cabang Centralized<br>• Forensik Digital Full<br>• Custom API Integration<br><br><b>Pemasangan:</b> Kontak Admin<br><b>Bulanan:</b> Custom</div></div>", unsafe_allow_html=True)
+        st.link_button("Hubungi CEO", "https://wa.me/6282122190885")
 
-    # --- ROI DI BAWAH PRODUK (2 BAGIAN) ---
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.subheader("📊 Kalkulator ROI (Return on Investment)")
-    roi_col1, roi_col2 = st.columns(2)
-    
-    with roi_col1:
-        st.markdown("<div class='roi-section'><h4>Estimasi Kebocoran Bisnis</h4>", unsafe_allow_html=True)
+    st.markdown("---")
+    st.subheader("📊 Analisis Potensi Penghematan (ROI)")
+    r1, r2 = st.columns(2)
+    with r1:
+        st.markdown("<div class='roi-section'><h4>Estimasi Kerugian</h4>", unsafe_allow_html=True)
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-        leakage_rate = st.slider("Persentase Kebocoran (%)", 0, 20, 5)
-        loss = omzet * (leakage_rate/100)
-        st.error(f"Potensi Rugi: Rp {loss:,.0f} / bln")
+        leak = st.slider("Kebocoran (%)", 0, 20, 5)
+        loss = omzet * (leak/100)
+        st.error(f"Rugi: Rp {loss:,.0f}/bln")
+        st.markdown("</div>", unsafe_allow_html=True)
+    with r2:
+        st.markdown("<div class='roi-section'><h4>Hasil V-Guard AI</h4>", unsafe_allow_html=True)
+        st.success(f"Hemat: Rp {loss * 0.95:,.0f}/bln")
+        st.info("Efisiensi 95% pada sistem operasional.")
         st.markdown("</div>", unsafe_allow_html=True)
 
-    with roi_col2:
-        st.markdown("<div class='roi-section'><h4>Efisiensi V-Guard AI</h4>", unsafe_allow_html=True)
-        savings = loss * 0.95
-        st.success(f"Potensi Penghematan: Rp {savings:,.0f} / bln")
-        st.info("V-Guard AI memangkas hingga 95% resiko fraud internal.")
-        st.markdown("</div>", unsafe_allow_html=True)
-
-# --- 3. PORTAL KLIEN ---
+# --- 3. PORTAL KLIEN (ORDER & USER AKTIF) ---
 elif menu == "Portal Klien":
     st.header("Portal Klien")
-    tab_order, tab_status = st.tabs(["📝 Form Order Baru", "✅ Status User Aktif"])
     
-    with tab_order:
-        st.subheader("Pendaftaran Layanan")
-        nama_u = st.text_input("Nama Usaha")
-        paket_u = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-        harga_u = st.text_input("Harga Kesepakatan (Rp)")
-        ktp_u = st.file_uploader("Upload KTP Pemilik", type=['jpg','png','pdf'])
+    # 2 BAGIAN BERSAMPINGAN
+    col_order, col_status = st.columns([1, 1.2])
+    
+    with col_order:
+        st.subheader("📝 Form Order Baru")
+        with st.container(border=True):
+            n_u = st.text_input("Nama Usaha")
+            p_u = st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            h_u = st.text_input("Kesepakatan Harga (Rp)")
+            k_u = st.file_uploader("Upload KTP (JPG/PDF)")
+            if st.button("Kirim Pesanan"):
+                if n_u and k_u:
+                    text = f"Halo Pak Erwin, saya {n_u} ingin berlangganan paket {p_u}."
+                    st.link_button("Konfirmasi ke WhatsApp", f"https://wa.me/6282122190885?text={text}")
+                else:
+                    st.error("Lengkapi data dan Upload KTP.")
+
+    with col_status:
+        st.subheader("✅ Status User Aktif")
+        # KUNCI MENU DENGAN PASSWORD
+        lock_pw = st.text_input("Masukkan Password Akses Klien", type="password", key="client_lock")
         
-        if st.button("Kirim Data Order"):
-            if nama_u and ktp_u:
-                msg = f"Halo Pak Erwin, saya {nama_u} ingin order {paket_u} dengan harga {harga_u}."
-                st.link_button("Konfirmasi Kirim via WhatsApp", f"https://wa.me/6282122190885?text={msg}")
-            else:
-                st.warning("Mohon isi nama usaha dan upload KTP.")
+        if lock_pw == "vguardklien2026": # PASSWORD UNTUK LIHAT DATA AKTIF
+            st.markdown("<div class='status-box'>", unsafe_allow_html=True)
+            st.write("Daftar User yang Sudah Aktif & Bayar:")
+            st.table([
+                {"Nama Usaha": "Laundry Jaya", "Paket": "V-LITE", "Status": "LUNAS", "Password": "JAY-V1-2026"},
+                {"Nama Usaha": "Cafe Mantap", "Paket": "V-PRO", "Status": "LUNAS", "Password": "CAF-V2-9921"},
+                {"Nama Usaha": "Toko Emas Antam", "Paket": "V-SIGHT", "Status": "LUNAS", "Password": "ANT-V3-0012"}
+            ])
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.info("Notifikasi: Invoice H-7 Berlangganan dikirim ke WhatsApp terdaftar.")
+        elif lock_pw != "":
+            st.error("Password Akses Salah.")
 
-    with tab_status:
-        st.subheader("Daftar User Aktif")
-        st.table([
-            {"Nama Usaha": "Laundry Jaya", "Paket": "V-LITE", "Status": "Aktif", "Password": "JAY-V1"},
-            {"Nama Usaha": "Cafe Mantap", "Paket": "V-PRO", "Status": "Aktif", "Password": "CAF-V2"}
-        ])
-
-# --- 4. ORDER BERLANGGANAN (RINGKASAN) ---
-elif menu == "Order Berlangganan":
-    st.header("Ringkasan Pembayaran")
-    st.info("Invoice H-7 akan otomatis dikirimkan ke nomor terdaftar.")
-    st.write("Silakan hubungi WhatsApp 082122190885 untuk konfirmasi pembayaran.")
-
-# --- 5. ADMIN CONTROL CENTER (LAPORAN RUGI LABA PINDAH KE SINI) ---
+# --- 4. ADMIN CONTROL CENTER ---
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
-    pw = st.text_input("Password Admin", type="password")
-    
-    if pw == "adminvguard2026":
-        st.success("Akses Diterima")
-        a_tab1, a_tab2 = st.tabs(["📉 Laporan Rugi Laba & Audit", "🤖 V-Guard AI Assistant"])
-        
-        with a_tab1:
-            st.subheader("Laporan Keuangan & Audit Fraud")
-            st.warning("🚨 Alarm Fraud: Terdeteksi 2 Void mencurigakan pada User 'Cafe Mantap'.")
-            st.table([
-                {"Tanggal": "01/04/2026", "Klien": "Laundry Jaya", "Profit": "Rp 15jt", "Audit": "Clear"},
-                {"Tanggal": "01/04/2026", "Klien": "Cafe Mantap", "Profit": "Rp 45jt", "Audit": "Flagged"}
-            ])
-            
-        with a_tab2:
-            st.write("### AI Pendukung (Google Gemini)")
-            prompt = st.text_area("Input Analisis Keamanan:", "Analisis trend fraud bulan ini...")
-            if st.button("Jalankan AI"):
-                st.info("Menghubungkan ke Gemini API: AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA...")
-                st.write("Hasil analisis sedang diproses...")
-    elif pw != "":
-        st.error("Password Salah!")
+    adm_pw = st.text_input("Password Administrator", type="password")
+    if adm_pw == "adminvguard2026":
+        t1, t2 = st.tabs(["📉 Laporan Audit & Rugi Laba", "🤖 V-Guard AI (Gemini)"])
+        with t1:
+            st.warning("🚨 Alarm Fraud: Indikasi Void mencurigakan di 'Cafe Mantap'.")
+            st.table([{"Tanggal": "01/04", "User": "Cafe Mantap", "Audit": "Flagged", "Rugi Laba": "Profit Rp 45jt"}])
+        with t2:
+            st.write("AI Assistant Terkoneksi: AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA")
+            st.text_area("Gemini Analysis Prompt")
+            st.button("Proses Analisis")
+    elif adm_pw != "":
+        st.error("Akses Admin Ditolak.")
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("<div style='text-align: center; color: gray;'>🛡️ V-Guard AI Intelligence | ©2026 | WA: 082122190885</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; color: gray;'>🛡️ V-Guard AI Intelligence | ©2026 | Founder: Erwin Sinaga | WA: 082122190885</div>", unsafe_allow_html=True)
