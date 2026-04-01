@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import google.generativeai as genai
 
-# --- 1. ENGINE ---
+# --- 1. KONEKSI ENGINE ---
 K_AI = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 try:
     genai.configure(api_key=K_AI)
@@ -12,14 +12,18 @@ try:
 except:
     pass
 
-st.set_page_config(page_title="V-Guard AI", layout="wide")
+st.set_page_config(page_title="V-Guard AI Intelligence", layout="wide")
 
-# --- 2. DATA ---
+# --- 2. DATA SESSION ---
 if 'ord' not in st.session_state: st.session_state.ord = []
 if 'db' not in st.session_state:
-    sk = datetime.now().date()
-    jt = str(sk + timedelta(days=5))
-    st.session_state.db = [{"ID":101, "Bisnis":"Cafe Maju", "Harga":2500000, "Tempo":jt}]
+    t = datetime.now().date()
+    # Format dipindah ke variabel pendek agar tidak terpotong
+    f_tgl = "%Y-%m-%d"
+    st.session_state.db = [{
+        "ID": 101, "Nama": "Siska", "Bisnis": "Cafe Maju", 
+        "Harga": 2500000, "Tempo": str(t + timedelta(days=5))
+    }]
 if 'ok' not in st.session_state: st.session_state.ok = False
 
 # --- 3. PROFIL (SOP 150 KATA) ---
@@ -30,7 +34,7 @@ with st.sidebar:
     st.title("🛡️ V-GUARD AI")
     if os.path.exists("erwin.jpg"): st.image("erwin.jpg")
     st.write("**Erwin Sinaga**")
-    m = st.radio("Navigasi:", ["Profil", "ROI & Paket", "Order", "Admin"])
+    m = st.radio("Navigasi:", ["Profil", "ROI & Paket", "Order Pelanggan", "Admin"])
     st.write("---")
     st.caption("© 2026 V-Guard AI")
 
@@ -43,22 +47,22 @@ elif m == "ROI & Paket":
     st.header("ROI & Paket Layanan")
     oz = st.number_input("Omzet (Rp):", 100000000)
     bc = oz * 0.07
-    st.error("Bocor (7%): Rp {:,.0f}".format(bc))
+    st.error("Potensi Bocor (7%): Rp {:,.0f}".format(bc))
     st.success("Save via V-Guard: Rp {:,.0f}".format(bc-2500000))
     st.write("---")
     c1, c2 = st.columns(2)
     with c1:
         st.subheader("📦 BASIC (1.5jt)")
-        st.write("1. AI Monitor\n2. Report Mingguan\n3. Alarm\n4. Support")
+        st.write("• AI Monitor\n• Report Mingguan\n• Alarm\n• Support")
         st.subheader("🚀 SMART (2.5jt)")
-        st.write("1. Basic+\n2. VCS System\n3. Audit Realtime\n4. Notif WA\n5. Dashboard")
+        st.write("• Fitur Basic\n• VCS System\n• Audit Realtime\n• Notif WA\n• Dashboard")
     with c2:
         st.subheader("🛡️ PRO (5jt)")
-        st.write("1. Smart+\n2. Forensic\n3. Konsultasi\n4. Proteksi\n5. Multi-User")
+        st.write("• Fitur Smart\n• Forensic\n• Konsultasi\n• Proteksi Asset\n• Multi-User")
         st.subheader("👑 ENTERPRISE (10jt)")
-        st.write("1. Pro+\n2. Custom AI\n3. Onsite Audit\n4. 24/7\n5. Risk Mgmt\n6. Fraud Ins.")
+        st.write("• Fitur Pro\n• Custom AI\n• Onsite Audit\n• 24/7 Support\n• Risk Mgmt\n• Fraud Insur.")
 
-elif m == "Order":
+elif m == "Order Pelanggan":
     st.header("Formulir Order")
     with st.form("f_ord"):
         nm = st.text_input("Nama")
@@ -71,16 +75,4 @@ elif m == "Order":
 
 elif m == "Admin":
     if not st.session_state.ok:
-        p = st.text_input("Pass:", type="password")
-        if st.button("Masuk"):
-            if p == "w1nbju8282":
-                st.session_state.ok = True
-                st.rerun()
-    else:
-        if st.button("🔒 Keluar"):
-            st.session_state.ok = False
-            st.rerun()
-        st.error("🚨 FRAUD ALERT DETECTED!")
-        td = datetime.now().date()
-        for k in st.session_state.db:
-            jt = datetime.strptime(k['Tempo'], "%Y-%m
+        p = st.text_input("
