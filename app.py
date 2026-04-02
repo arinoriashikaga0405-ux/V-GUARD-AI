@@ -330,7 +330,7 @@ elif menu == "Admin Control Center":
                 st.checkbox("Audit: Void Tanpa Supervisor", value=True, key="vsop2")
 
             st.divider()
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun")i 35%")
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
 
 
 
