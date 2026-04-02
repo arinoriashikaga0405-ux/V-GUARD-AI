@@ -32,18 +32,18 @@ with st.sidebar:
 if menu == "Visi & Misi":
     st.header("Visi & Misi V-Guard AI Intelligence")
     col_img, col_txt = st.columns([1, 2])
+    
     with col_img:
         if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", caption="Founder V-Guard AI", use_container_width=True)
+            st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
+    
     with col_txt:
         st.markdown("""
-        ### **Visi**
-        Menjadi standar global dalam *Digital Trust Integrity* dengan menciptakan ekosistem bisnis yang transparan, akuntabel, dan bebas dari kebocoran finansial melalui kekuatan kecerdasan buatan.
-        
-        ### **Misi**
-        1. **Digitalisasi Kepercayaan**: Menggantikan pengawasan manual yang rentan dengan audit AI otonom 24/7.
-        2. **Presisi Finansial**: Mengintegrasikan data perbankan (VCS) dan visi komputer untuk eliminasi *fraud* secara *real-time*.
-        3. **Optimalisasi Profit**: Melindungi setiap aset klien melalui deteksi anomali dini dan pembuktian matematis yang akurat.
+        <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
+        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade di industri perbankan dan manajemen aset, kami memahami bahwa celah terkecil dalam sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi.<br><br>
+        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang memiliki keterbatasan, melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat dan real-time.<br><br>
+        Visi kami adalah menjadi standar global dalam "Integrity Assurance", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional saat ini.
+        </div>
         """, unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
