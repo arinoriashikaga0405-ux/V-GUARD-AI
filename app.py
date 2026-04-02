@@ -57,6 +57,12 @@ if menu == "Visi & Misi":
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     
+   elif menu == "Produk & Layanan":
+    st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
+    
+    # Base link WA Bapak
+    wa_number = "6282122190885"
+    
     # 1. Tampilan Detail Paket dalam Kolom
     c1, c2, c3, c4 = st.columns(4)
     
@@ -64,51 +70,39 @@ elif menu == "Produk & Layanan":
         with st.container(border=True):
             st.markdown("### 📦 V-LITE")
             st.caption("🎯 Target: Usaha Mikro / 1 Kasir")
-            st.markdown("""
-            - **AI Fraud Detector Dasar**
-            - **Daily WA/Email Summary**
-            - **Monthly PDF Report**
-            - **Cloud Storage 30 Hari**
-            """)
+            st.markdown("- **AI Fraud Detector Dasar**\n- **Daily WA/Email Summary**\n- **Monthly PDF Report**\n- **Cloud Storage 30 Hari**")
             st.info("**Pasang:** 1.5 Jt\n\n**Bulan:** 1 Jt")
+            # Tombol WA V-LITE
+            st.link_button("Pilih V-LITE", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*V-LITE*%20untuk%20usaha%20saya.")
 
     with c2:
         with st.container(border=True):
             st.markdown("### 📦 V-PRO")
             st.caption("🎯 Target: Retail & Kafe")
-            st.markdown("""
-            - **VCS Integration**
-            - **Bank Statement Audit**
-            - **Input Excel/CSV/PDF**
-            - **H-7 Auto-Invoice**
-            """)
+            st.markdown("- **VCS Integration**\n- **Bank Statement Audit**\n- **Input Excel/CSV/PDF**\n- **H-7 Auto-Invoice**")
             st.info("**Pasang:** 3 Jt\n\n**Bulan:** 2.5 Jt")
+            # Tombol WA V-PRO
+            st.link_button("Pilih V-PRO", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*V-PRO*%20Virtual%20Control%20System.")
 
     with c3:
         with st.container(border=True):
             st.markdown("### 📦 V-SIGHT")
             st.caption("🎯 Target: Gudang & Toko")
-            st.markdown("""
-            - **CCTV AI Behavior**
-            - **Visual Cashier Audit**
-            - **Real-Time Stock**
-            - **Fraud Alarm (🚨)**
-            """)
+            st.markdown("- **CCTV AI Behavior**\n- **Visual Cashier Audit**\n- **Real-Time Stock**\n- **Fraud Alarm (🚨)**")
             st.info("**Pasang:** 5 Jt\n\n**Bulan:** 5 Jt")
+            # Tombol WA V-SIGHT
+            st.link_button("Pilih V-SIGHT", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*V-SIGHT*%20Audit%20Visual.")
 
     with c4:
         with st.container(border=True):
             st.markdown("### 📦 V-ENTERPRISE")
             st.caption("🎯 Target: Korporasi")
-            st.markdown("""
-            - **The Core Brain**
-            - **Forensic AI (1 Thn)**
-            - **Dedicated Server**
-            - **Custom AI SOP**
-            """)
+            st.markdown("- **The Core Brain**\n- **Forensic AI (1 Thn)**\n- **Dedicated Server**\n- **Custom AI SOP**")
             st.info("**Pasang:** 10 Jt\n\n**Bulan:** 10 Jt")
+            # Tombol WA V-ENTERPRISE
+            st.link_button("Pilih V-ENTERPRISE", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20ingin%20konsultasi%20paket%20*V-ENTERPRISE*%20untuk%20skala%20korporasi.")
 
-    # 2. Tabel Perbandingan (PENTING UNTUK PRESENTASI)
+    # 2. Tabel Perbandingan Eksekutif
     st.markdown("---")
     st.subheader("📊 Tabel Perbandingan Eksekutif")
     st.markdown("""
@@ -118,7 +112,9 @@ elif menu == "Produk & Layanan":
     | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **CCTV Vision** | - | - | ✅ Ya | ✅ Ya |
-    | **Multi-Cabang** | - | - | - | ✅ Ya |
+    | **Pemasaran (Setup)** | 1.5 Jt | 3 Jt | 5 Jt | 10 Jt |
+    | **Langganan/Bulan** | 1 Jt | 2.5 Jt | 5 Jt | 10 Jt |
+    """)
     """)
 # MENU 3: ANALISIS ROI KERUGIAN
 elif menu == "Analisis ROI Kerugian":
