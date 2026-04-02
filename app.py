@@ -318,23 +318,6 @@ elif menu == "Admin Control Center":
         
                 st.divider()
                 st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-        
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
