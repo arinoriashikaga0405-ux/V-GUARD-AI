@@ -320,10 +320,5 @@ elif menu == "Admin Control Center":
 
             st.divider()
             st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-# FOOTER HARUS KEMBALI KE KIRI (SEJAJAR DENGAN 'with t9')
-# --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-# --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
