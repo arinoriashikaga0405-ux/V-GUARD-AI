@@ -141,22 +141,22 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center ")
+    st.header("🔒 Admin Control Center")
 
-    # 1. Cek apakah admin sudah login sebelumnya di sesi ini
+    # 1. Cek status login di session state
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
 
-    # 2. Jika belum login, tampilkan kotak password
+    # 2. Kotak Login (Hanya muncul jika belum login)
     if not st.session_state.admin_logged_in:
         admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         if admin_input == "w1nbju8282":
             st.session_state.admin_logged_in = True
-            st.rerun()  # Refresh halaman untuk menghilangkan kotak password
+            st.rerun()
         elif admin_input != "":
             st.error("Password Salah. Akses Ditolak.")
     
-    # 3. Jika sudah login, tampilkan isi Dashboard Admin tanpa kotak password lagi
+    # 3. Dashboard Admin (Muncul setelah password benar)
     else:
         col_header, col_logout = st.columns([5, 1])
         with col_header:
@@ -166,17 +166,21 @@ elif menu == "Admin Control Center":
                 st.session_state.admin_logged_in = False
                 st.rerun()
 
-        # --- ISI DASHBOARD ADMIN BAPAK ---
-        t1, t2, t3, t4, t5 = st.tabs([
-            "🖥️ Ekosistem AI Integrasi",
-            "📊 Dashboard Rugi Laba", 
-            "🔍 Audit Dokumen (OCR)", 
-            "👁️ CCTV Vision AI", 
-            "🚨 Alarm & Notifikasi"
+        # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
+        t1, t2, t3, t4, t5, t6, t7, t8 = st.tabs([
+            "👤 Aktivasi Klien",
+            "🖥️ Ekosistem AI",
+            "📈 Laba & Fraud",
+            "🔍 Audit Dokumen",
+            "👁️ Live CCTV Vision",
+            "🚨 Alarm System",
+            "📊 ROI Monitor",
+            "📑 Pusat Data OCR"
         ])
+
         with t1:
             st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-            st.info("Gunakan menu ini untuk mendaftarkan klien yang sudah melakukan pembayaran.")
+            st.info("Daftarkan klien yang sudah melakukan pembayaran.")
             with st.container(border=True):
                 col1, col2 = st.columns(2)
                 with col1:
@@ -187,10 +191,10 @@ elif menu == "Admin Control Center":
                     tgl_bayar = st.date_input("Tanggal Pembayaran")
                 
                 if st.button("Aktifkan Akun & Kirim Kredensial"):
-                    st.success(f"Akun {new_user} untuk paket {paket_pilihan} BERHASIL DIAKTIFKAN. Notifikasi telah dikirim ke WhatsApp klien.")
+                    st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
+
         with t2:
             st.subheader("🌐 V-Guard Global AI Ecosystem")
-            # ... (Isi Ekosistem AI Bapak) ...
             c1, c2 = st.columns(2)
             with c1:
                 with st.container(border=True):
@@ -200,39 +204,43 @@ elif menu == "Admin Control Center":
                 with st.container(border=True):
                     st.markdown("### 👁️ YOLO / Vision AI")
                     st.write("'Mata' digital yang memantau pergerakan visual.")
+
         with t3:
             st.subheader("📈 Financial Integrity Monitor")
             st.metric("Laba Bersih", "Rp 400.250.000", delta="Stabil")
+
         with t4:
             st.subheader("📑 Audit Dokumen Multi-Format")
-            st.file_uploader("Upload Dokumen Audit", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True)
+            st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
 
         with t5:
             st.subheader("👁️ Live Vision Monitoring")
             st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg")
+
         with t6:
             st.subheader("🚨 Pusat Alarm & Notifikasi")
             st.error("ALARM FRAUD: **AKTIF**")
             st.warning("NOTIFIKASI INVOICE H-7: **READY**")
-       with t7:
+
+        with t7:
             st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
             c_a, c_b = st.columns(2)
             c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
             c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
             st.divider()
             st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
+
         with t8:
-            st.subheader("📑 Pusat Audit Multi-Format")
-            st.write("Sistem V-Guard menggunakan OCR & Data Mining untuk membaca file:")
-            st.markdown("- **Excel/CSV**: Rekonsiliasi data kasir vs bank.\n- **PDF/JPG**: Analisis nota, struk, dan bukti transfer.")
+            st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
+            st.write("Sistem membaca: **Excel/CSV**, **PDF/JPG**, dan **VCS Data Bank**.")
             
-            uploaded_files = st.file_uploader("Upload file untuk di-Audit oleh AI", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True)
+            uploaded_files = st.file_uploader("Upload file untuk di-Audit AI", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True, key="audit_up_2")
             
             if uploaded_files:
                 with st.spinner("AI sedang membaca data..."):
                     import time
-                    time.sleep(2) # Simulasi proses AI
-                    st.success("✅ File berhasil dibaca. AI mendeteksi 100% kecocokan antara bukti fisik (JPG) dan laporan digital (Excel).")
+                    time.sleep(2)
+                    st.success("✅ File berhasil dibaca. AI mendeteksi 100% kecocokan data fisik dan digital.")
 
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
