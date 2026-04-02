@@ -303,24 +303,23 @@ elif menu == "Admin Control Center":
                     st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
                     
             # --- Tambahkan ini di bagian akhir dalam blok Admin Control Center ---
-            with t9: # (Ini sudah menjorok dari 'else')
-                st.divider() # <--- MASUK 1 TAB DARI 'with'
-                st.header("💎 V-ULTRA: Enterprise Command Center")
-                st.info("Status Infrastruktur: **Dedicated Private Server (Active)**")
-        
-        col_u1, col_u2 = st.columns(2)
-        with col_u1:
+            with t9:
+            st.divider()
+            st.header("💎 V-ULTRA: Enterprise Command Center")
+            st.info("Status Infrastruktur: **Dedicated Private Server (Active)**")
+            
+            col_u1, col_u2 = st.columns(2)
+            with col_u1:
                 st.success("🧠 **The Core Brain (AI Central)**")
                 st.write("Menyinkronkan data Lintas Cabang & Gudang.")
                 st.progress(100)
-        
-        with col_u2:
+            
+            with col_u2:
                 st.info("🖥️ **Dedicated Server Status**")
                 st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
 
-        st.divider()
-        st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-
+            st.divider()
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
 # FOOTER HARUS KEMBALI KE KIRI (SEJAJAR DENGAN 'with t9')
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
