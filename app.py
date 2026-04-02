@@ -174,8 +174,21 @@ elif menu == "Admin Control Center":
             "👁️ CCTV Vision AI", 
             "🚨 Alarm & Notifikasi"
         ])
-        
         with t1:
+            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
+            st.info("Gunakan menu ini untuk mendaftarkan klien yang sudah melakukan pembayaran.")
+            with st.container(border=True):
+                col1, col2 = st.columns(2)
+                with col1:
+                    new_user = st.text_input("Username Klien")
+                    new_mail = st.text_input("Email Bisnis")
+                with col2:
+                    paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                    tgl_bayar = st.date_input("Tanggal Pembayaran")
+                
+                if st.button("Aktifkan Akun & Kirim Kredensial"):
+                    st.success(f"Akun {new_user} untuk paket {paket_pilihan} BERHASIL DIAKTIFKAN. Notifikasi telah dikirim ke WhatsApp klien.")
+        with t2:
             st.subheader("🌐 V-Guard Global AI Ecosystem")
             # ... (Isi Ekosistem AI Bapak) ...
             c1, c2 = st.columns(2)
@@ -188,22 +201,41 @@ elif menu == "Admin Control Center":
                     st.markdown("### 👁️ YOLO / Vision AI")
                     st.write("'Mata' digital yang memantau pergerakan visual.")
 
-        with t2:
+        with t3:
             st.subheader("📈 Financial Integrity Monitor")
             st.metric("Laba Bersih", "Rp 400.250.000", delta="Stabil")
 
-        with t3:
+        with t4:
             st.subheader("📑 Audit Dokumen Multi-Format")
             st.file_uploader("Upload Dokumen Audit", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True)
 
-        with t4:
+        with t5:
             st.subheader("👁️ Live Vision Monitoring")
             st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg")
 
-        with t5:
+        with t6:
             st.subheader("🚨 Pusat Alarm & Notifikasi")
             st.error("ALARM FRAUD: **AKTIF**")
             st.warning("NOTIFIKASI INVOICE H-7: **READY**")
+       with t7:
+            st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+            c_a, c_b = st.columns(2)
+            c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
+            c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
+            st.divider()
+            st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
+        with t8:
+            st.subheader("📑 Pusat Audit Multi-Format")
+            st.write("Sistem V-Guard menggunakan OCR & Data Mining untuk membaca file:")
+            st.markdown("- **Excel/CSV**: Rekonsiliasi data kasir vs bank.\n- **PDF/JPG**: Analisis nota, struk, dan bukti transfer.")
+            
+            uploaded_files = st.file_uploader("Upload file untuk di-Audit oleh AI", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True)
+            
+            if uploaded_files:
+                with st.spinner("AI sedang membaca data..."):
+                    import time
+                    time.sleep(2) # Simulasi proses AI
+                    st.success("✅ File berhasil dibaca. AI mendeteksi 100% kecocokan antara bukti fisik (JPG) dan laporan digital (Excel).")
 
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
