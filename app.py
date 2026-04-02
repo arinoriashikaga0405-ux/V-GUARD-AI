@@ -52,59 +52,63 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-elif menu == "Layanan & Investasi":
+# --- CARI BAGIAN INI DI KODE BAPAK DAN GANTI DENGAN VERSI BERIKUT ---
+
+elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     
-    # 1. Tampilan Detail Paket dalam Card
+    # 1. Tampilan Detail Paket dalam Kolom
     c1, c2, c3, c4 = st.columns(4)
     
     with c1:
-        st.markdown("### 📦 V-LITE")
-        st.caption("🎯 Target: Usaha Mikro / 1 Kasir")
-        st.markdown("""
-        - **AI Fraud Detector Dasar**: Anomali transaksi jam operasional.
-        - **Daily Summary**: Laporan harian via WA/Email.
-        - **Monthly PDF**: Analisis kebocoran bulanan.
-        - **Cloud Storage**: Data aman 30 hari.
-        """)
-        st.info("**Pasang:** 1.5 Jt\n\n**Bulan:** 1 Jt")
+        with st.container(border=True):
+            st.markdown("### 📦 V-LITE")
+            st.caption("🎯 Target: Usaha Mikro / 1 Kasir")
+            st.markdown("""
+            - **AI Fraud Detector Dasar**
+            - **Daily WA/Email Summary**
+            - **Monthly PDF Report**
+            - **Cloud Storage 30 Hari**
+            """)
+            st.info("**Pasang:** 1.5 Jt\n\n**Bulan:** 1 Jt")
 
     with c2:
-        st.markdown("### 📦 V-PRO")
-        st.caption("🎯 Target: Retail, Kafe, Restoran")
-        st.markdown("""
-        - **Full VCS Integration**: Sinkron Kasir & Bank (Real-time).
-        - **Bank Audit**: Rekonsiliasi otomatis mutasi & struk.
-        - **Multi-Format**: Input Excel, CSV, PDF.
-        - **H-7 Auto-Invoice**: Penagihan otomatis.
-        - **Audit 24/7**: Tanpa audit manual.
-        """)
-        st.info("**Pasang:** 3 Jt\n\n**Bulan:** 2.5 Jt")
+        with st.container(border=True):
+            st.markdown("### 📦 V-PRO")
+            st.caption("🎯 Target: Retail & Kafe")
+            st.markdown("""
+            - **VCS Integration**
+            - **Bank Statement Audit**
+            - **Input Excel/CSV/PDF**
+            - **H-7 Auto-Invoice**
+            """)
+            st.info("**Pasang:** 3 Jt\n\n**Bulan:** 2.5 Jt")
 
     with c3:
-        st.markdown("### 📦 V-SIGHT")
-        st.caption("🎯 Target: Gudang & Toko Rawan")
-        st.markdown("""
-        - **CCTV AI Behavior**: Deteksi perilaku mencurigakan (saku uang).
-        - **Visual Audit**: Cocokkan wajah vs nominal kasir.
-        - **Real-Time Stock**: Pantau stok visual keluar-masuk.
-        - **Fraud Alarm**: Notifikasi darurat (🚨) ke HP.
-        """)
-        st.info("**Pasang:** 5 Jt\n\n**Bulan:** 5 Jt")
+        with st.container(border=True):
+            st.markdown("### 📦 V-SIGHT")
+            st.caption("🎯 Target: Gudang & Toko")
+            st.markdown("""
+            - **CCTV AI Behavior**
+            - **Visual Cashier Audit**
+            - **Real-Time Stock**
+            - **Fraud Alarm (🚨)**
+            """)
+            st.info("**Pasang:** 5 Jt\n\n**Bulan:** 5 Jt")
 
     with c4:
-        st.markdown("### 📦 V-ENTERPRISE")
-        st.caption("🎯 Target: Korporasi & Multi-Cabang")
-        st.markdown("""
-        - **The Core Brain**: Kontrol pusat puluhan cabang.
-        - **Forensic AI**: Lacak transaksi hingga 1 tahun.
-        - **Dedicated Server**: Keamanan Bank-grade.
-        - **Custom AI**: Integrasi SOP khusus klien.
-        - **Prioritas**: Support 24/7 & Kunjungan rutin.
-        """)
-        st.info("**Pasang:** 10 Jt\n\n**Bulan:** 10 Jt")
+        with st.container(border=True):
+            st.markdown("### 📦 V-ENTERPRISE")
+            st.caption("🎯 Target: Korporasi")
+            st.markdown("""
+            - **The Core Brain**
+            - **Forensic AI (1 Thn)**
+            - **Dedicated Server**
+            - **Custom AI SOP**
+            """)
+            st.info("**Pasang:** 10 Jt\n\n**Bulan:** 10 Jt")
 
-    # 2. Tabel Perbandingan Strategis (Untuk Bos Vertigo)
+    # 2. Tabel Perbandingan (PENTING UNTUK PRESENTASI)
     st.markdown("---")
     st.subheader("📊 Tabel Perbandingan Eksekutif")
     st.markdown("""
@@ -115,10 +119,7 @@ elif menu == "Layanan & Investasi":
     | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **CCTV Vision** | - | - | ✅ Ya | ✅ Ya |
     | **Multi-Cabang** | - | - | - | ✅ Ya |
-    | **Biaya Pemasangan** | 1.5 Jt | 3 Jt | 5 Jt | 10 Jt |
-    | **Biaya Bulanan** | 1 Jt | 2.5 Jt | 5 Jt | 10 Jt |
     """)
-
 # MENU 3: ANALISIS ROI KERUGIAN
 elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
