@@ -52,27 +52,72 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-# MENU 2: PRODUK & LAYANAN
-elif menu == "Produk & Layanan":
-    st.header("🛡️ Produk & Layanan V-Guard AI")
-    wa_base = "https://wa.me/?text=Halo,%20saya%20ingin%20order%20"
+elif menu == "Layanan & Investasi":
+    st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
+    
+    # 1. Tampilan Detail Paket dalam Card
     c1, c2, c3, c4 = st.columns(4)
+    
     with c1:
-        st.markdown("<div class='package-card'><div class='package-title'>📦 V-LITE</div>• AI Fraud Dasar<br>• Laporan Bulanan PDF<br>• Notifikasi Standar<div class='price-tag'>Rp 1.000.000 / bln</div>", unsafe_allow_html=True)
-        st.link_button("Pilih V-LITE", f"{wa_base}V-LITE")
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("### 📦 V-LITE")
+        st.caption("🎯 Target: Usaha Mikro / 1 Kasir")
+        st.markdown("""
+        - **AI Fraud Detector Dasar**: Anomali transaksi jam operasional.
+        - **Daily Summary**: Laporan harian via WA/Email.
+        - **Monthly PDF**: Analisis kebocoran bulanan.
+        - **Cloud Storage**: Data aman 30 hari.
+        """)
+        st.info("**Pasang:** 1.5 Jt\n\n**Bulan:** 1 Jt")
+
     with c2:
-        st.markdown("<div class='package-card'><div class='package-title'>🛡️ V-PRO</div>• Real-Time Monitoring<br>• VCS Integrasi Bank<br>• Audit Harian Otomatis<div class='price-tag'>Rp 2.500.000 / bln</div>", unsafe_allow_html=True)
-        st.link_button("Pilih V-PRO", f"{wa_base}V-PRO")
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("### 📦 V-PRO")
+        st.caption("🎯 Target: Retail, Kafe, Restoran")
+        st.markdown("""
+        - **Full VCS Integration**: Sinkron Kasir & Bank (Real-time).
+        - **Bank Audit**: Rekonsiliasi otomatis mutasi & struk.
+        - **Multi-Format**: Input Excel, CSV, PDF.
+        - **H-7 Auto-Invoice**: Penagihan otomatis.
+        - **Audit 24/7**: Tanpa audit manual.
+        """)
+        st.info("**Pasang:** 3 Jt\n\n**Bulan:** 2.5 Jt")
+
     with c3:
-        st.markdown("<div class='package-card'><div class='package-title'>👁️ V-SIGHT</div>• CCTV AI Behavior<br>• Visual Audit Kasir<br>• Deteksi Stok Real-time<div class='price-tag'>Rp 5.000.000 / bln</div>", unsafe_allow_html=True)
-        st.link_button("Pilih V-SIGHT", f"{wa_base}V-SIGHT")
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("### 📦 V-SIGHT")
+        st.caption("🎯 Target: Gudang & Toko Rawan")
+        st.markdown("""
+        - **CCTV AI Behavior**: Deteksi perilaku mencurigakan (saku uang).
+        - **Visual Audit**: Cocokkan wajah vs nominal kasir.
+        - **Real-Time Stock**: Pantau stok visual keluar-masuk.
+        - **Fraud Alarm**: Notifikasi darurat (🚨) ke HP.
+        """)
+        st.info("**Pasang:** 5 Jt\n\n**Bulan:** 5 Jt")
+
     with c4:
-        st.markdown("<div class='package-card'><div class='package-title'>🏢 V-ENTERPRISE</div>• Multi-Cabang Central<br>• Digital Forensik AI<br>• Dedicated Server<div class='price-tag'>Rp 10.000.000 / bln</div>", unsafe_allow_html=True)
-        st.link_button("Pilih V-ENTERPRISE", f"{wa_base}V-ENTERPRISE")
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("### 📦 V-ENTERPRISE")
+        st.caption("🎯 Target: Korporasi & Multi-Cabang")
+        st.markdown("""
+        - **The Core Brain**: Kontrol pusat puluhan cabang.
+        - **Forensic AI**: Lacak transaksi hingga 1 tahun.
+        - **Dedicated Server**: Keamanan Bank-grade.
+        - **Custom AI**: Integrasi SOP khusus klien.
+        - **Prioritas**: Support 24/7 & Kunjungan rutin.
+        """)
+        st.info("**Pasang:** 10 Jt\n\n**Bulan:** 10 Jt")
+
+    # 2. Tabel Perbandingan Strategis (Untuk Bos Vertigo)
+    st.markdown("---")
+    st.subheader("📊 Tabel Perbandingan Eksekutif")
+    st.markdown("""
+    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
+    | :--- | :---: | :---: | :---: | :---: |
+    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
+    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **CCTV Vision** | - | - | ✅ Ya | ✅ Ya |
+    | **Multi-Cabang** | - | - | - | ✅ Ya |
+    | **Biaya Pemasangan** | 1.5 Jt | 3 Jt | 5 Jt | 10 Jt |
+    | **Biaya Bulanan** | 1 Jt | 2.5 Jt | 5 Jt | 10 Jt |
+    """)
 
 # MENU 3: ANALISIS ROI KERUGIAN
 elif menu == "Analisis ROI Kerugian":
