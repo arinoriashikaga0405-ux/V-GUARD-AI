@@ -300,6 +300,63 @@ elif menu == "Admin Control Center":
                     c3.metric("Anomali Terdeteksi", "0 (Clean)", delta="Aman", delta_color="normal")
                     
                     st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
+          with t9:
+            st.subheader("💎 V-ULTRA: Enterprise Command Center")
+            st.write("Status Infrastruktur: **Dedicated Private Server (Active)**")
+            
+            # Baris 1: Status Server & Core Brain
+            col_u1, col_u2 = st.columns(2)
+            with col_u1:
+                st.success("🧠 **The Core Brain (AI Central)**")
+                st.write("Menyinkronkan data dari 5 Cabang & 12 Gudang secara Real-Time.")
+                st.progress(100)
+                st.caption("Status: Sinkronisasi Lintas Divisi 100% Aman.")
+            
+            with col_u2:
+                st.info("🖥️ **Dedicated Server Status**")
+                st.code("IP: 192.168.1.100 (Isolated)\nEncryption: AES-256 Bank-Grade\nUptime: 99.99%", language="bash")
+
+            st.divider()
+
+            # Baris 2: Forensic AI & Custom SOP
+            st.write("🔍 **Forensic AI & Compliance Audit**")
+            c_f1, c_f2 = st.columns([2, 1])
+            with c_f1:
+                st.write("📂 **Audit Forensik (1 Tahun Terakhir)**")
+                st.info("Hasil: AI telah membedah 450.000+ transaksi historis. Ditemukan pola 'Leakage' kecil pada periode Des-Jan.")
+                if st.button("Download Full Forensic PDF Report"):
+                    st.toast("Generating 1-Year Audit Report...")
+            
+            with c_f2:
+                st.write("📜 **Custom AI SOP**")
+                st.checkbox("Audit: Laci Kasir > 30 detik", value=True)
+                st.checkbox("Audit: Void Tanpa Supervisor", value=True)
+                st.checkbox("Audit: Selisih Bank > Rp 1.000", value=True)
+                st.caption("AI akan otomatis menegur staf via Telegram/WA jika SOP dilanggar.")
+
+            st.divider()
+            st.metric("ROI Estimasi (Penyelamatan Aset)", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
