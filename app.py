@@ -140,8 +140,8 @@ elif menu == "Portal Klien":
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
                 else: st.error("Password Salah.")
 
-elif menu == "Admin Control":
-    st.header("🔒 Admin Control")
+elif menu == "Admin Control Center":
+    st.header("🔒 Admin Control Center")
 
     # 1. Cek status login di session state
     if "admin_logged_in" not in st.session_state:
