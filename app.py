@@ -200,11 +200,9 @@ elif menu == "Admin Control Center":
                 with st.container(border=True):
                     st.markdown("### 👁️ YOLO / Vision AI")
                     st.write("'Mata' digital yang memantau pergerakan visual.")
-
         with t3:
             st.subheader("📈 Financial Integrity Monitor")
             st.metric("Laba Bersih", "Rp 400.250.000", delta="Stabil")
-
         with t4:
             st.subheader("📑 Audit Dokumen Multi-Format")
             st.file_uploader("Upload Dokumen Audit", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True)
@@ -212,7 +210,6 @@ elif menu == "Admin Control Center":
         with t5:
             st.subheader("👁️ Live Vision Monitoring")
             st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg")
-
         with t6:
             st.subheader("🚨 Pusat Alarm & Notifikasi")
             st.error("ALARM FRAUD: **AKTIF**")
