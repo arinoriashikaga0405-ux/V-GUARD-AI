@@ -1,9 +1,11 @@
 import streamlit as st
 import os
 
-# --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-
+# --- 1. KONFIGURASI ENGINE AI (THE CORE BRAIN) ---
+# Menggunakan API Key yang Bapak berikan
+GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
+genai.configure(api_key=GEMINI_API_KEY)
+model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 # --- 2. CSS CUSTOM (PREMIUM DARK MODE) ---
 st.markdown("""
     <style>
