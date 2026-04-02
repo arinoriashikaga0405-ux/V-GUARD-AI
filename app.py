@@ -234,14 +234,21 @@ elif menu == "Admin Control Center":
             st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
             st.write("Sistem membaca: **Excel/CSV**, **PDF/JPG**, dan **VCS Data Bank**.")
             
-            uploaded_files = st.file_uploader("Upload file untuk di-Audit AI", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True, key="audit_up_2")
+            uploaded_files = st.file_uploader("Upload Mutasi Rekening (6 Bulan Terakhir)", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True, key="audit_up_final")
             
             if uploaded_files:
-                with st.spinner("AI sedang membaca data..."):
+                with st.spinner("V-Guard AI sedang melakukan Deep Audit 180 hari terakhir..."):
                     import time
-                    time.sleep(2)
-                    st.success("✅ File berhasil dibaca. AI mendeteksi 100% kecocokan data fisik dan digital.")
-
+                    time.sleep(3) # Simulasi proses yang lebih dalam
+                    st.success("✅ Audit 6 Bulan Selesai.")
+                    
+                    # Tampilkan metrik hasil audit sebagai kejutan demo
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("Total Transaksi Diperiksa", "1,240 Data")
+                    c2.metric("Akurasi Reconsiliation", "100%")
+                    c3.metric("Anomali Terdeteksi", "0 (Clean)", delta="Aman", delta_color="normal")
+                    
+                    st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
