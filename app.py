@@ -303,7 +303,7 @@ elif menu == "Admin Control Center":
                     st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
                     
             # --- Tambahkan ini di bagian akhir dalam blok Admin Control Center ---
-        with t9: # (Ini sudah menjorok dari 'else')
+            with t9: # (Ini sudah menjorok dari 'else')
             st.divider() # <--- MASUK 1 TAB DARI 'with'
             st.header("💎 V-ULTRA: Enterprise Command Center")
             st.info("Status Infrastruktur: **Dedicated Private Server (Active)**")
