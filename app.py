@@ -99,7 +99,7 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center - The Core Brain")
+    st.header("🔒 Admin Control Center")
     admin_input = st.text_input("Administrator Password", type="password")
     if admin_input == "adminvguard2026":
         t1, t2, t3, t4 = st.tabs(["📊 Laporan Rugi Laba", "🔍 Audit Multi-Format", "👁️ CCTV AI", "🚨 Alarm & Notifikasi"])
