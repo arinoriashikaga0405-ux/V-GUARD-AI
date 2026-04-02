@@ -324,15 +324,15 @@ elif menu == "Admin Control Center":
             with c_f1:
                 st.write("📂 **Audit Forensik (1 Tahun Terakhir)**")
                 st.info("Hasil: AI telah membedah 450.000+ transaksi historis. Ditemukan pola 'Leakage' kecil pada periode Des-Jan.")
-                if st.button("Download Full Forensic PDF Report"):
+                if st.button("Download Full Forensic PDF Report", key="btn_forensic"):
                     st.toast("Generating 1-Year Audit Report...")
             
             with c_f2:
                 st.write("📜 **Custom AI SOP**")
-                st.checkbox("Audit: Laci Kasir > 30 detik", value=True)
-                st.checkbox("Audit: Void Tanpa Supervisor", value=True)
-                st.checkbox("Audit: Selisih Bank > Rp 1.000", value=True)
-                st.caption("AI akan otomatis menegur staf via Telegram/WA jika SOP dilanggar.")
+                st.checkbox("Audit: Laci Kasir > 30 detik", value=True, key="sop_1")
+                st.checkbox("Audit: Void Tanpa Supervisor", value=True, key="sop_2")
+                st.checkbox("Audit: Selisih Bank > Rp 1.000", value=True, key="sop_3")
+                st.caption("AI akan otomatis menegur staf jika SOP dilanggar.")
 
             st.divider()
             st.metric("ROI Estimasi (Penyelamatan Aset)", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
