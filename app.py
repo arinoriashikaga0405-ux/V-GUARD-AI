@@ -5,16 +5,18 @@ import google.generativeai as genai
 # --- 1. KONFIGURASI ENGINE AI ---
 GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 genai.configure(api_key=GEMINI_API_KEY)
+model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# CSS Premium Dark Mode
+# CSS Premium Eksekutif
 st.markdown("""
     <style>
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
     .stTextInput>div>div>input { background-color: #1e293b; color: white; }
+    div[data-testid="stMetricValue"] { font-size: 22px; color: #238636; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -32,11 +34,9 @@ with st.sidebar:
 if menu == "Visi & Misi":
     st.header("Visi & Misi V-Guard AI Intelligence")
     col_img, col_txt = st.columns([1, 2])
-    
     with col_img:
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
-    
     with col_txt:
         st.markdown("""
         <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
@@ -47,125 +47,76 @@ if menu == "Visi & Misi":
         """, unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
-    st.header("🛡️ Portfolio Layanan V-Guard AI")
+    st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
     c1, c2, c3, c4 = st.columns(4)
     packages = {
-        "V-LITE": ["Mikro / 1 Kasir", "1.5 Jt", "1 Jt", "AI Fraud Dasar, Daily Summary"],
-        "V-PRO": ["Retail & Kafe", "3 Jt", "2.5 Jt", "VCS Integration, Bank Audit"],
-        "V-SIGHT": ["Gudang & Toko", "5 Jt", "5 Jt", "CCTV AI, Vision Cashier Audit"],
-        "V-ENTERPRISE": ["Korporasi", "10 Jt", "10 Jt", "The Core Brain, Forensic AI"]
+        "V-LITE": ["Mikro / 1 Kasir", "1.5 Jt", "1 Jt", "AI Fraud Detector Dasar, Daily Summary, PDF Report"],
+        "V-PRO": ["Retail & Kafe", "3 Jt", "2.5 Jt", "VCS Integration, Bank Audit, H-7 Auto-Invoice"],
+        "V-SIGHT": ["Gudang & Toko", "5 Jt", "5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock"],
+        "V-ENTERPRISE": ["Korporasi", "10 Jt", "10 Jt", "The Core Brain, Forensic AI, Dedicated Server"]
     }
-    for i, (name, details) in enumerate(packages.items()):
+    for i, (name, det) in enumerate(packages.items()):
         with [c1, c2, c3, c4][i]:
             with st.container(border=True):
                 st.markdown(f"### 📦 {name}")
-                st.caption(f"🎯 {details[0]}")
-                st.markdown(f"- {details[3]}")
-                st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
-                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Saya%20tertarik%20{name}")
-
-    st.markdown("---")
-    st.subheader("📊 Tabel Perbandingan Eksekutif")
-    st.markdown("""
-    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
-    | :--- | :---: | :---: | :---: | :---: |
-    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Setup (Pasang)** | 1.5 Jt | 3 Jt | 5 Jt | 10 Jt |
-    """)
+                st.caption(f"🎯 {det[0]}")
+                st.markdown(f"- {det[3]}")
+                st.info(f"**Pasang:** {det[1]}\n**Bulan:** {det[2]}")
+                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Saya%20tertarik%20paket%20{name}")
 
 elif menu == "Analisis ROI Kerugian":
-    st.header("📊 Kalkulator ROI")
-    omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-    leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
-    loss = omzet * (leak / 100)
-    st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bln")
-    biaya = st.selectbox("Investasi Paket", [1000000, 2500000, 5000000, 10000000])
-    st.success(f"Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
+    with col_b:
+        biaya = st.selectbox("Investasi Paket", [1000000, 2500000, 5000000, 10000000])
+        st.success(f"Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
 
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     c_reg, c_log = st.columns(2)
     with c_reg:
-        st.subheader("📝 Registrasi")
+        st.subheader("📝 Form Order Baru")
         with st.container(border=True):
             st.text_input("Nama Pelanggan")
             st.text_input("Nama Usaha")
+            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
             st.text_input("Harga Paket (Rp)")
             st.file_uploader("Upload KTP")
-            st.text_area("Kebutuhan Khusus")
-            st.button("Kirim Data")
+            st.button("Kirim Registrasi")
     with c_log:
-        st.subheader("🔑 Login")
+        st.subheader("🔑 Akses User Aktif")
         with st.container(border=True):
             st.text_input("Username")
             pw = st.text_input("Password", type="password")
             if st.button("Masuk"):
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
-                else: st.error("Password salah.")
+                else: st.error("Password Salah.")
 
-eelif menu == "Admin Control Center":
+elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center - The Core Brain")
     admin_input = st.text_input("Administrator Password", type="password")
-    
     if admin_input == "adminvguard2026":
-        st.success("Akses Eksekutif Diterima.")
-        
-        # TAB MENU ADMIN YANG LEBIH LENGKAP
-        t1, t2, t3, t4, t5 = st.tabs([
-            "📊 Dashboard & Rugi Laba", 
-            "🔍 Audit & VCS System", 
-            "👁️ CCTV AI Monitor", 
-            "👤 Kelola User", 
-            "🚨 Alarm & Notifikasi"
-        ])
-        
+        t1, t2, t3, t4 = st.tabs(["📊 Laporan Rugi Laba", "🔍 Audit Multi-Format", "👁️ CCTV AI", "🚨 Alarm & Notifikasi"])
         with t1:
-            st.subheader("📈 Laporan Rugi Laba & Arus Kas")
-            c1, c2, c3 = st.columns(3)
-            c1.metric("Total Pendapatan", "Rp 1.250.450.000", delta="+12%")
-            c2.metric("Total Pengeluaran", "Rp 850.200.000", delta="-5%")
-            c3.metric("Laba Bersih", "Rp 400.250.000", delta="Sehat")
-            
-            st.divider()
-            st.markdown("### 📄 Download Laporan Resmi")
+            st.metric("Laba Bersih", "Rp 400.250.000", delta="Sehat")
             st.button("Unduh Laporan Rugi Laba (PDF)")
-
         with t2:
-            st.subheader("📑 Sistem Audit Multi-Format")
-            st.info("Pusat rekonsiliasi data otomatis antara Kasir, Bank (VCS), dan Fisik.")
-            
-            # Slot Upload untuk berbagai format
-            st.file_uploader("Upload Data Audit (VCS, Excel, PDF, JPG)", type=['xlsx','xls','csv','pdf','jpg','png'], accept_multiple_files=True)
-            
-            st.markdown("#### Status Sinkronisasi Terakhir")
-            st.write("✅ Data Excel Kasir vs Data VCS Bank: **SINKRON 100%**")
-            st.write("✅ Laporan Audit Fisik (PDF/JPG): **TERVERIFIKASI AI**")
-
+            st.info("Pusat Audit: VCS, Excel, PDF, JPG")
+            st.file_uploader("Upload Dokumen Audit", type=['xlsx','pdf','jpg','vcs'], accept_multiple_files=True)
         with t3:
-            st.subheader("👁️ Monitoring CCTV Vision AI")
-            st.warning("Integrasi YOLO AI sedang memantau aktivitas visual toko/gudang.")
-            st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg", caption="Live AI Behavior Tracking (Simulation)")
-            st.write("- Deteksi Aktivitas Mencurigakan: **0 Insiden**")
-            st.write("- Deteksi Antrian Kasir: **Normal**")
-
+            st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg", width=400)
+            st.write("✅ Live Monitor Vision AI: Aktif")
         with t4:
-            st.subheader("👤 Manajemen Pelanggan V-Guard")
-            col_u1, col_u2 = st.columns(2)
-            with col_u1:
-                st.text_input("ID Klien / Username Baru")
-                st.selectbox("Set Level Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            with col_u2:
-                st.text_input("Set Password Awal")
-                st.button("Aktifkan Akun Pelanggan")
+            st.error("🚨 Alarm Fraud Digital: AKTIF")
+            st.warning("🗓️ Notifikasi Invoice H-7: Siap Kirim")
+    elif admin_input != "": st.error("Akses Ditolak.")
 
-        with t5:
-            st.subheader("🚨 Pusat Alarm & Notifikasi Otomatis")
-            st.error("📢 ALARM FRAUD DIGITAL: **AKTIF** (Siaga 24 Jam)")
-            st.divider()
-            st.info("🗓️ **Sistem Invoice H-7**: Otomatis Mengirim Notifikasi ke WhatsApp Pelanggan 7 hari sebelum jatuh tempo.")
-            st.toggle("Aktifkan Notifikasi WhatsApp Otomatis", value=True)
-
-    elif admin_input != "":
-        st.error("Password Administrator Salah. Akses Ditolak.")
+# --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
