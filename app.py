@@ -167,15 +167,16 @@ elif menu == "Admin Control Center":
                 st.rerun()
 
         # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
-        t1, t2, t3, t4, t5, t6, t7, t8 = st.tabs([
-            "👤 Aktivasi Klien",
-            "🖥️ Ekosistem AI",
-            "📈 Laba & Fraud",
-            "🔍 Audit Dokumen",
-            "👁️ Live CCTV Vision",
-            "🚨 Alarm System",
-            "📊 ROI Monitor",
-            "📑 Pusat Data OCR"
+        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+        "👤 Aktivasi Klien",
+        "🖥️ Ekosistem AI",
+        "⚙️ Pengaturan",
+        "📊 Laporan",
+        "🛡️ Keamanan",
+        "💾 Backup",
+        "🌐 Jaringan",
+        "📈 Performa",
+        "💎 V-ULTRA"
         ])
 
         with t1:
