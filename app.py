@@ -27,7 +27,7 @@ with st.sidebar:
         st.image("erwin.jpg", use_container_width=True)
     st.markdown("<div style='text-align:center;'><p style='color:white; font-weight:bold; margin-bottom:0;'>Erwin Sinaga</p><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
     st.markdown("---")
-menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center", "V-ULTRA"])
+    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center", "V-ULTRA"])
     
 
 # --- 4. LOGIKA MENU ---
