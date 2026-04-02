@@ -302,35 +302,35 @@ elif menu == "Admin Control Center":
                     st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
                     
             with t9:
-            st.subheader("💎 V-ULTRA: Enterprise Command Center")
-            st.write("Status Infrastruktur: **Dedicated Private Server (Active)**")
-            
-            col_u1, col_u2 = st.columns(2)
-            with col_u1:
-                st.success("🧠 **The Core Brain (AI Central)**")
-                st.write("Menyinkronkan data Lintas Cabang & Gudang.")
-                st.progress(100)
-            
-            with col_u2:
-                st.info("🖥️ **Dedicated Server Status**")
-                st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
-
-            st.divider()
-            
-            st.write("🔍 **Forensic AI & Compliance Audit**")
-            cf1, cf2 = st.columns([2, 1])
-            with cf1:
-                st.info("📂 **Audit Forensik (1 Tahun Terakhir)**")
-                if st.button("Download Full Forensic PDF Report", key="btn_ultra_final_v3"):
-                    st.toast("Generating Report...")
-            
-            with cf2:
-                st.write("📜 **Custom AI SOP**")
-                st.checkbox("Audit: Laci Kasir > 30 detik", value=True, key="vsop1")
-                st.checkbox("Audit: Void Tanpa Supervisor", value=True, key="vsop2")
-
-            st.divider()
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+                st.subheader("💎 V-ULTRA: Enterprise Command Center")
+                st.write("Status Infrastruktur: **Dedicated Private Server (Active)**")
+                
+                col_u1, col_u2 = st.columns(2)
+                with col_u1:
+                    st.success("🧠 **The Core Brain (AI Central)**")
+                    st.write("Menyinkronkan data Lintas Cabang & Gudang.")
+                    st.progress(100)
+                
+                with col_u2:
+                    st.info("🖥️ **Dedicated Server Status**")
+                    st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
+    
+                st.divider()
+                
+                st.write("🔍 **Forensic AI & Compliance Audit**")
+                cf1, cf2 = st.columns([2, 1])
+                with cf1:
+                    st.info("📂 **Audit Forensik (1 Tahun Terakhir)**")
+                    if st.button("Download Full Forensic PDF Report", key="btn_ultra_final_v3"):
+                        st.toast("Generating Report...")
+                
+                with cf2:
+                    st.write("📜 **Custom AI SOP**")
+                    st.checkbox("Audit: Laci Kasir > 30 detik", value=True, key="vsop1")
+                    st.checkbox("Audit: Void Tanpa Supervisor", value=True, key="vsop2")
+    
+                st.divider()
+                st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
 
 
 
