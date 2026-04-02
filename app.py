@@ -150,7 +150,7 @@ elif menu == "Admin Control Center":
     # 2. Jika belum login, tampilkan kotak password
     if not st.session_state.admin_logged_in:
         admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
-        if admin_input == "adminvguard2026":
+        if admin_input == "w1nbju8282":
             st.session_state.admin_logged_in = True
             st.rerun()  # Refresh halaman untuk menghilangkan kotak password
         elif admin_input != "":
