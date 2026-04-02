@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-
+import google.generativeai as genai
 # --- 1. KONFIGURASI ENGINE AI (THE CORE BRAIN) ---
 # Menggunakan API Key yang Bapak berikan
 GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
