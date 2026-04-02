@@ -141,7 +141,7 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center - The Core Brain")
+    st.header("🔒 Admin Control Center ")
 
     # 1. Cek apakah admin sudah login sebelumnya di sesi ini
     if "admin_logged_in" not in st.session_state:
