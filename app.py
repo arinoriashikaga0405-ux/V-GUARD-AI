@@ -57,24 +57,24 @@ elif menu == "Produk & Layanan":
         "V-LITE": [
             "Mikro / 1 Kasir", 
             "1.5 Jt", 
-            "1 Jt", 
+            "750 rb", 
             "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"
         ],
         "V-PRO": [
             "Retail & Kafe", 
             "3 Jt", 
-            "2.5 Jt", 
+            "1.5 Jt", 
             "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"
         ],
         "V-SIGHT": [
             "Gudang & Toko", 
-            "5 Jt", 
-            "5 Jt", 
+            "7,5 Jt", 
+            "3,5 Jt", 
             "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"
         ],
         "V-ENTERPRISE": [
             "Korporasi", 
-            "10 Jt", 
+            "15 Jt", 
             "10 Jt", 
             "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"
         ]
@@ -100,8 +100,8 @@ elif menu == "Produk & Layanan":
     | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 5 Jt | 10 Jt |
-    | **Biaya Langganan** | 1 Jt | 2.5 Jt | 5 Jt | 10 Jt |
+    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 5 Jt | 15 Jt |
+    | **Biaya Langganan** | 750 rb | 1.5 Jt | 3,5 Jt | 10 Jt |
     """)
 
     # 3. Footer Tambahan (Opsional)
