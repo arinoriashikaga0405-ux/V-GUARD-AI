@@ -105,12 +105,67 @@ elif menu == "Portal Klien":
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
                 else: st.error("Password salah.")
 
-elif menu == "Admin Control Center":
-    st.header("🔒 Admin Dashboard")
-    adm_pw = st.text_input("Admin Password", type="password")
-    if adm_pw == "adminvguard2026":
-        st.metric("VCS Status", "100% Sinkron")
-    elif adm_pw != "": st.error("Akses Ditolak.")
+eelif menu == "Admin Control Center":
+    st.header("🔒 Admin Control Center - The Core Brain")
+    admin_input = st.text_input("Administrator Password", type="password")
+    
+    if admin_input == "adminvguard2026":
+        st.success("Akses Eksekutif Diterima.")
+        
+        # TAB MENU ADMIN YANG LEBIH LENGKAP
+        t1, t2, t3, t4, t5 = st.tabs([
+            "📊 Dashboard & Rugi Laba", 
+            "🔍 Audit & VCS System", 
+            "👁️ CCTV AI Monitor", 
+            "👤 Kelola User", 
+            "🚨 Alarm & Notifikasi"
+        ])
+        
+        with t1:
+            st.subheader("📈 Laporan Rugi Laba & Arus Kas")
+            c1, c2, c3 = st.columns(3)
+            c1.metric("Total Pendapatan", "Rp 1.250.450.000", delta="+12%")
+            c2.metric("Total Pengeluaran", "Rp 850.200.000", delta="-5%")
+            c3.metric("Laba Bersih", "Rp 400.250.000", delta="Sehat")
+            
+            st.divider()
+            st.markdown("### 📄 Download Laporan Resmi")
+            st.button("Unduh Laporan Rugi Laba (PDF)")
 
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+        with t2:
+            st.subheader("📑 Sistem Audit Multi-Format")
+            st.info("Pusat rekonsiliasi data otomatis antara Kasir, Bank (VCS), dan Fisik.")
+            
+            # Slot Upload untuk berbagai format
+            st.file_uploader("Upload Data Audit (VCS, Excel, PDF, JPG)", type=['xlsx','xls','csv','pdf','jpg','png'], accept_multiple_files=True)
+            
+            st.markdown("#### Status Sinkronisasi Terakhir")
+            st.write("✅ Data Excel Kasir vs Data VCS Bank: **SINKRON 100%**")
+            st.write("✅ Laporan Audit Fisik (PDF/JPG): **TERVERIFIKASI AI**")
+
+        with t3:
+            st.subheader("👁️ Monitoring CCTV Vision AI")
+            st.warning("Integrasi YOLO AI sedang memantau aktivitas visual toko/gudang.")
+            st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg", caption="Live AI Behavior Tracking (Simulation)")
+            st.write("- Deteksi Aktivitas Mencurigakan: **0 Insiden**")
+            st.write("- Deteksi Antrian Kasir: **Normal**")
+
+        with t4:
+            st.subheader("👤 Manajemen Pelanggan V-Guard")
+            col_u1, col_u2 = st.columns(2)
+            with col_u1:
+                st.text_input("ID Klien / Username Baru")
+                st.selectbox("Set Level Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            with col_u2:
+                st.text_input("Set Password Awal")
+                st.button("Aktifkan Akun Pelanggan")
+
+        with t5:
+            st.subheader("🚨 Pusat Alarm & Notifikasi Otomatis")
+            st.error("📢 ALARM FRAUD DIGITAL: **AKTIF** (Siaga 24 Jam)")
+            st.divider()
+            st.info("🗓️ **Sistem Invoice H-7**: Otomatis Mengirim Notifikasi ke WhatsApp Pelanggan 7 hari sebelum jatuh tempo.")
+            st.toggle("Aktifkan Notifikasi WhatsApp Otomatis", value=True)
+
+    elif admin_input != "":
+        st.error("Password Administrator Salah. Akses Ditolak.")
