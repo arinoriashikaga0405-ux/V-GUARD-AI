@@ -49,21 +49,63 @@ if menu == "Visi & Misi":
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
+    
+    # 1. Tampilan Detail Paket dalam Kolom
     c1, c2, c3, c4 = st.columns(4)
+    
     packages = {
-        "V-LITE": ["Mikro / 1 Kasir", "1.5 Jt", "1 Jt", "AI Fraud Detector Dasar, Daily Summary, PDF Report"],
-        "V-PRO": ["Retail & Kafe", "3 Jt", "2.5 Jt", "VCS Integration, Bank Audit, H-7 Auto-Invoice"],
-        "V-SIGHT": ["Gudang & Toko", "5 Jt", "5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock"],
-        "V-ENTERPRISE": ["Korporasi", "10 Jt", "10 Jt", "The Core Brain, Forensic AI, Dedicated Server"]
+        "V-LITE": [
+            "Mikro / 1 Kasir", 
+            "1.5 Jt", 
+            "1 Jt", 
+            "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"
+        ],
+        "V-PRO": [
+            "Retail & Kafe", 
+            "3 Jt", 
+            "2.5 Jt", 
+            "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"
+        ],
+        "V-SIGHT": [
+            "Gudang & Toko", 
+            "5 Jt", 
+            "5 Jt", 
+            "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"
+        ],
+        "V-ENTERPRISE": [
+            "Korporasi", 
+            "10 Jt", 
+            "10 Jt", 
+            "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"
+        ]
     }
-    for i, (name, det) in enumerate(packages.items()):
+
+    for i, (name, details) in enumerate(packages.items()):
         with [c1, c2, c3, c4][i]:
             with st.container(border=True):
                 st.markdown(f"### 📦 {name}")
-                st.caption(f"🎯 {det[0]}")
-                st.markdown(f"- {det[3]}")
-                st.info(f"**Pasang:** {det[1]}\n**Bulan:** {det[2]}")
-                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Saya%20tertarik%20paket%20{name}")
+                st.caption(f"🎯 Target: {details[0]}")
+                st.markdown(f"- {details[3]}")
+                st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
+                # Tombol WA Otomatis sesuai paket
+                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
+
+    # 2. Tabel Perbandingan Eksekutif
+    st.markdown("---")
+    st.subheader("📊 Tabel Perbandingan Eksekutif")
+    st.markdown(f"""
+    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
+    | :--- | :---: | :---: | :---: | :---: |
+    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
+    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
+    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 5 Jt | 10 Jt |
+    | **Biaya Langganan** | 1 Jt | 2.5 Jt | 5 Jt | 10 Jt |
+    """)
+
+    # 3. Footer Tambahan (Opsional)
+    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
 elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
