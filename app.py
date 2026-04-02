@@ -319,7 +319,7 @@ elif menu == "Admin Control Center":
                 st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
 
             st.divider()
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%"))
 # FOOTER HARUS KEMBALI KE KIRI (SEJAJAR DENGAN 'with t9')
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
