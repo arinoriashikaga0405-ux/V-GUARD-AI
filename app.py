@@ -313,8 +313,8 @@ elif menu == "Admin Control Center":
                     st.progress(100)
             
                 with col_u2:
-                st.info("🖥️ **Dedicated Server Status**")
-                st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
+                    st.info("🖥️ **Dedicated Server Status**")
+                    st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
         
                 st.divider()
                 st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
