@@ -141,23 +141,69 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
-    admin_input = st.text_input("Administrator Password", type="password")
-    if admin_input == "w1nbju8282":
-        t1, t2, t3, t4 = st.tabs(["📊 Laporan Rugi Laba", "🔍 Audit Multi-Format", "👁️ CCTV AI", "🚨 Alarm & Notifikasi"])
+    st.header("🔒 Admin Control Center - The Core Brain")
+
+    # 1. Cek apakah admin sudah login sebelumnya di sesi ini
+    if "admin_logged_in" not in st.session_state:
+        st.session_state.admin_logged_in = False
+
+    # 2. Jika belum login, tampilkan kotak password
+    if not st.session_state.admin_logged_in:
+        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        if admin_input == "adminvguard2026":
+            st.session_state.admin_logged_in = True
+            st.rerun()  # Refresh halaman untuk menghilangkan kotak password
+        elif admin_input != "":
+            st.error("Password Salah. Akses Ditolak.")
+    
+    # 3. Jika sudah login, tampilkan isi Dashboard Admin tanpa kotak password lagi
+    else:
+        col_header, col_logout = st.columns([5, 1])
+        with col_header:
+            st.success("Akses Eksekutif Aktif")
+        with col_logout:
+            if st.button("Log Out"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+
+        # --- ISI DASHBOARD ADMIN BAPAK ---
+        t1, t2, t3, t4, t5 = st.tabs([
+            "🖥️ Ekosistem AI Integrasi",
+            "📊 Dashboard Rugi Laba", 
+            "🔍 Audit Dokumen (OCR)", 
+            "👁️ CCTV Vision AI", 
+            "🚨 Alarm & Notifikasi"
+        ])
+        
         with t1:
-            st.metric("Laba Bersih", "Rp 400.250.000", delta="Sehat")
-            st.button("Unduh Laporan Rugi Laba (PDF)")
+            st.subheader("🌐 V-Guard Global AI Ecosystem")
+            # ... (Isi Ekosistem AI Bapak) ...
+            c1, c2 = st.columns(2)
+            with c1:
+                with st.container(border=True):
+                    st.markdown("### 🧠 Google Gemini AI")
+                    st.write("Analis utama yang memproses data audit kompleks.")
+            with c2:
+                with st.container(border=True):
+                    st.markdown("### 👁️ YOLO / Vision AI")
+                    st.write("'Mata' digital yang memantau pergerakan visual.")
+
         with t2:
-            st.info("Pusat Audit: VCS, Excel, PDF, JPG")
-            st.file_uploader("Upload Dokumen Audit", type=['xlsx','pdf','jpg','vcs'], accept_multiple_files=True)
+            st.subheader("📈 Financial Integrity Monitor")
+            st.metric("Laba Bersih", "Rp 400.250.000", delta="Stabil")
+
         with t3:
-            st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg", width=400)
-            st.write("✅ Live Monitor Vision AI: Aktif")
+            st.subheader("📑 Audit Dokumen Multi-Format")
+            st.file_uploader("Upload Dokumen Audit", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True)
+
         with t4:
-            st.error("🚨 Alarm Fraud Digital: AKTIF")
-            st.warning("🗓️ Notifikasi Invoice H-7: Siap Kirim")
-    elif admin_input != "": st.error("Akses Ditolak.")
+            st.subheader("👁️ Live Vision Monitoring")
+            st.image("https://img.freepik.com/free-photo/security-camera-monitoring-market_23-2149156434.jpg")
+
+        with t5:
+            st.subheader("🚨 Pusat Alarm & Notifikasi")
+            st.error("ALARM FRAUD: **AKTIF**")
+            st.warning("NOTIFIKASI INVOICE H-7: **READY**")
 
 # --- 5. FOOTER (SESUAI PERMINTAAN BAPAK) ---
 st.markdown("---")
