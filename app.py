@@ -300,7 +300,8 @@ elif menu == "Admin Control Center":
                     c3.metric("Anomali Terdeteksi", "0 (Clean)", delta="Aman", delta_color="normal")
                     
                     st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
-with t9:
+                    
+            with t9:
             st.subheader("💎 V-ULTRA: Enterprise Command Center")
             st.write("Status Infrastruktur: **Dedicated Private Server (Active)**")
             
