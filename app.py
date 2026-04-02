@@ -143,7 +143,7 @@ elif menu == "Portal Klien":
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
     admin_input = st.text_input("Administrator Password", type="password")
-    if admin_input == "adminvguard2026":
+    if admin_input == "w1nbju8282":
         t1, t2, t3, t4 = st.tabs(["📊 Laporan Rugi Laba", "🔍 Audit Multi-Format", "👁️ CCTV AI", "🚨 Alarm & Notifikasi"])
         with t1:
             st.metric("Laba Bersih", "Rp 400.250.000", delta="Sehat")
