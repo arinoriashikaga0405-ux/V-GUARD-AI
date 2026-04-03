@@ -116,8 +116,19 @@ elif menu == "Analisis ROI Kerugian":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
     with col_b:
-        biaya = st.selectbox("Investasi Paket", [1000000, 2500000, 5000000, 10000000])
-        st.success(f"Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
+    # Daftar pilihan yang lebih mudah dibaca klien
+    opsi_biaya = {
+        "Rp 1.000.000 (V-LITE)": 1000000,
+        "Rp 2.500.000 (V-STANDARD)": 2500000,
+        "Rp 5.000.000 (V-PRO)": 5000000,
+        "Rp 10.000.000 (V-ULTRA)": 10000000
+    }
+    
+    pilihan_label = st.selectbox("Pilih Paket Investasi", list(opsi_biaya.keys()))
+    biaya = opsi_biaya[pilihan_label]
+    
+    # Menampilkan profit yang diselamatkan dengan format ribuan yang jelas
+    st.success(f"💰 Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
 
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
