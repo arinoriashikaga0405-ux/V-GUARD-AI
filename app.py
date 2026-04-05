@@ -150,30 +150,34 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
+    # 1. Cek status login (Tanpa header di luar agar tidak muncul duluan)
+    if not st.session_state.get('admin_logged_in', False):
+        # Header dan input ini HANYA muncul jika belum login
+        st.header("🔐 Admin Control Center")
+        admin_input = st.text_input("Administrator Password", type="password", key="vguard_lock_field")
+        
+        MASTER_PWD = os.getenv("ADMIN_PASSWORD")
 
-    # 1. Cek status login di session state
-    if "admin_logged_in" not in st.session_state:
-        st.session_state.admin_logged_in = False
+        if admin_input == MASTER_PWD:
+            st.session_state.admin_logged_in = True
+            st.rerun()
+        elif admin_input != "":
+            st.error("Password Salah. Akses Ditolak.")
+        
+        st.stop() # Mengunci semua konten di bawahnya agar tidak bocor
 
-    # 2. Kotak Login (Hanya muncul jika belum login)
-    # --- BAGIAN 1: LOGIKA SISTEM KEAMANAN ---
-# Cek apakah status login admin sudah aktif di session_state
-if not st.session_state.get('admin_logged_in', False):
-    
-    # Tampilan SEBELUM LOGIN (Sistem Terkunci)
-    st.title("🔐 Admin Control Center")
-    admin_input = st.text_input("Administrator Password", type="password", key="vguard_lock_field")
-    
-    # Ambil password rahasia dari file .env
-    MASTER_PWD = os.getenv("ADMIN_PASSWORD")
-
-    if admin_input == MASTER_PWD:
-        st.session_state.admin_logged_in = True
-        st.rerun() # Refresh agar tampilan berganti ke tombol Log Out
-    elif admin_input != "":
-        st.error("Password Salah. Akses Ditolak.")
-    
+    else:
+        # 2. Tampilan SETELAH LOGIN (Menggantikan Kotak Password)
+        col_btn, col_txt = st.columns([1, 4])
+        with col_btn:
+            if st.button("Log Out"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+        
+        st.subheader("✅ Dashboard Admin Aktif")
+        st.divider()
+        
+        # --- LANJUTKAN ISI TAB/KONTEN ADMIN BAPAK DI SINI ---
     # PENTING: Hentikan kode di sini agar isi folder admin tidak bocor ke bawah
     st.stop() 
 
