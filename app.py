@@ -150,30 +150,31 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    # 1. Cek status login (Tanpa header di luar agar tidak muncul duluan)
+    # 1. Cek status login
     if not st.session_state.get('admin_logged_in', False):
-        # Header dan input ini HANYA muncul jika belum login
         st.header("🔐 Admin Control Center")
-        admin_input = st.text_input("Administrator Password", type="password", key="vguard_lock_field")
         
-        MASTER_PWD = os.getenv("w1nbju8282")
-
-        if admin_input == MASTER_PWD:
+        # Input password (HANYA muncul di menu Admin)
+        admin_input = st.text_input("Password", type="password", key="vguard_admin_final")
+        
+        # CEK PASSWORD LANGSUNG (Ganti 'w1nbju8282' jika ingin merubah password)
+        if admin_input == "w1nbju8282": 
             st.session_state.admin_logged_in = True
             st.rerun()
         elif admin_input != "":
             st.error("Password Salah. Akses Ditolak.")
         
-        st.stop() # Mengunci semua konten di bawahnya agar tidak bocor
+        st.stop() # Mengunci halaman agar isi admin tidak bocor ke Visi & Misi
 
     else:
         # 2. Tampilan SETELAH LOGIN (Menggantikan Kotak Password)
-        col_btn, col_txt = st.columns([1, 4])
-        with col_btn:
-            if st.button("Log Out"):
-                st.session_state.admin_logged_in = False
-                st.rerun()
+        if st.button("Log Out"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
         
+        st.divider()
+        st.success("Selamat Datang, Pak Erwin. Dashboard V-GUARD Aktif.")
+        # Lanjutkan isi folder admin Bapak (t1, t2, dst) di bawah sini
         st.subheader("✅ Dashboard Admin Aktif")
         st.divider()
         
