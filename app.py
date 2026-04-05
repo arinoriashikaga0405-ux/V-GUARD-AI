@@ -225,16 +225,16 @@ else:
                 with t2:
                     st.subheader("🌐 V-Guard Global AI Ecosystem")
             c1, c2 = st.columns(2)
-        with c1:
+                with c1:
                 with st.container(border=True):
                     st.markdown("### 🧠 Google Gemini AI")
                     st.write("Analis utama yang memproses data audit kompleks.")
-            with c2:
+                with c2:
                 with st.container(border=True):
                     st.markdown("### 👁️ YOLO / Vision AI")
                     st.write("'Mata' digital yang memantau pergerakan visual.")
 
-        with t3:
+            with t3:
             st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
             c_a, c_b = st.columns(2)
             with c_a:
@@ -246,11 +246,11 @@ else:
             st.info("🔍 **Status Deteksi Dasar:** AI sedang memantau pembatalan transaksi (Void) dan anomali input kasir harian.")
             st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
 
-        with t4:
+            with t4:
             st.subheader("📑 Audit Dokumen Multi-Format")
             st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
 
-        with t5:
+            with t5:
             st.subheader("👁️ V-SIGHT: AI Visual Command Center")
             st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
             
@@ -277,12 +277,12 @@ else:
                 st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
                 if st.button("Lihat Cuplikan Video Kejadian"):
                     st.toast("Memuat rekaman cloud... Mohon tunggu.")
-        with t6:
+            with t6:
             st.subheader("🚨 Pusat Alarm & Notifikasi")
             st.error("ALARM FRAUD: **AKTIF**")
             st.warning("NOTIFIKASI INVOICE H-7: **READY**")
 
-        with t7:
+            with t7:
             st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
             c_a, c_b = st.columns(2)
             c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
@@ -290,7 +290,7 @@ else:
             st.divider()
             st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
 
-        with t8:
+            with t8:
             st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
             st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
 
