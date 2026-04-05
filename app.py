@@ -336,16 +336,16 @@ else:
                 st.header("💎 V-ULTRA: Enterprise Command Center")
                 # Baris 309 ke bawah:
             col_u1, col_u2 = st.columns(2)
-        with col_u1:
+            with col_u1:
             st.success("🧠 **The Core Brain (AI Central)**")
             st.write("Menyinkronkan data Lintas Cabang & Gudang.")
             st.progress(100)
         
-        with col_u2:
+            with col_u2:
             st.info("🖥️ **Dedicated Server Status**")
             st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
 
-        st.divider()
-        st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+            st.divider()
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+            st.markdown("---")
+            st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
