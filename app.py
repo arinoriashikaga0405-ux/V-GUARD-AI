@@ -225,7 +225,7 @@ else:
         with t2:
             st.subheader("🌐 V-Guard Global AI Ecosystem")
             c1, c2 = st.columns(2)
-            with c1:
+        with c1:
                 with st.container(border=True):
                     st.markdown("### 🧠 Google Gemini AI")
                     st.write("Analis utama yang memproses data audit kompleks.")
