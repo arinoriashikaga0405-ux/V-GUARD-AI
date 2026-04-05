@@ -156,7 +156,7 @@ elif menu == "Admin Control Center":
         st.header("🔐 Admin Control Center")
         admin_input = st.text_input("Administrator Password", type="password", key="vguard_lock_field")
         
-        MASTER_PWD = os.getenv("ADMIN_PASSWORD")
+        MASTER_PWD = os.getenv("w1nbju8282")
 
         if admin_input == MASTER_PWD:
             st.session_state.admin_logged_in = True
