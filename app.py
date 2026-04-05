@@ -160,7 +160,7 @@ elif menu == "Admin Control Center":
     if not st.session_state.admin_logged_in:
         admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         MASTER_PWD = os.getenv("ADMIN_PASSWORD")
-           if admin_input == MASTER_PWD:
+    if admin_input == MASTER_PWD:
     st.session_state.admin_logged_in = True
     st.rerun()
 elif admin_input != "":
