@@ -157,36 +157,43 @@ elif menu == "Admin Control Center":
         st.session_state.admin_logged_in = False
 
     # 2. Kotak Login (Hanya muncul jika belum login)
-    if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
-        # --- 2. KOTAK LOGIN ADMIN ---
-        if not st.session_state.admin_logged_in:
-            # Variabel admin_input HARUS dibuat di sini sebelum dicek bawahnya
-            # Ubah key="admin_pwd_field" menjadi sesuatu yang baru, misalnya "vguard_admin_key"
-            admin_input = st.text_input("Administrator Password", type="password", key="vguard_admin_key")
-            
-            # Mengambil password dari file .env
-            MASTER_PWD = os.getenv("ADMIN_PASSWORD")
+    # --- BAGIAN 1: LOGIKA SISTEM KEAMANAN ---
+# Cek apakah status login admin sudah aktif di session_state
+if not st.session_state.get('admin_logged_in', False):
+    
+    # Tampilan SEBELUM LOGIN (Sistem Terkunci)
+    st.title("🔐 Admin Control Center")
+    admin_input = st.text_input("Administrator Password", type="password", key="vguard_lock_field")
+    
+    # Ambil password rahasia dari file .env
+    MASTER_PWD = os.getenv("ADMIN_PASSWORD")
 
-            if admin_input == MASTER_PWD:
-                st.session_state.admin_logged_in = True
-                st.rerun()
-            elif admin_input != "":
-                st.error("Password Salah. Akses Ditolak.")
+    if admin_input == MASTER_PWD:
+        st.session_state.admin_logged_in = True
+        st.rerun() # Refresh agar tampilan berganti ke tombol Log Out
+    elif admin_input != "":
+        st.error("Password Salah. Akses Ditolak.")
+    
+    # PENTING: Hentikan kode di sini agar isi folder admin tidak bocor ke bawah
+    st.stop() 
 
-        # 3. Dashboard Admin (Muncul setelah password benar)
-        # 3. Dashboard Admin (Muncul setelah password benar)
-        else:
-            # MEMBUAT KOLOM (Penting agar col_logout tidak NameError)
-            col_header, col_logout = st.columns([5, 1])
-            
-            with col_header:
-                st.success("Akses Eksekutif V-GUARD Aktif")
-            
-            with col_logout:
-                if st.button("Log Out", key="vguard_logout_btn"):
-                    st.session_state.admin_logged_in = False
-                    st.rerun()
+else:
+    # Tampilan SESUDAH LOGIN (Menggantikan input password di atas)
+    # Gunakan kolom agar tombol Log Out terlihat rapi
+    col_logout, col_empty = st.columns([1, 4])
+    with col_logout:
+        if st.button("Log Out"):
+            st.session_state.admin_logged_in = False
+            st.rerun() # Refresh agar kembali terkunci
+    
+    st.divider() # Garis pembatas tipis
+
+    # --- DI SINI ADALAH ISI FOLDER ADMIN BAPAK ---
+    st.subheader("Data Ekosistem V-GUARD")
+    
+    # Contoh: Tampilkan data klien atau hasil audit AI
+    st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
+                    
         # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
         t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
         "👤 Aktivasi Klien",
