@@ -291,8 +291,8 @@ else:
             st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
 
             with t8:
-            st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
-            st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
+                st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
+                st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
 
             # --- BAGIAN BARU: KONFIGURASI VCS (API INTEGRATION) ---
             with st.expander("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)"):
