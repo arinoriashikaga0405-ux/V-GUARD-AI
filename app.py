@@ -167,7 +167,7 @@ elif admin_input != "":
     st.error("Password Salah. Akses Ditolak.")
     
     # 3. Dashboard Admin (Muncul setelah password benar)
-    else:
+                else:
         col_header, col_logout = st.columns([5, 1])
         with col_header:
             st.success("Akses Eksekutif Aktif")
