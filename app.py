@@ -195,7 +195,7 @@ else:
     st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
                     
     # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
-        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+    t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
         "👤 Aktivasi Klien",
         "🖥️ Ekosistem AI",
         "⚙️ Pengaturan",
