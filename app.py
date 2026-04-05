@@ -162,7 +162,8 @@ elif menu == "Admin Control Center":
         # --- 2. KOTAK LOGIN ADMIN ---
         if not st.session_state.admin_logged_in:
             # Variabel admin_input HARUS dibuat di sini sebelum dicek bawahnya
-            admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+            # Ubah key="admin_pwd_field" menjadi sesuatu yang baru, misalnya "vguard_admin_key"
+            admin_input = st.text_input("Administrator Password", type="password", key="vguard_admin_key")
             
             # Mengambil password dari file .env
             MASTER_PWD = os.getenv("ADMIN_PASSWORD")
