@@ -222,7 +222,7 @@ else:
                 if st.button("Aktifkan Akun & Kirim Kredensial"):
                     st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
 
-        with t2:
+                with t2:
             st.subheader("🌐 V-Guard Global AI Ecosystem")
             c1, c2 = st.columns(2)
         with c1:
