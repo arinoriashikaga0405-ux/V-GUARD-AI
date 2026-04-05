@@ -181,12 +181,7 @@ elif menu == "Admin Control Center":
         with t1:
             st.write("Data Audit Bapak ada di sini...")
         # ... dan seterusnya
-    else:
-        # 2. Tampilan SETELAH LOGIN (Menggantikan Kotak Password)
-        if st.button("Log Out"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-        
+      
         st.divider()
         st.success("Selamat Datang, Pak Erwin. Dashboard V-GUARD Aktif.")
         # Lanjutkan isi folder admin Bapak (t1, t2, dst) di bawah sini
