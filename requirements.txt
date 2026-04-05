@@ -2,5 +2,4 @@ streamlit
 google-generativeai
 python-dotenv
 bcrypt
-streamlit-authenticatorstreamlit
 google-generativeai
