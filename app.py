@@ -283,7 +283,7 @@ else:
                 st.warning("NOTIFIKASI INVOICE H-7: **READY**")
 
             with t7:
-            st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+                st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
             c_a, c_b = st.columns(2)
             c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
             c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
