@@ -1,9 +1,11 @@
 import streamlit as st
 import os
 import google.generativeai as genai
-
 # --- 1. KONFIGURASI ENGINE AI ---
-GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
+from dotenv import load_dotenv
+load_dotenv() # Ini perintah untuk membaca file .env
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 
