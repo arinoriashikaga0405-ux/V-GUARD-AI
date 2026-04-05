@@ -346,6 +346,6 @@ else:
                 st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
 
             st.divider()
-                st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-                st.markdown("---")
-                st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+            st.markdown("---")
+            st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
