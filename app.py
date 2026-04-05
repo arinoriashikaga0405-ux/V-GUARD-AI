@@ -278,9 +278,9 @@ else:
                 if st.button("Lihat Cuplikan Video Kejadian"):
                     st.toast("Memuat rekaman cloud... Mohon tunggu.")
             with t6:
-            st.subheader("🚨 Pusat Alarm & Notifikasi")
-            st.error("ALARM FRAUD: **AKTIF**")
-            st.warning("NOTIFIKASI INVOICE H-7: **READY**")
+                st.subheader("🚨 Pusat Alarm & Notifikasi")
+                st.error("ALARM FRAUD: **AKTIF**")
+                st.warning("NOTIFIKASI INVOICE H-7: **READY**")
 
             with t7:
             st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
