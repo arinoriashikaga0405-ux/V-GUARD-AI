@@ -190,8 +190,8 @@ elif menu == "Admin Control Center":
         if st.button("Log Out", key="logout_admin_dashboard"):
             st.session_state.admin_logged_in = False
     st.rerun()
-            st.session_state.admin_logged_in = False
-            st.rerun() # Refresh agar kembali terkunci
+    st.session_state.admin_logged_in = False
+    st.rerun() # Refresh agar kembali terkunci
     
     st.divider() # Garis pembatas tipis
 
