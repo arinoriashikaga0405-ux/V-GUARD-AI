@@ -182,17 +182,6 @@ elif menu == "Admin Control Center":
             st.write("Data Audit Bapak ada di sini...")
         # ... dan seterusnya
       
-        st.divider()
-        st.success("Selamat Datang, Pak Erwin. Dashboard V-GUARD Aktif.")
-        # Lanjutkan isi folder admin Bapak (t1, t2, dst) di bawah sini
-        st.subheader("✅ Dashboard Admin Aktif")
-        st.divider()
-        
-        # --- LANJUTKAN ISI TAB/KONTEN ADMIN BAPAK DI SINI ---
-    # PENTING: Hentikan kode di sini agar isi folder admin tidak bocor ke bawah
-    st.stop() 
-
-else:
     # Tampilan SESUDAH LOGIN (Menggantikan input password di atas)
     # Gunakan kolom agar tombol Log Out terlihat rapi
     col_logout, col_empty = st.columns([1, 4])
