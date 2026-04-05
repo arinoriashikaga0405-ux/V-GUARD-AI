@@ -175,13 +175,18 @@ elif menu == "Admin Control Center":
                 st.error("Password Salah. Akses Ditolak.")
 
         # 3. Dashboard Admin (Muncul setelah password benar)
+        # 3. Dashboard Admin (Muncul setelah password benar)
         else:
-            st.success("Akses Eksekutif Aktif")
-        with col_logout:
-            if st.button("Log Out"):
-                st.session_state.admin_logged_in = False
-                st.rerun()
-
+            # MEMBUAT KOLOM (Penting agar col_logout tidak NameError)
+            col_header, col_logout = st.columns([5, 1])
+            
+            with col_header:
+                st.success("Akses Eksekutif V-GUARD Aktif")
+            
+            with col_logout:
+                if st.button("Log Out", key="vguard_logout_btn"):
+                    st.session_state.admin_logged_in = False
+                    st.rerun()
         # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
         t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
         "👤 Aktivasi Klien",
