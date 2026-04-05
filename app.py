@@ -186,7 +186,10 @@ elif menu == "Admin Control Center":
     # Gunakan kolom agar tombol Log Out terlihat rapi
     col_logout, col_empty = st.columns([1, 4])
     with col_logout:
-        if st.button("Log Out"):
+        # Tambahkan key="logout_admin_dashboard" di dalam kurung
+if st.button("Log Out", key="logout_admin_dashboard"):
+    st.session_state.admin_logged_in = False
+    st.rerun()
             st.session_state.admin_logged_in = False
             st.rerun() # Refresh agar kembali terkunci
     
