@@ -159,15 +159,22 @@ elif menu == "Admin Control Center":
     # 2. Kotak Login (Hanya muncul jika belum login)
     if not st.session_state.admin_logged_in:
         admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
-        # Ini akan menambah sekitar 3-5 baris baru
-MASTER_PWD = os.getenv("ADMIN_PASSWORD")
-if admin_input == MASTER_PWD:
-    st.session_state.admin_logged_in = True
-    st.rerun()
-    # 3. Dashboard Admin (Muncul setelah password benar)
-else:
-        col_header, col_logout = st.columns([5, 1])
-        with col_header:
+        # --- 2. KOTAK LOGIN ADMIN ---
+        if not st.session_state.admin_logged_in:
+            # Variabel admin_input HARUS dibuat di sini sebelum dicek bawahnya
+            admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+            
+            # Mengambil password dari file .env
+            MASTER_PWD = os.getenv("ADMIN_PASSWORD")
+
+            if admin_input == MASTER_PWD:
+                st.session_state.admin_logged_in = True
+                st.rerun()
+            elif admin_input != "":
+                st.error("Password Salah. Akses Ditolak.")
+
+        # 3. Dashboard Admin (Muncul setelah password benar)
+        else:
             st.success("Akses Eksekutif Aktif")
         with col_logout:
             if st.button("Log Out"):
