@@ -335,7 +335,7 @@ else:
                 st.divider()
                 st.header("💎 V-ULTRA: Enterprise Command Center")
                 # Baris 309 ke bawah:
-        col_u1, col_u2 = st.columns(2)
+            col_u1, col_u2 = st.columns(2)
         with col_u1:
             st.success("🧠 **The Core Brain (AI Central)**")
             st.write("Menyinkronkan data Lintas Cabang & Gudang.")
