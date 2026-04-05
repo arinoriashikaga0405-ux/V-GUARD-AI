@@ -165,7 +165,7 @@ if admin_input == MASTER_PWD:
     st.session_state.admin_logged_in = True
     st.rerun()
     # 3. Dashboard Admin (Muncul setelah password benar)
-             else:
+            else:
         col_header, col_logout = st.columns([5, 1])
         with col_header:
             st.success("Akses Eksekutif Aktif")
