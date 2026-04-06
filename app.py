@@ -238,7 +238,7 @@ elif menu == "Admin Control Center":
                         st.info(res)
 
             st.divider()
-            st.markdown("### 👥 AI Agent V-guard")
+            st.markdown("### 👥 AI Agent V-GUARD")
             
             # Daftar lengkap 10 AI Agent
             agents = [
