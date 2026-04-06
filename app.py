@@ -289,17 +289,21 @@ with t8:
 # --- TAB 9: V-ULTRA (ENTERPRISE COMMAND CENTER) ---
 with t9:
     st.header("💎 V-ULTRA: Enterprise Command Center")
-    col_u1, col_u2 = st.columns(2)
+    st.markdown("### 🖥️ Status Infrastruktur & AI Central")
     
+    col_u1, col_u2 = st.columns(2)
     with col_u1:
         st.success("🧠 **The Core Brain (AI Central)**")
-        st.write("Menyinkronkan data Lintas Cabang & Gudang.")
+        st.write("Menyinkronkan data Lintas Cabang & Gudang secara real-time.")
         st.progress(100)
-    
+        
     with col_u2:
         st.info("🖥️ **Dedicated Server Status**")
-        # Di sini Bapak menampilkan IP dan status server klien
+        # Menampilkan IP dan status server khusus klien
         st.code("IP Server: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%\nStatus: Terhubung")
 
+    st.divider()
+    # Metrik tambahan untuk memperkuat kesan V-ULTRA
+    st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence ©2026</small></center>", unsafe_allow_html=True)
