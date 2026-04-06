@@ -229,9 +229,9 @@ elif menu == "Admin Control Center":
                                 st.subheader("📑 Audit Dokumen Multi-Format")
                                 st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
             
-                        with t5:
-                            st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-                            st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
+                            with t5:
+                                st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+                                st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
                             
                             # Baris Atas: Live Monitor & Behavior Detection
                             c_vid1, c_vid2 = st.columns(2)
@@ -252,31 +252,31 @@ elif menu == "Admin Control Center":
                                 st.write("- **Data Kasir:** Kopi Hitam (Rp 20.000)")
                                 st.write("- **Visual AI:** Kopi Susu Gula Aren (Rp 35.000)")
                                 st.caption("Status: Menunggu konfirmasi owner untuk tindakan disiplin.")
-                        with col_f2:
+                            with col_f2:
                             st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
                             if st.button("Lihat Cuplikan Video Kejadian"):
                                 st.toast("Memuat rekaman cloud... Mohon tunggu.")
-                        with t6:
-                            st.subheader("🚨 Pusat Alarm & Notifikasi")
-                            st.error("ALARM FRAUD: **AKTIF**")
-                            st.warning("NOTIFIKASI INVOICE H-7: **READY**")
+                            with t6:
+                                st.subheader("🚨 Pusat Alarm & Notifikasi")
+                                st.error("ALARM FRAUD: **AKTIF**")
+                                st.warning("NOTIFIKASI INVOICE H-7: **READY**")
             
-                        with t7:
-                            st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
-                        c_a, c_b = st.columns(2)
-                        c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
-                        c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
-                        st.divider()
-                        st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
+                            with t7:
+                                st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+                                c_a, c_b = st.columns(2)
+                                c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
+                                c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
+                                st.divider()
+                                st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
             
-                        with t8:
-                            st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
-                            st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
+                            with t8:
+                                st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
+                                st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
             
                         # --- BAGIAN BARU: KONFIGURASI VCS (API INTEGRATION) ---
-                        with st.expander("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)"):
-                            st.info("Gunakan fitur ini untuk menghubungkan Kasir/Bank secara otomatis tanpa upload file.")
-                            col_api1, col_api2 = st.columns(2)
+                            with st.expander("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)"):
+                                 st.info("Gunakan fitur ini untuk menghubungkan Kasir/Bank secara otomatis tanpa upload file.")
+                                 col_api1, col_api2 = st.columns(2)
                             with col_api1:
                                 api_provider = st.selectbox("Pilih Sistem Kasir/Bank", 
                                                           ["Moka POS", "Majoo", "Nutapos", "BCA Business API", "Bank Mandiri API"])
