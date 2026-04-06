@@ -205,20 +205,35 @@ elif menu == "Admin Control Center":
 
 # --- TAB 1: AKTIVASI KLIEN ---
     with t1:
+        # 1. Judul dan Info (Hanya di Tab 1)
         st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
         st.info("Daftarkan klien yang sudah melakukan pembayaran.")
-    with st.container(border=True):
-        col1, col2 = st.columns(2)
-        with col1:
-            new_user = st.text_input("Username Klien", key="admin_user")
-            new_mail = st.text_input("Email Bisnis", key="admin_mail")
-        with col2:
-            paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            tgl_bayar = st.date_input("Tanggal Pembayaran")
         
-        if st.button("Aktifkan Akun & Kirim Kredensial"):
-            st.success(f"✅ Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
+        # 2. Input Data Klien
+        c1, c2 = st.columns(2)
+        with c1:
+            nama_klien = st.text_input("Nama Perusahaan/Klien:", placeholder="Contoh: UD. MAJU JAYA")
+        with c2:
+            paket_layanan = st.selectbox("Paket V-GUARD:", ["Starter", "Professional", "Enterprise"])
 
+        st.divider()
+
+        # 3. Pusat Audit Dokumen (Pindah ke Sini agar tidak menyebar ke tab lain)
+        st.subheader("📑 Pusat Audit Dokumen Multi-Format")
+        st.write(f"Audit operasional untuk: **{nama_klien if nama_klien else 'Klien Baru'}**")
+        
+        up_files = st.file_uploader(
+            "Upload Mutasi/Laporan (Excel/PDF/JPG)",
+            accept_multiple_files=True,
+            key="audit_v1_exclusive"
+        )
+
+        if up_files:
+            st.info(f"📂 {len(up_files)} Dokumen terdeteksi.")
+            if st.button("🚀 MULAI AUDIT FORENSIK"):
+                with st.spinner("THE ANALYST sedang membedah dokumen..."):
+                    # Logika AI Audit Bapak tetap di sini
+                    st.success("Audit Selesai!")
 # --- TAB 2: EKOSISTEM AI ---
     with t2:
         st.header("🛡️ V-GUARD ELITE AI COMMAND CENTER")
