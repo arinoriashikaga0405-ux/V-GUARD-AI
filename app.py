@@ -161,13 +161,31 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    else:
+    # 1. Cek status login (Pastikan IF ini di posisi awal)
+    if not st.session_state.get('admin_logged_in', False):
+        st.header("🔐 Admin Control Center")
+        
+        # Input password
+        admin_input = st.text_input("Password", type="password", key="vguard_admin_main")
+        
+        if admin_input == "w1nbju8282": 
+            st.session_state.admin_logged_in = True
+            st.rerun()
+        elif admin_input != "":
+            st.error("Invalid Key")
+        st.stop() # Mengunci halaman jika belum login
+
+    # 2. SEJAJARKAN ELSE INI DENGAN 'if not' DI ATAS (Baris 164)
+    else: 
         # Tombol Logout di pojok kanan atas
         c_out1, c_out2 = st.columns([9, 1])
         with c_out2:
             if st.button("🚪 Out", key="logout_btn"):
                 st.session_state.admin_logged_in = False
                 st.rerun()
+        
+        st.header("🎮 V-GUARD: Admin Control Center")
+        # ... lanjut ke Tab dan isi lainnya ...
         
         st.header("🎮 V-GUARD: Admin Control Center")
         st.divider()
