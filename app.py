@@ -176,156 +176,156 @@ elif menu == "Admin Control Center":
             st.subheader("Data Ekosistem V-GUARD")
     
     
-    st.divider() # Garis pembatas tipis
-
-    # Contoh: Tampilkan data klien atau hasil audit AI
-st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
-                    
-    # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
-t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-            "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
-            "📊 Laporan", "🛡️ Keamanan", "💾 Backup", 
-            "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
-        ])
-with t1:
-            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-            st.info("Daftarkan klien yang sudah melakukan pembayaran.")
-            with st.container(border=True):
-                col1, col2 = st.columns(2)
-                with col1:
-                    new_user = st.text_input("Username Klien")
-                    new_mail = st.text_input("Email Bisnis")
-                with col2:
-                    paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                    tgl_bayar = st.date_input("Tanggal Pembayaran")
-                
-                if st.button("Aktifkan Akun & Kirim Kredensial"):
-                    st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
-
-                with t2:
-                    st.subheader("🌐 V-Guard Global AI Ecosystem")
-            c1, c2 = st.columns(2)
-            with c1:
-                with st.container(border=True):
-                    st.markdown("### 🧠 Google Gemini AI")
-                    st.write("Analis utama yang memproses data audit kompleks.")
-                with c2:
-                    with st.container(border=True):
-                        st.markdown("### 👁️ YOLO / Vision AI")
-                        st.write("'Mata' digital yang memantau pergerakan visual.")
-
-            with t3:
-                st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
-            c_a, c_b = st.columns(2)
-            with c_a:
-                st.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
-            with c_b:
-                st.metric("Dana Terselamatkan", "Rp 15.700.000", delta="AI Fraud Detector Aktif")
-            
-            st.divider()
-            st.info("🔍 **Status Deteksi Dasar:** AI sedang memantau pembatalan transaksi (Void) dan anomali input kasir harian.")
-            st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
-
-            with t4:
-                st.subheader("📑 Audit Dokumen Multi-Format")
-            st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
-
-            with t5:
-                st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-            st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
-            
-            # Baris Atas: Live Monitor & Behavior Detection
-            c_vid1, c_vid2 = st.columns(2)
-            with c_vid1:
-                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir (AI Behavior Active)")
-                st.info("🤖 **AI Behavior:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi.")
-            with c_vid2:
-                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
-                st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
-
-            st.divider()
-
-            # Baris Bawah: Hasil Audit Visual & Fraud Alarm
-            st.write("🚨 **Fraud Alarm History (Visual Proof)**")
-            col_f1, col_f2 = st.columns([2, 1])
-            with col_f1:
-                st.error("🚨 **ALARM: Visual Mismatch Terdeteksi (14:20 WIB)**")
-                st.write("- **Data Kasir:** Kopi Hitam (Rp 20.000)")
-                st.write("- **Visual AI:** Kopi Susu Gula Aren (Rp 35.000)")
-                st.caption("Status: Menunggu konfirmasi owner untuk tindakan disiplin.")
-            with col_f2:
-                st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
-                if st.button("Lihat Cuplikan Video Kejadian"):
-                    st.toast("Memuat rekaman cloud... Mohon tunggu.")
-            with t6:
-                st.subheader("🚨 Pusat Alarm & Notifikasi")
-                st.error("ALARM FRAUD: **AKTIF**")
-                st.warning("NOTIFIKASI INVOICE H-7: **READY**")
-
-            with t7:
-                st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
-            c_a, c_b = st.columns(2)
-            c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
-            c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
-            st.divider()
-            st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
-
-            with t8:
-                st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
-                st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
-
-            # --- BAGIAN BARU: KONFIGURASI VCS (API INTEGRATION) ---
-            with st.expander("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)"):
-                st.info("Gunakan fitur ini untuk menghubungkan Kasir/Bank secara otomatis tanpa upload file.")
-                col_api1, col_api2 = st.columns(2)
-                with col_api1:
-                    api_provider = st.selectbox("Pilih Sistem Kasir/Bank", 
-                                              ["Moka POS", "Majoo", "Nutapos", "BCA Business API", "Bank Mandiri API"])
-                with col_api2:
-                    api_key_input = st.text_input("Masukkan API Key / Client ID", type="password", help="Dapatkan kunci ini dari dashboard kasir/bank Anda")
-                
-                if st.button("Hubungkan ke V-Guard AI"):
-                    with st.spinner("Menyambungkan enkripsi ke server..."):
-                        import time
-                        time.sleep(2)
-                        st.success(f"✅ Terhubung! V-Guard AI sekarang menarik data dari {api_provider} secara real-time.")
-            
-            st.divider()
-
-            # --- BAGIAN UPLOAD MANUAL (KODE ASLI BAPAK) ---
-            st.write("---")
-            st.write("📤 **Audit Manual via File:**")
-            uploaded_files = st.file_uploader("Upload Mutasi Rekening / Laporan Kasir", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True, key="audit_up_final")
-            
-            if uploaded_files:
-                with st.spinner("V-Guard AI sedang melakukan Deep Audit 180 hari terakhir..."):
-                    import time
-                    time.sleep(3) 
-                    st.success("✅ Audit 6 Bulan Selesai.")
-                    
-                    c1, c2, c3 = st.columns(3)
-                    c1.metric("Total Transaksi Diperiksa", "1,240 Data")
-                    c2.metric("Akurasi Reconciliation", "100%")
-                    c3.metric("Anomali Terdeteksi", "0 (Clean)", delta="Aman", delta_color="normal")
-                    
-                    st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
-                    
-            # --- Tambahkan ini di bagian akhir dalam blok Admin Control Center ---
-            with t9:
-                st.divider()
-                st.header("💎 V-ULTRA: Enterprise Command Center")
-                # Baris 309 ke bawah:
-            col_u1, col_u2 = st.columns(2)
-            with col_u1:
-                st.success("🧠 **The Core Brain (AI Central)**")
-                st.write("Menyinkronkan data Lintas Cabang & Gudang.")
-                st.progress(100)
+            st.divider() # Garis pembatas tipis
         
-            with col_u2:
-                st.info("🖥️ **Dedicated Server Status**")
-                st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
-
-            st.divider()
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-            st.markdown("---")
-            st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+            # Contoh: Tampilkan data klien atau hasil audit AI
+        st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
+                            
+            # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
+        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+                    "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
+                    "📊 Laporan", "🛡️ Keamanan", "💾 Backup", 
+                    "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
+                ])
+        with t1:
+                    st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
+                    st.info("Daftarkan klien yang sudah melakukan pembayaran.")
+                    with st.container(border=True):
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            new_user = st.text_input("Username Klien")
+                            new_mail = st.text_input("Email Bisnis")
+                        with col2:
+                            paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                            tgl_bayar = st.date_input("Tanggal Pembayaran")
+                        
+                        if st.button("Aktifkan Akun & Kirim Kredensial"):
+                            st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
+        
+                        with t2:
+                            st.subheader("🌐 V-Guard Global AI Ecosystem")
+                    c1, c2 = st.columns(2)
+                    with c1:
+                        with st.container(border=True):
+                            st.markdown("### 🧠 Google Gemini AI")
+                            st.write("Analis utama yang memproses data audit kompleks.")
+                        with c2:
+                            with st.container(border=True):
+                                st.markdown("### 👁️ YOLO / Vision AI")
+                                st.write("'Mata' digital yang memantau pergerakan visual.")
+        
+                    with t3:
+                        st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+                    c_a, c_b = st.columns(2)
+                    with c_a:
+                        st.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
+                    with c_b:
+                        st.metric("Dana Terselamatkan", "Rp 15.700.000", delta="AI Fraud Detector Aktif")
+                    
+                    st.divider()
+                    st.info("🔍 **Status Deteksi Dasar:** AI sedang memantau pembatalan transaksi (Void) dan anomali input kasir harian.")
+                    st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
+        
+                    with t4:
+                        st.subheader("📑 Audit Dokumen Multi-Format")
+                    st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
+        
+                    with t5:
+                        st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+                    st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
+                    
+                    # Baris Atas: Live Monitor & Behavior Detection
+                    c_vid1, c_vid2 = st.columns(2)
+                    with c_vid1:
+                        st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir (AI Behavior Active)")
+                        st.info("🤖 **AI Behavior:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi.")
+                    with c_vid2:
+                        st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
+                        st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
+        
+                    st.divider()
+        
+                    # Baris Bawah: Hasil Audit Visual & Fraud Alarm
+                    st.write("🚨 **Fraud Alarm History (Visual Proof)**")
+                    col_f1, col_f2 = st.columns([2, 1])
+                    with col_f1:
+                        st.error("🚨 **ALARM: Visual Mismatch Terdeteksi (14:20 WIB)**")
+                        st.write("- **Data Kasir:** Kopi Hitam (Rp 20.000)")
+                        st.write("- **Visual AI:** Kopi Susu Gula Aren (Rp 35.000)")
+                        st.caption("Status: Menunggu konfirmasi owner untuk tindakan disiplin.")
+                    with col_f2:
+                        st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
+                        if st.button("Lihat Cuplikan Video Kejadian"):
+                            st.toast("Memuat rekaman cloud... Mohon tunggu.")
+                    with t6:
+                        st.subheader("🚨 Pusat Alarm & Notifikasi")
+                        st.error("ALARM FRAUD: **AKTIF**")
+                        st.warning("NOTIFIKASI INVOICE H-7: **READY**")
+        
+                    with t7:
+                        st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+                    c_a, c_b = st.columns(2)
+                    c_a.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
+                    c_b.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
+                    st.divider()
+                    st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
+        
+                    with t8:
+                        st.subheader("📑 Pusat Audit Multi-Format (Advanced)")
+                        st.write("Metode Audit: **Otomatis (API)** atau **Manual (Upload Dokumen)**.")
+        
+                    # --- BAGIAN BARU: KONFIGURASI VCS (API INTEGRATION) ---
+                    with st.expander("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)"):
+                        st.info("Gunakan fitur ini untuk menghubungkan Kasir/Bank secara otomatis tanpa upload file.")
+                        col_api1, col_api2 = st.columns(2)
+                        with col_api1:
+                            api_provider = st.selectbox("Pilih Sistem Kasir/Bank", 
+                                                      ["Moka POS", "Majoo", "Nutapos", "BCA Business API", "Bank Mandiri API"])
+                        with col_api2:
+                            api_key_input = st.text_input("Masukkan API Key / Client ID", type="password", help="Dapatkan kunci ini dari dashboard kasir/bank Anda")
+                        
+                        if st.button("Hubungkan ke V-Guard AI"):
+                            with st.spinner("Menyambungkan enkripsi ke server..."):
+                                import time
+                                time.sleep(2)
+                                st.success(f"✅ Terhubung! V-Guard AI sekarang menarik data dari {api_provider} secara real-time.")
+                    
+                    st.divider()
+        
+                    # --- BAGIAN UPLOAD MANUAL (KODE ASLI BAPAK) ---
+                    st.write("---")
+                    st.write("📤 **Audit Manual via File:**")
+                    uploaded_files = st.file_uploader("Upload Mutasi Rekening / Laporan Kasir", type=['xlsx', 'pdf', 'jpg', 'jpeg', 'csv'], accept_multiple_files=True, key="audit_up_final")
+                    
+                    if uploaded_files:
+                        with st.spinner("V-Guard AI sedang melakukan Deep Audit 180 hari terakhir..."):
+                            import time
+                            time.sleep(3) 
+                            st.success("✅ Audit 6 Bulan Selesai.")
+                            
+                            c1, c2, c3 = st.columns(3)
+                            c1.metric("Total Transaksi Diperiksa", "1,240 Data")
+                            c2.metric("Akurasi Reconciliation", "100%")
+                            c3.metric("Anomali Terdeteksi", "0 (Clean)", delta="Aman", delta_color="normal")
+                            
+                            st.info("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction' atau pengeluaran tanpa invoice pendukung.")
+                            
+                    # --- Tambahkan ini di bagian akhir dalam blok Admin Control Center ---
+                    with t9:
+                        st.divider()
+                        st.header("💎 V-ULTRA: Enterprise Command Center")
+                        # Baris 309 ke bawah:
+                    col_u1, col_u2 = st.columns(2)
+                    with col_u1:
+                        st.success("🧠 **The Core Brain (AI Central)**")
+                        st.write("Menyinkronkan data Lintas Cabang & Gudang.")
+                        st.progress(100)
+                
+                    with col_u2:
+                        st.info("🖥️ **Dedicated Server Status**")
+                        st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
+        
+                    st.divider()
+                    st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+                    st.markdown("---")
+                    st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
