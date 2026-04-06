@@ -264,7 +264,6 @@ with t5:
                  caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
         st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
 
-
 # --- TAB 6: PUSAT ALARM ---
 with t6:
     st.subheader("🚨 Pusat Alarm & Notifikasi")
@@ -287,19 +286,20 @@ with t8:
     st.write("Penyimpanan otomatis ke Cloud Server setiap jam 00:00.")
     st.button("Jalankan Manual Backup Sekarang")
 
-# --- TAB 9: V-ULTRA (ENTERPRISE) ---
+# --- TAB 9: V-ULTRA (ENTERPRISE COMMAND CENTER) ---
 with t9:
     st.header("💎 V-ULTRA: Enterprise Command Center")
     col_u1, col_u2 = st.columns(2)
+    
     with col_u1:
         st.success("🧠 **The Core Brain (AI Central)**")
         st.write("Menyinkronkan data Lintas Cabang & Gudang.")
         st.progress(100)
+    
     with col_u2:
         st.info("🖥️ **Dedicated Server Status**")
-        st.code("IP: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%")
-    st.divider()
-    st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+        # Di sini Bapak menampilkan IP dan status server klien
+        st.code("IP Server: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%\nStatus: Terhubung")
 
 st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | Powered by Gemini & YOLO | ©2026</small></center>", unsafe_allow_html=True)
+st.markdown("<center><small>V-Guard AI Intelligence ©2026</small></center>", unsafe_allow_html=True)
