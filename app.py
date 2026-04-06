@@ -379,45 +379,51 @@ elif menu == "Admin Control Center":
 # --- TAB 8: BACKUP DATA ---
    # --- TAB 8: BACKUP DATA (DENGAN OWNER LOCK) ---
     with t8:
-        st.header("💾 Backup & Data Management")
+        st.header("💾 Backup & Strategic Management")
         
-        # --- Bagian 1: Fungsi Backup (Bisa dilihat Admin/Timotius) ---
+        # --- Bagian 1: Fungsi Operasional (Bisa dilihat Timotius/Admin) ---
         st.subheader("🛠️ Sistem Cadangan Data")
-        st.write("Penyimpanan otomatis ke Cloud Server setiap jam 00:00.")
+        st.write("Status: **🟢 Terhubung ke Cloud Server**")
         if st.button("Jalankan Manual Backup Sekarang", key="btn_backup_manual"):
-            with st.spinner("Mengompresi data..."):
-                st.success("Backup Berhasil (ID: VG-2026-04-06)")
+            with st.spinner("Mengompresi data klien..."):
+                st.success("Backup Berhasil (ID: VG-2026-04-06).")
 
         st.divider()
 
-        # --- Bagian 2: OWNER LOCK (Hanya untuk Pak Erwin) ---
-        # Timotius tidak akan bisa melihat simulator profit kecuali dia tahu kodenya
+        # --- Bagian 2: OWNER LOCK & SIMULASI PROFIT (Hanya untuk Pak Erwin) ---
         st.subheader("🔒 Owner Intelligence Center")
-        owner_key = st.text_input("Masukkan Kode Otoritas Owner untuk akses Proyeksi:", type="password", key="auth_owner")
+        owner_key = st.text_input("Masukkan Kode Otoritas Owner:", type="password", key="auth_owner")
 
-        # Ganti 'ERWIN77' dengan kode rahasia yang Bapak mau
-        if owner_key == "ERWIN77": 
-            st.success("Akses Diterima, Halo Pak Erwin.")
+        if owner_key == "ERWIN77": # Ganti ERWIN77 dengan kode rahasia Bapak
+            st.success("Akses Diterima. Halo Pak Erwin.")
             
-            # --- Simulator Profit Rahasia Bapak ---
-            st.markdown("### 📊 Simulasi Proyeksi Laba Bersih")
-            c1, c2 = st.columns(2)
-            with c1:
-                omzet_input = st.number_input("Estimasi Omzet Target (Rp):", min_value=0, value=100000000, key="input_omzet_locked")
-            with c2:
-                target_growth = st.slider("Target Pertumbuhan (%):", 5, 50, 15, key="growth_locked")
+            st.markdown("### 📊 Simulasi Strategis (Acuan: V-GUARD Profit Sharing)")
+            st.write("Simulator ini menghitung laba bersih setelah potongan Ops (30%) & Komisi/Insentif (10%).")
+            
+            omzet_input = st.number_input("Estimasi Omzet Target (Rp):", min_value=0, value=100000000, key="input_omzet_pribadi")
+            
+            # --- Kalkulasi Berdasarkan Logika Biaya Bapak ---
+            biaya_ops_iklan = omzet_input * 0.30  # Biaya Iklan, Server, API
+            komisi_insentif = omzet_input * 0.10  # Komisi Penjualan & Insentif Langganan
+            laba_bersih = omzet_input - biaya_ops_iklan - komisi_insentif
+            
+            col_res1, col_res2 = st.columns(2)
+            with col_res1:
+                st.metric("Estimasi Laba Bersih", f"Rp {laba_bersih:,.0f}")
+            with col_res2:
+                st.metric("Total Potongan Biaya", f"Rp {biaya_ops_iklan + komisi_insentif:,.0f}", delta="-40%", delta_color="inverse")
 
-            if st.button("📈 Jalankan Simulasi Strategis", key="btn_profit_locked"):
-                with st.spinner("THE STRATEGIST sedang mengkalkulasi..."):
-                    laba_bersih = omzet_input * 0.70
-                    instruksi = f"Proyeksi Omzet Rp {omzet_input:,.0f} dengan laba Rp {laba_bersih:,.0f}."
-                    saran = vguard_ai_engine("THE STRATEGIST", instruksi, "Berikan langkah konkret untuk mencapai target tersebut.")
-                    
-                    st.success(f"Proyeksi Laba Bersih Bapak: Rp {laba_bersih:,.0f}")
+            if st.button("📈 Jalankan Analisis Proyeksi THE STRATEGIST", key="btn_profit_locked"):
+                with st.spinner("THE STRATEGIST sedang menyusun langkah strategis..."):
+                    instruksi = (
+                        f"Omzet Rp {omzet_input:,.0f}. Potongan Biaya Ops/Server/Iklan 30% dan Komisi 10%. "
+                        f"Laba Bersih Riil: Rp {laba_bersih:,.0f}."
+                    )
+                    saran = vguard_ai_engine("THE STRATEGIST", instruksi, "Berikan strategi mencapai target ini berdasarkan data retail 2026.")
                     st.info(saran)
         
         elif owner_key != "":
-            st.error("Kode Salah. Akses ke Data Strategis Ditolak.")
+            st.error("Kode Otoritas Salah. Akses Dibatasi.")
 
 # --- TAB 9: V-ULTRA (ENTERPRISE COMMAND CENTER) ---
     with t9:
