@@ -210,9 +210,9 @@ elif menu == "Admin Control Center":
                                 st.markdown("### 🧠 Google Gemini AI")
                                 st.write("Analis utama yang memproses data audit kompleks.")
                         with c2:
-                                with st.container(border=True):
-                                    st.markdown("### 👁️ YOLO / Vision AI")
-                                    st.write("'Mata' digital yang memantau pergerakan visual.")  
+                            with st.container(border=True):
+                                st.markdown("### 👁️ YOLO / Vision AI")
+                                st.write("'Mata' digital yang memantau pergerakan visual.")  
                         with t3:
                             st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
                         c_a, c_b = st.columns(2)
