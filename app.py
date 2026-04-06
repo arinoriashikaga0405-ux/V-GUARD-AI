@@ -204,15 +204,15 @@ elif menu == "Admin Control Center":
             
                             with t2:
                                 st.subheader("🌐 V-Guard Global AI Ecosystem")
-                            c1, c2 = st.columns(2)
-                        with c1:
-                            with st.container(border=True):
-                                st.markdown("### 🧠 Google Gemini AI")
-                                st.write("Analis utama yang memproses data audit kompleks.")
-                        with c2:
-                            with st.container(border=True):
-                                st.markdown("### 👁️ YOLO / Vision AI")
-                                st.write("'Mata' digital yang memantau pergerakan visual.")  
+                                c1, c2 = st.columns(2)
+                            with c1:
+                                with st.container(border=True):
+                                    st.markdown("### 🧠 Google Gemini AI")
+                                    st.write("Analis utama yang memproses data audit kompleks.")
+                            with c2:
+                                with st.container(border=True):
+                                    st.markdown("### 👁️ YOLO / Vision AI")
+                                    st.write("'Mata' digital yang memantau pergerakan visual.")  
                         with t3:
                             st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
                         c_a, c_b = st.columns(2)
