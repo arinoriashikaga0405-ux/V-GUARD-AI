@@ -474,65 +474,66 @@ elif menu == "Admin Control Center":
             st.divider()
             st.caption("V-ULTRA: Global Command for Business Leaders.")
         # --- TAB 10: OWNER (STRATEGI EKSEKUTIF) ---
-        # --- OWNER STRATEGIC MENU: FINAL PROFIT SHARING ---
-        with st.expander("👑 OWNER COMMAND: Profit & Revenue Distribution", expanded=True):
-            st.header("Kalkulator Profit Sharing V-GUARD (Final)")
-            st.info("Porsi: Potongan 30% Operasional diambil dari Omset Kotor.")
+        # --- TAB 10: OWNER COMMAND - NATIONAL REVENUE & PROFIT SHARING ---
+        with t10:
+            st.header("🏢 V-GUARD National Financial Control")
+            st.markdown("Pusat pantauan omset nasional dan pembagian profit otomatis (Potongan 30% Ops di awal).")
 
-            # 1. Input Transaksi
-            c1, c2 = st.columns(2)
-            with c1:
-                produk = st.selectbox("Pilih Produk Terjual:", 
-                                    ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA (ENTERPRISE)"], key="fin_prod")
-                kategori = st.radio("Kategori Pendapatan:", 
-                                   ["Setup Fee (Pasang Baru)", "Monthly Recurring (Langganan)"], key="fin_cat")
-            with c2:
-                unit = st.number_input("Jumlah Unit/Cabang:", min_value=1, value=1, key="fin_unit")
-                reserve_pct = 0.30 # Fixed 30% sesuai instruksi Bapak
+            # 1. INPUT PENJUALAN NASIONAL (SIMULASI)
+            with st.expander("📝 Input Penjualan Kolektif Nasional", expanded=True):
+                c_in1, c_in2, c_in3, c_in4 = st.columns(4)
+                v_lite = c_in1.number_input("Unit V-LITE:", min_value=0, value=10)
+                v_pro = c_in2.number_input("Unit V-PRO:", min_value=0, value=5)
+                v_sight = c_in3.number_input("Unit V-SIGHT:", min_value=0, value=2)
+                v_ultra = c_in4.number_input("Unit V-ULTRA:", min_value=0, value=1)
+                
+                tipe_fee = st.selectbox("Pilih Jenis Transaksi:", ["Setup Fee (Pasang Baru)", "Monthly Recurring (Langganan)"])
 
-            # 2. Data Referensi Harga & Porsi (Sesuai Excel)
-            if kategori == "Setup Fee (Pasang Baru)":
-                prices = {"V-LITE": 1500000, "V-PRO": 3000000, "V-SIGHT": 7500000, "V-ULTRA (ENTERPRISE)": 15000000}
-                net_val_pct = 0.50 # Net Profit 50% dari sisa
+            # 2. DATA HARGA & LOGIKA (REFERENSI EXCEL)
+            if tipe_fee == "Setup Fee (Pasang Baru)":
+                prices = {"lite": 1500000, "pro": 3000000, "sight": 7500000, "ultra": 15000000}
+                net_profit_pct = 0.50 # 50% dari sisa setelah potongan 30%
                 porsi_tim = {
-                    "CEO (Erwin Sinaga)": 0.25, "CSO (Christin)": 0.20, "CTO (Tech)": 0.15,
+                    "CEO (Erwin Sinaga)": 0.25, "CSO (Christin)": 0.20, "CTO (Technical)": 0.15,
                     "COO (Ops)": 0.10, "Manager": 0.10, "Digital Marketing": 0.10, "Admin": 0.10
                 }
             else:
-                prices = {"V-LITE": 750000, "V-PRO": 1500000, "V-SIGHT": 3500000, "V-ULTRA (ENTERPRISE)": 10000000}
-                net_val_pct = 0.80 # Net Profit 80% dari sisa
+                prices = {"lite": 750000, "pro": 1500000, "sight": 3500000, "ultra": 10000000}
+                net_profit_pct = 0.80 # 80% dari sisa setelah potongan 30%
                 porsi_tim = {
-                    "CEO (Erwin Sinaga)": 0.60, "CSO (Christin)": 0.05, "CTO (Tech)": 0.10,
+                    "CEO (Erwin Sinaga)": 0.60, "CSO (Christin)": 0.05, "CTO (Technical)": 0.10,
                     "COO (Ops)": 0.05, "Manager": 0.10, "Digital Marketing": 0.05, "Admin": 0.05
                 }
 
-            # 3. Kalkulasi Waterfall
-            gross_total = prices[produk] * unit
-            biaya_ops_30 = gross_total * reserve_pct
-            sisa_setelah_ops = gross_total - biaya_ops_30
-            profit_siap_bagi = sisa_setelah_ops * net_val_pct
+            # 3. KALKULASI WATERFALL (STRATEGI PAK ERWIN)
+            gross_nasional = (v_lite * prices["lite"]) + (v_pro * prices["pro"]) + \
+                             (v_sight * prices["sight"]) + (v_ultra * prices["ultra"])
+            
+            # POTONG 30% DARI OMSET KOTOR (UNTUK SERVER, IKLAN, CASH V-GUARD)
+            biaya_ops_30 = gross_nasional * 0.30
+            sisa_setelah_ops = gross_nasional - biaya_ops_30
+            
+            # TOTAL PROFIT YANG SIAP DIBAGIKAN KE TIM
+            total_profit_sharing = sisa_setelah_ops * net_profit_pct
 
-            # 4. Tampilan Ringkasan Keuangan
+            # 4. TAMPILAN DASHBOARD UTAMA
             st.divider()
-            res_a, res_b, res_c = st.columns(3)
-            res_a.metric("OMSET KOTOR", f"Rp {gross_total:,.0f}")
-            res_b.metric("CADANGAN V-GUARD (30%)", f"Rp {biaya_ops_30:,.0f}", delta="-30%", delta_color="inverse")
-            res_c.metric("PROFIT SIAP BAGI TIM", f"Rp {profit_siap_bagi:,.0f}")
+            m1, m2, m3 = st.columns(3)
+            m1.metric("TOTAL OMSET NASIONAL", f"Rp {gross_nasional:,.0f}")
+            m2.metric("CADANGAN V-GUARD (30%)", f"Rp {biaya_ops_30:,.0f}", delta="-30% Fixed", delta_color="inverse")
+            m3.metric("TOTAL PROFIT SHARING", f"Rp {total_profit_sharing:,.0f}")
 
-            # 5. Tabel Distribusi Tim
-            st.subheader("📋 Rincian Penerimaan Tim")
-            data_final = []
+            # 5. RINCIAN BAGI HASIL TIM
+            st.subheader("👥 Distribusi Profit Sharing Tim")
+            data_tim = []
             for role, pct in porsi_tim.items():
-                nominal = profit_siap_bagi * pct
-                data_final.append({
+                nominal = total_profit_sharing * pct
+                data_tim.append({
                     "Posisi": role,
-                    "Porsi": f"{pct*100:.0f}%",
+                    "Porsi (%)": f"{pct*100:.0f}%",
                     "Penerimaan Bersih": f"Rp {nominal:,.0f}"
                 })
-            
-            st.table(data_final)
+            st.table(data_tim)
 
-            # Tombol Eksekusi
-            if st.button("✅ Konfirmasi & Masuk Buku Kas", key="fin_save"):
-                st.balloons()
-                st.success(f"Berhasil! Dana Cadangan Rp {biaya_ops_30:,.0f} telah diamankan ke Kas V-GUARD.")
+            # 6. KESIMPULAN OWNER
+            st.info(f"**Total Pendapatan Pak Erwin (CEO):** Rp { (total_profit_sharing * porsi_tim['CEO (Erwin Sinaga)']) + biaya_ops_30 :,.0f} (Termasuk Cadangan Ops)")
