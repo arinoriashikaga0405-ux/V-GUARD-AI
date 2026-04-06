@@ -157,7 +157,7 @@ elif menu == "Admin Control Center":
         # Input password (HANYA muncul di menu Admin)
         admin_input = st.text_input("Password", type="password", key="vguard_admin_final")
         
-        # CEK PASSWORD LANGSUNG (Ganti 'w1nbju8282' jika ingin merubah password)
+        # CEK PASSWORD LANGSUNG ('w1nbju8282')
         if admin_input == "w1nbju8282": 
            st.session_state.admin_logged_in = True
            st.rerun() # Refresh HANYA SEKALI saat login berhasil
@@ -167,7 +167,7 @@ elif menu == "Admin Control Center":
 
         else: # Baris 169
         # Tampilan SETELAH LOGIN
-        if st.button("Log Out"):
+    if st.button("Log Out"):
             st.session_state.admin_logged_in = False
             st.rerun()
         
