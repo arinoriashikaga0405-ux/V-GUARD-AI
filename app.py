@@ -161,31 +161,37 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    # 1. PROSES LOGIN (Hanya muncul jika belum login)
+    # --- 1. PENGUNCI FOLDER ADMIN (FOLDER LOCK) ---
     if not st.session_state.get('admin_logged_in', False):
-        st.subheader("🔐 Admin Access Only")
-        admin_input = st.text_input("Masukkan Kode Otoritas:", type="password", key="vguard_admin_login")
+        st.subheader("🔐 V-GUARD Secure Folder")
+        st.info("Folder ini terkunci. Masukkan Kode Otoritas untuk mengakses.")
+        
+        # Input password untuk membuka folder
+        admin_input = st.text_input("Password Folder:", type="password", key="vguard_folder_lock")
         
         if admin_input == "w1nbju8282": 
             st.session_state.admin_logged_in = True
+            st.success("Akses Diterima! Membuka Folder...")
             st.rerun()
         elif admin_input != "":
-            st.error("Invalid Key")
-        st.stop() # Berhenti di sini jika belum login
+            st.error("Password Salah. Folder tetap terkunci.")
+        
+        # Menghentikan eksekusi kode di bawahnya agar folder tidak bocor
+        st.stop() 
 
-    # 2. DASHBOARD UTAMA (Muncul setelah Login Berhasil)
+    # --- 2. ISI FOLDER ADMIN (Hanya terbuka jika password di atas benar) ---
     else: 
-        # Tombol Logout di pojok kanan
+        # Tombol Lock (Logout) untuk mengunci kembali folder
         c_out1, c_out2 = st.columns([9, 1])
         with c_out2:
-            if st.button("🚪 Out", key="logout_btn"):
+            if st.button("🔒 Lock", key="logout_btn"):
                 st.session_state.admin_logged_in = False
                 st.rerun()
         
         st.header("🎮 V-GUARD: Admin Control Center")
         st.divider()
 
-        # 3. DEFINISI 9 TAB UTAMA
+        # 3. STRUKTUR 9 TAB DI DALAM FOLDER
         t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
             "👥 Aktivasi", "🖥️ AI Squad", "⚙️ Integrasi", 
             "📊 Audit", "🛡️ V-SIGHT", "🚨 Alarm", 
@@ -196,7 +202,7 @@ elif menu == "Admin Control Center":
         with t1:
             st.subheader("📝 Registrasi & Aktivasi Klien")
             
-            # CSS untuk Tombol Putih
+            # CSS untuk Tombol Putih Bersih
             st.markdown("""
                 <style>
                 div.stButton > button:first-child {
@@ -226,7 +232,7 @@ elif menu == "Admin Control Center":
 
         # --- TAB 2: 10 AI AGENT SQUAD ---
         with t2:
-            st.subheader("🖥️ V-GUARD Elite Squad (10 Agents Active)")
+            st.subheader("🖥️ V-GUARD Elite Squad")
             agents = [
                 ("👁️ Visionary", "CCTV Monitoring"), ("👂 Concierge", "Client Support"),
                 ("👄 Growth", "Revenue Boost"), ("🤝 Liaison", "API & Connections"),
@@ -241,34 +247,11 @@ elif menu == "Admin Control Center":
                     st.info(f"**{n}**\n\n`{task}`")
             
             st.divider()
-            q_ai = st.text_input("Command Center (Instruksi ke Semua Agent):", key="q_admin")
+            q_ai = st.text_input("Command Center:", key="q_admin")
             if st.button("Jalankan Operasi AI", key="btn_q"):
-                # Memanggil mesin AI Utama
                 st.write(vguard_ai_engine("V-GUARD COMMANDER", q_ai))
 
-        # --- TAB 3: INTEGRASI API ---
-        with t3:
-            st.subheader("⚙️ API Bridge: Bank & POS Integration")
-            col_api1, col_api2 = st.columns(2)
-            with col_api1:
-                provider = st.selectbox("Pilih Koneksi:", ["BCA Business", "Moka POS", "Majoo", "Mandiri API"])
-            with col_api2:
-                st.text_input("API Key", type="password", value="HIDDEN_KEY_12345")
-            
-            if st.button("🔌 Hubungkan Sekarang", key="btn_api"):
-                st.success(f"**THE LIAISON:** Berhasil menghubungkan {provider} ke V-GUARD.")
-
-        # --- TAB 5: V-SIGHT (VISION AI) ---
-        with t5:
-            st.subheader("👁️ V-SIGHT: Visual Behavior AI")
-            c_vid1, c_vid2 = st.columns(2)
-            with c_vid1:
-                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="LIVE: Kasir Utama")
-            with c_vid2:
-                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="LIVE: Gudang A")
-            st.warning("**THE VISIONARY:** Mendeteksi pembukaan laci kasir tanpa input transaksi pada 14:05.")
-
-        # --- TAB 8: OWNER STRATEGIC ---
+        # --- TAB 8: OWNER STRATEGIC (Kunci Owner Tetap Pakai w1nw1n8282) ---
         with t8:
             st.header("💾 Owner Strategic Center")
             o_key = st.text_input("Kode Otoritas Owner:", type="password", key="okey_t8")
@@ -276,13 +259,13 @@ elif menu == "Admin Control Center":
                 st.success("Selamat Datang, Pak Erwin Sinaga.")
                 omz = st.number_input("Input Omzet:", value=100000000)
                 st.metric("Profit Bersih Bapak (Net 60%)", f"Rp {omz * 0.60:,.0f}")
-                if st.button("📊 Analisis THE STRATEGIST"):
-                    st.info(vguard_ai_engine("THE STRATEGIST", f"Omzet {omz}, berikan strategi profit."))
             elif o_key != "": 
-                st.error("Akses Khusus Founder Ditolak.")
+                st.error("Akses Founder Ditolak.")
 
-        # --- TAB LAINNYA ---
-        with t4: st.write("📊 Pusat Audit Dokumen Aktif.")
-        with t6: st.write("🚨 Alarm: Tidak ada anomali kritis.")
-        with t7: st.write("📈 Performa: Efisiensi meningkat 12%.")
-        with t9: st.write("💎 V-ULTRA: Dedicated Server Active.")
+        # --- TAB PLACEHOLDERS ---
+        with t3: st.write("⚙️ Integrasi API Aktif.")
+        with t4: st.write("📊 Pusat Audit Dokumen.")
+        with t5: st.info("👁️ V-SIGHT: Visual Monitoring Active.")
+        with t6: st.write("🚨 Alarm System.")
+        with t7: st.write("📈 Performa Bisnis.")
+        with t9: st.write("💎 V-ULTRA Server.")
