@@ -258,46 +258,43 @@ elif menu == "Admin Control Center":
                     st.toast("Semua file tersimpan di server V-GUARD.")
         # --- TAB 2: AI SQUAD (EKSEKUSI AGENT & 24/7 SERVICE) ---
         # --- TAB 2: AI SQUAD (COMMAND & OVERRIDE) ---
+        # --- TAB 2: AI SQUAD (COMMAND, OVERRIDE & GROWTH) ---
         with t2:
             st.subheader("🖥️ V-GUARD Elite AI Squad")
             
             # 1. Command Input
-            cmd_ai = st.text_area("Instruksi Strategis Admin:", placeholder="Contoh: Analyst, audit transaksi Cabang Medan jam 10 pagi tadi...")
-            if st.button("Kirim Perintah ke Squad"):
+            cmd_ai = st.text_area("Instruksi Strategis Admin:", placeholder="Contoh: Analyst, audit transaksi Cabang Medan jam 10 pagi tadi...", key="cmd_t2")
+            if st.button("Kirim Perintah ke Squad", key="btn_cmd_t2"):
                 if cmd_ai:
                     with st.spinner("Executing Command..."):
-                        res = vguard_ai_engine("COMMANDER", cmd_ai)
-                        st.info(res)
+                        # Fungsi simulasi response AI
+                        st.info(f"SQUAD RESPONSE: Menjalankan perintah '{cmd_ai}'. Laporan akan muncul di Tab Audit.")
 
             st.divider()
 
             # 2. LIVE CHAT MONITORING & OVERRIDE
             st.markdown("### 👁️ Live Chat (24/7)")
-            
-            # Frame Percakapan
             chat_container = st.container(border=True)
             with chat_container:
                 st.caption("🔴 LIVE: Interaksi Klien #8829 (Cabang Surabaya)")
                 st.chat_message("user").write("Halo, sistem V-SIGHT saya tidak muncul notifikasi di HP.")
                 st.chat_message("assistant").write("Mohon maaf atas ketidaknyamanannya. Saya Concierge Agent. Sedang memeriksa sinkronisasi perangkat Anda...")
             
-            # Fitur Override
-            st.markdown("---")
             st.write("**🕹️ Manual Override Mode**")
-            msg_override = st.text_input("Balas sebagai Admin (Pesan ini akan memotong AI):", placeholder="Ketik pesan Bapak di sini...")
+            msg_override = st.text_input("Balas sebagai Admin:", placeholder="Ketik pesan Bapak di sini...", key="ov_t2")
             
             c_ov1, c_ov2 = st.columns([1, 4])
             with c_ov1:
-                if st.button("📤 Kirim Pesan"):
+                if st.button("📤 Kirim Pesan", key="btn_ov_t2"):
                     if msg_override:
-                        st.success("Pesan Terkirim. AI dinonaktifkan sementara untuk sesi ini.")
+                        st.success("Pesan Terkirim via WA.")
             with c_ov2:
-                st.info("💡 Klik 'Kirim' untuk mengambil alih percakapan dari AI.")
+                st.info("💡 Override aktif: AI akan berhenti merespons sesi ini agar Bapak bisa bicara langsung.")
 
             st.divider()
             
-            # 3. Status Agent (Visual Grid)
-            st.markdown("### 👥 Squad AI AGENT ")
+            # 3. Status Agent (Visual Grid) - Dibuat Ringkas 5 Kolom
+            st.markdown("### 👥 Squad AI AGENT")
             agents = [
                 ("👁️ Visionary", "Online"), ("👂 Concierge", "Active"), 
                 ("👄 Growth", "Online"), ("🤝 Liaison", "Online"), 
@@ -311,6 +308,54 @@ elif menu == "Admin Control Center":
                 for j, (name, status) in enumerate(agents[i:i+5]):
                     with cols[j]:
                         st.metric(name, status)
+
+            st.divider()
+
+            # 4. DIGITAL MARKETING COMMAND (Bapak minta ditaruh di sini)
+            # Menggunakan expander agar hemat tempat
+            with st.expander("🚀 GROWTH & MARKETING CENTER (FB, TikTok, IG, LinkedIn)", expanded=False):
+                st.markdown("### 📢 Multi-Channel Marketing Control")
+                
+                # Baris Statistik Iklan
+                m1, m2, m3 = st.columns(3)
+                m1.metric("Ad Spend (MTD)", "Rp 4.5M", "-5%")
+                m2.metric("Total Reach", "850K", "+15%")
+                m3.metric("New Leads", "142", "+22%")
+
+                st.divider()
+
+                # Pengaturan & Leads
+                col_grow_l, col_grow_r = st.columns([2, 1])
+                
+                with col_grow_l:
+                    p_ads = st.multiselect("Target Platform:", ["FB", "IG", "TikTok", "LinkedIn", "Google"], 
+                                         default=["FB", "TikTok"], key="p_t2_grow")
+                    t_ads = st.text_input("Target Audience:", "Owner Franchise, Retailer Nasional", key="target_t2_grow")
+                    b_ads = st.slider("Budget Harian (Rp):", 100000, 2000000, 500000, key="budget_t2_grow")
+                    
+                    if st.button("🔥 Jalankan Kampanye Sekarang", key="btn_run_t2_grow"):
+                        st.success(f"Growth Agent: Kampanye aktif di {', '.join(p_ads)}!")
+
+                with col_grow_r:
+                    st.write("**🎯 Top Leads Today**")
+                    st.caption("1. Bpk Andi - 62812xxx")
+                    st.caption("2. Ibu Shinta - 62819xxx")
+                    if st.button("📲 Auto Follow-up Leads", key="btn_af_t2_grow"):
+                        st.toast("Concierge sedang mengirim perkenalan via WA...")
+
+                # Preview Mini
+                st.markdown("---")
+                st.write("**🎨 Creative Preview**")
+                pt1, pt2, pt3 = st.tabs(["Facebook", "TikTok", "LinkedIn"])
+                with pt1:
+                    st.caption("Copy: 'Pantau 100 cabang tanpa ribet. V-ULTRA Enterprise.'")
+                with pt2:
+                    st.caption("Video: CCTV deteksi fraud 3 detik (Ready)")
+                with pt3:
+                    st.caption("Chart: ROI V-GUARD untuk korporasi.")
+
+            st.divider()
+            st.caption("V-GUARD Unified Dashboard - Mr. Erwin Sinaga Executive Access")
         # --- TAB 3: INTEGRASI (API KASIR & BANK) ---
         with t3:
             st.subheader("⚙️ Integrasi: API Kasir & Bank Bridge")
