@@ -238,21 +238,21 @@ with t3:
                 time.sleep(1.5)
                 st.success(f"✅ Koneksi ke {api_p} Berhasil!")
 
-# --- TAB 4: LAPORAN & AUDIT ---
+# --- MULAI COPY DARI SINI (GANTIKAN BARIS 241 - 274) ---
 with t4:
     st.subheader("📑 Pusat Audit Dokumen Multi-Format")
     st.write("Gunakan bagian ini untuk audit manual via unggah dokumen.")
     
-    # Widget upload ini sekarang terkunci hanya di Tab 4
+    # Widget ini sekarang hanya akan muncul di Tab Laporan
     up_files = st.file_uploader(
         "Upload Mutasi/Laporan (Excel/PDF/JPG)", 
         accept_multiple_files=True, 
-        key="audit_v4_final"
+        key="audit_v4_admin_fixed"
     )
     
     if up_files:
         st.info("Audit sedang diproses oleh Gemini AI...")
-
+# --- SELESAI COPY ---
 # --- TAB 5: KEAMANAN (V-SIGHT) ---
 with t5:
     st.subheader("👁️ V-SIGHT: AI Visual Command Center")
