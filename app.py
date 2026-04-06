@@ -274,18 +274,36 @@ elif menu == "Admin Control Center":
 
 # --- MULAI COPY DARI SINI (GANTIKAN BARIS 241 - 274) ---
     with t4:
+        with t4:
         st.subheader("📑 Pusat Audit Dokumen Multi-Format")
         st.write("Gunakan bagian ini untuk audit manual via unggah dokumen.")
-    
-    # Widget ini sekarang hanya akan muncul di Tab Laporan
-    up_files = st.file_uploader(
-   "Upload Mutasi/Laporan (Excel/PDF/JPG)", 
-    accept_multiple_files=True, 
-    key="audit_v4_admin_fixed"
-    )
-    
-    if up_files:
-        st.info("Audit sedang diproses oleh Gemini AI...")
+
+        # Widget unggah file
+        up_files = st.file_uploader(
+            "Upload Mutasi/Laporan (Excel/PDF/JPG)", 
+            accept_multiple_files=True, 
+            key="audit_v4_admin_fixed"
+        )
+
+        if up_files:
+            st.info(f"📂 {len(up_files)} Dokumen terdeteksi.")
+            
+            # Tombol untuk memicu THE ANALYST
+            if st.button("🚀 MULAI AUDIT FORENSIK (THE ANALYST)"):
+                with st.spinner("THE ANALYST sedang membedah dokumen Bapak..."):
+                    # Mengambil daftar nama file
+                    file_names = ", ".join([f.name for f in up_files])
+                    
+                    # Memanggil Fungsi Pusat AI (Baris 15)
+                    hasil_audit = vguard_ai_engine(
+                        agent_name="THE ANALYST",
+                        task_instruction=f"Audit dokumen berikut: {file_names}. Berikan ringkasan, temukan potensi fraud, dan berikan skor integritas.",
+                        context_data="Fokus pada kecocokan data mutasi dan laporan penjualan."
+                    )
+                    
+                    st.success("✅ Audit Selesai!")
+                    st.divider()
+                    st.markdown(hasil_audit)
 # --- SELESAI COPY ---
 # --- TAB 5: KEAMANAN (V-SIGHT) ---
     with t5:
