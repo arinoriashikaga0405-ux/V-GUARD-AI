@@ -222,9 +222,9 @@ elif menu == "Admin Control Center":
             st.write("'Mata' digital yang memantau pergerakan visual.")
 
 # --- TAB 3: PENGATURAN & API ---
-with t3:
-    st.subheader("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)")
-    st.info("Hubungkan Kasir atau Bank secara otomatis untuk penarikan data real-time.")
+    with t3:
+        st.subheader("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)")
+        st.info("Hubungkan Kasir atau Bank secara otomatis untuk penarikan data real-time.")
     with st.expander("Buka Panel Konfigurasi API"):
         col_api1, col_api2 = st.columns(2)
         with col_api1:
