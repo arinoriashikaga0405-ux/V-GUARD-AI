@@ -253,7 +253,7 @@ elif menu == "Admin Control Center":
                                 st.write("- **Visual AI:** Kopi Susu Gula Aren (Rp 35.000)")
                                 st.caption("Status: Menunggu konfirmasi owner untuk tindakan disiplin.")
                             with col_f2:
-                            st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
+                                st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
                             if st.button("Lihat Cuplikan Video Kejadian"):
                                 st.toast("Memuat rekaman cloud... Mohon tunggu.")
                             with t6:
