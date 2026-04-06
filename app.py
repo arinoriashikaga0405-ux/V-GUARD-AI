@@ -205,11 +205,7 @@ elif menu == "Admin Control Center":
             # 1. LETAKKAN CSS DI SINI (Di dalam 'with t1')
             st.markdown("""
                 <style>
-                div.stButton > button:first-child {
-                    background-color: white !important;
-                    color: black !important;
-                    border: 1px solid #dcdcdc;
-                    border-radius: 5px;
+                
                 }
                 div.stButton > button:hover {
                     background-color: #f0f0f0 !important;
