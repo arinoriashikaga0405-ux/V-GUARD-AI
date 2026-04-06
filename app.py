@@ -180,7 +180,7 @@ elif menu == "Admin Control Center":
         # --- SEMUA KODE DASHBOARD BAPAK HARUS ADA DI SINI ---
         # --- PASTIKAN MENJOROK KE DALAM (SEJAJAR DENGAN st.success) ---
         
-                t1, t2, t3 = st.tabs(["Audit", "Security", "Analytics"])
+    t1, t2, t3 = st.tabs(["Audit", "Security", "Analytics"])
         with t1:
             st.write("Data Audit Bapak ada di sini...")
         # ... dan seterusnya
