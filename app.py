@@ -349,10 +349,23 @@ elif menu == "Admin Control Center":
 
 # --- TAB 6: PUSAT ALARM ---
     with t6:
-        st.subheader("🚨 Pusat Alarm & Notifikasi")
-        st.error("ALARM FRAUD: **AKTIF** (Mendeteksi 1 Anomali Hari Ini)")
-        st.warning("NOTIFIKASI INVOICE H-7: **READY** (12 Klien Terjadwal)")
-        st.metric("Integrity Score Today", "88%", delta="-12%", delta_color="inverse")
+        st.subheader("🚨 V-GUARD Watchdog (Security Alert)")
+        st.write("Daftar peringatan otomatis dari sistem monitoring.")
+        
+        # Simulasi Daftar Alarm
+        alarms = [
+            {"jam": "14:20", "tipe": "⚠️ Anomali", "pesan": "Transaksi Cash didelete di Kasir 02"},
+            {"jam": "15:45", "tipe": "🚫 Fraud", "pesan": "Selisih Mutasi Bank vs POS > 5%"},
+            {"jam": "16:10", "tipe": "🔔 Info", "pesan": "Koneksi API BCA stabil"}
+        ]
+
+        for a in alarms:
+            with st.expander(f"{a['jam']} - {a['tipe']}"):
+                st.warning(a['pesan'])
+                if st.button(f"Minta Analisis Fraud: {a['jam']}"):
+                    with st.spinner("THE WATCHDOG sedang membedah kejadian..."):
+                        analisis = vguard_ai_engine("THE WATCHDOG", f"Analisis kejadian ini: {a['pesan']}")
+                        st.write(analisis)
 
 # --- TAB 7: PERFORMA BISNIS ---
     with t7:
