@@ -226,7 +226,7 @@ elif menu == "Admin Control Center":
                         st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
             
                         with t4:
-                        st.subheader("📑 Audit Dokumen Multi-Format")
+                            st.subheader("📑 Audit Dokumen Multi-Format")
                         st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
             
                             with t5:
