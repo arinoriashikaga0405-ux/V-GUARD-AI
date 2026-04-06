@@ -197,7 +197,7 @@ st.session_state.admin_logged_in = False # Ini juga hapus
 st.rerun() # Ini juga hapus
     
     # Contoh: Tampilkan data klien atau hasil audit AI
-    st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
+st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
                     
     # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
     t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
