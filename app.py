@@ -216,9 +216,9 @@ elif menu == "Admin Control Center":
                             with t3:
                                 st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
                                 c_a, c_b = st.columns(2)
-                                    with c_a:
-                                    st.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
-                                    with c_b:
+                                with c_a:
+                                st.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
+                                with c_b:
                                 st.metric("Dana Terselamatkan", "Rp 15.700.000", delta="AI Fraud Detector Aktif")
                         
                                 st.divider()
