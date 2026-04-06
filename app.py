@@ -183,10 +183,10 @@ elif menu == "Admin Control Center":
                                 
                 # --- V-GUARD ADMIN CONTROL CENTER: FINAL COMPLETE VERSION ---
 
-st.header("🎮 V-GUARD: Admin Control Center")
+            st.header("🎮 V-GUARD: Admin Control Center")
 
-# 1. Definisikan 9 Tab Utama
-t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            # 1. Definisikan 9 Tab Utama
+            t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
     "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
     "📊 Laporan", "🛡️ Keamanan", "🚨 Alarm", 
     "📈 Performa", "💾 Backup", "💎 V-ULTRA"
