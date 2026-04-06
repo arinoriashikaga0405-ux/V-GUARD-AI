@@ -209,7 +209,7 @@ elif menu == "Admin Control Center":
                             with st.container(border=True):
                                 st.markdown("### 🧠 Google Gemini AI")
                                 st.write("Analis utama yang memproses data audit kompleks.")
-                            with c2:
+                        with c2:
                                 with st.container(border=True):
                                     st.markdown("### 👁️ YOLO / Vision AI")
                                     st.write("'Mata' digital yang memantau pergerakan visual.")  
