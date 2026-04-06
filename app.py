@@ -180,7 +180,7 @@ elif menu == "Admin Control Center":
         # --- SEMUA KODE DASHBOARD BAPAK HARUS ADA DI SINI ---
         # --- PASTIKAN MENJOROK KE DALAM (SEJAJAR DENGAN st.success) ---
         
-        t1, t2, t3 = st.tabs(["Audit", "Security", "Analytics"])
+                t1, t2, t3 = st.tabs(["Audit", "Security", "Analytics"])
         with t1:
             st.write("Data Audit Bapak ada di sini...")
         # ... dan seterusnya
@@ -190,11 +190,15 @@ elif menu == "Admin Control Center":
     col_logout, col_empty = st.columns([1, 4])
     with col_logout:
         # Tambahkan key="logout_admin_dashboard" di dalam kurung
-        if st.button("Log Out", key="logout_admin_dashboard"):
-            st.session_state.admin_logged_in = False
-    st.rerun()
-    st.session_state.admin_logged_in = False
-    st.rerun() # Refresh agar kembali terkunci
+        with col_logout:
+            if st.button("Log Out", key="logout_admin_dashboard"):
+                st.session_state.admin_logged_in = False
+                st.rerun() # Refresh HANYA SAAT tombol diklik
+
+        # Setelah ini langsung lanjut ke divider dan subheader
+        st.divider() 
+        st.subheader("Data Ekosistem V-GUARD")
+    
     
     st.divider() # Garis pembatas tipis
 
