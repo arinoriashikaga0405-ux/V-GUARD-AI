@@ -162,10 +162,14 @@ elif menu == "Admin Control Center":
            st.session_state.admin_logged_in = True
            st.rerun() # Refresh HANYA SEKALI saat login berhasil
         else:
-            st.error("Invalid Key")
-            st.stop() # Mengunci halaman agar isi admin tidak bocor ke Visi & Misi
-
-        else: # Baris 169
+            if admin_input != "": # Hanya munculkan error jika sudah mengetik
+                st.error("Invalid Key")
+            st.stop() # Mengunci halaman agar isi admin tidak bocor
+    else: # INI BARIS 168 (Harus lurus dengan 'if not' di baris 154)
+        # Tombol Logout dan Dashboard Bapak dimulai di sini
+        if st.button("Log Out", key="logout_admin_final"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
         # Tampilan SETELAH LOGIN
     if st.button("Log Out"):
             st.session_state.admin_logged_in = False
