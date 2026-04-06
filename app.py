@@ -11,7 +11,18 @@ model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-
+# --- 1.1 FUNGSI PUSAT 10 AI AGENT V-GUARD ---
+def vguard_ai_engine(agent_name, task_instruction, context_data=""):
+    """Fungsi tunggal untuk memanggil 10 Agent V-GUARD"""
+    system_prompt = f"""
+    ROLE: Anda adalah {agent_name} dari V-GUARD AI Squad.
+    INSTRUKSI KHUSUS: {task_instruction}
+    KONTEKS DATA: {context_data}
+    STYLE: Profesional, tegas, fokus pada integritas & profit.
+    Hapus semua penyebutan pihak ketiga, gunakan identitas V-GUARD AI.
+    """
+    response = model_gemini.generate_content(system_prompt)
+    return response.text
 # CSS Premium Eksekutif
 st.markdown("""
     <style>
@@ -209,17 +220,39 @@ elif menu == "Admin Control Center":
             st.success(f"✅ Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
 
 # --- TAB 2: EKOSISTEM AI ---
-    with t2:
-        st.subheader("🌐 V-Guard Global AI Ecosystem")
-        c1, c2 = st.columns(2)
-    with c1:
-        with st.container(border=True):
-            st.markdown("### 🧠 Google Gemini AI")
-            st.write("Analis utama yang memproses data audit kompleks.")
-    with c2:
-        with st.container(border=True):
-            st.markdown("### 👁️ YOLO / Vision AI")
-            st.write("'Mata' digital yang memantau pergerakan visual.")
+   st.header("🛡️ V-GUARD ELITE AI COMMAND CENTER")
+        
+        # Grid Status Agent (3 Kolom)
+        c1, c2, c3 = st.columns(3)
+        agents = [
+            ("👁️ Visionary", "Active"), ("👂 Concierge", "Active"), 
+            ("👄 Growth Hacker", "Active"), ("🤝 Liaison", "Standby"),
+            ("🧠 Analyst", "Processing"), ("📈 Strategist", "Active"),
+            ("🐕 Watchdog", "Monitoring"), ("🛡️ Sentinel", "Secure"),
+            ("⚖️ Legalist", "Safe"), ("💰 Treasurer", "Calculating")
+        ]
+
+        for i, (name, status) in enumerate(agents):
+            col = [c1, c2, c3][i % 3]
+            with col:
+                st.info(f"**{name}**\n\nStatus: `{status}`")
+
+        st.divider()
+        
+        # Fitur Instruksi Langsung
+        st.subheader("💬 Instruksi Langsung ke Pasukan AI")
+        target_agent = st.selectbox("Pilih Agent:", [a[0] for a in agents], key="sel_agent_admin_final")
+        user_query = st.text_input(f"Apa instruksi Bapak untuk {target_agent}?")
+
+        if st.button("Kirim Perintah ke Pasukan", key="btn_send_ai_final"):
+            if user_query:
+                with st.spinner(f"{target_agent} sedang bekerja..."):
+                    # Memanggil fungsi vguard_ai_engine yang tadi kita buat di baris 14
+                    jawaban = vguard_ai_engine(target_agent, user_query)
+                    st.markdown(f"### 🚩 Laporan {target_agent}:")
+                    st.info(jawaban)
+            else:
+                st.warning("Silakan masukkan instruksi terlebih dahulu, Pak Erwin.")
 
 # --- TAB 3: PENGATURAN & API ---
     with t3:
