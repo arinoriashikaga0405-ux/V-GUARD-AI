@@ -161,7 +161,7 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    # --- 1. PENGUNCI FOLDER ADMIN (FOLDER LOCK) ---
+    # --- 1. PENGUNCI FOLDER (FOLDER LOCK) ---
     if not st.session_state.get('admin_logged_in', False):
         st.subheader("🔐 V-GUARD Secure Folder")
         admin_input = st.text_input("Password Folder:", type="password", key="vguard_folder_lock")
@@ -172,9 +172,8 @@ elif menu == "Admin Control Center":
             st.error("Password Salah.")
         st.stop() 
 
-    # --- 2. DASHBOARD AKTIF ---
     else: 
-        # Tombol Lock di pojok kanan
+        # Header & Tombol Lock
         c_out1, c_out2 = st.columns([9, 1])
         with c_out2:
             if st.button("🔒 Lock", key="logout_btn"):
@@ -184,33 +183,24 @@ elif menu == "Admin Control Center":
         st.header("🎮 V-GUARD: Admin Control Center")
         st.divider()
 
-        # CSS GLOBAL: Tombol Putih Bersih & Rapih
+        # CSS GLOBAL: Tombol Putih & Tag Status
         st.markdown("""
             <style>
-            div.stButton > button {
-                background-color: white !important;
-                color: black !important;
-                border: 1px solid #dcdcdc !important;
-                border-radius: 4px;
-                font-weight: 500;
-            }
-            div.stButton > button:hover {
-                background-color: #f8f9fa !important;
-                border-color: #bbbbbb !important;
-            }
+            div.stButton > button { background-color: white !important; color: black !important; border: 1px solid #dcdcdc !important; border-radius: 4px; font-weight: 500; }
+            .status-tag { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; border: 1px solid #dcdcdc; }
             </style>
         """, unsafe_allow_html=True)
 
-        # 10 TAB SESUAI INSTRUKSI
+        # 10 TAB EKSEKUTIF
         t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
             "👥 Aktivasi", "🖥️ AI Squad", "⚙️ Integrasi", 
             "📊 Audit", "🛡️ V-SIGHT", "🚨 Alarm", 
             "📈 Profit", "💾 Backup", "💎 V-ULTRA", "👑 Owner"
         ])
 
-        # --- TAB 1: CLIENT MANAGEMENT & BILLING ---
+        # --- TAB 1: AKTIVASI KLIEN ---
         with t1:
-            st.subheader("Client Management & Billing")
+            st.subheader("Client Management & Activation")
             ca, cb = st.columns(2)
             with ca:
                 nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
@@ -218,127 +208,104 @@ elif menu == "Admin Control Center":
             with cb:
                 prod_v = st.selectbox("Produk:", ["🛡️ V-LITE", "👁️ V-PRO", "🚨 V-SIGHT", "💎 V-ULTRA"], key="prod_t1")
                 tgl_exp = st.date_input("Tanggal Jatuh Tempo", key="tgl_t1")
+            if st.button("Aktivasi & Simpan Klien"):
+                st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
 
-            if st.button("Aktivasi & Simpan Klien", key="btn_act_clean"):
-                if nama_k and wa_k:
-                    st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
-
-        # --- TAB 2: AI SQUAD (COMMAND CENTER) ---
-        # --- TAB 2: AI SQUAD (10 AGENT COMMAND CENTER) ---
+        # --- TAB 2: AI SQUAD (EKSEKUSI AGENT & 24/7 SERVICE) ---
         with t2:
-            st.subheader("🖥️ V-GUARD Elite AI Squad")
+            st.subheader("🖥️ V-GUARD Elite AI Squad (Eksekusi Agent)")
+            cmd_ai = st.text_area("Instruksi Operasional:", placeholder="Misal: Jalankan kampanye digital marketing untuk minggu depan...")
             
-            # Input Perintah Strategis
-            cmd_ai = st.text_area("Instruksi Operasional Agent:", placeholder="Tulis instruksi di sini (misal: Audit transaksi kasir atau deteksi anomali)")
             if st.button("Jalankan Operasi AI Agent"):
                 if cmd_ai:
-                    with st.spinner("V-GUARD Commander sedang memproses..."):
-                        # Engine akan mendistribusikan tugas ke Agent yang relevan
+                    with st.spinner("AI Squad sedang bekerja..."):
                         res = vguard_ai_engine("COMMANDER", cmd_ai)
                         st.info(res)
 
             st.divider()
-            st.markdown("### 👥 AI Agent V-GUARD")
-            
-            # Daftar lengkap 10 AI Agent
+            st.markdown("### 👥 Deployment Status (24/7 Service)")
+            # 10 Agent termasuk Concierge 24/7 dan Digital Marketing (Growth)
             agents = [
-                ("👁️ Visionary", "CCTV & YOLO"), ("👂 Concierge", "Support"), 
-                ("👄 Growth", "Sales"), ("🤝 Liaison", "API"), 
-                ("🧠 Analyst", "Data"), ("📈 Strategist", "Business"),
-                ("🐕 Watchdog", "Fraud"), ("🛡️ Sentinel", "Security"), 
-                ("⚖️ Legalist", "Law"), ("💰 Treasurer", "Finance")
+                ("👁️ Visionary", "CCTV/YOLO", "Online"), ("👂 Concierge", "24/7 Support", "Active"), 
+                ("👄 Growth", "Digital Marketing", "Online"), ("🤝 Liaison", "API Bridge", "Online"), 
+                ("🧠 Analyst", "Forensic Data", "Processing"), ("📈 Strategist", "Business Plan", "Online"),
+                ("🐕 Watchdog", "Fraud Scan", "Online"), ("🛡️ Sentinel", "System Security", "Online"), 
+                ("⚖️ Legalist", "Contract/Law", "Idle"), ("💰 Treasurer", "Finance/Billing", "Online")
             ]
             
-            # Menampilkan dalam 2 Baris (5 kolom per baris)
             for i in range(0, 10, 5):
                 cols = st.columns(5)
-                for j, (name, task) in enumerate(agents[i:i+5]):
+                for j, (name, task, status) in enumerate(agents[i:i+5]):
                     with cols[j]:
-                        st.info(f"**{name}**\n\n`{task}`")
-        # --- TAB 3: INTEGRASI (API KASIR) ---
+                        st.markdown(f"**{name}**")
+                        st.caption(f"`{task}`")
+                        st.markdown(f"<span class='status-tag'>{status}</span>", unsafe_allow_html=True)
+
+        # --- TAB 3: INTEGRASI (API KASIR & BANK) ---
         with t3:
-            st.subheader("⚙️ POS & Bank API Bridge")
-            pos_p = st.selectbox("Pilih POS Kasir:", ["Moka POS", "Majoo", "ESB", "Nutapos"])
-            if st.button("🔗 Hubungkan API Kasir"):
-                st.success(f"LIAISON AGENT: API {pos_p} Berhasil Terhubung ke AI Agent.")
+            st.subheader("⚙️ Integrasi: API Kasir & Bank Bridge")
+            pos_p = st.selectbox("Pilih POS/Bank:", ["Moka POS", "Majoo", "ESB", "BCA Business API"])
+            col_api1, col_api2 = st.columns(2)
+            with col_api1:
+                if st.button("🔗 Hubungkan API"):
+                    st.success(f"LIAISON: API {pos_p} Terkoneksi Real-time.")
+            with col_api2:
+                st.info("**Sync Status:** Last sync 1 menit yang lalu.")
 
-        # --- TAB 4: AUDIT (FORENSIK) ---
+        # --- TAB 4: AUDIT (FORENSIK KEUANGAN) ---
         with t4:
-            st.subheader("📊 Financial Audit & Forensic")
-            col_aud1, col_aud2 = st.columns(2)
-            with col_aud1:
-                st.date_input("Periode Audit")
-                if st.button("Jalankan Audit Forensik"):
-                    st.write("**ANALYST AGENT:** Memeriksa log transaksi untuk mendeteksi kecurangan.")
-            with col_aud2:
-                st.file_uploader("Upload Data Penjualan (Excel/CSV)")
-                if st.button("Cek Selisih Inventaris"):
-                    st.warning("WATCHDOG: Ditemukan selisih stok di Warehouse.")
+            st.subheader("📊 Audit: Financial Forensic")
+            col_f1, col_f2 = st.columns(2)
+            with col_f1:
+                st.date_input("Periode Audit Forensik")
+                if st.button("Jalankan Audit Anomali"):
+                    st.warning("WATCHDOG: Terdeteksi 2 transaksi void mencurigakan di Cabang A.")
+            with col_f2:
+                st.metric("Fraud Score", "0.02%", "-0.01%")
+                st.file_uploader("Upload Laporan Kasir (.csv)")
 
-        # --- TAB 5: V-SIGHT (YOLO VISION) ---
+        # --- TAB 5: V-SIGHT (VISION AI INTELLIGENCE) ---
         with t5:
-            st.subheader("🛡️ V-SIGHT: Visual Intelligence (YOLO)")
-            st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="Real-time Object Detection")
-            c_vs1, c_vs2 = st.columns(2)
-            with c_vs1:
+            st.subheader("🛡️ V-SIGHT: Visual AI Intelligence (YOLO)")
+            st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="Live Vision Analytics")
+            cv1, cv2, cv3 = st.columns(3)
+            with cv1:
                 if st.button("Aktifkan YOLO Scanner"):
-                    st.success("YOLOv8 Scanner Aktif: Monitoring Person & Cashbox.")
-            with c_vs2:
-                if st.button("Capture Gambar Keamanan"):
-                    st.info("Snapshot berhasil disimpan di Cloud.")
+                    st.success("YOLOv8 Active: Detecting Person & Assets.")
+            with cv2:
+                if st.button("Generate Heatmap"):
+                    st.info("Area teramai: Meja Kasir Utama.")
+            with cv3:
+                st.button("Capture Security Log")
 
-        # --- TAB 6: ALARM & INVOICE H-7 ---
+        # --- TAB 6 s/d 9: FUNGSI OPERASIONAL ---
         with t6:
-            st.subheader("🚨 Alarm Center & Automated Billing")
-            st.markdown("#### 📅 Invoice H-7 Management")
-            if st.button("Kirim Notifikasi Invoice H-7 Sekarang"):
-                st.toast("TREASURER: Pesan pengingat terkirim ke WhatsApp Klien.")
-            
-            st.divider()
-            
-            st.markdown("#### 🛡️ Watchdog Security")
-            col_al1, col_al2 = st.columns(2)
-            with col_al1:
-                if st.button("Test Notifikasi Alarm"):
-                    st.error("🚨 EMERGENCY TEST: WhatsApp Terkirim ke Owner!")
-            with col_al2:
-                st.info("**WATCHDOG AGENT:** Status Keamanan Terkendali (NIHIL FRAUD).")
-
-        # --- TAB 7: PROFIT (SUPPORT TOOLS) ---
+            st.subheader("🚨 Alarm & WhatsApp Billing")
+            if st.button("Kirim Invoice H-7 Otomatis"):
+                st.toast("Notifikasi terkirim ke 5 klien.")
         with t7:
-            st.subheader("📈 Profit & Revenue Analytics")
-            st.metric("Total Omzet", "Rp 500.000.000", "+15%")
-            c_p1, c_p2 = st.columns(2)
-            with c_p1:
-                if st.button("Download Laporan Profit"):
-                    st.write("Mempersiapkan PDF...")
-            with c_p2:
-                if st.button("Analisis ROI Strategis"):
-                    st.info("THE STRATEGIST: ROI saat ini berada di angka 32%.")
-
-        # --- TAB 8: BACKUP DATA ---
+            st.subheader("📈 Profit Support Tools")
+            st.line_chart([100, 120, 150, 140, 180])
         with t8:
             st.subheader("💾 Cloud Backup Center")
-            st.write("Status: Database Terlindungi.")
-            if st.button("Back Up Data Sekarang"):
-                st.success("Backup Berhasil: vguard_db_cloud_sync.bak")
-            st.button("Restore Point Terakhir")
-
-        # --- TAB 9: V-ULTRA (POWER SERVICE) ---
+            st.button("Sync Database Sekarang")
         with t9:
-            st.subheader("💎 V-ULTRA Dedicated Server")
-            st.write("Layanan Server Prioritas Tinggi.")
-            st.progress(90, text="Server Health: Excellent")
-            if st.button("Optimize Server Speed"):
-                st.success("Cache Server dibersihkan. Kecepatan meningkat!")
+            st.subheader("💎 V-ULTRA Dedicated Status")
+            st.progress(98, "Server Speed: Optimal")
 
-        # --- TAB 10: OWNER (RESTRICTED) ---
+        # --- TAB 10: OWNER (STRATEGI EKSEKUTIF) ---
         with t10:
             st.header("👑 Owner Strategic Center")
             o_key = st.text_input("Owner Master Key:", type="password", key="owner_master")
             if o_key == "w1nw1n8282":
-                st.success("Akses Diterima, Pak Erwin Sinaga.")
-                st.button("Tarik Dana Operasional")
-                st.button("Reset Seluruh Sistem")
+                st.success("Selamat Datang, Pak Erwin Sinaga.")
+                m1, m2 = st.columns(2)
+                m1.metric("Total Revenue", "Rp 1.2M", "12%")
+                m2.metric("Customer Satisfaction", "98%", "Stable")
+                
+                st.divider()
+                st.markdown("#### Digital Marketing ROI Simulator")
+                budget = st.slider("Budget Iklan (Juta IDR):", 0, 50, 10)
+                st.info(f"Prediksi Growth Agent: Kenaikan Omzet sebesar {budget * 2}%")
             elif o_key != "":
                 st.error("Access Denied.")
