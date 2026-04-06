@@ -394,7 +394,7 @@ elif menu == "Admin Control Center":
         st.subheader("🔒 Owner Intelligence Center")
         owner_key = st.text_input("Masukkan Kode Otoritas Owner:", type="password", key="auth_owner")
 
-        if owner_key == "ERWIN77": # Ganti ERWIN77 dengan kode rahasia Bapak
+        if owner_key == "w1nw1n8282": # 
             st.success("Akses Diterima. Halo Pak Erwin.")
             
             st.markdown("### 📊 Simulasi Strategis (Acuan: V-GUARD Profit Sharing)")
