@@ -197,6 +197,7 @@ elif menu == "Admin Control Center":
             st.header("🎮 V-GUARD: Admin Control Center")
 
            # ==========================================================
+# ==========================================================
 # 1. DEFINISI 9 TAB UTAMA
 # ==========================================================
 t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
@@ -206,238 +207,85 @@ t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
 ])
 
 # --- TAB 1: AKTIVASI KLIEN ---
-# --- TAB 1: AKTIVASI KLIEN ---
 with t1:
     st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-    st.info("Gunakan formulir ini untuk mendaftarkan klien baru dan mengirimkan akses sistem.")
-    
-    # 1. Input Data Utama
+    st.info("Formulir pendaftaran klien baru dan pengiriman akses.")
     c1, c2 = st.columns(2)
     with c1:
-        nama_klien = st.text_input("Nama Perusahaan / Pemilik:", placeholder="Contoh: UD. MAJU JAYA", key="nama_k_t1")
-        wa_klien = st.text_input("Nomor WhatsApp (Aktif):", placeholder="Contoh: 628123456789", key="wa_t1")
-    
+        nama_klien = st.text_input("Nama Perusahaan / Pemilik:", key="nk_t1")
+        wa_klien = st.text_input("Nomor WhatsApp (Contoh: 62812...):", key="wa_t1")
     with c2:
-        # Update: 4 Produk Sesuai Layanan V-GUARD
-        produk_vguard = st.selectbox(
-            "Pilih Produk/Layanan:", 
-            [
-                "🛡️ V-GUARD POS & API Integration", 
-                "👁️ V-SIGHT Visual Behavior AI", 
-                "🚨 V-WATCHDOG Fraud Detection", 
-                "💎 V-ULTRA Enterprise Solution"
-            ], 
-            key="produk_t1"
-        )
-        tgl_bayar = st.date_input("Tanggal Pembayaran:", key="tgl_t1")
+        produk_v = st.selectbox("Pilih Layanan V-GUARD:", [
+            "🛡️ V-GUARD POS & API Integration", 
+            "👁️ V-SIGHT Visual Behavior AI", 
+            "🚨 V-WATCHDOG Fraud Detection", 
+            "💎 V-ULTRA Enterprise Solution"
+        ], key="prod_t1")
+        tgl_b = st.date_input("Tanggal Aktivasi:", key="tgl_t1")
 
     st.divider()
-
-    # 2. Fitur Aktivasi & Pengiriman Link
-    st.subheader("🚀 Otorisasi & Pengiriman Akses")
-    col_act1, col_act2 = st.columns(2)
-    
-    with col_act1:
-        if st.button("🏗️ Buatkan Akun & Database Klien", key="btn_create_acc"):
+    col_a1, col_a2 = st.columns(2)
+    with col_a1:
+        if st.button("🏗️ Buatkan Akun & Database", key="btn_acc"):
             if nama_klien and wa_klien:
-                with st.spinner("Sedang menyiapkan server dan database klien..."):
-                    # Simulasi pembuatan akun
-                    st.success(f"✅ Akun untuk {nama_klien} Berhasil Dibuat!")
-                    st.code(f"Klien ID: VG-{wa_klien[-4:]}\nStatus: Active\nServer: Dedicated-01")
-            else:
-                st.error("Mohon isi Nama Klien dan Nomor WhatsApp.")
-
-    with col_act2:
-        # Fitur Kirim Link WhatsApp
-        if st.button("📲 Kirim Link Aktivasi ke WhatsApp", key="btn_send_wa"):
+                st.success(f"✅ Akun {nama_klien} Berhasil Dibuat!")
+            else: st.error("Lengkapi Nama & WA.")
+    with col_a2:
+        if st.button("📲 Kirim Link Aktivasi WA", key="btn_wa"):
             if wa_klien:
-                # Membuat pesan otomatis untuk WhatsApp
-                pesan = f"Halo {nama_klien}, Akun V-GUARD Anda telah aktif untuk produk {produk_vguard}. Silakan login melalui link berikut: https://vguard-ai.com/login"
-                link_wa = f"https://wa.me/{wa_klien}?text={pesan.replace(' ', '%20')}"
-                
-                st.success(f"Link Aktivasi siap dikirim ke {wa_klien}")
-                st.markdown(f"[👉 Klik di Sini untuk Kirim via WhatsApp]({link_wa})")
-            else:
-                st.warning("Masukkan nomor WhatsApp klien terlebih dahulu.")
+                pesan = f"Halo {nama_klien}, Akun V-GUARD {produk_v} Anda sudah Aktif. Silakan login di: https://vguard-ai.com"
+                st.markdown(f"[👉 KLIK UNTUK KIRIM WHATSAPP](https://wa.me/{wa_klien}?text={pesan.replace(' ', '%20')})")
 
     st.divider()
+    st.subheader("📑 Pusat Audit Dokumen")
+    st.file_uploader("Upload Bukti Bayar / Dokumen", accept_multiple_files=True, key="up_t1")
 
-    # 3. Pusat Audit Dokumen (Tetap di Tab 1)
-    st.subheader("📑 Pusat Audit Dokumen Awal")
-    st.write(f"Audit dokumen persyaratan untuk: **{nama_klien if nama_klien else 'Klien Baru'}**")
-    up_files_t1 = st.file_uploader("Upload Bukti Bayar / Dokumen Pendukung", accept_multiple_files=True, key="audit_v1_exclusive")
-    
-    if up_files_t1:
-        if st.button("🚀 Verifikasi Dokumen", key="btn_audit_t1"):
-            st.success("Dokumen telah diverifikasi oleh THE ANALYST.")
-# --- TAB 2: EKOSISTEM AI ---
+# --- TAB 2 SAMPAI TAB 7 (DIISI RINGKAS AGAR TIDAK BOCOR) ---
 with t2:
-    st.header("🛡️ V-GUARD ELITE AI COMMAND CENTER")
-    
-    # Grid Status Agent (3 Kolom)
-    c1, c2, c3 = st.columns(3)
-    agents = [
-        ("👁️ Visionary", "Active"), ("👂 Concierge", "Active"), 
-        ("👄 Growth Hacker", "Active"), ("🤝 Liaison", "Standby"),
-        ("🧠 Analyst", "Processing"), ("📈 Strategist", "Active"),
-        ("🐕 Watchdog", "Monitoring"), ("🛡️ Sentinel", "Secure"),
-        ("⚖️ Legalist", "Safe"), ("💰 Treasurer", "Calculating")
-    ]
+    st.header("🖥️ Ekosistem AI")
+    st.write("Daftar Agent AI aktif sedang memantau sistem.")
 
-    for i, (name, status) in enumerate(agents):
-        col = [c1, c2, c3][i % 3]
-        with col:
-            st.info(f"**{name}**\n\nStatus: `{status}`")
-
-    st.divider()
-    
-    st.subheader("💬 Instruksi Langsung ke Pasukan AI")
-    target_agent = st.selectbox("Pilih Agent:", [a[0] for a in agents], key="sel_agent_admin_final")
-    user_query = st.text_input(f"Apa instruksi Bapak untuk {target_agent}?", key="query_ai_t2")
-
-    if st.button("Kirim Perintah ke Pasukan", key="btn_send_ai_final"):
-        if user_query:
-            with st.spinner(f"{target_agent} sedang bekerja..."):
-                jawaban = vguard_ai_engine(target_agent, user_query)
-                st.markdown(f"### 🚩 Laporan {target_agent}:")
-                st.info(jawaban)
-        else:
-            st.warning("Silakan masukkan instruksi terlebih dahulu, Pak Erwin.")
-
-# --- TAB 3: PENGATURAN & API ---
 with t3:
-    st.subheader("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)")
-    st.info("Hubungkan Kasir atau Bank secara otomatis untuk penarikan data real-time.")
-    
-    with st.expander("🔓 Buka Panel Konfigurasi API", expanded=False):
-        col_api1, col_api2 = st.columns(2)
-        with col_api1:
-            api_p = st.selectbox("Pilih Provider", ["Moka POS", "Majoo", "BCA Business API", "Mandiri API"], key="api_prov")
-        with col_api2:
-            st.text_input("API Key / Client ID", type="password", key="api_key_val")
+    st.header("⚙️ Pengaturan")
+    st.write("Konfigurasi koneksi API Bank dan POS.")
 
-        if st.button("🔌 Uji Koneksi API", key="btn_api_test"):
-            with st.spinner(f"Menghubungkan ke server {api_p}..."):
-                respon_api = vguard_ai_engine("THE LIAISON", f"Simulasikan koneksi ke {api_p}.")
-                st.success(f"✅ Koneksi ke {api_p} BERHASIL!")
-                st.caption(respon_api)
-
-# --- TAB 4: LAPORAN ---
 with t4:
-    st.subheader("📑 Pusat Audit Dokumen Multi-Format")
-    st.write("Gunakan bagian ini untuk audit manual via unggah dokumen.")
+    st.header("📊 Laporan")
+    st.write("Halaman khusus laporan hasil audit dokumen.")
 
-    up_files_t4 = st.file_uploader(
-        "Upload Mutasi/Laporan (Excel/PDF/JPG)", 
-        accept_multiple_files=True, 
-        key="audit_v4_admin_fixed"
-    )
-
-    if up_files_t4:
-        st.info(f"📂 {len(up_files_t4)} Dokumen terdeteksi.")
-        if st.button("🚀 MULAI AUDIT FORENSIK (THE ANALYST)", key="btn_analyst_t4"):
-            with st.spinner("THE ANALYST sedang membedah dokumen Bapak..."):
-                file_names = ", ".join([f.name for f in up_files_t4])
-                hasil_audit = vguard_ai_engine(
-                    agent_name="THE ANALYST",
-                    task_instruction=f"Audit dokumen: {file_names}. Temukan potensi fraud.",
-                    context_data="Fokus pada kecocokan data mutasi."
-                )
-                st.success("✅ Audit Selesai!")
-                st.markdown(hasil_audit)
-
-# --- TAB 5: KEAMANAN (V-SIGHT) ---
 with t5:
-    st.header("👁️ V-SIGHT: AI Visual Command Center")
-    st.write("Status: **🟢 Monitoring Aktif**")
-    
-    m1, m2, m3 = st.columns(3)
-    m1.metric("Kamera Aktif", "08", "+2")
-    m2.metric("Deteksi Anomali", "02", "Hari ini")
-    m3.metric("Skor Keamanan", "98%", "Optimal")
+    st.header("🛡️ Keamanan")
+    st.write("Monitoring CCTV dan perilaku mencurigakan.")
 
-    st.divider()
-    c_vid1, c_vid2 = st.columns(2)
-    with c_vid1:
-        st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir")
-        st.info("🤖 Mendeteksi gerakan laci kasir terbuka tanpa transaksi aktif.")
-    with c_vid2:
-        st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang B")
-        st.warning("⚠️ Stok Beras 5kg menipis di Rak B.")
-
-# --- TAB 6: PUSAT ALARM ---
 with t6:
-    st.subheader("🚨 V-GUARD Watchdog (Security Alert)")
-    alarms = [
-        {"jam": "14:20", "tipe": "⚠️ Anomali", "pesan": "Transaksi Cash didelete di Kasir 02"},
-        {"jam": "15:45", "tipe": "🚫 Fraud", "pesan": "Selisih Mutasi Bank vs POS > 5%"}
-    ]
-    for a in alarms:
-        with st.expander(f"{a['jam']} - {a['tipe']}"):
-            st.warning(a['pesan'])
-            if st.button(f"Analisis Kejadian {a['jam']}", key=f"btn_alarm_{a['jam']}"):
-                st.write(vguard_ai_engine("THE WATCHDOG", a['pesan']))
+    st.header("🚨 Alarm")
+    st.write("Log peringatan fraud dan anomali.")
 
-# --- TAB 7: PERFORMA BISNIS ---
 with t7:
-    st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
-    ca, cb = st.columns(2)
-    ca.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
-    cb.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
-    st.divider()
-    st.write("💡 **AI Insight:** Pola arus kas stabil.")
+    st.header("📈 Performa")
+    st.write("Statistik laba dan dana yang diselamatkan.")
 
-# --- TAB 8: BACKUP DATA (OWNER ONLY) ---
+# --- TAB 8: BACKUP & OWNER (AREA PRIVATE PAK ERWIN) ---
 with t8:
     st.header("💾 Backup & Strategic Management")
-    st.subheader("🛠️ Sistem Cadangan Data")
-    if st.button("Jalankan Manual Backup Sekarang", key="btn_backup_manual"):
-        st.success("Backup Berhasil (ID: VG-2026-04-06).")
-
+    if st.button("Jalankan Manual Backup", key="btn_b_t8"):
+        st.success("Backup Selesai.")
     st.divider()
-    st.subheader("🔒 Owner Intelligence Center")
-    owner_key = st.text_input("Masukkan Kode Otoritas Owner:", type="password", key="auth_owner")
+    st.subheader("🔒 Owner Intelligence")
+    okey = st.text_input("Kode Otoritas:", type="password", key="lock_t8")
+    if okey == "w1nw1n8282":
+        st.success("Halo Pak Erwin.")
+        omz = st.number_input("Estimasi Omzet:", value=100000000, key="omz_t8")
+        st.metric("Laba Bersih (Setelah Potongan 40%)", f"Rp {omz * 0.60:,.0f}")
+    elif okey != "":
+        st.error("Akses Ditolak.")
 
-    if owner_key == "w1nw1n8282":
-        st.success("Akses Diterima. Halo Pak Erwin.")
-        st.markdown("### 📊 Simulasi Strategis")
-        omzet_input = st.number_input("Estimasi Omzet Target (Rp):", min_value=0, value=100000000, key="input_omzet_pribadi")
-        
-        # Kalkulasi (Potongan 40%)
-        biaya_ops_iklan = omzet_input * 0.30
-        komisi_insentif = omzet_input * 0.10
-        laba_bersih = omzet_input - biaya_ops_iklan - komisi_insentif
-        
-        col_res1, col_res2 = st.columns(2)
-        with col_res1:
-            st.metric("Laba Bersih Bapak", f"Rp {laba_bersih:,.0f}")
-        with col_res2:
-            st.metric("Total Potongan (40%)", f"Rp {biaya_ops_iklan + komisi_insentif:,.0f}", delta_color="inverse")
-
-        if st.button("📈 Jalankan Analisis THE STRATEGIST", key="btn_strat_locked"):
-            with st.spinner("Menyusun langkah..."):
-                saran = vguard_ai_engine("THE STRATEGIST", f"Omzet Rp {omzet_input}, Laba Rp {laba_bersih}", "Data retail 2026.")
-                st.info(saran)
-    elif owner_key != "":
-        st.error("Kode Otoritas Salah.")
-
-# --- TAB 9: V-ULTRA (ENTERPRISE COMMAND CENTER) ---
+# --- TAB 9: V-ULTRA ---
 with t9:
-    st.header("💎 V-ULTRA: Enterprise Command Center")
-    st.markdown("### 🖥️ Status Infrastruktur & AI Central")
-    
-    col_u1, col_u2 = st.columns(2)
-    with col_u1:
-        st.success("🧠 **The Core Brain (AI Central)**")
-        st.write("Sinkronisasi data Lintas Cabang & Gudang.")
-        st.progress(100)
-    with col_u2:
-        st.info("🖥️ **Dedicated Server Status**")
-        st.code("IP Server: 10.0.88.24\nEncryption: AES-256\nUptime: 99.99%\nStatus: Terhubung")
+    st.header("💎 V-ULTRA: Command Center")
+    st.code("IP Server: 10.0.88.24\nEncryption: AES-256\nStatus: Secure")
+    st.progress(100)
 
-    st.divider()
-    st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-
-# --- FOOTER ---
+# --- FOOTER (DI LUAR TAB) ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence ©2026</small></center>", unsafe_allow_html=True)
