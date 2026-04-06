@@ -182,12 +182,12 @@ elif menu == "Admin Control Center":
             st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
                                 
                 # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
-                t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
                         "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
                         "📊 Laporan", "🛡️ Keamanan", "💾 Backup", 
                         "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
                     ])
-                with t1:
+            with t1:
                         st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
                         st.info("Daftarkan klien yang sudah melakukan pembayaran.")
                         with st.container(border=True):
