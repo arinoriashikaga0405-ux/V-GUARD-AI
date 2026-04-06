@@ -187,7 +187,7 @@ elif menu == "Admin Control Center":
                     "📊 Laporan", "🛡️ Keamanan", "💾 Backup", 
                     "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
                 ])
-        with t1:
+            with t1:
                     st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
                     st.info("Daftarkan klien yang sudah melakukan pembayaran.")
                     with st.container(border=True):
