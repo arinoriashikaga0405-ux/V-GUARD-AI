@@ -249,13 +249,21 @@ with t4:
 # --- TAB 5: KEAMANAN (V-SIGHT) ---
 with t5:
     st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+    st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
+    
     c_vid1, c_vid2 = st.columns(2)
     with c_vid1:
-        st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir")
-        st.info("🤖 **AI Behavior:** Mendeteksi laci kasir terbuka tanpa transaksi.")
+        # Link image ini adalah simulasi tampilan CCTV Kasir
+        st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", 
+                 caption="CCTV 01 - Area Kasir (AI Behavior Active)")
+        st.info("🤖 **AI Behavior:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi.")
+        
     with c_vid2:
-        st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Gudang")
-        st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B.")
+        # Link image ini adalah simulasi tampilan CCTV Gudang
+        st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", 
+                 caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
+        st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
+
 
 # --- TAB 6: PUSAT ALARM ---
 with t6:
