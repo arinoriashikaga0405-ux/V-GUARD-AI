@@ -192,9 +192,9 @@ elif menu == "Admin Control Center":
     
     
     st.divider() # Garis pembatas tipis
-
-    # --- DI SINI ADALAH ISI FOLDER ADMIN BAPAK ---
-    st.subheader("Data Ekosistem V-GUARD")
+st.rerun()
+st.session_state.admin_logged_in = False # Ini juga hapus
+st.rerun() # Ini juga hapus
     
     # Contoh: Tampilkan data klien atau hasil audit AI
     st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
