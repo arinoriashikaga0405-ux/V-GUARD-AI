@@ -214,16 +214,16 @@ elif menu == "Admin Control Center":
                                     st.markdown("### 👁️ YOLO / Vision AI")
                                     st.write("'Mata' digital yang memantau pergerakan visual.")  
                             with t3:
-                                    st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+                                st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
                                     c_a, c_b = st.columns(2)
                                     with c_a:
                                     st.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
                                     with c_b:
-                                    st.metric("Dana Terselamatkan", "Rp 15.700.000", delta="AI Fraud Detector Aktif")
+                                st.metric("Dana Terselamatkan", "Rp 15.700.000", delta="AI Fraud Detector Aktif")
                         
-                                    st.divider()
-                                    st.info("🔍 **Status Deteksi Dasar:** AI sedang memantau pembatalan transaksi (Void) dan anomali input kasir harian.")
-                                    st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
+                                st.divider()
+                                st.info("🔍 **Status Deteksi Dasar:** AI sedang memantau pembatalan transaksi (Void) dan anomali input kasir harian.")
+                                st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
             
                         with t4:
                             st.subheader("📑 Audit Dokumen Multi-Format")
