@@ -474,18 +474,65 @@ elif menu == "Admin Control Center":
             st.divider()
             st.caption("V-ULTRA: Global Command for Business Leaders.")
         # --- TAB 10: OWNER (STRATEGI EKSEKUTIF) ---
-        with t10:
-            st.header("👑 Owner Strategic Center")
-            o_key = st.text_input("Owner Master Key:", type="password", key="owner_master")
-            if o_key == "w1nw1n8282":
-                st.success("Selamat Datang, Pak Erwin Sinaga.")
-                m1, m2 = st.columns(2)
-                m1.metric("Total Revenue", "Rp 1.2M", "12%")
-                m2.metric("Customer Satisfaction", "98%", "Stable")
-                
-                st.divider()
-                st.markdown("#### Digital Marketing ROI Simulator")
-                budget = st.slider("Budget Iklan (Juta IDR):", 0, 50, 10)
-                st.info(f"Prediksi Growth Agent: Kenaikan Omzet sebesar {budget * 2}%")
-            elif o_key != "":
-                st.error("Access Denied.")
+        # --- OWNER STRATEGIC MENU: FINAL PROFIT SHARING ---
+        with st.expander("👑 OWNER COMMAND: Profit & Revenue Distribution", expanded=True):
+            st.header("Kalkulator Profit Sharing V-GUARD (Final)")
+            st.info("Porsi: Potongan 30% Operasional diambil dari Omset Kotor.")
+
+            # 1. Input Transaksi
+            c1, c2 = st.columns(2)
+            with c1:
+                produk = st.selectbox("Pilih Produk Terjual:", 
+                                    ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA (ENTERPRISE)"], key="fin_prod")
+                kategori = st.radio("Kategori Pendapatan:", 
+                                   ["Setup Fee (Pasang Baru)", "Monthly Recurring (Langganan)"], key="fin_cat")
+            with c2:
+                unit = st.number_input("Jumlah Unit/Cabang:", min_value=1, value=1, key="fin_unit")
+                reserve_pct = 0.30 # Fixed 30% sesuai instruksi Bapak
+
+            # 2. Data Referensi Harga & Porsi (Sesuai Excel)
+            if kategori == "Setup Fee (Pasang Baru)":
+                prices = {"V-LITE": 1500000, "V-PRO": 3000000, "V-SIGHT": 7500000, "V-ULTRA (ENTERPRISE)": 15000000}
+                net_val_pct = 0.50 # Net Profit 50% dari sisa
+                porsi_tim = {
+                    "CEO (Erwin Sinaga)": 0.25, "CSO (Christin)": 0.20, "CTO (Tech)": 0.15,
+                    "COO (Ops)": 0.10, "Manager": 0.10, "Digital Marketing": 0.10, "Admin": 0.10
+                }
+            else:
+                prices = {"V-LITE": 750000, "V-PRO": 1500000, "V-SIGHT": 3500000, "V-ULTRA (ENTERPRISE)": 10000000}
+                net_val_pct = 0.80 # Net Profit 80% dari sisa
+                porsi_tim = {
+                    "CEO (Erwin Sinaga)": 0.60, "CSO (Christin)": 0.05, "CTO (Tech)": 0.10,
+                    "COO (Ops)": 0.05, "Manager": 0.10, "Digital Marketing": 0.05, "Admin": 0.05
+                }
+
+            # 3. Kalkulasi Waterfall
+            gross_total = prices[produk] * unit
+            biaya_ops_30 = gross_total * reserve_pct
+            sisa_setelah_ops = gross_total - biaya_ops_30
+            profit_siap_bagi = sisa_setelah_ops * net_val_pct
+
+            # 4. Tampilan Ringkasan Keuangan
+            st.divider()
+            res_a, res_b, res_c = st.columns(3)
+            res_a.metric("OMSET KOTOR", f"Rp {gross_total:,.0f}")
+            res_b.metric("CADANGAN V-GUARD (30%)", f"Rp {biaya_ops_30:,.0f}", delta="-30%", delta_color="inverse")
+            res_c.metric("PROFIT SIAP BAGI TIM", f"Rp {profit_siap_bagi:,.0f}")
+
+            # 5. Tabel Distribusi Tim
+            st.subheader("📋 Rincian Penerimaan Tim")
+            data_final = []
+            for role, pct in porsi_tim.items():
+                nominal = profit_siap_bagi * pct
+                data_final.append({
+                    "Posisi": role,
+                    "Porsi": f"{pct*100:.0f}%",
+                    "Penerimaan Bersih": f"Rp {nominal:,.0f}"
+                })
+            
+            st.table(data_final)
+
+            # Tombol Eksekusi
+            if st.button("✅ Konfirmasi & Masuk Buku Kas", key="fin_save"):
+                st.balloons()
+                st.success(f"Berhasil! Dana Cadangan Rp {biaya_ops_30:,.0f} telah diamankan ke Kas V-GUARD.")
