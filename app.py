@@ -213,6 +213,23 @@ elif menu == "Admin Control Center":
                     msg = f"Halo {nama_k}, Akun V-GUARD {prod_v} Anda AKTIF. Login: https://vguard-ai.com"
                     st.success(f"✅ Akun {nama_k} Aktif!")
                     st.markdown(f"[👉 KIRIM WA](https://wa.me/{wa_k}?text={msg.replace(' ', '%20')})")
+                    # CSS untuk memaksa tombol menjadi putih, tulisan hitam, dan tanpa roket
+st.markdown("""
+    <style>
+    div.stButton > button:first-child {
+        background-color: white !important;
+        color: black !important;
+        border: 1px solid #dcdcdc;
+        border-radius: 5px;
+    }
+    /* Menghilangkan efek hover/saat diklik agar tetap putih */
+    div.stButton > button:hover {
+        background-color: #f0f0f0 !important;
+        color: black !important;
+        border: 1px solid #cccccc;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
         # --- TAB 2: 10 AI AGENT SQUAD ---
         with t2:
