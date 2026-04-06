@@ -226,32 +226,32 @@ elif menu == "Admin Control Center":
                         st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
             
                         with t4:
-                            st.subheader("📑 Audit Dokumen Multi-Format")
+                        st.subheader("📑 Audit Dokumen Multi-Format")
                         st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
             
-                        with t5:
-                            st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-                        st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
-                        
-                        # Baris Atas: Live Monitor & Behavior Detection
-                        c_vid1, c_vid2 = st.columns(2)
-                        with c_vid1:
-                            st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir (AI Behavior Active)")
-                            st.info("🤖 **AI Behavior:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi.")
-                        with c_vid2:
-                            st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
-                            st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
-            
-                        st.divider()
-            
-                        # Baris Bawah: Hasil Audit Visual & Fraud Alarm
-                        st.write("🚨 **Fraud Alarm History (Visual Proof)**")
-                        col_f1, col_f2 = st.columns([2, 1])
-                        with col_f1:
-                            st.error("🚨 **ALARM: Visual Mismatch Terdeteksi (14:20 WIB)**")
-                            st.write("- **Data Kasir:** Kopi Hitam (Rp 20.000)")
-                            st.write("- **Visual AI:** Kopi Susu Gula Aren (Rp 35.000)")
-                            st.caption("Status: Menunggu konfirmasi owner untuk tindakan disiplin.")
+                            with t5:
+                                st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+                            st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
+                            
+                            # Baris Atas: Live Monitor & Behavior Detection
+                            c_vid1, c_vid2 = st.columns(2)
+                            with c_vid1:
+                                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir (AI Behavior Active)")
+                                st.info("🤖 **AI Behavior:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi.")
+                            with c_vid2:
+                                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
+                                st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
+                
+                            st.divider()
+                
+                            # Baris Bawah: Hasil Audit Visual & Fraud Alarm
+                            st.write("🚨 **Fraud Alarm History (Visual Proof)**")
+                            col_f1, col_f2 = st.columns([2, 1])
+                            with col_f1:
+                                st.error("🚨 **ALARM: Visual Mismatch Terdeteksi (14:20 WIB)**")
+                                st.write("- **Data Kasir:** Kopi Hitam (Rp 20.000)")
+                                st.write("- **Visual AI:** Kopi Susu Gula Aren (Rp 35.000)")
+                                st.caption("Status: Menunggu konfirmasi owner untuk tindakan disiplin.")
                         with col_f2:
                             st.metric("Integrity Score Today", "88%", delta="-12% vs Kemarin", delta_color="inverse")
                             if st.button("Lihat Cuplikan Video Kejadian"):
