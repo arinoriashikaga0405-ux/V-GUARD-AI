@@ -170,48 +170,23 @@ elif menu == "Admin Control Center":
         if st.button("Log Out", key="logout_admin_final"):
             st.session_state.admin_logged_in = False
             st.rerun()
-        # Tampilan SETELAH LOGIN
-            if st.button("Log Out"):
-                st.session_state.admin_logged_in = False
-                st.rerun()
-        # ... dan seterusnya
-      
-    # Tampilan SESUDAH LOGIN (Menggantikan input password di atas)
-    # Gunakan kolom agar tombol Log Out terlihat rapi
-    col_logout, col_empty = st.columns([1, 4])
-    with col_logout:
-        # Tambahkan key="logout_admin_dashboard" di dalam kurung
-        with col_logout:
-            if st.button("Log Out", key="logout_admin_dashboard"):
-                st.session_state.admin_logged_in = False
-                st.rerun() # Refresh HANYA SAAT tombol diklik
-
+        
         # Setelah ini langsung lanjut ke divider dan subheader
         st.divider() 
         st.subheader("Data Ekosistem V-GUARD")
     
     
     st.divider() # Garis pembatas tipis
-st.rerun()
-st.session_state.admin_logged_in = False # Ini juga hapus
-st.rerun() # Ini juga hapus
-    
+
     # Contoh: Tampilkan data klien atau hasil audit AI
 st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
                     
     # Mendefinisikan 8 Tab agar tidak error saat dipanggil di bawah
-    t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-        "👤 Aktivasi Klien",
-        "🖥️ Ekosistem AI",
-        "⚙️ Pengaturan",
-        "📊 Laporan",
-        "🛡️ Keamanan",
-        "💾 Backup",
-        "🌐 Jaringan",
-        "📈 Performa",
-        "💎 V-ULTRA"
+t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
+            "📊 Laporan", "🛡️ Keamanan", "💾 Backup", 
+            "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
         ])
-
     with t1:
             st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
             st.info("Daftarkan klien yang sudah melakukan pembayaran.")
