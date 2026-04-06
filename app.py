@@ -209,9 +209,9 @@ elif menu == "Admin Control Center":
             st.success(f"✅ Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
 
 # --- TAB 2: EKOSISTEM AI ---
-with t2:
-    st.subheader("🌐 V-Guard Global AI Ecosystem")
-    c1, c2 = st.columns(2)
+    with t2:
+        st.subheader("🌐 V-Guard Global AI Ecosystem")
+        c1, c2 = st.columns(2)
     with c1:
         with st.container(border=True):
             st.markdown("### 🧠 Google Gemini AI")
