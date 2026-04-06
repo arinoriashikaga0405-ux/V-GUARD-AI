@@ -258,7 +258,7 @@ elif menu == "Admin Control Center":
                     st.toast("Semua file tersimpan di server V-GUARD.")
         # --- TAB 2: AI SQUAD (EKSEKUSI AGENT & 24/7 SERVICE) ---
         with t2:
-            st.subheader("🖥️ V-GUARD Elite AI Squad (Eksekusi Agent)")
+            st.subheader("🖥️ AI AGENT V-GUARD")
             cmd_ai = st.text_area("Instruksi Operasional:", placeholder="Misal: Jalankan kampanye digital marketing untuk minggu depan...")
             
             if st.button("Jalankan Operasi AI Agent"):
@@ -268,7 +268,7 @@ elif menu == "Admin Control Center":
                         st.info(res)
 
             st.divider()
-            st.markdown("### 👥 Deployment Status (24/7 Service)")
+            st.markdown("### 👥 AI AGENT V-GUARD (24/7 Service)")
             # 10 Agent termasuk Concierge 24/7 dan Digital Marketing (Growth)
             agents = [
                 ("👁️ Visionary", "CCTV/YOLO", "Online"), ("👂 Concierge", "24/7 Support", "Active"), 
