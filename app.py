@@ -198,8 +198,26 @@ elif menu == "Admin Control Center":
         ])
 
         # --- TAB 1: AKTIVASI KLIEN ---
+        # --- TAB 1: AKTIVASI KLIEN ---
         with t1:
             st.subheader("📝 Registrasi & Aktivasi Klien")
+            
+            # 1. LETAKKAN CSS DI SINI (Di dalam 'with t1')
+            st.markdown("""
+                <style>
+                div.stButton > button:first-child {
+                    background-color: white !important;
+                    color: black !important;
+                    border: 1px solid #dcdcdc;
+                    border-radius: 5px;
+                }
+                div.stButton > button:hover {
+                    background-color: #f0f0f0 !important;
+                    color: black !important;
+                }
+                </style>
+            """, unsafe_allow_html=True)
+
             ca, cb = st.columns(2)
             with ca:
                 nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
@@ -208,28 +226,12 @@ elif menu == "Admin Control Center":
                 prod_v = st.selectbox("Pilih Produk:", ["🛡️ V-LITE", "👁️ V-PRO", "🚨 V-SIGHT", "💎 V-ULTRA"], key="prod_t1")
                 st.date_input("Tanggal Aktivasi", key="tgl_t1")
 
-            if st.button("🚀 Aktivasi & Kirim Akses", key="btn_act"):
+            # 2. HAPUS EMOJI ROKET DI SINI
+            if st.button("Aktivasi & Kirim Akses", key="btn_act"):
                 if nama_k and wa_k:
-                    msg = f"Halo {nama_k}, Akun V-GUARD {prod_v} Anda AKTIF. Login: https://vguard-ai.com"
+                    msg = f"Halo {nama_k}, Akun V-GUARD {prod_v} Anda AKTIF."
                     st.success(f"✅ Akun {nama_k} Aktif!")
                     st.markdown(f"[👉 KIRIM WA](https://wa.me/{wa_k}?text={msg.replace(' ', '%20')})")
-                    # CSS untuk memaksa tombol menjadi putih, tulisan hitam, dan tanpa roket
-st.markdown("""
-    <style>
-    div.stButton > button:first-child {
-        background-color: white !important;
-        color: black !important;
-        border: 1px solid #dcdcdc;
-        border-radius: 5px;
-    }
-    /* Menghilangkan efek hover/saat diklik agar tetap putih */
-    div.stButton > button:hover {
-        background-color: #f0f0f0 !important;
-        color: black !important;
-        border: 1px solid #cccccc;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
         # --- TAB 2: 10 AI AGENT SQUAD ---
         with t2:
