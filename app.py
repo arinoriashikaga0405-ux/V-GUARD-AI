@@ -161,89 +161,100 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    #elif menu == "Admin Control Center":
-    # 1. CEK LOGIN ADMIN
-    if not st.session_state.get('admin_logged_in', False):
-        st.header("🔐 Admin Control Center")
-        admin_input = st.text_input("Password Otoritas", type="password", key="vguard_admin_final")
-        
-        if admin_input == "w1nbju8282": 
-           st.session_state.admin_logged_in = True
-           st.rerun()
-        elif admin_input != "":
-           st.error("Invalid Key")
-        st.stop() 
-
-    # 2. JIKA SUDAH LOGIN, TAMPILKAN DASHBOARD
     else:
-        c_out1, c_out2 = st.columns([8, 2])
+        # Tombol Logout di pojok kanan atas
+        c_out1, c_out2 = st.columns([9, 1])
         with c_out2:
-            if st.button("🚪 Log Out", key="logout_btn"):
+            if st.button("🚪 Out", key="logout_btn"):
                 st.session_state.admin_logged_in = False
                 st.rerun()
         
         st.header("🎮 V-GUARD: Admin Control Center")
         st.divider()
 
-        # --- DEFINISI TAB ---
+        # --- DEFINISI 9 TAB UTAMA ---
         t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-            "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
-            "📊 Laporan", "🛡️ Keamanan", "🚨 Alarm", 
-            "📈 Performa", "💾 Backup", "💎 V-ULTRA"
+            "👥 Aktivasi", "🖥️ AI Squad", "⚙️ Integrasi", 
+            "📊 Audit", "🛡️ V-SIGHT", "🚨 Alarm", 
+            "📈 Profit", "💾 Owner", "💎 V-ULTRA"
         ])
 
         # --- TAB 1: AKTIVASI KLIEN ---
         with t1:
-            st.subheader("📝 Registrasi & Aktivasi Klien (Paid)")
+            st.subheader("📝 Registrasi & Aktivasi Klien")
             ca, cb = st.columns(2)
             with ca:
                 nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
-                wa_k = st.text_input("Nomor WhatsApp (62...):", key="wa_t1")
+                wa_k = st.text_input("WhatsApp (62...):", key="wa_t1")
             with cb:
-                prod_v = st.selectbox("Pilih Produk:", [
-                    "🛡️ V-LITE (Mikro)", "👁️ V-PRO (Advanced)", 
-                    "🚨 V-SIGHT (Visual AI)", "💎 V-ENTERPRISE"
-                ], key="prod_t1")
+                prod_v = st.selectbox("Pilih Produk:", ["🛡️ V-LITE", "👁️ V-PRO", "🚨 V-SIGHT", "💎 V-ULTRA"], key="prod_t1")
                 st.date_input("Tanggal Aktivasi", key="tgl_t1")
 
-            if st.button("🚀 Buat Akun & Kirim Link WA", key="btn_act"):
+            if st.button("🚀 Aktivasi & Kirim Akses", key="btn_act"):
                 if nama_k and wa_k:
                     msg = f"Halo {nama_k}, Akun V-GUARD {prod_v} Anda AKTIF. Login: https://vguard-ai.com"
-                    link = f"https://wa.me/{wa_k}?text={msg.replace(' ', '%20')}"
-                    st.success(f"✅ Akun {nama_k} Siap!")
-                    st.markdown(f"[👉 KLIK UNTUK KIRIM WHATSAPP]({link})")
-                else: st.error("Lengkapi data!")
+                    st.success(f"✅ Akun {nama_k} Aktif!")
+                    st.markdown(f"[👉 KIRIM WA](https://wa.me/{wa_k}?text={msg.replace(' ', '%20')})")
 
-        # --- TAB 2: EKOSISTEM AI ---
+        # --- TAB 2: 10 AI AGENT SQUAD ---
         with t2:
-            st.subheader("🖥️ V-GUARD Elite AI Agents")
-            c1, c2, c3 = st.columns(3)
-            agents = [("👁️ Visionary", "Active"), ("🧠 Analyst", "Active"), ("🐕 Watchdog", "Monitoring")]
-            for i, (n, s) in enumerate(agents):
-                with [c1, c2, c3][i]: st.info(f"**{n}**\n\nStatus: `{s}`")
+            st.subheader("🖥️ V-GUARD Elite Squad (10 Agents Active)")
+            agents = [
+                ("👁️ Visionary", "CCTV Monitoring"), ("👂 Concierge", "Client Support"),
+                ("👄 Growth", "Revenue Boost"), ("🤝 Liaison", "API & Connections"),
+                ("🧠 Analyst", "Data Forensic"), ("📈 Strategist", "Business Plan"),
+                ("🐕 Watchdog", "Fraud Detection"), ("🛡️ Sentinel", "System Security"),
+                ("⚖️ Legalist", "Compliance"), ("💰 Treasurer", "Cashflow Audit")
+            ]
             
-            q_ai = st.text_input("Instruksi ke AI:", key="q_admin")
-            if st.button("Kirim Perintah", key="btn_q"):
-                st.write(vguard_ai_engine("COMMANDER", q_ai))
+            # Grid 5 Kolom agar rapi
+            cols = st.columns(5)
+            for i, (n, task) in enumerate(agents):
+                with cols[i % 5]:
+                    st.info(f"**{n}**\n\n`{task}`")
+            
+            st.divider()
+            q_ai = st.text_input("Command Center (Instruksi ke Semua Agent):", key="q_admin")
+            if st.button("Jalankan Operasi AI", key="btn_q"):
+                st.write(vguard_ai_engine("V-GUARD COMMANDER", q_ai))
 
-        # --- TAB 8: BACKUP & OWNER (KODE: w1nw1n8282) ---
+        # --- TAB 3: INTEGRASI API (THE LIAISON) ---
+        with t3:
+            st.subheader("⚙️ API Bridge: Bank & POS Integration")
+            col_api1, col_api2 = st.columns(2)
+            with col_api1:
+                provider = st.selectbox("Pilih Koneksi:", ["BCA Business", "Moka POS", "Majoo", "Mandiri API"])
+            with col_api2:
+                st.text_input("API Key", type="password", value="HIDDEN_KEY_12345")
+            
+            if st.button("🔌 Hubungkan Sekarang", key="btn_api"):
+                st.success(f"**THE LIAISON:** Berhasil menghubungkan database {provider} ke V-GUARD.")
+
+        # --- TAB 5: V-SIGHT (THE VISIONARY) ---
+        with t5:
+            st.subheader("👁️ V-SIGHT: Visual Behavior AI")
+            c_vid1, c_vid2 = st.columns(2)
+            with c_vid1:
+                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="LIVE: Kasir Utama")
+            with c_vid2:
+                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="LIVE: Gudang A")
+            
+            st.warning("**THE VISIONARY:** Mendeteksi pembukaan laci kasir tanpa input transaksi pada 14:05.")
+
+        # --- TAB 8: OWNER (KODE: w1nw1n8282) ---
         with t8:
-            st.header("💾 Owner Intelligence Center")
-            o_key = st.text_input("Kode Otoritas Owner:", type="password", key="okey_t8")
+            st.header("💾 Owner Strategic Center")
+            o_key = st.text_input("Kode Otoritas:", type="password", key="okey_t8")
             if o_key == "w1nw1n8282":
-                st.success(f"Selamat Datang kembali, Pak Erwin Sinaga.")
-                omz = st.number_input("Estimasi Omzet:", value=100000000)
-                st.metric("Laba Bersih (Net Profit 60%)", f"Rp {omz * 0.60:,.0f}")
+                st.success("Halo Pak Erwin Sinaga.")
+                omz = st.number_input("Input Omzet:", value=100000000)
+                st.metric("Profit Bersih Bapak (Net 60%)", f"Rp {omz * 0.60:,.0f}")
+                if st.button("📊 Analisis THE STRATEGIST"):
+                    st.info(vguard_ai_engine("THE STRATEGIST", f"Omzet {omz}, berikan strategi profit."))
             elif o_key != "": st.error("Akses Ditolak.")
 
-        # --- TAB LAINNYA (Placeholder agar tidak error) ---
-        with t3: st.write("Menu Pengaturan API")
-        with t4: st.write("Menu Laporan Audit")
-        with t5: st.write("Menu Keamanan Visual")
-        with t6: st.write("Menu Log Alarm")
-        with t7: st.write("Menu Statistik Performa")
-        with t9: st.write("Menu V-ULTRA Enterprise")
-
-# --- FOOTER (Di luar semua kondisi) ---
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence ©2026</small></center>", unsafe_allow_html=True)
+        # --- TAB LAINNYA (PLACEHOLDER) ---
+        with t4: st.write("Pusat Audit Dokumen Aktif.")
+        with t6: st.write("🚨 Alarm: Tidak ada anomali kritis.")
+        with t7: st.write("📈 Performa: Efisiensi meningkat 12%.")
+        with t9: st.write("💎 V-ULTRA: Dedicated Server Active.")
