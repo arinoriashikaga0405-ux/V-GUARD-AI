@@ -272,7 +272,7 @@ elif menu == "Admin Control Center":
             st.divider()
 
             # 2. LIVE CHAT MONITORING & OVERRIDE
-            st.markdown("### 👁️ Live Concierge Monitoring (24/7)")
+            st.markdown("### 👁️ Live Chat (24/7)")
             
             # Frame Percakapan
             chat_container = st.container(border=True)
@@ -297,7 +297,7 @@ elif menu == "Admin Control Center":
             st.divider()
             
             # 3. Status Agent (Visual Grid)
-            st.markdown("### 👥 Squad Deployment Status")
+            st.markdown("### 👥 Squad AI AGENT ")
             agents = [
                 ("👁️ Visionary", "Online"), ("👂 Concierge", "Active"), 
                 ("👄 Growth", "Online"), ("🤝 Liaison", "Online"), 
