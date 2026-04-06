@@ -257,35 +257,60 @@ elif menu == "Admin Control Center":
                 if st.button("Simpan & Sinkronisasi Dokumen", key="btn_save_docs"):
                     st.toast("Semua file tersimpan di server V-GUARD.")
         # --- TAB 2: AI SQUAD (EKSEKUSI AGENT & 24/7 SERVICE) ---
+        # --- TAB 2: AI SQUAD (COMMAND & OVERRIDE) ---
         with t2:
-            st.subheader("🖥️ AI AGENT V-GUARD")
-            cmd_ai = st.text_area("Instruksi Operasional:", placeholder="Misal: Jalankan kampanye digital marketing untuk minggu depan...")
+            st.subheader("🖥️ V-GUARD Elite AI Squad")
             
-            if st.button("Jalankan Operasi AI Agent"):
+            # 1. Command Input
+            cmd_ai = st.text_area("Instruksi Strategis Admin:", placeholder="Contoh: Analyst, audit transaksi Cabang Medan jam 10 pagi tadi...")
+            if st.button("Kirim Perintah ke Squad"):
                 if cmd_ai:
-                    with st.spinner("AI Squad sedang bekerja..."):
+                    with st.spinner("Executing Command..."):
                         res = vguard_ai_engine("COMMANDER", cmd_ai)
                         st.info(res)
 
             st.divider()
-            st.markdown("### 👥 AI AGENT V-GUARD (24/7 Service)")
-            # 10 Agent termasuk Concierge 24/7 dan Digital Marketing (Growth)
+
+            # 2. LIVE CHAT MONITORING & OVERRIDE
+            st.markdown("### 👁️ Live Concierge Monitoring (24/7)")
+            
+            # Frame Percakapan
+            chat_container = st.container(border=True)
+            with chat_container:
+                st.caption("🔴 LIVE: Interaksi Klien #8829 (Cabang Surabaya)")
+                st.chat_message("user").write("Halo, sistem V-SIGHT saya tidak muncul notifikasi di HP.")
+                st.chat_message("assistant").write("Mohon maaf atas ketidaknyamanannya. Saya Concierge Agent. Sedang memeriksa sinkronisasi perangkat Anda...")
+            
+            # Fitur Override
+            st.markdown("---")
+            st.write("**🕹️ Manual Override Mode**")
+            msg_override = st.text_input("Balas sebagai Admin (Pesan ini akan memotong AI):", placeholder="Ketik pesan Bapak di sini...")
+            
+            c_ov1, c_ov2 = st.columns([1, 4])
+            with c_ov1:
+                if st.button("📤 Kirim Pesan"):
+                    if msg_override:
+                        st.success("Pesan Terkirim. AI dinonaktifkan sementara untuk sesi ini.")
+            with c_ov2:
+                st.info("💡 Klik 'Kirim' untuk mengambil alih percakapan dari AI.")
+
+            st.divider()
+            
+            # 3. Status Agent (Visual Grid)
+            st.markdown("### 👥 Squad Deployment Status")
             agents = [
-                ("👁️ Visionary", "CCTV/YOLO", "Online"), ("👂 Concierge", "24/7 Support", "Active"), 
-                ("👄 Growth", "Digital Marketing", "Online"), ("🤝 Liaison", "API Bridge", "Online"), 
-                ("🧠 Analyst", "Forensic Data", "Processing"), ("📈 Strategist", "Business Plan", "Online"),
-                ("🐕 Watchdog", "Fraud Scan", "Online"), ("🛡️ Sentinel", "System Security", "Online"), 
-                ("⚖️ Legalist", "Contract/Law", "Idle"), ("💰 Treasurer", "Finance/Billing", "Online")
+                ("👁️ Visionary", "Online"), ("👂 Concierge", "Active"), 
+                ("👄 Growth", "Online"), ("🤝 Liaison", "Online"), 
+                ("🧠 Analyst", "Processing"), ("📈 Strategist", "Online"),
+                ("🐕 Watchdog", "Online"), ("🛡️ Sentinel", "Online"), 
+                ("⚖️ Legalist", "Idle"), ("💰 Treasurer", "Online")
             ]
             
             for i in range(0, 10, 5):
                 cols = st.columns(5)
-                for j, (name, task, status) in enumerate(agents[i:i+5]):
+                for j, (name, status) in enumerate(agents[i:i+5]):
                     with cols[j]:
-                        st.markdown(f"**{name}**")
-                        st.caption(f"`{task}`")
-                        st.markdown(f"<span class='status-tag'>{status}</span>", unsafe_allow_html=True)
-
+                        st.metric(name, status)
         # --- TAB 3: INTEGRASI (API KASIR & BANK) ---
         with t3:
             st.subheader("⚙️ Integrasi: API Kasir & Bank Bridge")
