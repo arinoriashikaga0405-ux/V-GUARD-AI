@@ -162,8 +162,8 @@ elif menu == "Admin Control Center":
            st.session_state.admin_logged_in = True
            st.rerun() # Refresh HANYA SEKALI saat login berhasil
         else:
-        
-        st.stop() # Mengunci halaman agar isi admin tidak bocor ke Visi & Misi
+            st.error("Invalid Key")
+            st.stop() # Mengunci halaman agar isi admin tidak bocor ke Visi & Misi
 
         else: # Baris 169
         # Tampilan SETELAH LOGIN
