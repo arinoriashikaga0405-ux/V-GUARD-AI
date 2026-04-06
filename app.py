@@ -289,8 +289,7 @@ elif menu == "Admin Control Center":
         with t8:
             st.subheader("💾 Cloud Backup Center")
             st.button("Sync Database Sekarang")
-        with t9:
-            # --- TAB 9: V-ULTRA (NATIONAL COMMAND CENTER & ENTERPRISE SOLUTION) ---
+       # --- TAB 9: V-ULTRA (NATIONAL COMMAND CENTER & ENTERPRISE SOLUTION) ---
         with t9:
             st.header("💎 V-ULTRA: The Ultimate Enterprise Solution")
             st.markdown("""
@@ -306,7 +305,7 @@ elif menu == "Admin Control Center":
 
             st.divider()
 
-            # 2. FITUR ALARM & INVOICE H-7 NASIONAL (NEW)
+            # 2. FITUR ALARM & INVOICE H-7 NASIONAL
             st.subheader("🚨 Enterprise Alarm & Automated Billing")
             col_inv1, col_inv2 = st.columns(2)
             
@@ -358,8 +357,7 @@ elif menu == "Admin Control Center":
                     st.info("**STRATEGIST AGENT:** Rekomendasi ekspansi ke Jawa Tengah berdasarkan tren penjualan nasional.")
 
             st.divider()
-            st.caption("V-ULTRA: Global Command for Business Leaders."))
-
+            st.caption("V-ULTRA: Global Command for Business Leaders.")
         # --- TAB 10: OWNER (STRATEGI EKSEKUTIF) ---
         with t10:
             st.header("👑 Owner Strategic Center")
