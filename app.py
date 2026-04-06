@@ -290,8 +290,75 @@ elif menu == "Admin Control Center":
             st.subheader("💾 Cloud Backup Center")
             st.button("Sync Database Sekarang")
         with t9:
-            st.subheader("💎 V-ULTRA Dedicated Status")
-            st.progress(98, "Server Speed: Optimal")
+            # --- TAB 9: V-ULTRA (NATIONAL COMMAND CENTER & ENTERPRISE SOLUTION) ---
+        with t9:
+            st.header("💎 V-ULTRA: The Ultimate Enterprise Solution")
+            st.markdown("""
+                *V-ULTRA: Kontrol penuh Multi-Cabang, Automated Billing Nasional, & Global Security.*
+            """)
+            
+            # 1. Dashboard Ringkasan Nasional
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("Total Cabang", "150+", "Nasional")
+            m2.metric("Uptime Server", "100%", "Dedicated")
+            m3.metric("Security Alerts", "0", "Safe")
+            m4.metric("Data Sync Speed", "0.2s", "Real-time")
+
+            st.divider()
+
+            # 2. FITUR ALARM & INVOICE H-7 NASIONAL (NEW)
+            st.subheader("🚨 Enterprise Alarm & Automated Billing")
+            col_inv1, col_inv2 = st.columns(2)
+            
+            with col_inv1:
+                st.write("**📅 Automated Billing System (H-7)**")
+                st.info("Sistem mendeteksi 12 cabang akan jatuh tempo dalam 7 hari.")
+                if st.button("🚀 Blast Invoice H-7 Ke Seluruh Cabang"):
+                    st.success("TREASURER AGENT: 12 Invoice WhatsApp & Email berhasil dikirim secara serentak!")
+            
+            with col_inv2:
+                st.write("**🛡️ Global Alarm Watchdog**")
+                st.error("Status: Monitoring 150+ CCTV & Sensor AI Nasional")
+                if st.button("🔔 Test Global Alarm"):
+                    st.toast("🚨 EMERGENCY: Alarm aktif di seluruh pusat komando wilayah.")
+
+            st.divider()
+
+            # 3. Peta Pemantauan Nasional
+            st.subheader("🌐 National Monitoring Map")
+            map_data = {
+                'city': ['Jakarta', 'Tangerang', 'Surabaya', 'Medan', 'Bali', 'Makassar'],
+                'lat': [-6.2088, -6.1702, -7.2575, 3.5952, -8.4095, -5.1476],
+                'lon': [106.8456, 106.6303, 112.7521, 98.6722, 115.1889, 119.4327]
+            }
+            import pandas as pd
+            df_map = pd.DataFrame(map_data)
+            st.map(df_map)
+
+            # 4. KONTROL CABANG STRATEGIS
+            st.divider()
+            st.subheader("🕹️ Regional Command & Control")
+            col_ctrl1, col_ctrl2 = st.columns([2, 1])
+            with col_ctrl1:
+                pilih_wilayah = st.selectbox("Pilih Wilayah Operasional:", 
+                                           ["Jabodetabek", "Jawa Timur", "Sumatera Utara", "Bali & Nusa Tenggara"])
+                if st.button(f"🔴 Live Feed CCTV Wilayah {pilih_wilayah}"):
+                    st.success(f"Menghubungkan ke 25+ kamera di {pilih_wilayah}...")
+            
+            with col_ctrl2:
+                st.write("**V-ULTRA Power**")
+                st.button("🛡️ Deep Shield Anti-Fraud")
+                st.button("📡 Emergency Lockdown (All)")
+
+            # 5. ANALISIS ENTERPRISE
+            st.divider()
+            st.subheader("📈 Enterprise Business Intelligence")
+            if st.button("Generate National Growth Report"):
+                with st.spinner("AI menganalisis data nasional..."):
+                    st.info("**STRATEGIST AGENT:** Rekomendasi ekspansi ke Jawa Tengah berdasarkan tren penjualan nasional.")
+
+            st.divider()
+            st.caption("V-ULTRA: Global Command for Business Leaders."))
 
         # --- TAB 10: OWNER (STRATEGI EKSEKUTIF) ---
         with t10:
