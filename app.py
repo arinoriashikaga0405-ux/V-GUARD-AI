@@ -215,7 +215,7 @@ elif menu == "Admin Control Center":
                                     st.write("'Mata' digital yang memantau pergerakan visual.")  
                             with t3:
                                 st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
-                                    c_a, c_b = st.columns(2)
+                                c_a, c_b = st.columns(2)
                                     with c_a:
                                     st.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
                                     with c_b:
