@@ -311,7 +311,6 @@ elif menu == "Admin Control Center":
 # --- SELESAI COPY ---
 # --- TAB 5: KEAMANAN (V-SIGHT) ---
     with t5:
-        with t5:
         st.header("👁️ V-SIGHT: AI Visual Command Center")
         st.write("Status: **🟢 Monitoring Aktif** | Target: Gudang & Toko Utama")
         
