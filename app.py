@@ -242,7 +242,14 @@ with t3:
 with t4:
     st.subheader("📑 Pusat Audit Dokumen Multi-Format")
     st.write("Gunakan bagian ini untuk audit manual via unggah dokumen.")
-    up_files = st.file_uploader("Upload Mutasi/Laporan (Excel/PDF/JPG)", accept_multiple_files=True, key="audit_v4")
+    
+    # Widget upload ini sekarang terkunci hanya di Tab 4
+    up_files = st.file_uploader(
+        "Upload Mutasi/Laporan (Excel/PDF/JPG)", 
+        accept_multiple_files=True, 
+        key="audit_v4_final"
+    )
+    
     if up_files:
         st.info("Audit sedang diproses oleh Gemini AI...")
 
