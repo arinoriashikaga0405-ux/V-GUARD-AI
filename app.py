@@ -225,9 +225,9 @@ elif menu == "Admin Control Center":
                                 st.info("🔍 **Status Deteksi Dasar:** AI sedang memantau pembatalan transaksi (Void) dan anomali input kasir harian.")
                                 st.write("🗓️ **Status Invoice H-7**: Otomatis Terjadwal untuk 12 Klien.")
             
-                        with t4:
-                            st.subheader("📑 Audit Dokumen Multi-Format")
-                        st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
+                            with t4:
+                                st.subheader("📑 Audit Dokumen Multi-Format")
+                                st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
             
                         with t5:
                             st.subheader("👁️ V-SIGHT: AI Visual Command Center")
