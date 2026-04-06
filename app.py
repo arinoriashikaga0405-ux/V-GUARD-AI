@@ -255,8 +255,8 @@ elif menu == "Admin Control Center":
 # --- SELESAI COPY ---
 # --- TAB 5: KEAMANAN (V-SIGHT) ---
     with t5:
-    st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-    st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
+        st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+        st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
     
     c_vid1, c_vid2 = st.columns(2)
     with c_vid1:
@@ -273,30 +273,30 @@ elif menu == "Admin Control Center":
 
 # --- TAB 6: PUSAT ALARM ---
     with t6:
-    st.subheader("🚨 Pusat Alarm & Notifikasi")
-    st.error("ALARM FRAUD: **AKTIF** (Mendeteksi 1 Anomali Hari Ini)")
-    st.warning("NOTIFIKASI INVOICE H-7: **READY** (12 Klien Terjadwal)")
-    st.metric("Integrity Score Today", "88%", delta="-12%", delta_color="inverse")
+        st.subheader("🚨 Pusat Alarm & Notifikasi")
+        st.error("ALARM FRAUD: **AKTIF** (Mendeteksi 1 Anomali Hari Ini)")
+        st.warning("NOTIFIKASI INVOICE H-7: **READY** (12 Klien Terjadwal)")
+        st.metric("Integrity Score Today", "88%", delta="-12%", delta_color="inverse")
 
 # --- TAB 7: PERFORMA BISNIS ---
     with t7:
-    st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
-    ca, cb = st.columns(2)
-    ca.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
-    cb.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
-    st.divider()
-    st.write("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction'.")
+        st.subheader("📈 Monitoring Laba & Pencegahan Fraud")
+        ca, cb = st.columns(2)
+        ca.metric("Laba Bersih", "Rp 400.250.000", delta="Normal")
+        cb.metric("Dana Terselamatkan", "Rp 15.700.000", delta="Pencegahan Fraud")
+        st.divider()
+        st.write("💡 **AI Insight:** Pola arus kas stabil. Tidak ditemukan indikasi 'Split Transaction'.")
 
 # --- TAB 8: BACKUP DATA ---
     with t8:
-    st.subheader("💾 Backup & Archive")
-    st.write("Penyimpanan otomatis ke Cloud Server setiap jam 00:00.")
-    st.button("Jalankan Manual Backup Sekarang")
+        st.subheader("💾 Backup & Archive")
+        st.write("Penyimpanan otomatis ke Cloud Server setiap jam 00:00.")
+        st.button("Jalankan Manual Backup Sekarang")
 
 # --- TAB 9: V-ULTRA (ENTERPRISE COMMAND CENTER) ---
     with t9:
-    st.header("💎 V-ULTRA: Enterprise Command Center")
-    st.markdown("### 🖥️ Status Infrastruktur & AI Central")
+        st.header("💎 V-ULTRA: Enterprise Command Center")
+        st.markdown("### 🖥️ Status Infrastruktur & AI Central")
     
     col_u1, col_u2 = st.columns(2)
     with col_u1:
