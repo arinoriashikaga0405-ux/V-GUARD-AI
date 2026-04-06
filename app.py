@@ -240,8 +240,8 @@ elif menu == "Admin Control Center":
 
 # --- MULAI COPY DARI SINI (GANTIKAN BARIS 241 - 274) ---
     with t4:
-    st.subheader("📑 Pusat Audit Dokumen Multi-Format")
-    st.write("Gunakan bagian ini untuk audit manual via unggah dokumen.")
+        st.subheader("📑 Pusat Audit Dokumen Multi-Format")
+        st.write("Gunakan bagian ini untuk audit manual via unggah dokumen.")
     
     # Widget ini sekarang hanya akan muncul di Tab Laporan
     up_files = st.file_uploader(
