@@ -206,35 +206,70 @@ t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
 ])
 
 # --- TAB 1: AKTIVASI KLIEN ---
+# --- TAB 1: AKTIVASI KLIEN ---
 with t1:
     st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-    st.info("Daftarkan klien yang sudah melakukan pembayaran.")
+    st.info("Gunakan formulir ini untuk mendaftarkan klien baru dan mengirimkan akses sistem.")
     
-    # Input Data Klien
+    # 1. Input Data Utama
     c1, c2 = st.columns(2)
     with c1:
-        nama_klien = st.text_input("Nama Perusahaan/Klien:", placeholder="Contoh: UD. MAJU JAYA", key="nama_k_t1")
+        nama_klien = st.text_input("Nama Perusahaan / Pemilik:", placeholder="Contoh: UD. MAJU JAYA", key="nama_k_t1")
+        wa_klien = st.text_input("Nomor WhatsApp (Aktif):", placeholder="Contoh: 628123456789", key="wa_t1")
+    
     with c2:
-        paket_layanan = st.selectbox("Paket V-GUARD:", ["Starter", "Professional", "Enterprise"], key="paket_t1")
+        # Update: 4 Produk Sesuai Layanan V-GUARD
+        produk_vguard = st.selectbox(
+            "Pilih Produk/Layanan:", 
+            [
+                "🛡️ V-GUARD POS & API Integration", 
+                "👁️ V-SIGHT Visual Behavior AI", 
+                "🚨 V-WATCHDOG Fraud Detection", 
+                "💎 V-ULTRA Enterprise Solution"
+            ], 
+            key="produk_t1"
+        )
+        tgl_bayar = st.date_input("Tanggal Pembayaran:", key="tgl_t1")
 
     st.divider()
 
-    # Pusat Audit Dokumen (Hanya muncul di Tab 1)
-    st.subheader("📑 Pusat Audit Dokumen Multi-Format")
-    st.write(f"Audit operasional untuk: **{nama_klien if nama_klien else 'Klien Baru'}**")
+    # 2. Fitur Aktivasi & Pengiriman Link
+    st.subheader("🚀 Otorisasi & Pengiriman Akses")
+    col_act1, col_act2 = st.columns(2)
     
-    up_files_t1 = st.file_uploader(
-        "Upload Mutasi/Laporan (Excel/PDF/JPG)",
-        accept_multiple_files=True,
-        key="audit_v1_exclusive"
-    )
+    with col_act1:
+        if st.button("🏗️ Buatkan Akun & Database Klien", key="btn_create_acc"):
+            if nama_klien and wa_klien:
+                with st.spinner("Sedang menyiapkan server dan database klien..."):
+                    # Simulasi pembuatan akun
+                    st.success(f"✅ Akun untuk {nama_klien} Berhasil Dibuat!")
+                    st.code(f"Klien ID: VG-{wa_klien[-4:]}\nStatus: Active\nServer: Dedicated-01")
+            else:
+                st.error("Mohon isi Nama Klien dan Nomor WhatsApp.")
 
+    with col_act2:
+        # Fitur Kirim Link WhatsApp
+        if st.button("📲 Kirim Link Aktivasi ke WhatsApp", key="btn_send_wa"):
+            if wa_klien:
+                # Membuat pesan otomatis untuk WhatsApp
+                pesan = f"Halo {nama_klien}, Akun V-GUARD Anda telah aktif untuk produk {produk_vguard}. Silakan login melalui link berikut: https://vguard-ai.com/login"
+                link_wa = f"https://wa.me/{wa_klien}?text={pesan.replace(' ', '%20')}"
+                
+                st.success(f"Link Aktivasi siap dikirim ke {wa_klien}")
+                st.markdown(f"[👉 Klik di Sini untuk Kirim via WhatsApp]({link_wa})")
+            else:
+                st.warning("Masukkan nomor WhatsApp klien terlebih dahulu.")
+
+    st.divider()
+
+    # 3. Pusat Audit Dokumen (Tetap di Tab 1)
+    st.subheader("📑 Pusat Audit Dokumen Awal")
+    st.write(f"Audit dokumen persyaratan untuk: **{nama_klien if nama_klien else 'Klien Baru'}**")
+    up_files_t1 = st.file_uploader("Upload Bukti Bayar / Dokumen Pendukung", accept_multiple_files=True, key="audit_v1_exclusive")
+    
     if up_files_t1:
-        st.info(f"📂 {len(up_files_t1)} Dokumen terdeteksi.")
-        if st.button("🚀 MULAI AUDIT FORENSIK", key="btn_audit_t1"):
-            with st.spinner("THE ANALYST sedang membedah dokumen..."):
-                st.success("✅ Audit Selesai! Data telah diarsipkan ke sistem.")
-
+        if st.button("🚀 Verifikasi Dokumen", key="btn_audit_t1"):
+            st.success("Dokumen telah diverifikasi oleh THE ANALYST.")
 # --- TAB 2: EKOSISTEM AI ---
 with t2:
     st.header("🛡️ V-GUARD ELITE AI COMMAND CENTER")
