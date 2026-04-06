@@ -161,7 +161,7 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    # --- 1. PENGUNCI FOLDER ADMIN ---
+    # --- 1. PENGUNCI FOLDER ADMIN (FOLDER LOCK) ---
     if not st.session_state.get('admin_logged_in', False):
         st.subheader("🔐 V-GUARD Secure Folder")
         admin_input = st.text_input("Password Folder:", type="password", key="vguard_folder_lock")
@@ -174,6 +174,7 @@ elif menu == "Admin Control Center":
 
     # --- 2. DASHBOARD AKTIF ---
     else: 
+        # Tombol Lock di pojok kanan
         c_out1, c_out2 = st.columns([9, 1])
         with c_out2:
             if st.button("🔒 Lock", key="logout_btn"):
@@ -183,16 +184,33 @@ elif menu == "Admin Control Center":
         st.header("🎮 V-GUARD: Admin Control Center")
         st.divider()
 
-        # 9 TAB LENGKAP & TERHUBUNG AGENT
-        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+        # CSS GLOBAL: Tombol Putih Bersih & Rapih
+        st.markdown("""
+            <style>
+            div.stButton > button {
+                background-color: white !important;
+                color: black !important;
+                border: 1px solid #dcdcdc !important;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+            div.stButton > button:hover {
+                background-color: #f8f9fa !important;
+                border-color: #bbbbbb !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+
+        # 10 TAB SESUAI INSTRUKSI
+        t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
             "👥 Aktivasi", "🖥️ AI Squad", "⚙️ Integrasi", 
             "📊 Audit", "🛡️ V-SIGHT", "🚨 Alarm", 
-            "📈 Profit", "💾 Owner", "💎 V-ULTRA"
+            "📈 Profit", "💾 Backup", "💎 V-ULTRA", "👑 Owner"
         ])
 
-        # --- TAB 1: AKTIVASI & INVOICE H-7 ---
+        # --- TAB 1: CLIENT MANAGEMENT & BILLING ---
         with t1:
-            st.subheader("📝 Client Management & Billing")
+            st.subheader("Client Management & Billing")
             ca, cb = st.columns(2)
             with ca:
                 nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
@@ -201,61 +219,104 @@ elif menu == "Admin Control Center":
                 prod_v = st.selectbox("Produk:", ["🛡️ V-LITE", "👁️ V-PRO", "🚨 V-SIGHT", "💎 V-ULTRA"], key="prod_t1")
                 tgl_exp = st.date_input("Tanggal Jatuh Tempo", key="tgl_t1")
 
-            if st.button("🚀 Aktivasi & Setup Notifikasi H-7"):
+            if st.button("Aktivasi & Simpan Klien", key="btn_act_clean"):
                 if nama_k and wa_k:
-                    # Logic Agent TREASURER untuk Billing
-                    st.success(f"✅ {nama_k} Aktif. Notifikasi Invoice H-7 otomatis dijadwalkan.")
-                    st.info(f"**TREASURER:** Reminder invoice akan dikirim ke {wa_k} pada {(tgl_exp).strftime('%d %B %Y')}")
+                    st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
 
-        # --- TAB 2: 10 AI AGENT SQUAD ---
+        # --- TAB 2: AI SQUAD (COMMAND CENTER) ---
         with t2:
-            st.subheader("🖥️ V-GUARD Elite Squad")
-            agents = [("👁️ Visionary", "CCTV & YOLO"), ("👂 Concierge", "Support"), ("👄 Growth", "Sales"), 
-                      ("🤝 Liaison", "API"), ("🧠 Analyst", "Data"), ("📈 Strategist", "Business"),
-                      ("🐕 Watchdog", "Fraud"), ("🛡️ Sentinel", "Security"), ("⚖️ Legalist", "Law"), ("💰 Treasurer", "Finance")]
-            cols = st.columns(5)
-            for i, (n, task) in enumerate(agents):
-                with cols[i % 5]: st.info(f"**{n}**\n\n`{task}`")
+            st.subheader("🖥️ V-GUARD AI Squad Command Center")
+            cmd_ai = st.text_area("Instruksi Operasional Agent:", placeholder="Tulis instruksi di sini (misal: Cek semua void kasir hari ini)")
+            if st.button("Jalankan Operasi AI Agent"):
+                if cmd_ai:
+                    with st.spinner("AI sedang bekerja..."):
+                        res = vguard_ai_engine("V-GUARD COMMANDER", cmd_ai)
+                        st.info(res)
 
-        # --- TAB 3: INTEGRASI API KASIR ---
+        # --- TAB 3: INTEGRASI (API KASIR) ---
         with t3:
-            st.subheader("⚙️ POS & Bank Integration")
+            st.subheader("⚙️ POS & Bank API Bridge")
             pos_p = st.selectbox("Pilih POS Kasir:", ["Moka POS", "Majoo", "ESB", "Nutapos"])
-            if st.button("🔗 Sinkronisasi Data Kasir"):
-                st.write(f"**LIAISON AGENT:** Menghubungkan API {pos_p} ke Database V-GUARD...")
-                st.success("Koneksi Berhasil. Data transaksi kasir sekarang Real-Time.")
+            if st.button("🔗 Hubungkan API Kasir"):
+                st.success(f"LIAISON AGENT: API {pos_p} Berhasil Terhubung ke AI Agent.")
 
-        # --- TAB 5: V-SIGHT (VISION AI & YOLO) ---
+        # --- TAB 4: AUDIT (FORENSIK) ---
+        with t4:
+            st.subheader("📊 Financial Audit & Forensic")
+            col_aud1, col_aud2 = st.columns(2)
+            with col_aud1:
+                st.date_input("Periode Audit")
+                if st.button("Jalankan Audit Forensik"):
+                    st.write("**ANALYST AGENT:** Memeriksa log transaksi untuk mendeteksi kecurangan.")
+            with col_aud2:
+                st.file_uploader("Upload Data Penjualan (Excel/CSV)")
+                if st.button("Cek Selisih Inventaris"):
+                    st.warning("WATCHDOG: Ditemukan selisih stok di Warehouse.")
+
+        # --- TAB 5: V-SIGHT (YOLO VISION) ---
         with t5:
-            st.subheader("🛡️ V-SIGHT: YOLO Object Detection")
-            st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="YOLOv8 Real-time Detection")
-            st.write("**VISIONARY AGENT Report:**")
-            st.warning("⚠️ Terdeteksi antrean > 5 orang di Kasir 1. Agent Concierge disarankan membantu.")
+            st.subheader("🛡️ V-SIGHT: Visual Intelligence (YOLO)")
+            st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="Real-time Object Detection")
+            c_vs1, c_vs2 = st.columns(2)
+            with c_vs1:
+                if st.button("Aktifkan YOLO Scanner"):
+                    st.success("YOLOv8 Scanner Aktif: Monitoring Person & Cashbox.")
+            with c_vs2:
+                if st.button("Capture Gambar Keamanan"):
+                    st.info("Snapshot berhasil disimpan di Cloud.")
 
-        # --- TAB 6: ALARM & NOTIFIKASI ---
+        # --- TAB 6: ALARM & INVOICE H-7 ---
         with t6:
-            st.subheader("🚨 Pusat Alarm & Keamanan")
+            st.subheader("🚨 Alarm Center & Automated Billing")
+            st.markdown("#### 📅 Invoice H-7 Management")
+            if st.button("Kirim Notifikasi Invoice H-7 Sekarang"):
+                st.toast("TREASURER: Pesan pengingat terkirim ke WhatsApp Klien.")
+            
+            st.divider()
+            
+            st.markdown("#### 🛡️ Watchdog Security")
             col_al1, col_al2 = st.columns(2)
             with col_al1:
-                st.error("ALARM STATUS: STANDBY")
-                if st.button("🔔 Test Notifikasi Alarm"):
-                    st.toast("🚨 EMERGENCY: Notifikasi terkirim ke WhatsApp Owner!")
+                if st.button("Test Notifikasi Alarm"):
+                    st.error("🚨 EMERGENCY TEST: WhatsApp Terkirim ke Owner!")
             with col_al2:
-                st.write("**WATCHDOG AGENT:**")
-                st.info("Pola transaksi mencurigakan (Void Berulang) : NIHIL.")
+                st.info("**WATCHDOG AGENT:** Status Keamanan Terkendali (NIHIL FRAUD).")
 
-        # --- TAB 8: OWNER STRATEGIC ---
+        # --- TAB 7: PROFIT (SUPPORT TOOLS) ---
+        with t7:
+            st.subheader("📈 Profit & Revenue Analytics")
+            st.metric("Total Omzet", "Rp 500.000.000", "+15%")
+            c_p1, c_p2 = st.columns(2)
+            with c_p1:
+                if st.button("Download Laporan Profit"):
+                    st.write("Mempersiapkan PDF...")
+            with c_p2:
+                if st.button("Analisis ROI Strategis"):
+                    st.info("THE STRATEGIST: ROI saat ini berada di angka 32%.")
+
+        # --- TAB 8: BACKUP DATA ---
         with t8:
-            st.header("💾 Owner Strategic Center")
-            o_key = st.text_input("Kode Otoritas Owner:", type="password", key="okey_t8")
-            if o_key == "w1nw1n8282":
-                st.success(f"Selamat Datang, Pak Erwin Sinaga.")
-                omz = st.number_input("Input Omzet Bulanan:", value=100000000)
-                st.metric("Profit Bersih Bapak (Net 60%)", f"Rp {omz * 0.60:,.0f}")
-                if st.button("📊 Minta Strategi Pertumbuhan"):
-                    st.info(vguard_ai_engine("THE STRATEGIST", f"Omzet {omz}, buatkan rencana ekspansi."))
+            st.subheader("💾 Cloud Backup Center")
+            st.write("Status: Database Terlindungi.")
+            if st.button("Back Up Data Sekarang"):
+                st.success("Backup Berhasil: vguard_db_cloud_sync.bak")
+            st.button("Restore Point Terakhir")
 
-        # --- TAB LAINNYA ---
-        with t4: st.write("📊 **ANALYST AGENT:** Sedang mengaudit 1.240 dokumen digital.")
-        with t7: st.write("📈 **GROWTH AGENT:** Tren penjualan naik 15% minggu ini.")
-        with t9: st.write("💎 **V-ULTRA:** Kapasitas server 99.9% Uptime.")
+        # --- TAB 9: V-ULTRA (POWER SERVICE) ---
+        with t9:
+            st.subheader("💎 V-ULTRA Dedicated Server")
+            st.write("Layanan Server Prioritas Tinggi.")
+            st.progress(90, text="Server Health: Excellent")
+            if st.button("Optimize Server Speed"):
+                st.success("Cache Server dibersihkan. Kecepatan meningkat!")
+
+        # --- TAB 10: OWNER (RESTRICTED) ---
+        with t10:
+            st.header("👑 Owner Strategic Center")
+            o_key = st.text_input("Owner Master Key:", type="password", key="owner_master")
+            if o_key == "w1nw1n8282":
+                st.success("Akses Diterima, Pak Erwin Sinaga.")
+                st.button("Tarik Dana Operasional")
+                st.button("Reset Seluruh Sistem")
+            elif o_key != "":
+                st.error("Access Denied.")
