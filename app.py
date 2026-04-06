@@ -259,18 +259,23 @@ elif menu == "Admin Control Center":
     with t3:
         st.subheader("⚙️ Konfigurasi Integrasi VCS (API POS & Bank)")
         st.info("Hubungkan Kasir atau Bank secara otomatis untuk penarikan data real-time.")
-    with st.expander("Buka Panel Konfigurasi API"):
-        col_api1, col_api2 = st.columns(2)
-        with col_api1:
-            api_p = st.selectbox("Pilih Provider", ["Moka POS", "Majoo", "BCA Business API", "Mandiri API"])
-        with col_api2:
-            st.text_input("API Key / Client ID", type="password")
         
-        if st.button("Uji Koneksi API"):
-            with st.spinner("Menyambungkan..."):
-                import time
-                time.sleep(1.5)
-                st.success(f"✅ Koneksi ke {api_p} Berhasil!")
+        with st.expander("🔓 Buka Panel Konfigurasi API"):
+            col_api1, col_api2 = st.columns(2)
+            with col_api1:
+                api_p = st.selectbox("Pilih Provider", ["Moka POS", "Majoo", "BCA Business API", "Mandiri API"], key="api_prov")
+            with col_api2:
+                st.text_input("API Key / Client ID", type="password", key="api_key_val")
+
+            if st.button("🔌 Uji Koneksi API"):
+                with st.spinner(f"Menghubungkan ke server {api_p}..."):
+                    # Simulasi pemanggilan Liaison Agent
+                    respon_api = vguard_ai_engine(
+                        agent_name="THE LIAISON",
+                        task_instruction=f"Simulasikan koneksi ke {api_p}. Pastikan jalur data aman (Encrypted)."
+                    )
+                    st.success(f"✅ Koneksi ke {api_p} BERHASIL!")
+                    st.caption(respon_api)
 
 # --- MULAI COPY DARI SINI (GANTIKAN BARIS 241 - 274) ---
     with t4:
