@@ -311,21 +311,42 @@ elif menu == "Admin Control Center":
 # --- SELESAI COPY ---
 # --- TAB 5: KEAMANAN (V-SIGHT) ---
     with t5:
-        st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-        st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
-    
-    c_vid1, c_vid2 = st.columns(2)
-    with c_vid1:
-        # Link image ini adalah simulasi tampilan CCTV Kasir
-        st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", 
-                 caption="CCTV 01 - Area Kasir (AI Behavior Active)")
-        st.info("🤖 **AI Behavior:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi.")
+        with t5:
+        st.header("👁️ V-SIGHT: AI Visual Command Center")
+        st.write("Status: **🟢 Monitoring Aktif** | Target: Gudang & Toko Utama")
         
-    with c_vid2:
-        # Link image ini adalah simulasi tampilan CCTV Gudang
-        st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", 
-                 caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
-        st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
+        # Baris Header Metrik Visual
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Kamera Aktif", "08", "+2")
+        m2.metric("Deteksi Anomali", "02", "Hari ini")
+        m3.metric("Skor Keamanan", "98%", "Optimal")
+
+        st.divider()
+
+        c_vid1, c_vid2 = st.columns(2)
+        
+        with c_vid1:
+            with st.container(border=True):
+                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", 
+                         caption="CCTV 01 - Area Kasir (AI Behavior Active)")
+                
+                # Integrasi dengan The Visionary
+                st.info("🤖 **V-SIGHT Alert:** Mendeteksi gerakan laci kasir terbuka tanpa transaksi aktif.")
+                if st.button("Tanya 'The Visionary' tentang rekaman ini", key="btn_vision_1"):
+                    with st.spinner("Menganalisis frame..."):
+                        hasil = vguard_ai_engine("THE VISIONARY", "Anomali terdeteksi: Laci kasir terbuka. Berikan protokol keamanan.")
+                        st.write(hasil)
+
+        with c_vid2:
+            with st.container(border=True):
+                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", 
+                         caption="CCTV 02 - Rak Gudang B (Visual Stock Control)")
+                
+                st.warning("⚠️ **Visual Stock:** Stok Beras 5kg menipis di Rak B. Segera Restock!")
+                if st.button("Minta Strategi Re-stock", key="btn_vision_2"):
+                    with st.spinner("Menghitung kebutuhan..."):
+                        hasil = vguard_ai_engine("THE STRATEGIST", "Stok beras menipis di Gudang B. Berapa jumlah re-stock optimal?")
+                        st.write(hasil)
 
 # --- TAB 6: PUSAT ALARM ---
     with t6:
