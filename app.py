@@ -229,8 +229,8 @@ elif menu == "Admin Control Center":
                             st.subheader("📑 Audit Dokumen Multi-Format")
                         st.file_uploader("Upload Dokumen Audit (VCS/Excel/PDF)", type=['xlsx','pdf','jpg','vcs','csv'], accept_multiple_files=True, key="audit_up_1")
             
-                            with t5:
-                                st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+                        with t5:
+                            st.subheader("👁️ V-SIGHT: AI Visual Command Center")
                             st.write("Status: **Monitoring Aktif** | Target: Gudang & Toko Utama")
                             
                             # Baris Atas: Live Monitor & Behavior Detection
