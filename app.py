@@ -198,29 +198,49 @@ elif menu == "Admin Control Center":
             "📈 Profit", "💾 Backup", "💎 V-ULTRA", "👑 Owner"
         ])
 
-        # --- TAB 1: AKTIVASI KLIEN ---
-        wi# --- TAB 1: CLIENT MANAGEMENT & BILLING ---
+        # --- TAB 1: CLIENT MANAGEMENT & BILLING ---
         with t1:
-            st.subheader("Client Management & Billing")
+            st.subheader("👥 Client Management & Account Activation")
+            
+            # Form Input Data
             ca, cb = st.columns(2)
             with ca:
                 nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
-                wa_k = st.text_input("WhatsApp (62...):", key="wa_t1")
+                wa_k = st.text_input("WhatsApp (62...):", key="wa_t1", help="Gunakan format 628xxx")
             with cb:
                 prod_v = st.selectbox("Produk:", ["🛡️ V-LITE", "👁️ V-PRO", "🚨 V-SIGHT", "💎 V-ULTRA"], key="prod_t1")
                 tgl_exp = st.date_input("Tanggal Jatuh Tempo", key="tgl_t1")
 
-            if st.button("Aktivasi & Simpan Klien", key="btn_act_clean"):
+            # Tombol Aktivasi Utama
+            if st.button("🚀 Aktivasi & Buat Akun Klien", key="btn_act_clean"):
                 if nama_k and wa_k:
-                    st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
+                    # Simulasi Pembuatan Akun Otomatis
+                    username_client = nama_k.lower().replace(" ", "") + "_vguard"
+                    pass_client = "VG-" + wa_k[-4:] # Password default 4 digit terakhir WA
+                    
+                    st.success(f"✅ Akun untuk {nama_k} Berhasil Dibuat!")
+                    
+                    # Kotak Informasi Akun untuk dikirim ke Klien
+                    st.markdown(f"""
+                    > **🔑 KREDENSIAL LOGIN KLIEN:**
+                    > * **Portal:** `https://v-guard.ai/client-login`
+                    > * **Username:** `{username_client}`
+                    > * **Password:** `{pass_client}`
+                    """)
+                    
+                    # Fitur Kirim Link via WhatsApp
+                    link_akses = f"https://wa.me/{wa_k}?text=Halo%20{nama_k},%20Akun%20V-GUARD%20Anda%20telah%20aktif.%0A%0AUsername:%20{username_client}%0APassword:%20{pass_client}%0ASilakan%20login%20di%20portal%20kami."
+                    st.markdown(f'<a href="{link_akses}" target="_blank"><button style="background-color: #25D366; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">📲 Kirim Link Akses via WhatsApp</button></a>', unsafe_allow_html=True)
+                else:
+                    st.error("Mohon isi Nama Perusahaan dan WhatsApp terlebih dahulu.")
 
-            # --- TARUH DI SINI (BAGIAN BAWAH TAB 1) ---
+            # --- FITUR FILE UPLOAD (DOKUMEN KLIEN) ---
             st.divider()
             st.subheader("📁 Client Document & Data Center")
-            st.markdown("Gunakan area ini untuk mengunggah dokumen CSV, JPG, atau PDF dari klien.")
+            st.markdown("Unggah bukti bayar atau dokumen legalitas klien di sini.")
             
             uploaded_files = st.file_uploader(
-                "Pilih file (Bukti Transfer, Data Penjualan, atau Dokumen PDF):", 
+                "Upload Bukti Transfer / PDF Data:", 
                 type=['csv', 'jpg', 'jpeg', 'png', 'pdf'], 
                 accept_multiple_files=True,
                 key="client_file_uploader"
@@ -228,16 +248,14 @@ elif menu == "Admin Control Center":
 
             if uploaded_files:
                 for uploaded_file in uploaded_files:
-                    st.write(f"📄 **File Terdeteksi:** {uploaded_file.name}")
+                    st.write(f"📄 **File:** {uploaded_file.name}")
                     if uploaded_file.name.endswith('.pdf'):
-                        st.success(f"Analyst Agent: Sedang membaca dokumen PDF {uploaded_file.name}...")
+                        st.success(f"Analyst Agent: PDF {uploaded_file.name} terekam.")
                     elif uploaded_file.name.endswith(('.jpg', '.jpeg', '.png')):
-                        st.image(uploaded_file, caption=f"Preview: {uploaded_file.name}", width=300)
-                        st.info("Visionary Agent: Foto berhasil di-scan untuk validasi.")
+                        st.image(uploaded_file, width=250)
                 
-                if st.button("Simpan & Sinkronisasi Dokumen"):
-                    st.toast("Semua file berhasil disimpan ke Cloud V-GUARD.")
-
+                if st.button("Simpan & Sinkronisasi Dokumen", key="btn_save_docs"):
+                    st.toast("Semua file tersimpan di server V-GUARD.")
         # --- TAB 2: AI SQUAD (EKSEKUSI AGENT & 24/7 SERVICE) ---
         with t2:
             st.subheader("🖥️ V-GUARD Elite AI Squad (Eksekusi Agent)")
