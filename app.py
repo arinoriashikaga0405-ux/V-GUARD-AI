@@ -224,15 +224,37 @@ elif menu == "Admin Control Center":
                     st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
 
         # --- TAB 2: AI SQUAD (COMMAND CENTER) ---
+        # --- TAB 2: AI SQUAD (10 AGENT COMMAND CENTER) ---
         with t2:
-            st.subheader("🖥️ V-GUARD AI Squad Command Center")
-            cmd_ai = st.text_area("Instruksi Operasional Agent:", placeholder="Tulis instruksi di sini (misal: Cek semua void kasir hari ini)")
+            st.subheader("🖥️ V-GUARD Elite AI Squad")
+            
+            # Input Perintah Strategis
+            cmd_ai = st.text_area("Instruksi Operasional Agent:", placeholder="Tulis instruksi di sini (misal: Audit transaksi kasir atau deteksi anomali)")
             if st.button("Jalankan Operasi AI Agent"):
                 if cmd_ai:
-                    with st.spinner("AI sedang bekerja..."):
-                        res = vguard_ai_engine("V-GUARD COMMANDER", cmd_ai)
+                    with st.spinner("V-GUARD Commander sedang memproses..."):
+                        # Engine akan mendistribusikan tugas ke Agent yang relevan
+                        res = vguard_ai_engine("COMMANDER", cmd_ai)
                         st.info(res)
 
+            st.divider()
+            st.markdown("### 👥 Squad Members & Functional Areas")
+            
+            # Daftar lengkap 10 AI Agent
+            agents = [
+                ("👁️ Visionary", "CCTV & YOLO"), ("👂 Concierge", "Support"), 
+                ("👄 Growth", "Sales"), ("🤝 Liaison", "API"), 
+                ("🧠 Analyst", "Data"), ("📈 Strategist", "Business"),
+                ("🐕 Watchdog", "Fraud"), ("🛡️ Sentinel", "Security"), 
+                ("⚖️ Legalist", "Law"), ("💰 Treasurer", "Finance")
+            ]
+            
+            # Menampilkan dalam 2 Baris (5 kolom per baris)
+            for i in range(0, 10, 5):
+                cols = st.columns(5)
+                for j, (name, task) in enumerate(agents[i:i+5]):
+                    with cols[j]:
+                        st.info(f"**{name}**\n\n`{task}`")
         # --- TAB 3: INTEGRASI (API KASIR) ---
         with t3:
             st.subheader("⚙️ POS & Bank API Bridge")
