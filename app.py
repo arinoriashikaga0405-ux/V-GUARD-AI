@@ -159,10 +159,9 @@ elif menu == "Admin Control Center":
         
         # CEK PASSWORD LANGSUNG (Ganti 'w1nbju8282' jika ingin merubah password)
         if admin_input == "w1nbju8282": 
-            st.session_state.admin_logged_in = True
-            st.rerun()
-        elif admin_input != "":
-            st.error("Password Salah. Akses Ditolak.")
+           st.session_state.admin_logged_in = True
+                st.rerun() # Refresh HANYA SEKALI saat login berhasil
+            else:
         
         st.stop() # Mengunci halaman agar isi admin tidak bocor ke Visi & Misi
 
