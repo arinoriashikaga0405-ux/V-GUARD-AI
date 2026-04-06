@@ -220,7 +220,7 @@ elif menu == "Admin Control Center":
             st.success(f"✅ Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
 
 # --- TAB 2: EKOSISTEM AI ---
-   st.header("🛡️ V-GUARD ELITE AI COMMAND CENTER")
+       st.header("🛡️ V-GUARD ELITE AI COMMAND CENTER")
         
         # Grid Status Agent (3 Kolom)
         c1, c2, c3 = st.columns(3)
