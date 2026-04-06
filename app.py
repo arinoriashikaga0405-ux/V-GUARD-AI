@@ -161,25 +161,17 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    # 1. Cek status login (Pastikan IF ini di posisi awal)
+    # 1. CEK STATUS LOGIN
     if not st.session_state.get('admin_logged_in', False):
-
-        # Input password
-        admin_input = st.text_input("Password", type="password", key="vguard_admin_main")
+        st.subheader("🔐 Admin Access Only")
+        admin_input = st.text_input("Masukkan Kode Otoritas:", type="password", key="vguard_admin_login")
         
         if admin_input == "w1nbju8282": 
             st.session_state.admin_logged_in = True
             st.rerun()
         elif admin_input != "":
             st.error("Invalid Key")
-        st.stop() # Mengunci halaman jika belum login
-
-        st.header("🎮 V-GUARD: Admin Control Center")
-        # ... lanjut ke Tab dan isi lainnya ...
-        
-        st.header("🎮 V-GUARD: Admin Control Center")
-        st.divider()
-
+        st.stop() # Berhenti di sini jika belum login
         # --- DEFINISI 9 TAB UTAMA ---
         t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
             "👥 Aktivasi", "🖥️ AI Squad", "⚙️ Integrasi", 
