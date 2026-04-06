@@ -176,7 +176,7 @@ elif menu == "Admin Control Center":
             st.subheader("Data Ekosistem V-GUARD")
     
     
-                st.divider() # Garis pembatas tipis
+            st.divider() # Garis pembatas tipis
             
                 # Contoh: Tampilkan data klien atau hasil audit AI
                 st.info("Seluruh data rahasia V-GUARD kini dapat Anda akses.")
