@@ -194,8 +194,8 @@ elif menu == "Admin Control Center":
 
 # --- TAB 1: AKTIVASI KLIEN ---
     with t1:
-    st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-    st.info("Daftarkan klien yang sudah melakukan pembayaran.")
+        st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
+        st.info("Daftarkan klien yang sudah melakukan pembayaran.")
     with st.container(border=True):
         col1, col2 = st.columns(2)
         with col1:
