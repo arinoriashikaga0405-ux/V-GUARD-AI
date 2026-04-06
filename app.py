@@ -165,15 +165,15 @@ elif menu == "Admin Control Center":
             if admin_input != "": # Hanya munculkan error jika sudah mengetik
                 st.error("Invalid Key")
             st.stop() # Mengunci halaman agar isi admin tidak bocor
-    else: # INI BARIS 168 (Harus lurus dengan 'if not' di baris 154)
-        # Tombol Logout dan Dashboard Bapak dimulai di sini
-        if st.button("Log Out", key="logout_admin_final"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-        
-        # Setelah ini langsung lanjut ke divider dan subheader
-        st.divider() 
-        st.subheader("Data Ekosistem V-GUARD")
+        else: # INI BARIS 168 (Harus lurus dengan 'if not' di baris 154)
+            # Tombol Logout dan Dashboard Bapak dimulai di sini
+            if st.button("Log Out", key="logout_admin_final"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+            
+            # Setelah ini langsung lanjut ke divider dan subheader
+            st.divider() 
+            st.subheader("Data Ekosistem V-GUARD")
     
     
     st.divider() # Garis pembatas tipis
