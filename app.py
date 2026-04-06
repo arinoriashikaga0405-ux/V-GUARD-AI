@@ -161,24 +161,89 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    # 1. Cek status login
+    #elif menu == "Admin Control Center":
+    # 1. CEK LOGIN ADMIN
     if not st.session_state.get('admin_logged_in', False):
         st.header("🔐 Admin Control Center")
-      # Baris 167:
-else: # Area Admin setelah login berhasil
-    # Baris 168 (Mulai Tempel di Sini):
-    if st.button("🚪 Log Out", key="logout_admin_final"):
-        st.session_state.admin_logged_in = False
-        st.rerun()
+        admin_input = st.text_input("Password Otoritas", type="password", key="vguard_admin_final")
+        
+        if admin_input == "w1nbju8282": 
+           st.session_state.admin_logged_in = True
+           st.rerun()
+        elif admin_input != "":
+           st.error("Invalid Key")
+        st.stop() 
 
-    st.divider() 
-    st.header("🎮 V-GUARD: Admin Control Center")
+    # 2. JIKA SUDAH LOGIN, TAMPILKAN DASHBOARD
+    else:
+        c_out1, c_out2 = st.columns([8, 2])
+        with c_out2:
+            if st.button("🚪 Log Out", key="logout_btn"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+        
+        st.header("🎮 V-GUARD: Admin Control Center")
+        st.divider()
 
-    # --- DEFINISI 9 TAB UTAMA ---
-    t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-        "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
-        "📊 Laporan", "🛡️ Keamanan", "🚨 Alarm", 
-        "📈 Performa", "💾 Backup", "💎 V-ULTRA"
-    ])
-    
-    # ... dan seterusnya sampai footer ...
+        # --- DEFINISI TAB ---
+        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            "👥 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", 
+            "📊 Laporan", "🛡️ Keamanan", "🚨 Alarm", 
+            "📈 Performa", "💾 Backup", "💎 V-ULTRA"
+        ])
+
+        # --- TAB 1: AKTIVASI KLIEN ---
+        with t1:
+            st.subheader("📝 Registrasi & Aktivasi Klien (Paid)")
+            ca, cb = st.columns(2)
+            with ca:
+                nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
+                wa_k = st.text_input("Nomor WhatsApp (62...):", key="wa_t1")
+            with cb:
+                prod_v = st.selectbox("Pilih Produk:", [
+                    "🛡️ V-LITE (Mikro)", "👁️ V-PRO (Advanced)", 
+                    "🚨 V-SIGHT (Visual AI)", "💎 V-ENTERPRISE"
+                ], key="prod_t1")
+                st.date_input("Tanggal Aktivasi", key="tgl_t1")
+
+            if st.button("🚀 Buat Akun & Kirim Link WA", key="btn_act"):
+                if nama_k and wa_k:
+                    msg = f"Halo {nama_k}, Akun V-GUARD {prod_v} Anda AKTIF. Login: https://vguard-ai.com"
+                    link = f"https://wa.me/{wa_k}?text={msg.replace(' ', '%20')}"
+                    st.success(f"✅ Akun {nama_k} Siap!")
+                    st.markdown(f"[👉 KLIK UNTUK KIRIM WHATSAPP]({link})")
+                else: st.error("Lengkapi data!")
+
+        # --- TAB 2: EKOSISTEM AI ---
+        with t2:
+            st.subheader("🖥️ V-GUARD Elite AI Agents")
+            c1, c2, c3 = st.columns(3)
+            agents = [("👁️ Visionary", "Active"), ("🧠 Analyst", "Active"), ("🐕 Watchdog", "Monitoring")]
+            for i, (n, s) in enumerate(agents):
+                with [c1, c2, c3][i]: st.info(f"**{n}**\n\nStatus: `{s}`")
+            
+            q_ai = st.text_input("Instruksi ke AI:", key="q_admin")
+            if st.button("Kirim Perintah", key="btn_q"):
+                st.write(vguard_ai_engine("COMMANDER", q_ai))
+
+        # --- TAB 8: BACKUP & OWNER (KODE: w1nw1n8282) ---
+        with t8:
+            st.header("💾 Owner Intelligence Center")
+            o_key = st.text_input("Kode Otoritas Owner:", type="password", key="okey_t8")
+            if o_key == "w1nw1n8282":
+                st.success(f"Selamat Datang kembali, Pak Erwin Sinaga.")
+                omz = st.number_input("Estimasi Omzet:", value=100000000)
+                st.metric("Laba Bersih (Net Profit 60%)", f"Rp {omz * 0.60:,.0f}")
+            elif o_key != "": st.error("Akses Ditolak.")
+
+        # --- TAB LAINNYA (Placeholder agar tidak error) ---
+        with t3: st.write("Menu Pengaturan API")
+        with t4: st.write("Menu Laporan Audit")
+        with t5: st.write("Menu Keamanan Visual")
+        with t6: st.write("Menu Log Alarm")
+        with t7: st.write("Menu Statistik Performa")
+        with t9: st.write("Menu V-ULTRA Enterprise")
+
+# --- FOOTER (Di luar semua kondisi) ---
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence ©2026</small></center>", unsafe_allow_html=True)
