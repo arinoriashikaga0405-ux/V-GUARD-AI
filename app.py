@@ -172,8 +172,8 @@ elif menu == "Admin Control Center":
             st.rerun()
         # Tampilan SETELAH LOGIN
             if st.button("Log Out"):
-        st.session_state.admin_logged_in = False
-        st.rerun()
+                st.session_state.admin_logged_in = False
+                st.rerun()
         # ... dan seterusnya
       
     # Tampilan SESUDAH LOGIN (Menggantikan input password di atas)
