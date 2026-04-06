@@ -171,16 +171,14 @@ elif menu == "Admin Control Center":
             st.session_state.admin_logged_in = False
             st.rerun()
         # Tampilan SETELAH LOGIN
-    if st.button("Log Out"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
+    
         
             st.success("Selamat Datang, Pak Erwin. Dashboard V-GUARD Aktif.")
         
         # --- SEMUA KODE DASHBOARD BAPAK HARUS ADA DI SINI ---
         # --- PASTIKAN MENJOROK KE DALAM (SEJAJAR DENGAN st.success) ---
         
-    t1, t2, t3 = st.tabs(["Audit", "Security", "Analytics"])
+  
     with t1:
             st.write("Data Audit Bapak ada di sini...")
         # ... dan seterusnya
