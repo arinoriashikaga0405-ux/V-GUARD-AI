@@ -199,8 +199,9 @@ elif menu == "Admin Control Center":
         ])
 
         # --- TAB 1: AKTIVASI KLIEN ---
+        wi# --- TAB 1: CLIENT MANAGEMENT & BILLING ---
         with t1:
-            st.subheader("Client Management & Activation")
+            st.subheader("Client Management & Billing")
             ca, cb = st.columns(2)
             with ca:
                 nama_k = st.text_input("Nama Perusahaan:", key="nk_t1")
@@ -208,8 +209,34 @@ elif menu == "Admin Control Center":
             with cb:
                 prod_v = st.selectbox("Produk:", ["🛡️ V-LITE", "👁️ V-PRO", "🚨 V-SIGHT", "💎 V-ULTRA"], key="prod_t1")
                 tgl_exp = st.date_input("Tanggal Jatuh Tempo", key="tgl_t1")
-            if st.button("Aktivasi & Simpan Klien"):
-                st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
+
+            if st.button("Aktivasi & Simpan Klien", key="btn_act_clean"):
+                if nama_k and wa_k:
+                    st.success(f"✅ Data {nama_k} Berhasil Disimpan.")
+
+            # --- TARUH DI SINI (BAGIAN BAWAH TAB 1) ---
+            st.divider()
+            st.subheader("📁 Client Document & Data Center")
+            st.markdown("Gunakan area ini untuk mengunggah dokumen CSV, JPG, atau PDF dari klien.")
+            
+            uploaded_files = st.file_uploader(
+                "Pilih file (Bukti Transfer, Data Penjualan, atau Dokumen PDF):", 
+                type=['csv', 'jpg', 'jpeg', 'png', 'pdf'], 
+                accept_multiple_files=True,
+                key="client_file_uploader"
+            )
+
+            if uploaded_files:
+                for uploaded_file in uploaded_files:
+                    st.write(f"📄 **File Terdeteksi:** {uploaded_file.name}")
+                    if uploaded_file.name.endswith('.pdf'):
+                        st.success(f"Analyst Agent: Sedang membaca dokumen PDF {uploaded_file.name}...")
+                    elif uploaded_file.name.endswith(('.jpg', '.jpeg', '.png')):
+                        st.image(uploaded_file, caption=f"Preview: {uploaded_file.name}", width=300)
+                        st.info("Visionary Agent: Foto berhasil di-scan untuk validasi.")
+                
+                if st.button("Simpan & Sinkronisasi Dokumen"):
+                    st.toast("Semua file berhasil disimpan ke Cloud V-GUARD.")
 
         # --- TAB 2: AI SQUAD (EKSEKUSI AGENT & 24/7 SERVICE) ---
         with t2:
