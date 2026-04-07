@@ -218,8 +218,8 @@ elif menu == "Produk & Layanan":
 elif menu == "Dashboard Client":
      pass
 
-    st.markdown("---")
-    st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
+st.markdown("---")
+st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
     
 elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
