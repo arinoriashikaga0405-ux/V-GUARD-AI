@@ -93,7 +93,7 @@ elif "Produk & Layanan":
     st.write("Solusi kecerdasan buatan untuk keamanan transaksi dan optimalisasi profit bisnis Anda.")
     st.markdown("---")
 
-    # CSS Khusus agar kartu rapi, profesional, dan tinggi menyesuaikan isi
+    # CSS Premium
     st.markdown("""
         <style>
         [data-testid="stVerticalBlock"] > div:has(div.pk-card) {
@@ -131,34 +131,32 @@ elif "Produk & Layanan":
     with col1:
         st.markdown('<div class="pk-card">', unsafe_allow_html=True)
         st.subheader("1. V-LITE (Entry Level)")
-        st.caption("Target: Toko Kelontong, Butik Kecil, Kedai Kopi (1 Kasir)")
-        st.write("**Fungsi Utama:** CCTV Digital Transaksi")
+        st.caption("Target: Toko Kelontong, Butik Kecil, Kedai Kopi")
         st.markdown("""
-        * ✅ **AI Fraud Detector Dasar**: Deteksi transaksi tak wajar (barang keluar tanpa input).
-        * ✅ **Daily WA/Email Summary**: Laporan ringkas harian langsung ke HP Owner.
-        * ✅ **Monthly PDF Recap**: Rekapitulasi bulanan untuk evaluasi keuntungan.
+        * ✅ **AI Fraud Detector Dasar**
+        * ✅ **Daily WA/Email Summary**
+        * ✅ **Monthly PDF Recap**
         """)
         st.markdown('<div class="price-box">💰 Aktivasi: 1.5jt | Rp 550rb/bln</div>', unsafe_allow_html=True)
-        st.markdown('<p class="sales-pitch">"Murah, Praktis, Aman. Cocok buat yang baru mulai bisnis dan ingin tidur nyenyak tanpa takut uang laci dicuri."</p>', unsafe_allow_html=True)
-        st.link_button("Konsultasi V-LITE", "https://wa.me/6282122190885?text=Halo%20Admin,%20V-LITE", use_container_width=True)
+        st.markdown('<p class="sales-pitch">"Murah, Praktis, Aman. Anti-maling laci."</p>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-LITE", "https://wa.me/6282122190885?text=V-LITE", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col2:
         st.markdown('<div class="pk-card">', unsafe_allow_html=True)
         st.subheader("2. V-PRO (Growth Level)")
-        st.caption("Target: Restoran, Kafe Menengah, Retail Stok Banyak")
-        st.write("**Fungsi Utama:** Otomasi Audit & Keuangan")
+        st.caption("Target: Restoran, Kafe, Retail")
         st.markdown("""
-        * ✅ **VCS Integration**: Sinkronisasi stok dengan catatan kasir otomatis.
-        * ✅ **Bank Statement Audit**: Cocokkan uang bank dengan laporan (Anti-manipulasi).
-        * ✅ **H-7 Auto-Invoice**: Pengingat otomatis tagihan/pembayaran supplier.
+        * ✅ **VCS Integration (Stok)**
+        * ✅ **Bank Statement Audit**
+        * ✅ **H-7 Auto-Invoice**
         """)
         st.markdown('<div class="price-box">💰 Aktivasi: 3jt | Rp 1.5jt/bln</div>', unsafe_allow_html=True)
-        st.markdown('<p class="sales-pitch">"Ganti admin manual Bapak/Ibu dengan AI. Lebih cepat, lebih akurat, dan anti-salah hitung."</p>', unsafe_allow_html=True)
-        st.link_button("Konsultasi V-PRO", "https://wa.me/6282122190885?text=Halo%20Admin,%20V-PRO", use_container_width=True)
+        st.markdown('<p class="sales-pitch">"Ganti admin manual dengan AI yang anti-salah."</p>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-PRO", "https://wa.me/6282122190885?text=V-PRO", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-        st.markdown("---")
+    st.markdown("---")
 
     # BARIS 2: V-SIGHT & V-ENTERPRISE
     col3, col4 = st.columns(2)
@@ -166,57 +164,51 @@ elif "Produk & Layanan":
     with col3:
         st.markdown('<div class="pk-card">', unsafe_allow_html=True)
         st.subheader("3. V-SIGHT (Monitoring)")
-        st.caption("Target: Gudang Distributor, Minimarket, Toko Emas")
-        st.write("**Fungsi Utama:** CCTV Pintar & Visual AI")
+        st.caption("Target: Gudang, Minimarket, Toko Emas")
         st.markdown("""
-        * ✅ **CCTV AI Behavior**: Deteksi gerak mencurigakan di area terlarang.
-        * ✅ **Visual Cashier Audit**: Bandingkan wajah staf dengan data transaksi.
-        * ✅ **Fraud Alarm**: Notifikasi instan (sirine/HP) saat terjadi potensi pencurian.
+        * ✅ **CCTV AI Behavior**
+        * ✅ **Visual Cashier Audit**
+        * ✅ **Fraud Alarm Real-time**
         """)
         st.markdown('<div class="price-box">💰 Aktivasi: 7.5jt | Rp 2.9jt/bln</div>', unsafe_allow_html=True)
-        st.markdown('<p class="sales-pitch">"Bukan sekadar rekam, tapi mengawasi. V-SIGHT adalah satpam digital 24 jam yang tidak pernah mengantuk."</p>', unsafe_allow_html=True)
-        st.link_button("Konsultasi V-SIGHT", "https://wa.me/6282122190885?text=Halo%20Admin,%20V-SIGHT", use_container_width=True)
+        st.markdown('<p class="sales-pitch">"Satpam digital 24 jam yang tidak pernah tidur."</p>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-SIGHT", "https://wa.me/6282122190885?text=V-SIGHT", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col4:
         st.markdown('<div class="pk-card">', unsafe_allow_html=True)
         st.subheader("4. V-ENTERPRISE (Ultimate)")
-        st.caption("Target: Perusahaan Besar, Jaringan Ritel Nasional, Pabrik")
-        st.write("**Fungsi Utama:** Kontrol Total Infrastruktur & SOP")
+        st.caption("Target: Korporasi, Jaringan Ritel Nasional")
         st.markdown("""
-        * ✅ **The Core Brain**: Olah ribuan data banyak cabang sekaligus.
-        * ✅ **Forensic AI (1 Thn)**: Lacak data setahun ke belakang untuk investigasi.
-        * ✅ **Dedicated Server**: Server private (VPS KVM 2) agar data sangat aman.
-        * ✅ **Custom AI SOP**: AI didesain khusus mengikuti aturan unik perusahaan.
+        * ✅ **The Core Brain (Multi-Cabang)**
+        * ✅ **Forensic AI (Pelacakan 1 Tahun)**
+        * ✅ **Dedicated Private Server**
         """)
         st.markdown('<div class="price-box">💰 Aktivasi: 10jt | Rp 6.9jt/bln</div>', unsafe_allow_html=True)
-        st.markdown('<p class="sales-pitch">"Solusi kasta tertinggi untuk proteksi aset milyaran rupiah. Eksklusif, sangat aman, dan sepenuhnya kustom."</p>', unsafe_allow_html=True)
-        st.link_button("Konsultasi V-ENTERPRISE", "https://wa.me/6282122190885?text=Halo%20Admin,%20V-ENTERPRISE", use_container_width=True)
+        st.markdown('<p class="sales-pitch">"Kontrol total aset milyaran dalam satu genggaman."</p>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-ENTERPRISE", "https://wa.me/6282122190885?text=V-ENTERPRISE", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-        st.markdown("---")
+    st.markdown("---")
 
-    # BARIS 3: V-ULTRA (FULL WIDTH - LEGENDARY LEVEL)
-        st.subheader("5. V-ULTRA (Legendary Level)")
+    # BARIS 3: V-ULTRA (Full Width)
+    st.subheader("5. V-ULTRA (Legendary Level)")
     with st.container(border=True):
-        u1, u2 = st.columns([1, 1])
+        u1, u2 = st.columns(2)
         with u1:
-            st.caption("Target: Investor Multi-Cabang, Pemilik Jaringan Hotel/Resort")
-            st.write("**Fungsi:** Decision Support System (DSS) Prediktif")
+            st.caption("Target: Investor & Pemilik Jaringan Bisnis")
             st.markdown("""
-            * ✅ **Multi-Branch Executive Dashboard**: Rekap performa seluruh cabang dalam satu layar.
-            * ✅ **Leakage Heatmap**: Peta titik panas lokasi paling rawan kebocoran.
-            * ✅ **Profit Optimizer**: Saran stok & operasional berbasis tren pembelian.
+            * ✅ **Multi-Branch Executive Dashboard**
+            * ✅ **Leakage Heatmap (Titik Bocor)**
+            * ✅ **Profit Optimizer AI**
             """)
         with u2:
-         st.markdown("""
-            * ✅ **White-Label Branding**: Gunakan logo & nama perusahaan Anda sendiri.
-            * ✅ **VIP Priority Support**: Respons tim ahli < 15 menit & Monitoring 24/7.
-            * ✅ **H-7 Multi-Vendor Invoice**: Kontrol tagihan lintas vendor otomatis.
+            st.markdown("""
+            * ✅ **White-Label Branding**
+            * ✅ **VIP Priority Support < 15 Menit**
             """)
-         st.info("💰 Aktivasi: 25jt | Rp 14.9jt/bln")
-         st.link_button("Hubungi Eksklusif V-ULTRA", "https://wa.me/6282122190885?text=Halo%20Founder,%20V-ULTRA", use_container_width=True)
-            
+            st.info("💰 Aktivasi: 25jt | Rp 14.9jt/bln")
+            st.link_button("Hubungi Eksklusif V-ULTRA", "https://wa.me/6282122190885?text=V-ULTRA", use_container_width=True)
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
