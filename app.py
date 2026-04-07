@@ -86,7 +86,7 @@ if menu == "Visi & Misi":
 
         st.markdown("---")
 
-import streamlit as st
+        import streamlit as st
 
 elif "Produk & Layanan":
     st.title("🛡️ Daftar Layanan V-GUARD AI Systems")
