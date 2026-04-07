@@ -87,7 +87,6 @@ if menu == "Visi & Misi":
     st.markdown("---")
 
 elif menu == "Produk & Layanan":
-elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     st.markdown("---")
     
