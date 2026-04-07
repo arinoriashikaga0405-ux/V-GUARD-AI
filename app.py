@@ -568,7 +568,6 @@ elif menu == "Admin Control Center":
 
    # --- FOOTER COPYRIGHT (Muncul di Semua Halaman) ---
 st.markdown("<br><br>", unsafe_allow_html=True) # Memberi jarak agar tidak menempel ke konten
-st.markdown("---")
 st.markdown(
     """
     <div style="text-align: center; color: #666; font-size: 12px; padding-bottom: 20px;">
