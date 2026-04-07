@@ -222,10 +222,10 @@ elif menu == "Analisis ROI Kerugian":
         col_a, col_b = st.columns(2)
     
         with col_a:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100_000_000)
-        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
-        loss = omzet * (leak / 100)
-        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
+            omzet = st.number_input("Omzet Bulanan (Rp)", value=100_000_000)
+            leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
+            loss = omzet * (leak / 100)
+            st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
         
         with col_b:
         st.subheader("💡 Solusi V-GUARD")
