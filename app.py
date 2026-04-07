@@ -46,8 +46,8 @@ with st.sidebar:
 
 if menu == "Visi & Misi":
     st.markdown("---")
-    # Membuat dua kolom: Kolom 1 untuk Foto (lebar 1), Kolom 2 untuk Teks (lebar 2)
-    col_foto, col_teks = st.columns([1, 2])
+    # Membuat dua kolom: Kolom 1 untuk Foto, Kolom 2 untuk Teks Visi & Misi
+    col_foto, col_teks = st.columns([1, 2.5])
 
     with col_foto:
         if os.path.exists("erwin.jpg"):
@@ -57,27 +57,35 @@ if menu == "Visi & Misi":
 
     with col_teks:
         st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
-        # Menggunakan Justify agar teks terlihat rapi dan memenuhi area samping foto
+        # Narasi 250 Kata mencakup semua sektor usaha
         st.markdown(f"""
-        <div style="text-align: justify; line-height: 1.6; color: #d1d5db;">
-        V-GUARD AI lahir dari urgensi akan sistem keamanan yang tidak hanya sekadar merekam, 
-        tetapi mampu memberikan kepastian hukum dan data bagi pemilik bisnis. Visi kami adalah 
-        mendigitalisasi kepercayaan di setiap titik operasional perusahaan. Kami percaya bahwa 
-        di era modern, kepercayaan harus didasarkan pada data yang akurat dan transparan. 
-        Melalui teknologi AI, kami bertekad menghilangkan segala bentuk 'kebocoran'—baik itu 
-        kebocoran aset, inefisiensi waktu, maupun hilangnya peluang bisnis akibat sistem 
-        pemantauan yang pasif. Kami membangun masa depan di mana setiap pengusaha dapat tidur 
-        nyenyak karena operasional mereka dijaga oleh kecerdasan yang proaktif dan terintegrasi.
+        <div style="text-align: justify; line-height: 1.7; color: #d1d5db; font-size: 15px;">
+        <b>V-GUARD AI Intelligence</b> didirikan atas dasar keyakinan bahwa kepercayaan di era digital 
+        harus didukung oleh data yang objektif dan transparan. Visi utama kami, <b>Digitizing Trust, 
+        Eliminating Leakage</b>, bukan sekadar semboyan, melainkan komitmen kami untuk memberikan 
+        kepastian operasional bagi para pemimpin bisnis. Kami memahami bahwa tantangan terbesar dalam 
+        setiap organisasi adalah menjaga integritas di setiap lini. Oleh karena itu, kami hadir untuk 
+        mendigitalisasi kepercayaan tersebut, memastikan bahwa setiap interaksi dan proses bisnis 
+        tercatat dengan presisi yang tidak dapat dimanipulasi.
         <br><br>
-        Misi kami mencakup inovasi AI proaktif yang mampu memprediksi anomali sebelum kerugian terjadi, 
-        serta menyediakan dashboard analitik yang menyajikan data secara jujur dan real-time. 
-        Kami berfokus pada eliminasi kebocoran operasional di sektor hospitality dan otomotif 
-        demi profitabilitas maksimal. Dengan skala nasional, kami membangun infrastruktur digital 
-        yang kokoh untuk menjaga integritas aset Anda tanpa celah.
+        Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang dapat 
+        diadaptasi oleh <b>seluruh sektor jenis usaha</b>, mulai dari manufaktur, ritel, jasa, hingga 
+        pengelolaan properti skala besar. Melalui teknologi deteksi visual tingkat lanjut, kami bertekad 
+        menghilangkan segala bentuk kebocoran (leakage)—baik itu kebocoran finansial, inefisiensi tenaga kerja, 
+        maupun potensi kehilangan aset fisik. Kami mengubah sistem keamanan yang awalnya bersifat pasif 
+        menjadi asisten analitik proaktif yang bekerja 24/7.
+        <br><br>
+        Dengan membangun infrastruktur digital yang kokoh di tingkat nasional, V-GUARD AI berkomitmen 
+        untuk mengoptimalkan profitabilitas klien kami melalui eliminasi celah operasional secara total. 
+        Kami percaya bahwa melalui transparansi data yang dihasilkan oleh AI, setiap pemilik usaha dapat 
+        mengambil keputusan strategis dengan tingkat keyakinan yang lebih tinggi. Kami adalah mitra 
+        strategis Anda dalam menjaga masa depan bisnis yang bersih, efisien, dan berkelanjutan 
+        di seluruh pelosok nusantara.
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
+
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
