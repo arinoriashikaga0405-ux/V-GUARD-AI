@@ -88,7 +88,7 @@ if menu == "Visi & Misi":
 
 import streamlit as st
 
-def show_produk_layanan():
+elif_menu == "Produk & Layanan":
     st.title("🛡️ Daftar Layanan V-GUARD AI Systems")
     st.write("Solusi kecerdasan buatan untuk keamanan transaksi dan optimalisasi profit bisnis Anda.")
     st.markdown("---")
