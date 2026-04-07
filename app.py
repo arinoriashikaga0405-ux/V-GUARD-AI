@@ -92,7 +92,7 @@ elif "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI Intelligence</h2>", unsafe_allow_html=True)
     st.markdown("---")
 
-    # CSS untuk membuat styling kartu yang bersih dan responsif
+    # CSS Terbaru: Putih Bersih & Profesional
     st.markdown("""
         <style>
         .service-card {
@@ -102,29 +102,34 @@ elif "Produk & Layanan":
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 10px;
-            min-height: 450px;
+            min-height: 440px;
             color: #31333F;
             display: flex;
             flex-direction: column;
         }
         .price-tag {
-            background-color: #e8f0fe;
+            background-color: #ffffff; 
+            border: 1px solid #eeeeee;
             padding: 8px;
             border-radius: 8px;
             margin-top: auto;
+            text-align: center;
         }
         .price-text {
             color: #1a73e8;
             font-weight: bold;
             margin: 0;
-            font-size: 0.85em;
+            font-size: 0.9em;
         }
-        h3 { font-size: 1.1em !important; margin-bottom: 5px !important; }
+        h3 { font-size: 1.1em !important; margin-bottom: 5px !important; color: #1a73e8; }
         </style>
     """, unsafe_allow_html=True)
 
-    # Membuat 5 Kolom untuk 5 Produk Utama termasuk V-ULTRA
+    # Membuat 5 Kolom Sejajar
     col1, col2, col3, col4, col5 = st.columns(5)
+    
+    # Base link WhatsApp Bapak
+    wa_link = "https://wa.me/6282122190885?text="
 
     with col1:
         st.markdown(f"""
@@ -137,12 +142,12 @@ elif "Produk & Layanan":
                 <li>Monthly PDF Report</li>
             </ul>
             <div class="price-tag">
-                <p class="price-text">Pasang: 1.5 Jt</p>
-                <p class="price-text">Bulan: 750 rb</p>
+                <p class="price-text">Aktivasi: 1.5 Jt</p>
+                <p class="price-text">Bulanan: 750 rb</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        st.button("Pilih V-LITE", key="btn_lite", use_container_width=True)
+        st.link_button("Pilih V-LITE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-LITE", use_container_width=True)
 
     with col2:
         st.markdown(f"""
@@ -155,12 +160,12 @@ elif "Produk & Layanan":
                 <li>H-7 Auto-Invoice</li>
             </ul>
             <div class="price-tag">
-                <p class="price-text">Pasang: 3 Jt</p>
-                <p class="price-text">Bulan: 1.5 Jt</p>
+                <p class="price-text">Aktivasi: 3 Jt</p>
+                <p class="price-text">Bulanan: 1.5 Jt</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        st.button("Pilih V-PRO", key="btn_pro", use_container_width=True)
+        st.link_button("Pilih V-PRO", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-PRO", use_container_width=True)
 
     with col3:
         st.markdown(f"""
@@ -173,12 +178,12 @@ elif "Produk & Layanan":
                 <li>Real-Time Stock</li>
             </ul>
             <div class="price-tag">
-                <p class="price-text">Pasang: 7,5 Jt</p>
-                <p class="price-text">Bulan: 3,5 Jt</p>
+                <p class="price-text">Aktivasi: 7,5 Jt</p>
+                <p class="price-text">Bulanan: 3,5 Jt</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        st.button("Pilih V-SIGHT", key="btn_sight", use_container_width=True)
+        st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-SIGHT", use_container_width=True)
 
     with col4:
         st.markdown(f"""
@@ -191,12 +196,12 @@ elif "Produk & Layanan":
                 <li>Custom AI SOP</li>
             </ul>
             <div class="price-tag">
-                <p class="price-text">Pasang: 15 Jt</p>
-                <p class="price-text">Bulan: 10 Jt</p>
+                <p class="price-text">Aktivasi: 15 Jt</p>
+                <p class="price-text">Bulanan: 10 Jt</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        st.button("Pilih V-ENTERPRISE", key="btn_ent", use_container_width=True)
+        st.link_button("Pilih V-ENTERPRISE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-ENTERPRISE", use_container_width=True)
 
     with col5:
         st.markdown(f"""
@@ -207,15 +212,15 @@ elif "Produk & Layanan":
                 <li>Executive Dashboard</li>
                 <li>Leakage Heatmap</li>
                 <li>White-Label Branding</li>
-                <li>VIP Priority Support</li>
+                <li>VIP Priority</li>
             </ul>
-            <div class="price-tag" style="background-color: #fff9db;">
-                <p class="price-text" style="color: #d4a017;">Pasang: 25 Jt</p>
-                <p class="price-text" style="color: #d4a017;">Bulan: 14.9 Jt</p>
+            <div class="price-tag">
+                <p class="price-text">Aktivasi: 25 Jt</p>
+                <p class="price-text">Bulanan: 14.9 Jt</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        st.button("Pilih V-ULTRA", key="btn_ultra", use_container_width=True)
+        st.link_button("Pilih V-ULTRA", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-ULTRA", use_container_width=True)
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
