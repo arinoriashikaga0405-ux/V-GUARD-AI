@@ -88,7 +88,7 @@ if menu == "Visi & Misi":
 
         import streamlit as st
 
-elif "Produk & Layanan":
+elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     st.markdown("---")
 
