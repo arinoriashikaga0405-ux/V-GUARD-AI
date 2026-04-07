@@ -222,8 +222,8 @@ st.markdown("---")
 st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
 
 elif menu == "Analisis ROI Kerugian":
-    st.header("📊 Analisis Potensi Kerugian vs ROI")
-    col_a, col_b = st.columns(2)
+st.header("📊 Analisis Potensi Kerugian vs ROI")
+col_a, col_b = st.columns(2)
     with col_a:
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
         leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
