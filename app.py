@@ -45,7 +45,7 @@ with st.sidebar:
 # --- 4. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
-    if menu == "Visi & Misi":
+
     st.header("Visi & Misi V-Guard AI Intelligence")
     
     # Mempertahankan foto Bapak dari kode lama
