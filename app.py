@@ -56,7 +56,7 @@ if menu == "Visi & Misi":
             st.info("Foto 'erwin.jpg' tidak ditemukan")
 
     with col_teks:
-        st.subheader("Visi: Digitizing Trust, Eliminating Leakage")
+        st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
         # Menggunakan Justify agar teks terlihat rapi dan memenuhi area samping foto
         st.markdown(f"""
         <div style="text-align: justify; line-height: 1.6; color: #d1d5db;">
