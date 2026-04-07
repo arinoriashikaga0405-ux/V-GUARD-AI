@@ -158,7 +158,7 @@ def show_produk_layanan():
         st.link_button("Konsultasi V-PRO", "https://wa.me/6282122190885?text=Halo%20Admin,%20V-PRO", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("---")
+        st.markdown("---")
 
     # BARIS 2: V-SIGHT & V-ENTERPRISE
     col3, col4 = st.columns(2)
@@ -217,7 +217,7 @@ def show_produk_layanan():
          st.info("💰 Aktivasi: 25jt | Rp 14.9jt/bln")
          st.link_button("Hubungi Eksklusif V-ULTRA", "https://wa.me/6282122190885?text=Halo%20Founder,%20V-ULTRA", use_container_width=True)
             
-     elif menu == "Analisis ROI Kerugian":
+elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
     
