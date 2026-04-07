@@ -87,8 +87,8 @@ if menu == "Visi & Misi":
     st.markdown("---")
 
 elif menu == "Produk & Layanan":
-    st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
-    st.markdown("---")
+    st.header("🛡️ Portfolio Layanan V-Guard AI ")
+   
     
     wa_number = "6282122190885"
 
@@ -160,8 +160,7 @@ elif menu == "Produk & Layanan":
 
     st.markdown("---")
     st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
-    st.markdown("---")
-    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
+    
 elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
