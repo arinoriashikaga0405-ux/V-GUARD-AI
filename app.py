@@ -87,62 +87,65 @@ if menu == "Visi & Misi":
     st.markdown("---")
 
 elif menu == "Produk & Layanan":
+elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
+    st.markdown("---")
+    
     wa_number = "6282122190885"
-    
-    # 1. Tampilan Detail Paket dalam Kolom
-    c1, c2, c3, c4 = st.columns(4)
-    
-    packages = {
-        "V-LITE": [
-            "Mikro / 1 Kasir", 
-            "1.5 Jt", 
-            "750 rb", 
-            "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"
-        ],
-        "V-PRO": [
-            "Retail & Kafe", 
-            "3 Jt", 
-            "1.5 Jt", 
-            "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"
-        ],
-        "V-SIGHT": [
-            "Gudang & Toko", 
-            "7,5 Jt", 
-            "3,5 Jt", 
-            "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"
-        ],
-        "V-ENTERPRISE": [
-            "Korporasi", 
-            "15 Jt", 
-            "10 Jt", 
-            "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"
-        ]
+
+    # Data Produk (Sesuai update terakhir Bapak)
+    products = {
+        "V-LITE (Entry Level)": {
+            "target": "Toko kelontong, butik kecil, atau kedai kopi (1 Kasir).",
+            "fitur": ["AI Fraud Detector Dasar", "Daily WA/Email Summary", "Monthly PDF Recap"],
+            "biaya": "Aktivasi Rp 1.500.000 | Langganan Rp 550.000/bln",
+            "msg": "Halo Admin, saya tertarik dengan paket V-LITE."
+        },
+        "V-PRO (Growth Level)": {
+            "target": "Restoran, kafe menengah, atau toko retail dengan stok banyak.",
+            "fitur": ["VCS Integration", "Bank Statement Audit", "H-7 Auto-Invoice", "Fraud Alarm Instan"],
+            "biaya": "Aktivasi Rp 3.000.000 | Langganan Rp 1.500.000/bln",
+            "msg": "Halo Admin, saya tertarik paket V-PRO dengan fitur Alarm Fraud & Invoice H-7."
+        },
+        "V-SIGHT (Monitoring Level)": {
+            "target": "Gudang distributor, minimarket, atau toko emas.",
+            "fitur": ["CCTV AI Behavior", "Visual Cashier Audit", "H-7 Auto-Invoice", "Weekly & Monthly Audit Report"],
+            "biaya": "Aktivasi Rp 5.000.000 | Langganan Rp 2.999.000/bln",
+            "msg": "Halo Admin, mohon info paket V-SIGHT termasuk laporan Audit Bulanan & Mingguan."
+        },
+        "V-ENTERPRISE (Ultimate)": {
+            "target": "Perusahaan besar, jaringan ritel nasional, atau pabrik.",
+            "fitur": ["The Core Brain", "Forensic AI (1 Thn)", "Corporate Invoice H-7", "Full Forensic Monthly Audit"],
+            "biaya": "Aktivasi Rp 10.000.000 | Langganan Rp 6.999.000/bln",
+            "msg": "Halo Admin, kami tertarik paket V-ENTERPRISE untuk skala korporasi."
+        },
+        "V-ULTRA (Legendary)": {
+            "target": "Investor multi-cabang atau pemilik jaringan hotel/resort.",
+            "fitur": ["Multi-Branch Dashboard", "Leakage Heatmap", "White-Label Branding", "VIP Monthly Audit & Advisory"],
+            "biaya": "Aktivasi Rp 25.000.000 | Langganan Rp 14.999.000/bln",
+            "msg": "Halo Admin, saya ingin paket V-ULTRA dengan fitur White-Label dan Audit VIP."
+        }
     }
 
-    for i, (name, details) in enumerate(packages.items()):
-        with [c1, c2, c3, c4][i]:
+    # Menampilkan Produk dalam Grid 2 Kolom
+    cols = st.columns(2)
+    for index, (name, info) in enumerate(products.items()):
+        with cols[index % 2]:
             with st.container(border=True):
-                st.markdown(f"### 📦 {name}")
-                st.caption(f"🎯 Target: {details[0]}")
-                st.markdown(f"- {details[3]}")
-                st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
-                # Tombol WA Otomatis sesuai paket
-                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
-
-    # 2. Tabel Perbandingan Eksekutif
-    st.markdown("---")
-    st.subheader("📊 Tabel Perbandingan Eksekutif")
-    st.markdown(f"""
-    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
-    | :--- | :---: | :---: | :---: | :---: |
-    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
-    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 5 Jt | 15 Jt |
-    | **Biaya Langganan** | 750 rb | 1.5 Jt | 3,5 Jt | 10 Jt |
-    """)
+                st.subheader(name)
+                st.caption(f"🎯 Target: {info['target']}")
+                
+                st.write("**Fitur Unggulan:**")
+                for f in info['fitur']:
+                    st.markdown(f"- {f}")
+                
+                st.info(f"💰 **Investasi:** {info['biaya']}")
+                
+                # Membuat Tombol WhatsApp
+                encoded_msg = info['msg'].replace(" ", "%20")
+                wa_url = f"https://wa.me/{wa_number}?text={encoded_msg}"
+                
+                st.link_button(f"Konsultasi {name}", wa_url, use_container_width=True, type="primary")
 
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
