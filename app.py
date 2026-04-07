@@ -184,11 +184,11 @@ def show_produk_layanan():
         st.markdown('<div class="price-box">💰 Aktivasi: 10jt | Rp 6.9jt/bln</div>', unsafe_allow_html=True)
         st.link_button("Konsultasi V-ENTERPRISE", "https://wa.me/6282122190885?text=Halo%20Admin,%20saya%20tertarik%20paket%20V-ENTERPRISE", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
- elif menu == "Analisis ROI Kerugian":
+     elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
     
-    with col_a:
+     with col_a:
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100_000_000)
         leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
