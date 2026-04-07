@@ -566,24 +566,14 @@ elif menu == "Admin Control Center":
             st.info(f"**Total Pendapatan Pak Erwin (CEO):** Rp { (total_profit_sharing * porsi_tim['CEO (Erwin Sinaga)']) + biaya_ops_30 :,.0f} (Termasuk Cadangan Ops)")
             # Tambahkan ini di bagian paling akhir kode Python Anda
 
+   # --- FOOTER COPYRIGHT (Muncul di Semua Halaman) ---
+st.markdown("<br><br>", unsafe_allow_html=True) # Memberi jarak agar tidak menempel ke konten
+st.markdown("---")
+st.markdown(
     """
-    <style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: transparent;
-        color: #666;
-        text-align: center;
-        padding: 10px;
-        font-size: 12px;
-        letter-spacing: 1px;
-    }
-    </style>
-    <div class="footer">
-        <p>© 2026 V-GUARD AI Intelligence | Digitizing Trust, Eliminating Leakage</p>
+    <div style="text-align: center; color: #666; font-size: 12px; padding-bottom: 20px;">
+        © 2026 V-GUARD AI Intelligence | Digitizing Trust, Eliminating Leakage
     </div>
-    """,
+    """, 
     unsafe_allow_html=True
 )
