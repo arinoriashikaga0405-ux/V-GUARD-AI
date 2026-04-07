@@ -248,7 +248,7 @@ elif menu == "Dashboard Client":
     st.info("Halaman ini dalam tahap pengembangan.")
     pass
 
-st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
+    st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     c_reg, c_log = st.columns(2)
