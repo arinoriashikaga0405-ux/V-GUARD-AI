@@ -228,9 +228,9 @@ elif menu == "Analisis ROI Kerugian":
             st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
         
         with col_b:
-        st.subheader("💡 Solusi V-GUARD")
-        st.write("Dengan menutup celah kebocoran ini, investasi Anda akan kembali dalam waktu singkat.")
-        # Tambahkan logika perhitungan BEP di sini jika perlu
+            st.subheader("💡 Solusi V-GUARD")
+            st.write("Dengan menutup celah kebocoran ini, investasi Anda akan kembali dalam waktu singkat.")
+            # Tambahkan logika perhitungan BEP di sini jika perlu
 
 elif menu == "Dashboard Client":
     st.info("Halaman ini dalam tahap pengembangan.")
