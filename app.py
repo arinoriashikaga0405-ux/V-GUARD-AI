@@ -45,45 +45,39 @@ with st.sidebar:
 # --- 4. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
+    st.markdown("---")
+    # Membuat dua kolom: Kolom 1 untuk Foto (lebar 1), Kolom 2 untuk Teks (lebar 2)
+    col_foto, col_teks = st.columns([1, 2])
 
-    st.header("Visi & Misi V-Guard AI Intelligence")
-    
-    # Mempertahankan foto Bapak dari kode lama
-    col_img, col_txt = st.columns([1, 2])
-    
-    with col_img:
+    with col_foto:
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
-            
-    with col_txt:
-        # VISI UTAMA (Narasi 200 Kata)
+        else:
+            st.info("Foto 'erwin.jpg' tidak ditemukan")
+
+    with col_teks:
         st.subheader("Visi: Digitizing Trust, Eliminating Leakage")
+        # Menggunakan Justify agar teks terlihat rapi dan memenuhi area samping foto
         st.markdown(f"""
-        <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
-        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital. 
-        Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade, kami percaya bahwa 
-        kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia, melainkan harus dibangun di atas 
-        fondasi teknologi AI yang presisi. 
+        <div style="text-align: justify; line-height: 1.6; color: #d1d5db;">
+        V-GUARD AI lahir dari urgensi akan sistem keamanan yang tidak hanya sekadar merekam, 
+        tetapi mampu memberikan kepastian hukum dan data bagi pemilik bisnis. Visi kami adalah 
+        mendigitalisasi kepercayaan di setiap titik operasional perusahaan. Kami percaya bahwa 
+        di era modern, kepercayaan harus didasarkan pada data yang akurat dan transparan. 
+        Melalui teknologi AI, kami bertekad menghilangkan segala bentuk 'kebocoran'—baik itu 
+        kebocoran aset, inefisiensi waktu, maupun hilangnya peluang bisnis akibat sistem 
+        pemantauan yang pasif. Kami membangun masa depan di mana setiap pengusaha dapat tidur 
+        nyenyak karena operasional mereka dijaga oleh kecerdasan yang proaktif dan terintegrasi.
         <br><br>
-        Melalui teknologi AI, kami bertekad menghilangkan segala bentuk 'kebocoran'—baik itu kebocoran aset, 
-        inefisiensi waktu, maupun hilangnya peluang bisnis akibat sistem pemantauan yang pasif. 
-        Kami membangun masa depan di mana setiap pengusaha dapat menjalankan operasional mereka dengan tenang 
-        karena setiap Rupiah dan aset dijaga oleh kecerdasan yang proaktif.
+        Misi kami mencakup inovasi AI proaktif yang mampu memprediksi anomali sebelum kerugian terjadi, 
+        serta menyediakan dashboard analitik yang menyajikan data secara jujur dan real-time. 
+        Kami berfokus pada eliminasi kebocoran operasional di sektor hospitality dan otomotif 
+        demi profitabilitas maksimal. Dengan skala nasional, kami membangun infrastruktur digital 
+        yang kokoh untuk menjaga integritas aset Anda tanpa celah.
         </div>
         """, unsafe_allow_html=True)
 
-    # MISI STRATEGIS (Di bawah foto dan narasi)
     st.markdown("---")
-    st.subheader("🚀 Misi Strategis Perusahaan")
-    misi_points = [
-        "**Inovasi AI Proaktif:** Mengubah CCTV pasif menjadi asisten operasional yang mampu memprediksi anomali.",
-        "**Integritas & Transparansi:** Menyediakan dashboard real-time untuk kontrol penuh aset dari mana saja.",
-        "**Eliminasi Kebocoran:** Mengoptimalkan kinerja staf dan profitabilitas di sektor hospitality & otomotif.",
-        "**Skalabilitas Nasional:** Infrastruktur digital kokoh yang siap diadopsi skala industri nasional."
-    ]
-    
-    for point in misi_points:
-        st.markdown(f"- {point}")
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
