@@ -221,7 +221,7 @@ elif menu == "Dashboard Client":
 st.markdown("---")
 st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
 
- elif menu == "Analisis ROI Kerugian":
+elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
     with col_a:
