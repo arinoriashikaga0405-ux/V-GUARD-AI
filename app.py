@@ -86,77 +86,138 @@ if menu == "Visi & Misi":
 
     st.markdown("---")
 
-elif menu == "Produk & Layanan":
-    st.header("🛡️ Portfolio Layanan V-Guard AI ")
-   
-    
-    wa_number = "6282122190885"
+import streamlit as st
 
-    # Data Produk
-    products = [
-        {
-            "name": "V-LITE",
-            "target": "Toko, butik, kedai kopi.",
-            "fitur": ["AI Fraud Detector Dasar", "Daily Summary", "Monthly PDF Recap"],
-            "biaya": "Aktivasi Rp 1.5M | Rp 550rb/bln",
-            "msg": "Halo Admin, saya tertarik paket V-LITE."
-        },
-        {
-            "name": "V-PRO",
-            "target": "Restoran, kafe, retail.",
-            "fitur": ["VCS Integration", "Bank Audit", "H-7 Invoice", "Fraud Alarm Instan"],
-            "biaya": "Aktivasi Rp 3M | Rp 1.5M/bln",
-            "msg": "Halo Admin, saya tertarik paket V-PRO."
-        },
-        {
-            "name": "V-SIGHT",
-            "target": "Gudang, minimarket, emas.",
-            "fitur": ["CCTV AI Behavior", "Visual Audit", "H-7 Invoice", "Audit Report"],
-            "biaya": "Aktivasi Rp 5M | Rp 2.9M/bln",
-            "msg": "Halo Admin, mohon info paket V-SIGHT."
-        },
-        {
-            "name": "V-ENTERPRISE",
-            "target": "Korporasi, pabrik, ritel.",
-            "fitur": ["The Core Brain", "Forensic AI", "Corp Invoice", "Full Forensic Audit"],
-            "biaya": "Aktivasi Rp 10M | Rp 6.9M/bln",
-            "msg": "Halo Admin, kami tertarik paket V-ENTERPRISE."
-        },
-        {
-            "name": "V-ULTRA",
-            "target": "Investor hotel & resort.",
-            "fitur": ["Multi-Branch Dashboard", "Leakage Heatmap", "White-Label", "VIP Advisory"],
-            "biaya": "Aktivasi Rp 25M | Rp 14.9M/bln",
-            "msg": "Halo Admin, saya ingin paket V-ULTRA."
+# 1. DEFINISI FUNGSI TAMPILAN PRODUK
+def show_produk_layanan():
+    st.title("🛡️ Daftar Layanan V-GUARD AI Systems")
+    st.write("Solusi kecerdasan buatan untuk keamanan transaksi dan optimalisasi profit bisnis Anda.")
+    st.markdown("---")
+
+    # CSS Khusus untuk Kartu Produk (Warna Putih, Border Halus, Tinggi Seragam)
+    st.markdown("""
+        <style>
+        [data-testid="stVerticalBlock"] > div:has(div.pk-card) {
+            background-color: #ffffff;
+            border: 1px solid #e6e9ef;
+            padding: 25px;
+            border-radius: 12px;
+            min-height: 580px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
         }
-    ]
+        .price-box {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 5px solid #2e7d32;
+            margin: 15px 0;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
-    # --- Trik Sejajarkan Tombol ---
-    # Kita bagi per baris (row) agar tombol selalu sejajar di baris yang sama
-    for i in range(0, len(products), 3):
-        batch = products[i:i+3]
-        cols = st.columns(3)
-        
-        # Iterasi pertama untuk konten (Fitur & Judul)
-        for idx, item in enumerate(batch):
-            with cols[idx]:
-                with st.container(border=True):
-                    st.markdown(f"#### {item['name']}")
-                    st.caption(f"🎯 {item['target']}")
-                    
-                    # Kita batasi tinggi fitur agar area box seimbang
-                    fitur_text = "".join([f"• {f}<br>" for f in item['fitur']])
-                    st.markdown(f"<div style='min-height: 120px;'>{fitur_text}</div>", unsafe_allow_html=True)
-                    
-                    st.write("**💰 Investasi:**")
-                    st.code(item['biaya'], language=None)
-                    
-                    # Link WhatsApp
-                    encoded_msg = item['msg'].replace(" ", "%20")
-                    wa_url = f"https://wa.me/{wa_number}?text={encoded_msg}"
-                    
-                    # Tombol Putih Sejajar
-                    st.link_button("Konsultasi", wa_url, use_container_width=True, type="secondary")
+    # BARIS 1: V-LITE & V-PRO
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown('<div class="pk-card">', unsafe_allow_html=True)
+        st.subheader("1. V-LITE (Entry Level)")
+        st.caption("Target: Toko Kelontong, Kedai Kopi (1 Kasir)")
+        st.write("**Fungsi Utama:** CCTV Digital Transaksi")
+        st.markdown("""
+        * ✅ **AI Fraud Detector Dasar** (Deteksi barang keluar tanpa input)
+        * ✅ **Daily Summary (WA/Email)** (Laporan harian otomatis)
+        * ✅ **Monthly PDF Recap** (Rekapitulasi evaluasi profit)
+        """)
+        st.markdown('<div class="price-box">💰 <b>Aktivasi: 1.5jt</b> | Rp 550rb/bln</div>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-LITE", "https://wa.me/6282122190885?text=Halo%20Admin,%20saya%20tertarik%20paket%20V-LITE", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col2:
+        st.markdown('<div class="pk-card">', unsafe_allow_html=True)
+        st.subheader("2. V-PRO (Growth Level)")
+        st.caption("Target: Restoran, Kafe, Retail Stok Banyak")
+        st.write("**Fungsi Utama:** Otomasi Audit & Keuangan")
+        st.markdown("""
+        * ✅ **VCS Integration** (Sinkronisasi stok & kasir otomatis)
+        * ✅ **Bank Statement Audit** (Cek manipulasi transfer bank)
+        * ✅ **H-7 Auto-Invoice** (Pengingat tagihan supplier)
+        * ✅ **Fraud Alarm Instan** (Notifikasi bahaya ke HP Owner)
+        """)
+        st.markdown('<div class="price-box">💰 <b>Aktivasi: 3jt</b> | Rp 1.5jt/bln</div>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-PRO", "https://wa.me/6282122190885?text=Halo%20Admin,%20saya%20tertarik%20paket%20V-PRO", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # BARIS 2: V-SIGHT & V-ENTERPRISE
+    col3, col4 = st.columns(2)
+
+    with col3:
+        st.markdown('<div class="pk-card">', unsafe_allow_html=True)
+        st.subheader("3. V-SIGHT (Monitoring)")
+        st.caption("Target: Gudang, Minimarket, Toko Emas")
+        st.write("**Fungsi Utama:** CCTV Pintar & Visual AI")
+        st.markdown("""
+        * ✅ **CCTV AI Behavior** (Deteksi gerak mencurigakan)
+        * ✅ **Visual Cashier Audit** (Verifikasi wajah vs data kasir)
+        * ✅ **H-7 Auto-Invoice** (Manajemen tagihan vendor)
+        * ✅ **Fraud Alarm** (Sirine lokal & Notifikasi HP)
+        * ✅ **Audit Report Visual** (Analisis pola perilaku staf/tamu)
+        """)
+        st.markdown('<div class="price-box">💰 <b>Aktivasi: 7.5jt</b> | Rp 2.9jt/bln</div>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-SIGHT", "https://wa.me/6282122190885?text=Halo%20Admin,%20saya%20tertarik%20paket%20V-SIGHT", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col4:
+        st.markdown('<div class="pk-card">', unsafe_allow_html=True)
+        st.subheader("4. V-ENTERPRISE (Ultimate)")
+        st.caption("Target: Korporasi, Jaringan Ritel Nasional")
+        st.write("**Fungsi Utama:** Kontrol Total Infrastruktur & SOP")
+        st.markdown("""
+        * ✅ **The Core Brain** (Olah data ribuan cabang sekaligus)
+        * ✅ **Forensic AI** (Pelacakan investigasi hingga 1 tahun)
+        * ✅ **Dedicated Private Server** (Keamanan data eksklusif)
+        * ✅ **Custom AI SOP** (AI dilatih sesuai aturan perusahaan)
+        * ✅ **H-7 Corporate Invoice** & **Fraud Alarm Enterprise**
+        """)
+        st.markdown('<div class="price-box">💰 <b>Aktivasi: 10jt</b> | Rp 6.9jt/bln</div>', unsafe_allow_html=True)
+        st.link_button("Konsultasi V-ENTERPRISE", "https://wa.me/6282122190885?text=Halo%20Admin,%20saya%20tertarik%20paket%20V-ENTERPRISE", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # BARIS 3: V-ULTRA (FULL WIDTH)
+    st.subheader("5. V-ULTRA (Legendary Level)")
+    with st.container(border=True):
+        c1, c2 = st.columns([1, 1])
+        with c1:
+            st.caption("Target: Investor Multi-Cabang, Pemilik Hotel/Resort")
+            st.write("**Fungsi:** Decision Support System (DSS) Prediktif")
+            st.markdown("""
+            * ✅ **Multi-Branch Executive Dashboard**
+            * ✅ **Leakage Heatmap** (Peta titik panas kebocoran)
+            * ✅ **Profit Optimizer** (Saran operasional berbasis tren)
+            """)
+        with c2:
+            st.markdown("""
+            * ✅ **White-Label Branding** (Logo & Nama Perusahaan Anda)
+            * ✅ **H-7 Multi-Vendor Invoice**
+            * ✅ **Fraud Alarm & VIP Support** (Respons < 15 Menit)
+            """)
+            st.info("💰 Aktivasi: 25jt | Rp 14.9jt/bln")
+            st.link_button("Hubungi Eksklusif V-ULTRA", "https://wa.me/6282122190885?text=Halo%20Admin,%20saya%20ingin%20layanan%20VIP%20V-ULTRA", use_container_width=True)
+
+# 2. LOGIKA NAVIGASI MENU (DI MANA KODE INI DITEMPATKAN)
+# Pastikan variabel 'menu' sudah didefinisikan sebelumnya di sidebar
+
+# if menu == "Beranda":
+#     st.header("Home")
+
+elif menu == "Produk & Layanan":
+    show_produk_layanan()
+
+# elif menu == "Dashboard Client":
+#     pass
 
     st.markdown("---")
     st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
