@@ -93,68 +93,73 @@ elif menu == "Produk & Layanan":
     wa_number = "6282122190885"
 
     # Data Produk
-    products = {
-        "V-LITE": {
-            "full_name": "V-LITE (Entry Level)",
+    products = [
+        {
+            "name": "V-LITE",
             "target": "Toko, butik, kedai kopi.",
-            "fitur": ["AI Fraud Detector", "Daily Summary", "Monthly PDF"],
+            "fitur": ["AI Fraud Detector Dasar", "Daily Summary", "Monthly PDF Recap"],
             "biaya": "Aktivasi Rp 1.5M | Rp 550rb/bln",
-            "msg": "Halo Admin, saya tertarik dengan paket V-LITE."
+            "msg": "Halo Admin, saya tertarik paket V-LITE."
         },
-        "V-PRO": {
-            "full_name": "V-PRO (Growth Level)",
+        {
+            "name": "V-PRO",
             "target": "Restoran, kafe, retail.",
-            "fitur": ["VCS Integration", "Bank Audit", "H-7 Invoice", "Fraud Alarm"],
+            "fitur": ["VCS Integration", "Bank Audit", "H-7 Invoice", "Fraud Alarm Instan"],
             "biaya": "Aktivasi Rp 3M | Rp 1.5M/bln",
             "msg": "Halo Admin, saya tertarik paket V-PRO."
         },
-        "V-SIGHT": {
-            "full_name": "V-SIGHT (Monitoring)",
+        {
+            "name": "V-SIGHT",
             "target": "Gudang, minimarket, emas.",
-            "fitur": ["CCTV AI", "Visual Audit", "H-7 Invoice", "Audit Report"],
+            "fitur": ["CCTV AI Behavior", "Visual Audit", "H-7 Invoice", "Audit Report"],
             "biaya": "Aktivasi Rp 5M | Rp 2.9M/bln",
             "msg": "Halo Admin, mohon info paket V-SIGHT."
         },
-        "V-ENTERPRISE": {
-            "full_name": "V-ENTERPRISE (Ultimate)",
-            "target": "Korporasi, pabrik, ritel nasional.",
-            "fitur": ["The Core Brain", "Forensic AI", "Corp Invoice", "Full Audit"],
+        {
+            "name": "V-ENTERPRISE",
+            "target": "Korporasi, pabrik, ritel.",
+            "fitur": ["The Core Brain", "Forensic AI", "Corp Invoice", "Full Forensic Audit"],
             "biaya": "Aktivasi Rp 10M | Rp 6.9M/bln",
             "msg": "Halo Admin, kami tertarik paket V-ENTERPRISE."
         },
-        "V-ULTRA": {
-            "full_name": "V-ULTRA (Legendary)",
-            "target": "Investor hotel, resort, multi-cabang.",
+        {
+            "name": "V-ULTRA",
+            "target": "Investor hotel & resort.",
             "fitur": ["Multi-Branch Dashboard", "Leakage Heatmap", "White-Label", "VIP Advisory"],
             "biaya": "Aktivasi Rp 25M | Rp 14.9M/bln",
             "msg": "Halo Admin, saya ingin paket V-ULTRA."
         }
-    }
+    ]
 
-    # Gunakan 3 Kolom agar tampilan lebih kecil & padat
-    cols = st.columns(3)
-    for index, (name, info) in enumerate(products.items()):
-        with cols[index % 3]:
-            with st.container(border=True):
-                # Judul lebih kecil
-                st.markdown(f"#### {info['full_name']}")
-                st.caption(f"🎯 {info['target']}")
-                
-                # Fitur dengan poin sederhana
-                for f in info['fitur']:
-                    st.markdown(f"• {f}")
-                
-                # Info biaya yang lebih ringkas
-                st.write(f"**💰 Investasi:**")
-                st.code(info['biaya'], language=None)
-                
-                # Membuat Tombol WhatsApp warna PUTIH
-                encoded_msg = info['msg'].replace(" ", "%20")
-                wa_url = f"https://wa.me/{wa_number}?text={encoded_msg}"
-                
-                # 'secondary' akan menghasilkan tombol warna putih/abu-abu terang
-                st.link_button(f"Konsultasi", wa_url, use_container_width=True, type="secondary")
+    # --- Trik Sejajarkan Tombol ---
+    # Kita bagi per baris (row) agar tombol selalu sejajar di baris yang sama
+    for i in range(0, len(products), 3):
+        batch = products[i:i+3]
+        cols = st.columns(3)
+        
+        # Iterasi pertama untuk konten (Fitur & Judul)
+        for idx, item in enumerate(batch):
+            with cols[idx]:
+                with st.container(border=True):
+                    st.markdown(f"#### {item['name']}")
+                    st.caption(f"🎯 {item['target']}")
+                    
+                    # Kita batasi tinggi fitur agar area box seimbang
+                    fitur_text = "".join([f"• {f}<br>" for f in item['fitur']])
+                    st.markdown(f"<div style='min-height: 120px;'>{fitur_text}</div>", unsafe_allow_html=True)
+                    
+                    st.write("**💰 Investasi:**")
+                    st.code(item['biaya'], language=None)
+                    
+                    # Link WhatsApp
+                    encoded_msg = item['msg'].replace(" ", "%20")
+                    wa_url = f"https://wa.me/{wa_number}?text={encoded_msg}"
+                    
+                    # Tombol Putih Sejajar
+                    st.link_button("Konsultasi", wa_url, use_container_width=True, type="secondary")
 
+    st.markdown("---")
+    st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
     st.markdown("---")
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 elif menu == "Analisis ROI Kerugian":
