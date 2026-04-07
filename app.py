@@ -248,8 +248,6 @@ elif menu == "Dashboard Client":
     st.info("Halaman ini dalam tahap pengembangan.")
     pass
 
-# --- FOOTER (TARUH DI PALING BAWAH, DI LUAR BLOK IF/ELIF) ---
-st.markdown("---")
 st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
