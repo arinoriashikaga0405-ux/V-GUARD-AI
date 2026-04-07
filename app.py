@@ -194,7 +194,7 @@ def show_produk_layanan():
         st.link_button("Konsultasi V-ENTERPRISE", "https://wa.me/6282122190885?text=Halo%20Admin,%20V-ENTERPRISE", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("---")
+        st.markdown("---")
 
     # BARIS 3: V-ULTRA (FULL WIDTH - LEGENDARY LEVEL)
     st.subheader("5. V-ULTRA (Legendary Level)")
@@ -209,7 +209,7 @@ def show_produk_layanan():
             * ✅ **Profit Optimizer**: Saran stok & operasional berbasis tren pembelian.
             """)
         with u2:
-            st.markdown("""
+        st.markdown("""
             * ✅ **White-Label Branding**: Gunakan logo & nama perusahaan Anda sendiri.
             * ✅ **VIP Priority Support**: Respons tim ahli < 15 menit & Monitoring 24/7.
             * ✅ **H-7 Multi-Vendor Invoice**: Kontrol tagihan lintas vendor otomatis.
