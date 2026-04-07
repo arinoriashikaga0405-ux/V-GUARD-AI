@@ -210,13 +210,13 @@ def show_produk_layanan():
 # 2. LOGIKA NAVIGASI MENU (DI MANA KODE INI DITEMPATKAN)
 # Pastikan variabel 'menu' sudah didefinisikan sebelumnya di sidebar
 
-# if menu == "Beranda":
-#     st.header("Home")
-   elif menu == "Produk & Layanan":
+if menu == "Beranda":
+    st.header("Home")
+elif menu == "Produk & Layanan":
     show_produk_layanan()
 
-# elif menu == "Dashboard Client":
-#     pass
+elif menu == "Dashboard Client":
+     pass
 
     st.markdown("---")
     st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
