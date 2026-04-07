@@ -221,13 +221,13 @@ elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
     
-         with col_a:
+        with col_a:
         omzet = st.number_input("Omzet Bulanan (Rp)", value=100_000_000)
         leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
         
-    with col_b:
+        with col_b:
         st.subheader("💡 Solusi V-GUARD")
         st.write("Dengan menutup celah kebocoran ini, investasi Anda akan kembali dalam waktu singkat.")
         # Tambahkan logika perhitungan BEP di sini jika perlu
