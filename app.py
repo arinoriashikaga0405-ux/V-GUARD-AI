@@ -220,26 +220,37 @@ elif menu == "Dashboard Client":
 
 st.markdown("---")
 st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
+# --- LOGIKA NAVIGASI MENU (PASTIKAN SEMUA ELIF SEJAJAR) ---
 
-  elif menu == "Analisis ROI Kerugian":
+if menu == "Beranda":
+    st.title("Selamat Datang di V-GUARD AI")
+    st.write("Solusi kecerdasan buatan untuk keamanan bisnis Anda.")
+
+elif menu == "Produk & Layanan":
+    show_produk_layanan()
+
+elif menu == "Analisis ROI Kerugian":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
+    
     with col_a:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100_000_000)
         leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
-        with col_b:
-            opsi_biaya = {
-                "Rp 1.000.000 (V-LITE)": 1000000,
-                "Rp 2.500.000 (V-STANDARD)": 2500000,
-                "Rp 5.000.000 (V-PRO)": 5000000,
-                "Rp 10.000.000 (V-ULTRA)": 10000000
-                    }
-        pilihan_label = st.selectbox("Pilih Paket Investasi", list(opsi_biaya.keys()))
-        biaya = opsi_biaya[pilihan_label]
-        st.success(f"💰 Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
+        
+    with col_b:
+        st.subheader("💡 Solusi V-GUARD")
+        st.write("Dengan menutup celah kebocoran ini, investasi Anda akan kembali dalam waktu singkat.")
+        # Tambahkan logika perhitungan BEP di sini jika perlu
 
+elif menu == "Dashboard Client":
+    st.info("Halaman ini dalam tahap pengembangan.")
+    pass
+
+# --- FOOTER (TARUH DI PALING BAWAH, DI LUAR BLOK IF/ELIF) ---
+st.markdown("---")
+st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     c_reg, c_log = st.columns(2)
