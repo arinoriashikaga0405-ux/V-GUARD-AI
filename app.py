@@ -84,7 +84,7 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-            st.markdown("---")
+        st.markdown("---")
 
 import streamlit as st
 
