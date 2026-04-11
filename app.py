@@ -167,10 +167,23 @@ elif menu == "Admin Control Center":
         # CSS GLOBAL: Tombol Putih & Tag Status
         st.markdown("""
             <style>
-            div.stButton > button { background-color: white !important; color: black !important; border: 1px solid #dcdcdc !important; border-radius: 4px; font-weight: 500; }
-            .status-tag { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; border: 1px solid #dcdcdc; }
-            </style>
-        """, unsafe_allow_html=True)
+            st.markdown("""
+        <style>
+        div.stButton > button { 
+            background-color: white !important; 
+            color: black !important; 
+            border: thin solid lightgrey !important; 
+            border-radius: small; 
+            font-weight: bold; 
+        }
+        .status-tag { 
+            padding: 0.5em; 
+            border-radius: 1em; 
+            font-size: small; 
+            border: thin solid lightgrey; 
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
         # 10 TAB EKSEKUTIF
         t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
