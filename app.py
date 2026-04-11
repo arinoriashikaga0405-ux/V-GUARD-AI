@@ -63,9 +63,10 @@ if menu == "Visi & Misi":
 <br><br>
 Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang universal dan dapat diadaptasi secara sempurna oleh <b>seluruh sektor jenis usaha</b>. Mulai dari sektor manufaktur berat, ritel, jasa profesional, hingga pengelolaan aset properti skala nasional. Melalui teknologi deteksi visual tingkat lanjut dan analisis data real-time, kami bertekad menghilangkan segala bentuk kebocoran (leakage), baik yang bersifat finansial akibat kecurangan, inefisiensi tenaga kerja yang tidak terpantau, maupun risiko kehilangan aset fisik yang merugikan perusahaan secara langsung. 
 </div>
-st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
+elif menu == "Produk & Layanan":
+    st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     
-    # CSS ini harus dalam SATU BLOK st.markdown agar tidak error
+    # CSS ini harus bersih di dalam satu blok markdown
     st.markdown("""
         <style>
         .service-card {
@@ -82,12 +83,12 @@ st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard A
 
     # Membuat 5 Kolom Sejajar
     col1, col2, col3, col4, col5 = st.columns(5)
-    # Membuat 5 Kolom Sejajar
-    col1, col2, col3, col4, col5 = st.columns(5)
-    
+
     # Base link WhatsApp Bapak
     wa_link = "https://wa.me/6282122190885?text="
 
+    with col1:
+        st.markdown(f"""
     with col1:
         st.markdown(f"""
         <div class="service-card">
