@@ -52,23 +52,18 @@ if menu == "Visi & Misi":
             st.info("Foto 'erwin.jpg' tidak ditemukan")
 
     with col_teks:
-st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
-    # Narasi 250 Kata mencakup seluruh sektor usaha
-    st.markdown(f"""
-<div style="text-align: justify; line-height: 1.7; color: #d1d5db; font-size: 15px;">
-<b>V-GUARD AI Intelligence</b> didirikan atas dasar keyakinan bahwa kepercayaan di era digital harus didukung oleh data yang objektif dan transparan. Visi utama kami, <b>Digitizing Trust, Eliminating Leakage</b>, bukan sekadar semboyan, melainkan komitmen kami untuk memberikan kepastian operasional bagi para pemimpin bisnis. Kami memahami bahwa tantangan terbesar dalam setiap organisasi adalah menjaga integritas di setiap lini. Oleh karena itu, kami hadir untuk mendigitalisasi kepercayaan tersebut, memastikan bahwa setiap interaksi dan proses bisnis tercatat dengan presisi yang tidak dapat dimanipulasi secara ilegal.
+with col_teks:
+        st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
+        # Narasi Strategis Komprehensif (250+ Kata)
+        st.markdown(f"""
+<div style="text-align: justify; line-height: 1.8; color: #d1d5db; font-size: 15px;">
+<b>V-GUARD AI Intelligence</b> didirikan atas dasar keyakinan fundamental bahwa di era transformasi digital yang masif, "kepercayaan" tidak lagi bisa hanya disandarkan pada janji verbal, melainkan harus didukung oleh data yang objektif, presisi, dan transparan. Visi utama kami, <b>Digitizing Trust, Eliminating Leakage</b>, adalah sebuah manifestasi dari komitmen kami untuk memberikan kepastian operasional mutlak bagi para pemimpin bisnis dan pemilik modal di seluruh Indonesia. Kami memahami bahwa tantangan terbesar dalam mengelola organisasi modern adalah menjaga integritas di setiap titik interaksi manusia. Oleh karena itu, V-GUARD hadir sebagai jembatan teknologi yang mendigitalisasi nilai kepercayaan tersebut, memastikan setiap proses bisnis berjalan sesuai koridor yang seharusnya tanpa ada celah sedikitpun untuk manipulasi data atau tindakan ilegal.
 <br><br>
-Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang dapat diadaptasi oleh <b>seluruh sektor jenis usaha</b>, mulai dari manufaktur, ritel, jasa, hingga pengelolaan properti skala besar. Melalui teknologi deteksi visual tingkat lanjut, kami bertekad menghilangkan segala bentuk kebocoran (leakage), baik itu kebocoran finansial, inefisiensi tenaga kerja, maupun potensi kehilangan aset fisik. Kami mengubah sistem keamanan yang awalnya bersifat pasif menjadi asisten analitik proaktif yang bekerja secara otomatis selama 24/7.
+Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang universal dan dapat diadaptasi secara sempurna oleh <b>seluruh sektor jenis usaha</b>. Mulai dari sektor manufaktur berat, retail ritel, jasa profesional, hingga pengelolaan aset properti skala nasional. Melalui teknologi deteksi visual tingkat lanjut dan analisis data real-time, kami bertekad menghilangkan segala bentuk kebocoran (leakage)—baik yang bersifat finansial akibat kecurangan, inefisiensi tenaga kerja yang tidak terpantau, maupun risiko kehilangan aset fisik yang merugikan. Kami mentransformasi sistem keamanan konvensional yang pasif menjadi asisten analitik proaktif yang bekerja tanpa henti selama 24/7.
 <br><br>
-Dengan membangun infrastruktur digital yang kokoh di tingkat nasional, V-GUARD AI berkomitmen untuk mengoptimalkan profitabilitas klien kami melalui eliminasi celah operasional secara total. Kami percaya bahwa melalui transparansi data yang dihasilkan oleh kecerdasan buatan (AI), setiap pemilik usaha dapat mengambil keputusan strategis dengan tingkat keyakinan yang lebih tinggi. Kami adalah mitra strategis Anda dalam menjaga masa depan bisnis yang bersih, efisien, dan berkelanjutan di seluruh pelosok nusantara.
+Dengan membangun infrastruktur digital yang kokoh dan tersebar di tingkat nasional, V-GUARD AI berkomitmen untuk terus mengoptimalkan profitabilitas klien kami melalui eliminasi total terhadap celah operasional yang tersembunyi. Kami percaya bahwa transparansi data yang dihasilkan oleh kecerdasan buatan akan melahirkan budaya kerja yang lebih berintegritas dan efisien. V-GUARD AI bukan sekadar penyedia perangkat lunak, melainkan mitra strategis Anda dalam mengawal masa depan bisnis yang lebih bersih, efisien, kompetitif, dan berkelanjutan di seluruh pelosok nusantara demi kemajuan ekonomi digital Indonesia.
 </div>
 """, unsafe_allow_html=True)
-
-
-        st.markdown("---")
-
-        import streamlit as st
-
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     st.markdown("---")
