@@ -6,48 +6,54 @@ import google.generativeai as genai
 with st.sidebar:
     st.header("⚙️ Admin Control Center")
     
-    # Input Password Admin untuk akses kontrol
     admin_pass = st.text_input("Admin Password", type="password")
     
-    # Gunakan password dari .env atau file rahasia Anda 
-    # Default dari file Anda: w1nbju8282 
+    # Password dari .env Anda
     if admin_pass == "w1nbju8282":
         st.success("Akses Admin Diterima")
         
-        # Input Manual API Key (Jika .env gagal terbaca)
         api_input = st.text_input("Update Gemini API Key", 
-                                 value="AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA", # Nilai dari .env Anda 
+                                 value="AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA", 
                                  type="password")
         
-        if st.button("Simpan & Refresh Konfigurasi"):
+        # Tambahkan key unik pada tombol di sidebar
+        if st.button("Simpan & Refresh Konfigurasi", key="btn_admin_save"):
             st.session_state['api_key'] = api_input
             st.rerun()
     else:
         st.warning("Masukkan password admin untuk mengubah setelan.")
 
 # --- 2. INISIALISASI ENGINE ---
-# Mengambil key dari session state atau file rahasia
-current_api_key = st.session_state.get('api_key', "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA") # Fallback ke key Anda 
+current_api_key = st.session_state.get('api_key', "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA")
 
 if current_api_key:
     try:
         genai.configure(api_key=current_api_key)
-        
-        # Optimasi Cost < 20%
-        generation_config = {
-            "temperature": 0.5,
-            "max_output_tokens": 512,
-        }
-        
+        # Konfigurasi hemat biaya (Cost < 20%)
         model_gemini = genai.GenerativeModel(
             model_name='gemini-1.5-flash',
-            generation_config=generation_config
+            generation_config={"temperature": 0.5, "max_output_tokens": 512}
         )
         api_status = "✅ Aktif"
     except Exception:
         api_status = "❌ Error Konfigurasi"
 else:
     api_status = "⚠️ Belum Terkonfigurasi"
+
+# --- 3. TAMPILAN UTAMA ---
+st.title("🛡️ V-Guard AI Intelligence")
+st.info(f"Status Sistem: {api_status}")
+
+# Tambahkan key unik pada tombol di halaman utama
+if st.button("Cek Status API", key="btn_main_check"):
+    if current_api_key:
+        try:
+            response = model_gemini.generate_content("Ping")
+            st.write("Respon AI:", response.text)
+        except Exception as e:
+            st.error(f"Gagal: {e}")
+    else:
+        st.error("API Key tidak ditemukan.")
 
 # --- 3. TAMPILAN UTAMA ---
 st.title("🛡️ V-Guard AI Intelligence")
