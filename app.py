@@ -3,8 +3,8 @@ import os
 import google.generativeai as genai
 
 # --- 1. KONFIGURASI ENGINE & SECURITY ---
-# Mengambil API Key secara aman (Gunakan st.secrets di produksi)
-GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA") 
+# API Key yang sudah terintegrasi
+GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Konfigurasi Efisiensi Biaya (Cost < 20%)
@@ -34,47 +34,17 @@ st.markdown("""
 
 # --- 3. LOGIKA V-GUARD (PENYARING BIAYA) ---
 def proses_transaksi(total, data_input):
+    """
+    Logika menekan biaya API maksimal 20%. 
+    AI hanya dipanggil jika ada anomali awal atau nominal besar.
+    """
     # Threshold lokal: Jika transaksi di bawah 5 juta, anggap aman (0 biaya API)
     if total < 5000000:
         return "PASS (Auto)", False
 
-    # Hanya panggil AI jika transaksi besar/mencurigakan (Hanya bayar 20% penggunaan)
+    # Panggil AI Cloud hanya untuk transaksi besar (Menekan biaya hingga sisa 20%)
     response = model_gemini.generate_content(f"Cek: {data_input}")
     return response.text, True
-
-# --- BARIS 40: PINDAHKAN KE SIDEBAR ---
-with st.sidebar:
-    st.header("⚙️ Admin Control Center")
-    
-    # Input Password Admin untuk Keamanan
-    admin_pass = st.text_input("Admin Password", type="password")
-    
-    if admin_pass == "w1nbju8282": # Password dari file .env Anda
-        st.success("Akses Diterima")
-        nominal = st.number_input("Total Transaksi", value=0, key="admin_total")
-        detail = st.text_input("Detail Barang", key="admin_detail")
-
-        if st.button("Kirim Data", key="btn_kirim_admin"):
-            hasil, panggil_ai = proses_transaksi(nominal, detail)
-            st.write(f"Status: {hasil}")
-            if panggil_ai:
-                st.caption("Analisis AI Aktif (Biaya Terpakai)")
-            else:
-                st.caption("Filter Lokal (Hemat Biaya)")
-    else:
-        st.warning("Silakan masukkan password admin.")
-
-# --- AREA UTAMA UNTUK VISI & MISI ---
-st.title("🛡️ V-Guard AI Intelligence")
-st.markdown("""
-### Visi
-Menjadi pionir perlindungan transaksi berbasis AI yang efisien dan terjangkau.
-
-### Misi
-1. **Deteksi Real-Time**: Mendeteksi anomali saat transaksi terjadi.
-2. **Efisiensi Biaya**: Menekan biaya operasional API hingga maksimal 20%.
-3. **Keamanan Eksekutif**: Memberikan perlindungan tingkat tinggi bagi pemilik bisnis.
-""")
 
 # --- 4. SIDEBAR NAVIGATION ---
 with st.sidebar:
@@ -88,11 +58,13 @@ with st.sidebar:
 # --- 5. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
+    # Menggunakan teks asli Anda tanpa perubahan
     st.header("Visi & Misi Digitizing Trust, Eliminating Leakage ")
     col_img, col_txt = st.columns([1, 2])
     with col_img:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
+        # Menampilkan gambar visi misi
+        if os.path.exists("Screenshot 2026-04-12 054634.jpg"):
+            st.image("Screenshot 2026-04-12 054634.jpg", use_container_width=True)
     with col_txt:
         st.markdown("""
         <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
@@ -101,6 +73,31 @@ if menu == "Visi & Misi":
         Visi kami adalah menjadi standar global dalam " Eliminating Leakage ", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional saat ini.
         </div>
         """, unsafe_allow_html=True)
+
+elif menu == "Admin Control Center":
+    st.header("⚙️ Admin Control Center")
+    
+    # Input Password Admin dari file .env
+    admin_pass = st.text_input("Admin Password", type="password")
+    
+    if admin_pass == "w1nbju8282":
+        st.success("Akses Diterima")
+        nominal = st.number_input("Total Transaksi", value=0, key="admin_total")
+        detail = st.text_input("Detail Barang", key="admin_detail")
+
+        if st.button("Kirim Data", key="btn_kirim_admin"):
+            hasil, panggil_ai = proses_transaksi(nominal, detail)
+            st.write(f"Status: {hasil}")
+            if panggil_ai:
+                st.caption("ℹ️ Analisis AI Cloud Aktif (Biaya Terpakai)")
+            else:
+                st.info("💡 Efisiensi Biaya: Filter Lokal Aktif (0 Biaya API)")
+    else:
+        st.warning("Silakan masukkan password admin.")
+
+elif menu == "Analisis ROI Kerugian":
+    st.title("Analisis ROI & Efisiensi Biaya")
+    st.write("Sistem V-Guard sedang menghitung penghematan biaya API Anda (Target: Biaya < 20%).")
 
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
