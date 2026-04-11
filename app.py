@@ -1,39 +1,13 @@
 import streamlit as st
+import os
 import google.generativeai as genai
 
-# --- 1. AMBIL KONFIGURASI DARI SECRETS ---
-# Menghindari hardcoding langsung di file .py
-DEFAULT_KEY = st.secrets.get("GEMINI_API_KEY", "")
-CORRECT_PASSWORD = st.secrets.get("ADMIN_PASSWORD", "w1nbju8282")
+# --- 1. KONFIGURASI ENGINE AI ---
+GEMINI_API_KEY = ""
+genai.configure(api_key=GEMINI_API_KEY)
+model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 
-with st.sidebar:
-    st.header("⚙️ Admin Control Center")
-    admin_pass = st.text_input("Admin Password", type="password")
-    
-    if admin_pass == CORRECT_PASSWORD:
-        st.success("Akses Admin Diterima")
-        
-        # Biarkan value kosong atau ambil dari session state agar tidak terlihat di kode
-        api_input = st.text_input("Update Gemini API Key", 
-                                 value=st.session_state.get('api_key', DEFAULT_KEY), 
-                                 type="password")
-        
-        if st.button("Simpan & Refresh", key="btn_admin_save"):
-            st.session_state['api_key'] = api_input
-            st.rerun()
-    else:
-        st.warning("Masukkan password admin.")
-
-# --- 2. LOGIKA ENGINE ---
-# Menggunakan key dari session state (dinamis) atau secrets (statis)
-current_api_key = st.session_state.get('api_key', DEFAULT_KEY)
-
-if current_api_key:
-    genai.configure(api_key=current_api_key)
-    # Tetap gunakan Flash untuk efisiensi biaya < 20%
-    model_gemini = genai.GenerativeModel('gemini-1.5-flash')
-
-# --- 3. KONFIGURASI HALAMAN ---
+# --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
 # CSS Premium Eksekutif
@@ -46,7 +20,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 4. SIDEBAR NAVIGATION ---
+# --- 3. SIDEBAR NAVIGATION ---
 with st.sidebar:
     st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
     if os.path.exists("erwin.jpg"):
@@ -55,7 +29,7 @@ with st.sidebar:
     st.markdown("---")
     menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center"])
 
-# --- 5. LOGIKA MENU ---
+# --- 4. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Digitizing Trust, Eliminating Leakage ")
