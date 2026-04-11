@@ -62,54 +62,40 @@ if menu == "Visi & Misi":
 
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
-    
-    # 1. BLOK CSS (Versi Super Aman: Tanpa angka yang bisa dibaca sebagai decimal literal)
+    # Blok CSS rapat tanpa spasi di depan angka
     st.markdown("""
-        <style>
-        .service-card {
-            background-color: white;
-            border: thin solid #e0e0e0;
-            padding: 1em;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 1em;
-            color: #31333F;
-            height: 320px;
-        }
-        .service-card h3 { color: #1E1E1E; margin-top: 0; text-align: center; }
-        .target-text { color: #e91e63; font-size: 0.8em; font-weight: bold; text-align: center; }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # 2. DEFINISI URL & KOLOM
+<style>
+.service-card {
+background-color: white;
+border: thin solid #e0e0e0;
+padding: 10px;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+margin-bottom: 10px;
+color: #31333F;
+height: 350px;
+}
+.service-card h3 { color: #1E1E1E; margin-top: 0; text-align: center; }
+.target-text { color: #e91e63; font-size: small; font-weight: bold; text-align: center; }
+</style>
+""", unsafe_allow_html=True)
     wa_link = "https://wa.me/6282122190885?text="
     col1, col2, col3, col4, col5 = st.columns(5)
-
-    # --- KOLOM 1: V-LITE ---
     with col1:
-        st.markdown('<div class="service-card"><h3>📦 V-LITE</h3><p class="target-text">🎯 Target: Mikro / 1 Kasir</p><p style="font-size: 13px; color: #666;">Pencatatan transaksi & stok otomatis untuk UMKM.</p><p style="font-weight: bold; font-size: 13px;">Aktivasi: 750 rb<br>Bulanan: 350 rb</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="service-card"><h3>📦 V-LITE</h3><p class="target-text">🎯 Target: Mikro</p><p style="font-size: small;">Pencatatan otomatis.</p><p style="font-weight: bold;">Aktivasi: 750 rb<br>Bulanan: 350 rb</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih V-LITE", f"{wa_link}Halo%20V-Guard%20Lite", use_container_width=True)
-
-    # --- KOLOM 2: V-PRO ---
     with col2:
-        st.markdown('<div class="service-card"><h3>🚀 V-PRO</h3><p class="target-text">🎯 Target: Retail / 2-3 Kasir</p><p style="font-size: 13px; color: #666;">Manajemen multi-kasir & laporan keuangan lengkap.</p><p style="font-weight: bold; font-size: 13px;">Aktivasi: 1.5 jt<br>Bulanan: 500 rb</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="service-card"><h3>🚀 V-PRO</h3><p class="target-text">🎯 Target: Retail</p><p style="font-size: small;">Manajemen multi-kasir.</p><p style="font-weight: bold;">Aktivasi: 1.5 jt<br>Bulanan: 500 rb</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih V-PRO", f"{wa_link}Halo%20V-Guard%20Pro", use_container_width=True)
-
-    # --- KOLOM 3: V-SIGHT ---
     with col3:
-        st.markdown('<div class="service-card"><h3>👁️ V-SIGHT</h3><p class="target-text">🎯 Target: Keamanan & Analitik</p><p style="font-size: 13px; color: #666;">Monitoring AI untuk deteksi anomali transaksi real-time.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="service-card"><h3>👁️ V-SIGHT</h3><p class="target-text">🎯 Target: Keamanan</p><p style="font-size: small;">Monitoring AI real-time.</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20V-Guard%20Sight", use_container_width=True)
-
-    # --- KOLOM 4: V-ENTERPRISE ---
     with col4:
-        st.markdown('<div class="service-card"><h3>🏢 V-ENTERPRISE</h3><p class="target-text">🎯 Target: Cabang / Franchise</p><p style="font-size: 13px; color: #666;">Integrasi ERP & kontrol stok antar gudang otomatis.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="service-card"><h3>🏢 V-ENTERPRISE</h3><p class="target-text">🎯 Target: Franchise</p><p style="font-size: small;">Integrasi ERP & stok.</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih ENTERPRISE", f"{wa_link}Halo%20V-Guard%20Enterprise", use_container_width=True)
-
-    # --- KOLOM 5: V-ULTRA ---
     with col5:
-        st.markdown('<div class="service-card"><h3>💎 V-ULTRA</h3><p class="target-text">🎯 Target: Bisnis Skala Besar</p><p style="font-size: 13px; color: #666;">Solusi AI Custom penuh dengan dukungan infrastruktur eksklusif.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="service-card"><h3>💎 V-ULTRA</h3><p class="target-text">🎯 Target: Skala Besar</p><p style="font-size: small;">Solusi AI Custom.</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih ULTRA", f"{wa_link}Halo%20V-Guard%20Ultra", use_container_width=True)
-        
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
