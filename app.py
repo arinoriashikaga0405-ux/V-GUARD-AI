@@ -78,7 +78,7 @@ if menu == "Visi & Misi":
         strategis Anda dalam menjaga masa depan bisnis yang bersih, efisien, dan berkelanjutan 
         di seluruh pelosok nusantara.
 </div>
-        """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
         st.markdown("---")
 
