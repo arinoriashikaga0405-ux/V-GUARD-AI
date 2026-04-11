@@ -42,18 +42,39 @@ def proses_transaksi(total, data_input):
     response = model_gemini.generate_content(f"Cek: {data_input}")
     return response.text, True
 
-# UI Contoh
-st.title("Admin Control Center")
-nominal = st.number_input("Total Transaksi", value=0)
-detail = st.text_input("Detail Barang")
+# --- BARIS 40: PINDAHKAN KE SIDEBAR ---
+with st.sidebar:
+    st.header("⚙️ Admin Control Center")
+    
+    # Input Password Admin untuk Keamanan
+    admin_pass = st.text_input("Admin Password", type="password")
+    
+    if admin_pass == "w1nbju8282": # Password dari file .env Anda
+        st.success("Akses Diterima")
+        nominal = st.number_input("Total Transaksi", value=0, key="admin_total")
+        detail = st.text_input("Detail Barang", key="admin_detail")
 
-if st.button("Kirim Data", key="btn_kirim"):
-    hasil, panggil_ai = proses_transaksi(nominal, detail)
-    st.write(f"Status: {hasil}")
-    if panggil_ai:
-        st.caption("Analisis dilakukan oleh AI (Biaya Terpakai)")
+        if st.button("Kirim Data", key="btn_kirim_admin"):
+            hasil, panggil_ai = proses_transaksi(nominal, detail)
+            st.write(f"Status: {hasil}")
+            if panggil_ai:
+                st.caption("Analisis AI Aktif (Biaya Terpakai)")
+            else:
+                st.caption("Filter Lokal (Hemat Biaya)")
     else:
-        st.caption("Analisis Lokal (Hemat Biaya 100%)")
+        st.warning("Silakan masukkan password admin.")
+
+# --- AREA UTAMA UNTUK VISI & MISI ---
+st.title("🛡️ V-Guard AI Intelligence")
+st.markdown("""
+### Visi
+Menjadi pionir perlindungan transaksi berbasis AI yang efisien dan terjangkau.
+
+### Misi
+1. **Deteksi Real-Time**: Mendeteksi anomali saat transaksi terjadi.
+2. **Efisiensi Biaya**: Menekan biaya operasional API hingga maksimal 20%.
+3. **Keamanan Eksekutif**: Memberikan perlindungan tingkat tinggi bagi pemilik bisnis.
+""")
 
 # --- 4. SIDEBAR NAVIGATION ---
 with st.sidebar:
