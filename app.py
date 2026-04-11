@@ -62,25 +62,28 @@ if menu == "Visi & Misi":
 
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
-    # Blok CSS rapat tanpa spasi di depan angka
+    
+    # VERSI ANTI-ERROR: Menggunakan kata kunci (thin, medium) bukan angka (1px, 10px)
     st.markdown("""
 <style>
 .service-card {
 background-color: white;
 border: thin solid #e0e0e0;
-padding: 10px;
+padding: medium;
 border-radius: 10px;
-box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-margin-bottom: 10px;
+box-shadow: none;
+margin-bottom: medium;
 color: #31333F;
-height: 350px;
+height: 380px;
 }
 .service-card h3 { color: #1E1E1E; margin-top: 0; text-align: center; }
 .target-text { color: #e91e63; font-size: small; font-weight: bold; text-align: center; }
 </style>
 """, unsafe_allow_html=True)
+
     wa_link = "https://wa.me/6282122190885?text="
     col1, col2, col3, col4, col5 = st.columns(5)
+    
     with col1:
         st.markdown('<div class="service-card"><h3>📦 V-LITE</h3><p class="target-text">🎯 Target: Mikro</p><p style="font-size: small;">Pencatatan otomatis.</p><p style="font-weight: bold;">Aktivasi: 750 rb<br>Bulanan: 350 rb</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih V-LITE", f"{wa_link}Halo%20V-Guard%20Lite", use_container_width=True)
@@ -96,6 +99,8 @@ height: 350px;
     with col5:
         st.markdown('<div class="service-card"><h3>💎 V-ULTRA</h3><p class="target-text">🎯 Target: Skala Besar</p><p style="font-size: small;">Solusi AI Custom.</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih ULTRA", f"{wa_link}Halo%20V-Guard%20Ultra", use_container_width=True)
+
+        
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
