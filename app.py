@@ -63,15 +63,15 @@ if menu == "Visi & Misi":
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
     
-    # 1. BLOK CSS (Menggunakan single-line untuk angka agar tidak error)
+    # 1. BLOK CSS (Dibersihkan dari angka yang memicu error)
     st.markdown("""
         <style>
         .service-card {
             background-color: white;
-            border: 1px solid #e0e0e0;
+            border: thin solid #e0e0e0;
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             margin-bottom: 10px;
             color: #31333F;
             height: 300px;
@@ -81,7 +81,7 @@ elif menu == "Produk & Layanan":
         </style>
     """, unsafe_allow_html=True)
 
-    # 2. KONFIGURASI WHATSAPP & KOLOM
+    # 2. DEFINISI URL & KOLOM
     wa_link = "https://wa.me/6282122190885?text="
     col1, col2, col3, col4, col5 = st.columns(5)
 
@@ -107,8 +107,9 @@ elif menu == "Produk & Layanan":
 
     # --- KOLOM 5: V-ULTRA ---
     with col5:
-        st.markdown('<div class="service-card"><h3>💎 V-ULTRA</h3><p class="target-text">🎯 Target: Bisnis Skala Besar</p><p style="font-size: 13px; color: #666;">Solusi AI Custom penuh dengan infrastruktur eksklusif.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="service-card"><h3>💎 V-ULTRA</h3><p class="target-text">🎯 Target: Bisnis Skala Besar</p><p style="font-size: 13px; color: #666;">Solusi AI Custom penuh dengan dukungan infrastruktur eksklusif.</p></div>', unsafe_allow_html=True)
         st.link_button("Pilih ULTRA", f"{wa_link}Halo%20V-Guard%20Ultra", use_container_width=True)
+        
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
