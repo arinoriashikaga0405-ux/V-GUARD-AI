@@ -138,10 +138,6 @@ elif menu == "PORTAL KLIEN":
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
                 else: st.error("Password Salah.")
 
-# --- E. DASHBOARD CLIENT ---
-elif menu == "DASHBOARD CLIENT":
-    st.info("Halaman ini dalam tahap pengembangan.")
-    st.caption("V-GUARD AI: Secure Your Business, Optimize Your Profit.")
 
 # --- F. ADMIN CONTROL CENTER ---
 elif menu == "ADMIN CONTROL CENTER":
