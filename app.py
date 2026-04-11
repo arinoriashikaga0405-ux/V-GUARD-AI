@@ -45,7 +45,7 @@ with st.sidebar:
 # --- 3. LOGIKA MENU UTAMA ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi Strategis: Fondasi Integritas Digital")
+    st.header("Visi & Misi")
     col_img, col_txt = st.columns([1, 2.5])
     with col_img:
         safe_image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO")
