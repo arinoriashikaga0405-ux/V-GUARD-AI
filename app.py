@@ -61,3 +61,94 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
+import streamlit as st
+
+# --- CSS CUSTOM (Wajib disertakan agar tampilan persis seperti gambar) ---
+st.markdown("""
+    <style>
+    .product-card {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid #e2e8f0;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .package-name { font-size: 22px; font-weight: 800; color: #1e3a8a; margin-bottom: 5px; }
+    .target-text { color: #d63384; font-size: 13px; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; }
+    .feature-list { text-align: left; font-size: 14px; color: #475569; min-height: 160px; line-height: 1.6; }
+    .price-box {
+        background-color: #f1f5f9;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+        border: 1px solid #cbd5e1;
+    }
+    .price-active { color: #0f172a; font-weight: bold; font-size: 15px; margin-bottom: 4px; }
+    .price-monthly { color: #2563eb; font-weight: 800; font-size: 18px; }
+    .wa-tag { color: #059669; font-weight: bold; font-size: 12px; }
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- LOGIKA NAVIGASI LAYANAN PRODUK ---
+st.header("🏷️ Layanan Produk & Paket V-Guard AI")
+
+# Data Konfigurasi
+wa_number = "6282122190885"
+packages = {
+    "V-LITE": {
+        "target": "🎯 Mikro / 1 Kasir",
+        "features": "• AI Fraud Detector Dasar<br>• Daily WhatsApp Summary<br>• Audit Transaksi Harian<br>• Laporan Mingguan Dasar",
+        "aktivasi": "750 RB",
+        "bulanan": "350 RB"
+    },
+    "V-PRO": {
+        "target": "🎯 Retail & Kafe Modern",
+        "features": "• Semua Fitur V-LITE<br>• VCS (Visual Cashier System)<br>• Bank Statement Audit<br>• H-7 Auto-Invoice System",
+        "aktivasi": "1.5 JT",
+        "bulanan": "800 RB"
+    },
+    "V-SIGHT": {
+        "target": "🎯 Gudang & Distribusi",
+        "features": "• CCTV AI Behavior Analysis<br>• Real-Time Stock Monitoring<br>• Alur Barang In/Out Audit<br>• Integrasi Fire Alarm",
+        "aktivasi": "7,5 JT",
+        "bulanan": "3,5 JT"
+    },
+    "V-ULTRA": {
+        "target": "🎯 Korporasi / Enterprise",
+        "features": "• The Core Brain AI Central<br>• Forensic AI (Data 1 Tahun)<br>• Dedicated Private Server<br>• Custom AI SOP Compliance",
+        "aktivasi": "15 JT",
+        "bulanan": "10 JT"
+    }
+}
+
+# Tampilan Grid Kartu
+cols = st.columns(4)
+
+for i, (name, info) in enumerate(packages.items()):
+    with cols[i]:
+        # Visual Kartu
+        st.markdown(f"""
+        <div class="product-card">
+            <div>
+                <div class="package-name">{name}</div>
+                <div class="target-text">{info['target']}</div>
+                <div class="feature-list">{info['features']}</div>
+            </div>
+            <div class="price-box">
+                <div class="price-active">Aktivasi: {info['aktivasi']}</div>
+                <div class="price-monthly">Langanan: {info['bulanan']}</div>
+                <div class="wa-tag">✅ Terhubung ke WhatsApp</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Tombol Link WhatsApp
+        pesan_wa = f"Halo Pak Erwin, saya tertarik untuk memesan paket *{name}* V-Guard AI."
+        wa_link = f"https://wa.me/{wa_number}?text={pesan_wa.replace(' ', '%20')}"
+        st.link_button(f"Pilih {name}", wa_link, use_container_width=True)
+
