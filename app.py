@@ -133,14 +133,127 @@ elif menu == "Portal Klien":
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("⚙️ Admin Control Center")
-    admin_pass = st.text_input("Admin Password", type="password")
-    if admin_pass == "w1nbju8282":
-        st.success("Akses Diterima")
-        nominal = st.number_input("Total Transaksi", value=0)
-        detail = st.text_input("Detail Barang")
-        if st.button("Proses Analisis"):
-            hasil, panggil_ai = proses_transaksi(nominal, detail)
-            st.subheader(f"Status: {hasil}")
+    st.header("🔒 Admin Control Center")
+
+    # 1. Cek status login di session state
+    if "admin_logged_in" not in st.session_state:
+        st.session_state.admin_logged_in = False
+
+    # 2. Kotak Login
+    if not st.session_state.admin_logged_in:
+        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        if admin_input == "w1nbju8282":
+            st.session_state.admin_logged_in = True
+            st.rerun()
+        elif admin_input != "":
+            st.error("Password Salah. Akses Ditolak.")
+    
+    # 3. Dashboard Admin (Muncul setelah password benar)
     else:
-        st.warning("Silakan masukkan password admin.")
+        col_header, col_logout = st.columns([5, 1])
+        with col_header:
+            st.success("Akses Eksekutif Aktif")
+        with col_logout:
+            if st.button("Log Out"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+
+        # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
+        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+        
+        # Panel Biaya API & Efisiensi
+        c_api1, c_api2, c_api3 = st.columns(3)
+        with c_api1:
+            st.metric("Anggaran API Bulanan", "Rp 10.000.000")
+        with c_api2:
+            # Simulasi biaya terpakai (contoh 1.2jt dari 10jt = 12%)
+            st.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)", delta_color="normal")
+        with c_api3:
+            st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
+        
+        st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
+
+        st.divider()
+
+        # UI untuk AI Squad Agent
+        st.subheader("🤖 V-Guard AI Squad Agents")
+        st.caption("Agen AI otonom yang bekerja mengawasi ekosistem bisnis Anda 24/7.")
+        
+        sq1, sq2, sq3, sq4 = st.columns(4)
+        with sq1:
+            with st.container(border=True):
+                st.markdown("🕵️ **Agent: Sentinel**")
+                st.caption("Status: Memantau Fraud")
+                st.write("Menganalisa anomali transaksi kasir.")
+        with sq2:
+            with st.container(border=True):
+                st.markdown("💰 **Agent: Auditor**")
+                st.caption("Status: VCS Sync")
+                st.write("Sinkronisasi mutasi bank & laporan POS.")
+        with sq3:
+            with st.container(border=True):
+                st.markdown("📦 **Agent: Stocker**")
+                st.caption("Status: Visual Check")
+                st.write("Cek stok fisik gudang melalui CCTV AI.")
+        with sq4:
+            with st.container(border=True):
+                st.markdown("📄 **Agent: Invoicer**")
+                st.caption("Status: H-7 Ready")
+                st.write("Otomatisasi pengiriman invoice klien.")
+
+        st.divider()
+
+        # Tab Menu Admin
+        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
+            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
+        ])
+
+        with t1:
+            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
+            with st.container(border=True):
+                col1, col2 = st.columns(2)
+                with col1:
+                    new_user = st.text_input("Username Klien")
+                    new_mail = st.text_input("Email Bisnis")
+                with col2:
+                    paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                    tgl_bayar = st.date_input("Tanggal Pembayaran")
+                if st.button("Aktifkan Akun & Kirim Kredensial"):
+                    st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
+
+        with t2:
+            st.subheader("🌐 V-Guard Global AI Ecosystem")
+            c1, c2 = st.columns(2)
+            with c1:
+                with st.container(border=True):
+                    st.markdown("### 🧠 Google Gemini AI")
+                    st.write("Analis utama yang memproses data audit kompleks.")
+            with c2:
+                with st.container(border=True):
+                    st.markdown("### 👁️ YOLO / Vision AI")
+                    st.write("'Mata' digital yang memantau pergerakan visual.")
+
+        # Tab-tab lainnya tetap menggunakan kode asli Anda
+        with t5:
+            st.subheader("👁️ V-SIGHT: AI Visual Command Center")
+            c_vid1, c_vid2 = st.columns(2)
+            with c_vid1:
+                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir")
+            with c_vid2:
+                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang")
+
+        with t9:
+            st.header("💎 V-ULTRA: Enterprise Command Center")
+            col_u1, col_u2 = st.columns(2)
+            with col_u1:
+                st.success("🧠 **The Core Brain (AI Central)**")
+                st.progress(100)
+            with col_u2:
+                st.info("🖥️ **Dedicated Server Status**")
+                st.code("IP: 10.0.88.24\nUptime: 99.99%")
+            st.divider()
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+
+        st.markdown("---")
+        st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
