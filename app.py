@@ -97,7 +97,7 @@ if menu == "Visi & Misi":
             </div>
         </div>
         """, unsafe_allow_html=True)
-        st.link_button("Pilih V-LITE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-LITE", use_container_width=True)
+        st.link_button("Pilih V-LITE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-LITE", use_container_width=True)True)
 
     with col2:
         st.markdown(f"""
