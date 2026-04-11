@@ -55,7 +55,7 @@ if st.button("Kirim Data", key="btn_kirim"):
     else:
         st.caption("Analisis Lokal (Hemat Biaya 100%)")
 
-# --- 3. SIDEBAR NAVIGATION ---
+# --- 4. SIDEBAR NAVIGATION ---
 with st.sidebar:
     st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
     if os.path.exists("erwin.jpg"):
@@ -64,7 +64,7 @@ with st.sidebar:
     st.markdown("---")
     menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "Analisis ROI Kerugian", "Portal Klien", "Admin Control Center"])
 
-# --- 4. LOGIKA MENU ---
+# --- 5. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Digitizing Trust, Eliminating Leakage ")
