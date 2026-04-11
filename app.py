@@ -63,23 +63,14 @@ if menu == "Visi & Misi":
 <br><br>
 Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang universal dan dapat diadaptasi secara sempurna oleh <b>seluruh sektor jenis usaha</b>. Mulai dari sektor manufaktur berat, ritel, jasa profesional, hingga pengelolaan aset properti skala nasional. Melalui teknologi deteksi visual tingkat lanjut dan analisis data real-time, kami bertekad menghilangkan segala bentuk kebocoran (leakage), baik yang bersifat finansial akibat kecurangan, inefisiensi tenaga kerja yang tidak terpantau, maupun risiko kehilangan aset fisik yang merugikan perusahaan secara langsung. 
 </div>
-""", unsafe_allow_html=True)
-
-elif menu == "Produk & Layanan":
-    st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
+    
+    # CSS ini harus dalam SATU BLOK st.markdown agar tidak error
     st.markdown("""
-<style>
-.service-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 10px;
-    color: #31333F;
-}
-</style>
-""", unsafe_allow_html=True)
+        <style>
+        .service-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -88,6 +79,9 @@ elif menu == "Produk & Layanan":
         }
         </style>
     """, unsafe_allow_html=True)
+
+    # Membuat 5 Kolom Sejajar
+    col1, col2, col3, col4, col5 = st.columns(5)
     # Membuat 5 Kolom Sejajar
     col1, col2, col3, col4, col5 = st.columns(5)
     
