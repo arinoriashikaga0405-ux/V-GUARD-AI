@@ -11,26 +11,22 @@ model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-# --- 1.1 FUNGSI PUSAT 10 AI AGENT V-GUARD ---
-def vguard_ai_engine(agent_name, task_instruction, context_data=""):
-    """Fungsi tunggal untuk memanggil 10 Agent V-GUARD"""
-    system_prompt = f"""
-    ROLE: Anda adalah {agent_name} dari V-GUARD AI Squad.
-    INSTRUKSI KHUSUS: {task_instruction}
-    KONTEKS DATA: {context_data}
-    STYLE: Profesional, tegas, fokus pada integritas & profit.
-    Hapus semua penyebutan pihak ketiga, gunakan identitas V-GUARD AI.
-    """
-    response = model_gemini.generate_content(system_prompt)
-    return response.text
-# CSS Premium Eksekutif
-st.markdown("""
-    <style>
-    .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
-    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
-    div[data-testid="stMetricValue"] { font-size: 22px; color: #238636; }
-    </style>
+# --- [ADDITION] V-GUARD CORE ENGINE: EDGE FILTERING LOGIC ---
+class VGuardCoreEngine:
+    @staticmethod
+    def edge_filter_process(data_type, raw_data):
+        """Memfilter data di tingkat lokal agar cost API < 20%"""
+        is_anomaly = False
+        reason = ""
+        if data_type == "V-PRO":
+            if raw_data.get('type') in ['VOID', 'REFUND'] and raw_data.get('amount', 0) > 50000:
+                is_anomaly = True
+                reason = "High Value Void/Refund"
+        elif data_type == "V-LITE":
+            if raw_data.get('visual_trigger') == "UNAUTHORIZED_OPEN":
+                is_anomaly = True
+                reason = "Unauthorized Drawer Access"
+        return is_anomaly, reason
     """, unsafe_allow_html=True)
 
 # --- 3. SIDEBAR NAVIGATION ---
