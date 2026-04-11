@@ -72,8 +72,8 @@ elif menu == "Produk & Layanan":
     wa_number = "6282122190885"
     c1, c2, c3, c4 = st.columns(4)
     packages = {
-        "V-LITE": ["Mikro / 1 Kasir", "1.5 Jt", "750 rb", "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"],
-        "V-PRO": ["Retail & Kafe", "3 Jt", "1.5 Jt", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"],
+        "V-LITE": ["Mikro / 1 Kasir", "750 rb", "350 brb", "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"],
+        "V-PRO": ["Retail & Kafe", "1.5 Jt", "85 rb", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"],
         "V-SIGHT": ["Gudang & Toko", "7,5 Jt", "3,5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"],
         "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"]
     }
@@ -93,11 +93,6 @@ elif menu == "ROI Kerugian Klien":
         leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
-    with col_b:
-        opsi_biaya = {"Rp 750.000 (V-LITE)": 750000, "Rp 1.500.000 (V-PRO)": 1500000, "Rp 3.500.000 (V-SIGHT)": 3500000, "Rp 10.000.000 (V-ENTERPRISE)": 10000000}
-        pilihan_label = st.selectbox("Pilih Paket Investasi (Biaya Langganan)", list(opsi_biaya.keys()))
-        biaya = opsi_biaya[pilihan_label]
-        st.success(f"💰 Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
 
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
