@@ -90,15 +90,11 @@ elif menu == "Produk & Layanan":
     | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
     | **Biaya Pemasaran** | 750 rb | 1.5Jt | 5 Jt | 15 Jt |
     | **Biaya Langganan** | 350 rb | 850 rb | 3,5 Jt | 10 Jt |
-    """)
+
 
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
            
-
-
-
-
 elif menu == "ROI Kerugian Klien":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     col_a, col_b = st.columns(2)
