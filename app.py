@@ -101,11 +101,11 @@ if menu == "Visi & Misi":
         st.link_button("Pilih V-LITE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-LITE", use_container_width=True)True)
 
     with col2:
+        with col2:
         st.markdown(f"""
         <div class="service-card">
-            <h3>📦 V-PRO</h3>
-            <p style='color: #e91e63; font-size: 0.75em;'>🎯 Target: Retail & Kafe</p>
-            <ul style='font-size: 0.8em; padding-left: 15px;'>
+            <h3 style="text-align: center;">V-PRO</h3>
+            <p style="color: #e91e63; font-size: 0.75em;">Target: Retail / 2-3 Kasir</p>
                 <li>VCS Integration</li>
                 <li>Bank Audit</li>
                 <li>H-7 Auto-Invoice</li>
