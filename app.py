@@ -10,36 +10,34 @@ genai.configure(api_key=GEMINI_API_KEY)
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# CSS Minimalis Profesional
+# CSS Profesional (Bersih, Tanpa Kotak Norak)
 st.markdown("""
     <style>
-    .justified-text { text-align: justify; line-height: 1.8; font-size: 16px; }
+    .main-text { text-align: justify; line-height: 1.8; font-size: 16px; color: #1e293b; }
+    .product-header { font-size: 20px; font-weight: bold; color: #1e3a8a; margin-bottom: 5px; }
+    .price-text { color: #2563eb; font-weight: 700; font-size: 18px; }
+    .login-sidebar { background-color: #f1f5f9; padding: 20px; border-radius: 10px; }
     </style>
     """, unsafe_allow_html=True)
 
-# Fungsi Penanganan Foto (Anti-Crash)
-def load_founder_image(image_path):
-    if os.path.exists(image_path):
+# Fungsi Anti-Crash Foto
+def safe_image_load(path):
+    if os.path.exists(path):
         try:
-            img = Image.open(image_path)
-            return img
-        except Exception:
+            return Image.open(path)
+        except:
             return None
     return None
 
 # --- 3. SIDEBAR NAVIGATION ---
 with st.sidebar:
-    st.title("🛡️ V-Guard AI")
-    
-    founder_img = load_founder_image("erwin.jpg")
-    if founder_img:
-        st.image(founder_img, use_container_width=True)
-    else:
-        st.warning("👤 Foto Founder belum terunggah/format salah.")
-        
-    st.markdown("**Erwin Sinaga** \nFounder & CEO")
+    st.markdown("### 🛡️ V-Guard AI")
+    img = safe_image_load("erwin.jpg")
+    if img:
+        st.image(img, use_container_width=True)
+    st.markdown("**Erwin Sinaga**\nFounder & CEO")
     st.write("---")
-    menu = st.radio("NAVIGATION", [
+    menu = st.radio("STRATEGIC MENU", [
         "Visi & Misi", 
         "Produk & Layanan", 
         "Analisis ROI Kerugian", 
@@ -51,7 +49,7 @@ with st.sidebar:
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Strategis")
-    st.markdown('<div class="justified-text">', unsafe_allow_html=True)
+    st.markdown('<div class="main-text">', unsafe_allow_html=True)
     st.write("""
     **Visi: Menjadi Jangkar Kepercayaan Digital Global** V-Guard AI Intelligence bervisi menciptakan ekosistem bisnis yang sepenuhnya transparan, aman, dan berintegritas tinggi melalui inovasi teknologi digital terdepan. Kami hadir bukan sekadar sebagai penyedia solusi perangkat lunak, melainkan sebagai jangkar kepercayaan (Digitizing Trust) bagi setiap pemilik bisnis di era ketidakpastian global yang serba cepat ini. Kami memastikan setiap pemilik usaha memiliki ketenangan pikiran total (Total Peace of Mind) melalui validasi kejujuran sistem secara real-time, di mana data operasional tidak lagi bisa dimanipulasi oleh kepentingan pribadi. Kami bercita-cita menjadi standar emas global dalam layanan "Integrity Assurance", di mana teknologi kecerdasan buatan otonom kami mampu menghapuskan segala bentuk keraguan operasional serta manipulasi finansial dalam dunia bisnis yang bergerak serba cepat dan kompetitif.  
 
@@ -61,40 +59,51 @@ if menu == "Visi & Misi":
 
 elif menu == "Produk & Layanan":
     st.header("Daftar Produk & Layanan")
-    st.table([
-        {"Produk": "V-LITE", "Target": "Mikro / 1 Kasir", "Aktivasi": "750 RB", "Bulanan": "350 RB"},
-        {"Produk": "V-PRO", "Target": "Retail & Kafe", "Aktivasi": "1.5 JT", "Bulanan": "800 RB"},
-        {"Produk": "V-SIGHT", "Target": "Gudang & Toko", "Aktivasi": "7.5 JT", "Bulanan": "3.5 JT"},
-        {"Produk": "V-ENTERPRISE", "Target": "Korporasi / Besar", "Aktivasi": "15 JT", "Bulanan": "10 JT"},
-        {"Produk": "V-ULTRA", "Target": "High-Security", "Aktivasi": "Custom", "Bulanan": "Custom"},
-    ])
+    cols = st.columns(5)
+    packages = [
+        ("V-LITE", "Mikro", "750 RB", "350 RB"),
+        ("V-PRO", "Retail", "1.5 JT", "800 RB"),
+        ("V-SIGHT", "Gudang", "7.5 JT", "3.5 JT"),
+        ("V-ENTERPRISE", "Besar", "15 JT", "10 JT"),
+        ("V-ULTRA", "High-Sec", "Custom", "Custom")
+    ]
+    for i, (name, target, akt, bln) in enumerate(packages):
+        with cols[i]:
+            st.markdown(f"<div class='product-header'>{name}</div>", unsafe_allow_html=True)
+            st.write(f"Target: {target}")
+            st.write(f"Aktivasi: {akt}")
+            st.markdown(f"<div class='price-text'>Bln: {bln}</div>", unsafe_allow_html=True)
+            st.button(f"Pesan {name}", key=name)
 
 elif menu == "Portal Klien":
-    st.header("Portal Onboarding & Akses Klien")
-    col1, col2 = st.columns([2, 1])
+    st.header("Portal Klien: Onboarding & Aktivasi")
+    col_form, col_login = st.columns([2, 1], gap="large")
     
-    with col1:
-        st.subheader("Pemesanan Baru")
+    with col_form:
+        st.subheader("📝 Registrasi & Order")
         st.text_input("Nama Lengkap")
         st.text_input("Nama Usaha")
-        st.selectbox("Produk", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
-        st.file_uploader("Upload KTP")
-        st.button("Kirim Pesanan")
+        st.selectbox("Pilih Produk", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
+        st.file_uploader("Upload KTP (Persyaratan SOP)")
+        st.button("Kirim Form Pemesanan")
 
-    with col2:
-        st.subheader("Aktivasi & Login")
-        st.text_input("ID Klien")
+    with col_login:
+        st.markdown('<div class="login-sidebar">', unsafe_allow_html=True)
+        st.subheader("🔑 Login Aktivasi")
+        st.write("Masukkan kredensial yang telah diaktivasi Admin.")
+        st.text_input("Client ID")
         st.text_input("Password", type="password")
-        st.button("Masuk Command Center")
+        st.button("Login Command Center", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "Analisis ROI Kerugian":
-    st.header("Analisis ROI")
+    st.header("Analisis ROI & Efisiensi")
     omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-    st.write(f"Efisiensi Server: **20%**")
-    st.write(f"Estimasi Dana Diselamatkan: **Rp {(omzet * 0.05):,.0f}** /bulan")
+    st.metric("Pencegahan Kebocoran", f"Rp {(omzet * 0.05):,.0f}")
+    st.metric("Efisiensi Biaya Server", "20% Terjamin")
 
 elif menu == "Admin Control Center":
-    st.header("Admin Control")
-    if st.text_input("Master Password", type="password") == "w1nbju8282":
-        st.metric("Status Server", "Efisiensi 20% Active")
-        st.metric("Aset Terpantau", "Rp 1.250.000.000")
+    st.header("🔒 Admin Center")
+    if st.text_input("Password", type="password") == "w1nbju8282":
+        st.success("Akses Diterima.")
+        st.metric("Dana Terlindungi", "Rp 1.250.000.000", delta="Efisiensi 20%")
