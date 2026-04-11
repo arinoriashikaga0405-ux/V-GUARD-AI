@@ -56,14 +56,14 @@ elif menu == "Produk & Layanan":
     packages = {
         "V-LITE": [
             "Mikro / 1 Kasir", 
-            "1.5 Jt", 
             "750 rb", 
+            "350 rb", 
             "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"
         ],
         "V-PRO": [
             "Retail & Kafe", 
-            "3 Jt", 
             "1.5 Jt", 
+            "850 rb", 
             "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"
         ],
         "V-SIGHT": [
@@ -100,8 +100,8 @@ elif menu == "Produk & Layanan":
     | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 5 Jt | 15 Jt |
-    | **Biaya Langganan** | 750 rb | 1.5 Jt | 3,5 Jt | 10 Jt |
+    | **Biaya Pemasaran** | 750 rb| 1.5 Jt | 5 Jt | 15 Jt |
+    | **Biaya Langganan** | 350 rb | 850 rb | 3,5 Jt | 10 Jt |
     """)
 
     # 3. Footer Tambahan (Opsional)
