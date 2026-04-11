@@ -120,15 +120,15 @@ if menu == "Visi & Misi":
 
     with col3: # Ganti sesuai nomor kolom (col1, col2, col3, dst)
         st.markdown("""
-            <div class="service-card">
-                <h3 style="text-align: center;">V-SIGHT</h3>
-                <p style="color: #e91e63; font-size: 0.75em;">Target: Keamanan & Analitik</p>
-                <p style="font-size: 14px; color: #666;">Monitoring AI untuk deteksi anomali.</p>
-            </div>
+            with col3:
+        st.markdown("""
+        <div class="service-card">
+            <h3 style="text-align: center;">V-SIGHT</h3>
+            <p style="color: #e91e63; font-size: 0.75em;">Target: Keamanan & Analitik</p>
+            <p style="font-size: 14px; color: #666;">Monitoring AI untuk deteksi anomali real-time.</p>
+        </div>
         """, unsafe_allow_html=True)
-        # Tombol tetap di luar markdown agar rapi
-        st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-SIGHT", use_container_width=True)idth=True)
-
+        st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-SIGHT", use_container_width=True)
     with col4:
         st.markdown(f"""
         <div class="service-card">
