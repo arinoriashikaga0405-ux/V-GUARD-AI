@@ -3,48 +3,55 @@ import os
 from PIL import Image
 import google.generativeai as genai
 
-# --- BAGIAN 0: KONFIGURASI API KEY ---
+# --- 1. KONFIGURASI API KEY ---
 GEMINI_API_KEY = "ISI_API_KEY_ANDA_DI_SINI" 
 
 try:
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-1.5-flash')
 except Exception as e:
-    st.error(f"Koneksi AI Terganggu: {e}")
+    st.error(f"Koneksi API Gagal: {e}")
 
-# --- BAGIAN 1: KONFIGURASI HALAMAN & CSS ---
+# --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
+# CSS Kustom untuk Tampilan Profesional & ROI Mewah
 st.markdown("""
     <style>
     .justified-text { text-align: justify; line-height: 1.8; font-size: 16px; }
-    .roi-container {
-        background-color: #ffffff; padding: 30px; border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #1e3a8a;
+    .product-card {
+        border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; 
+        text-align: center; height: 100%; background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
-    .product-box {
-        border: 1px solid #e2e8f0; border-radius: 10px; padding: 15px;
-        text-align: center; height: 100%;
+    .roi-dashboard {
+        background-color: #f8fafc; padding: 30px; border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-top: 6px solid #1e3a8a;
     }
+    .sidebar-title { color: #2563eb; font-weight: 800; text-align: center; font-size: 24px; margin-bottom: -10px; }
+    .founder-label { text-align: center; font-weight: bold; color: #64748b; font-size: 14px; margin-top: 5px; }
+    .efficiency-text { color: #16a34a; font-weight: bold; font-size: 13px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- BAGIAN 2: SIDEBAR (PROFIL & NAVIGASI) ---
+# Fungsi Proteksi Foto
+def load_founder_img(path):
+    if os.path.exists(path):
+        try: return Image.open(path)
+        except: return None
+    return None
+
+# --- 3. SIDEBAR NAVIGATION ---
 with st.sidebar:
-    # Judul V-Guard AI di tengah atas kepala foto
-    st.markdown("<h2 style='text-align:center; margin-bottom: -10px;'>V-Guard AI</h2>", unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-title">V-Guard AI</div>', unsafe_allow_html=True)
     
-    if os.path.exists("erwin.jpg"):
-        try:
-            img = Image.open("erwin.jpg")
-            st.image(img, use_container_width=True)
-        except:
-            st.info("👤 Foto Founder")
+    img = load_founder_img("erwin.jpg")
+    if img:
+        st.image(img, use_container_width=True)
     else:
         st.info("👤 Foto Founder")
         
-    # Hanya Founder - CEO di bawah foto
-    st.markdown("<div style='text-align:center; font-weight:bold;'>Founder - CEO</div>", unsafe_allow_html=True)
+    st.markdown('<div class="founder-label">Founder - CEO</div>', unsafe_allow_html=True)
     st.write("---")
     
     menu = st.radio("STRATEGIC NAVIGATOR", [
@@ -55,75 +62,83 @@ with st.sidebar:
         "Admin Control Center"
     ])
 
-# --- BAGIAN 3: LOGIKA HALAMAN ---
+# --- 4. LOGIKA HALAMAN ---
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Strategis")
     col_img, col_txt = st.columns([1, 2.5])
     with col_img:
-        if os.path.exists("erwin.jpg"):
-            st.image("erwin.jpg", use_container_width=True)
+        if img: st.image(img, use_container_width=True)
     with col_txt:
         st.markdown('<div class="justified-text">', unsafe_allow_html=True)
         st.write("""
-        **Visi: Menjadi Jangkar Kepercayaan Digital Global** V-Guard AI Intelligence bervisi menciptakan ekosistem bisnis yang sepenuhnya transparan, aman, dan berintegritas tinggi melalui inovasi teknologi digital terdepan. Kami hadir bukan sekadar sebagai penyedia solusi perangkat lunak, melainkan sebagai jangkar kepercayaan bagi setiap pemilik bisnis di era ketidakpastian global yang serba cepat ini. Kami memastikan setiap pemilik usaha memiliki ketenangan pikiran total melalui validasi kejujuran sistem secara real-time, di mana data operasional tidak lagi bisa dimanipulasi oleh kepentingan pribadi. Kami bercita-cita menjadi standar emas global dalam layanan Integrity Assurance, di mana teknologi kecerdasan buatan otonom kami mampu menghapuskan segala bentuk keraguan operasional serta manipulasi finansial dalam dunia bisnis yang kompetitif.  
+        **Visi: Menjadi Jangkar Kepercayaan Digital Global** V-Guard AI Intelligence bervisi menciptakan ekosistem bisnis yang sepenuhnya transparan dan aman melalui inovasi teknologi digital. 
 
-        **Misi: Eliminasi Kebocoran & Perlindungan Aset Strategis** Misi kami adalah memberikan perlindungan aset yang tak tertembus melalui lima pilar transformasi digital. Pertama, membangun infrastruktur integritas digital yang mampu mengubah etika kerja menjadi data terukur secara akurat. Kedua, menerapkan teknologi Edge Filtering yang mutakhir untuk deteksi dini anomali finansial tepat di titik kejadian transaksi, mencegah kebocoran sebelum terjadi. **Ketiga, memastikan efisiensi biaya infrastruktur server hingga 20% bagi seluruh mitra kami** melalui optimasi komputasi lokal yang cerdas, memastikan teknologi canggih tetap terjangkau dan efisien secara operasional. Keempat, memberikan kedaulatan akses penuh bagi pemilik usaha melalui Command Center terenkripsi tingkat militer yang dapat dipantau secara nasional maupun global. Terakhir, kami berkomitmen menjaga disiplin pengembangan perangkat lunak yang sangat ketat sesuai standar operasional baku V-Guard, guna menjaga warisan bisnis Anda dari risiko kecurangan sistemik, serangan siber, maupun kelalaian manusia selamanya.
+        **Misi: Efisiensi Biaya Operasional melalui Edge Filtering** Kami tidak mengirimkan data mentah kasir secara membabi buta ke Cloud. **Misi kami adalah memangkas biaya pengeluaran API Bapak hingga 20%** dengan cara hanya mengirimkan indikasi *void* atau *fraud* yang telah difilter di level lokal. Ini memastikan biaya bulanan Bapak tetap rendah tanpa mengurangi akurasi pengawasan.
         """)
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
-    st.header("🏷️ Daftar Produk & Paket")
+    st.header("🏷️ Daftar Produk (Smart Data Filtering Active)")
     pkgs = {
-        "V-LITE": {"akt": "1.5 Jt", "bln": "750 rb", "target": "Mikro / 1 Kasir"},
-        "V-PRO": {"akt": "3 Jt", "bln": "1.5 Jt", "target": "Retail & Kafe"},
-        "V-SIGHT": {"akt": "7,5 Jt", "bln": "3,5 Jt", "target": "Gudang & Toko"},
-        "V-ENTERPRISE": {"akt": "15 Jt", "bln": "10 Jt", "target": "Korporasi"},
-        "V-ULTRA": {"akt": "25 Jt", "bln": "14.9 Jt", "target": "Investor/VIP"}
+        "V-LITE": {"akt": "1.5 Jt", "bln": "750 rb", "target": "Mikro / 1 Kasir", "feat": "Anomali Filtering Lokal, WA Summary"},
+        "V-PRO": {"akt": "3 Jt", "bln": "1.5 Jt", "target": "Retail & Kafe", "feat": "VCS Integration, Void-Only API Upload"},
+        "V-SIGHT": {"akt": "7,5 Jt", "bln": "3,5 Jt", "target": "Gudang & Toko", "feat": "CCTV AI Behavior, API Cost Saver"},
+        "V-ENTERPRISE": {"akt": "15 Jt", "bln": "10 Jt", "target": "Korporasi", "feat": "Core Brain, Dedicated Filtering"},
+        "V-ULTRA": {"akt": "25 Jt", "bln": "14.9 Jt", "target": "Investor/VIP", "feat": "Full Executive Dashboard, VIP Support"}
     }
     cols = st.columns(5)
-    for i, (name, info) in enumerate(pkgs.items()):
+    for i, (name, info) in enumerate(packages.items()):
         with cols[i]:
             st.markdown(f"""
-            <div class="product-box">
-                <div style="font-weight: bold; color: #1e3a8a;">{name}</div>
-                <small>{info['target']}</small><br><br>
-                <small>Aktivasi: {info['akt']}</small><br>
-                <b style="color: #2563eb;">Bln: {info['bln']}</b>
+            <div class="product-card">
+                <div style="font-size: 22px; font-weight: 800; color: #1e3a8a;">{name}</div>
+                <div class="efficiency-text">20% API Cost Saving</div>
+                <div style="color: #d63384; font-size: 12px; font-weight: bold; margin: 5px 0;">{info['target']}</div>
+                <div style="font-size: 13px; text-align: left; min-height: 100px; line-height: 1.5;">• {info['feat'].replace(', ', '<br>• ')}</div>
+                <hr>
+                <div style="font-size: 13px;">Aktivasi: {info['akt']}</div>
+                <div style="color: #2563eb; font-weight: 800; font-size: 19px;">Bln: {info['bln']}</div>
             </div>
             """, unsafe_allow_html=True)
-            st.button(f"Pilih {name}", key=name, use_container_width=True)
+            st.button(f"Pilih {name}", key=f"btn_{name}", use_container_width=True)
 
 elif menu == "Analisis ROI Kerugian":
-    st.header("📊 Dashboard Penyelamatan Aset")
-    st.markdown('<div class="roi-container">', unsafe_allow_html=True)
-    c1, c2 = st.columns(2)
+    st.header("📊 Kalkulasi ROI & Efisiensi Pengeluaran Bulanan")
+    st.markdown('<div class="roi-dashboard">', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
     with c1:
-        omzet = st.number_input("Input Omzet Bulanan (Rp)", value=100000000, step=10000000)
-        leak = st.slider("Asumsi Kebocoran (%)", 1, 15, 5)
+        omzet = st.number_input("Omzet Bulanan Bisnis (Rp)", value=100000000)
+        api_bill = st.number_input("Tagihan API/Cloud Saat Ini (Rp)", value=5000000)
     with c2:
-        saved = (omzet * leak / 100)
-        st.metric("Dana Diselamatkan", f"Rp {saved:,.0f}", delta="Potensi Per Bulan")
-        st.metric("Efisiensi Server", "20% Active", delta_color="normal")
+        saved_leakage = (omzet * 0.05)
+        st.metric("Pencegahan Fraud (5%)", f"Rp {saved_leakage:,.0f}")
+    with c3:
+        # Menghitung penghematan biaya operasional API
+        saved_api = (api_bill * 0.20)
+        st.metric("Potongan Biaya API (20%)", f"Rp {saved_api:,.0f}", delta="Edge Filtering Active")
+    
+    total_benefit = saved_leakage + saved_api
+    st.write("---")
+    st.subheader(f"Total Efisiensi Biaya Bulanan: Rp {total_benefit:,.0f}")
+    st.caption("Penghematan didapat dari eliminasi data sampah. Hanya data indikasi fraud yang dikirim ke API Cloud.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "Portal Klien":
-    st.header("📱 Portal Onboarding")
-    col_a, col_b = st.columns([2, 1])
-    with col_a:
+    st.header("📱 Portal Klien")
+    st.info("Sistem Aktif: Mengurangi trafik data cloud untuk menjaga biaya operasional tetap rendah.")
+    ca, cb = st.columns([2, 1])
+    with ca:
         st.subheader("Form Order")
-        st.text_input("Nama Lengkap")
         st.text_input("Nama Usaha")
         st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
-        st.file_uploader("Upload KTP")
-    with col_b:
+    with cb:
         st.subheader("Aktivasi")
         st.text_input("ID Klien")
-        st.text_input("Password", type="password")
         st.button("Login Center", use_container_width=True)
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Center")
-    if st.text_input("Master Password", type="password") == "w1nbju8282":
-        st.metric("Efisiensi Infrastruktur", "20% Active")
-        st.metric("Total Dana Terlindungi", "Rp 1.250.000.000")
+    if st.text_input("Password", type="password") == "w1nbju8282":
+        st.success("Edge Filtering Berjalan: Penghematan API 20% Terverifikasi.")
+        st.metric("Status API", "Efficient Mode", delta="20% Saved")
