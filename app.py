@@ -60,45 +60,43 @@ if menu == "Visi & Misi":
         st.markdown(f"""
 <div style="text-align: justify; line-height: 1.8; color: #d1d5db; font-size: 15px;">
 
-elif menu == "Produk & Layanan":
-    st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
-    
-    # KODE TANPA CSS SAMA SEKALI AGAR TIDAK ERROR LAGI
-    wa_link = "https://wa.me/6282122190885?text="
-    col1, col2, col3, col4, col5 = st.columns(5)
-    
-    with col1:
-        st.subheader("📦 V-LITE")
-        st.write("**Target: Mikro**")
-        st.caption("Pencatatan otomatis.")
-        st.info("Aktivasi: 750rb\n\nBulanan: 350rb")
-        st.link_button("Pilih V-LITE", f"{wa_link}Halo%20V-Guard%20Lite", use_container_width=True)
-    
-    with col2:
-        st.subheader("🚀 V-PRO")
-        st.write("**Target: Retail**")
-        st.caption("Manajemen multi-kasir.")
-        st.info("Aktivasi: 1.5jt\n\nBulanan: 500rb")
-        st.link_button("Pilih V-PRO", f"{wa_link}Halo%20V-Guard%20Pro", use_container_width=True)
-        
-    with col3:
-        st.subheader("👁️ V-SIGHT")
-        st.write("**Target: Keamanan**")
-        st.caption("Monitoring AI real-time.")
-        st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20V-Guard%20Sight", use_container_width=True)
-        
-    with col4:
-        st.subheader("🏢 V-ENTERPRISE")
-        st.write("**Target: Franchise**")
-        st.caption("Integrasi ERP & stok.")
-        st.link_button("Pilih ENTERPRISE", f"{wa_link}Halo%20V-Guard%20Enterprise", use_container_width=True)
-        
-    with col5:
-        st.subheader("💎 V-ULTRA")
-        st.write("**Target: Skala Besar**")
-        st.caption("Solusi AI Custom.")
-        st.link_button("Pilih ULTRA", f"{wa_link}Halo%20V-Guard%20Ultra", use_container_width=True)
+st.markdown(f"""
+        <div style="text-align: center;">
+            <p>Aplikasi monitoring transaksi dan keamanan V-Guard AI.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
+    # 2. MENU PRODUK & LAYANAN
+    elif menu == "Produk & Layanan":
+        st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
+        
+        wa_link = "https://wa.me/6282122190885?text="
+        c1, c2, c3, c4, c5 = st.columns(5)
+        
+        with c1:
+            st.subheader("📦 V-LITE")
+            st.write("Target: Mikro")
+            st.link_button("Pilih V-LITE", f"{wa_link}Halo%20V-Guard%20Lite", use_container_width=True)
+        with c2:
+            st.subheader("🚀 V-PRO")
+            st.write("Target: Retail")
+            st.link_button("Pilih V-PRO", f"{wa_link}Halo%20V-Guard%20Pro", use_container_width=True)
+        with c3:
+            st.subheader("👁️ V-SIGHT")
+            st.write("Target: Keamanan")
+            st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20V-Guard%20Sight", use_container_width=True)
+        with c4:
+            st.subheader("🏢 V-ENTERPRISE")
+            st.write("Target: Franchise")
+            st.link_button("Pilih ENTERPRISE", f"{wa_link}Halo%20V-Guard%20Enterprise", use_container_width=True)
+        with c5:
+            st.subheader("💎 V-ULTRA")
+            st.write("Target: Skala Besar")
+            st.link_button("Pilih ULTRA", f"{wa_link}Halo%20V-Guard%20Ultra", use_container_width=True)
+
+    # 3. FOOTER
+    st.markdown("---")
+    st.markdown("<p style='text-align: center; color: grey;'>© 2026 V-Guard AI</p>", unsafe_allow_html=True)
 
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
