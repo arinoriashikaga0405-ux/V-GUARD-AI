@@ -1,31 +1,67 @@
 import streamlit as st
 import os
 import google.generativeai as genai
-from dotenv import load_dotenv
 
-# --- 1. MEMUAT KUNCI API ---
-# Membaca file .env
-load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") 
+# --- 1. ADMIN CONTROL CENTER (SIDEBAR) ---
+with st.sidebar:
+    st.header("⚙️ Admin Control Center")
+    
+    # Input Password Admin untuk akses kontrol
+    admin_pass = st.text_input("Admin Password", type="password")
+    
+    # Gunakan password dari .env atau file rahasia Anda 
+    # Default dari file Anda: w1nbju8282 
+    if admin_pass == "w1nbju8282":
+        st.success("Akses Admin Diterima")
+        
+        # Input Manual API Key (Jika .env gagal terbaca)
+        api_input = st.text_input("Update Gemini API Key", 
+                                 value="AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA", # Nilai dari .env Anda 
+                                 type="password")
+        
+        if st.button("Simpan & Refresh Konfigurasi"):
+            st.session_state['api_key'] = api_input
+            st.rerun()
+    else:
+        st.warning("Masukkan password admin untuk mengubah setelan.")
 
-# Inisialisasi API
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+# --- 2. INISIALISASI ENGINE ---
+# Mengambil key dari session state atau file rahasia
+current_api_key = st.session_state.get('api_key', "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA") # Fallback ke key Anda 
+
+if current_api_key:
+    try:
+        genai.configure(api_key=current_api_key)
+        
+        # Optimasi Cost < 20%
+        generation_config = {
+            "temperature": 0.5,
+            "max_output_tokens": 512,
+        }
+        
+        model_gemini = genai.GenerativeModel(
+            model_name='gemini-1.5-flash',
+            generation_config=generation_config
+        )
+        api_status = "✅ Aktif"
+    except Exception:
+        api_status = "❌ Error Konfigurasi"
 else:
-    st.error("API Key tidak ditemukan. Pastikan file .env sudah benar.")
+    api_status = "⚠️ Belum Terkonfigurasi"
 
-# --- 2. OPTIMASI BIAYA (COST REDUCTION < 20%) ---
-generation_config = {
-    "temperature": 0.5,        # Diturunkan agar respon lebih to-the-point
-    "top_p": 0.8,
-    "max_output_tokens": 512,  # Batasan lebih ketat untuk penghematan maksimal
-}
+# --- 3. TAMPILAN UTAMA ---
+st.title("🛡️ V-Guard AI Intelligence")
+st.info(f"Status Sistem: {api_status}")
 
-# Gunakan instruksi sistem untuk memaksa jawaban singkat (Hemat Token)
-model_gemini = genai.GenerativeModel(
-    model_name='gemini-1.5-flash',
-    generation_config=generation_config,
-    system_instruction="Berikan jawaban yang sangat ringkas dan teknis saja."
+if st.button("Cek Status API"):
+    if current_api_key:
+        try:
+            response = model_gemini.generate_content("Ping")
+            st.write("Respon AI:", response.text)
+        except Exception as e:
+            st.error(f"Gagal: {e}")
+    else:
+        st.error("API Key tidak ditemukan di Admin Center.")
 )
 
 # --- 3. KONFIGURASI HALAMAN ---
