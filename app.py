@@ -178,8 +178,8 @@ elif menu == "Admin Control Center":
         # UI untuk AI Squad Agent
         st.subheader("🤖 V-Guard AI Squad Agents")
         st.caption("Agen AI otonom yang bekerja mengawasi ekosistem bisnis Anda 24/7.")
-        
-        sq1, sq2, sq3, sq4 = st.columns(4)
+        # --- BARIS 181: UPDATE KE 5 KOLOM ---
+        sq1, sq2, sq3, sq4, sq5 = st.columns(5)
         with sq1:
             with st.container(border=True):
                 st.markdown("🕵️ **Agent: Sentinel**")
@@ -200,15 +200,55 @@ elif menu == "Admin Control Center":
                 st.markdown("📄 **Agent: Invoicer**")
                 st.caption("Status: H-7 Ready")
                 st.write("Otomatisasi pengiriman invoice klien.")
+        # TAMBAHAN AGENT BARU
+        with sq5:
+            with st.container(border=True):
+                st.markdown("💬 **Agent: Social-24**")
+                st.caption("Status: Social Media Chat")
+                st.write("Lead Gen & Support 24/7.")
 
         st.divider()
 
-        # Tab Menu Admin
-        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
-            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
+        # --- BARIS 207: UPDATE KE 10 TAB ---
+        t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
+            "👤 Aktivasi Klien", 
+            "🖥️ Ekosistem AI", 
+            "💬 AI Chat Agent", 
+            "⚙️ Pengaturan", 
+            "📊 Laporan", 
+            "🛡️ Keamanan", 
+            "💾 Backup", 
+            "🌐 Jaringan", 
+            "📈 Performa", 
+            "💎 V-ULTRA"
         ])
 
+        # --- TAB 3: MODUL CHAT AGENT (Sisipkan di antara t2 dan t4) ---
+        with t3:
+            st.subheader("📱 AI Social Media Chat Agent (FB, IG, WA, TikTok)")
+            st.info("Agen ini aktif 24/7 untuk merespons prospek dan membantu klien di platform sosial.")
+            
+            c_chat1, c_chat2 = st.columns(2)
+            with c_chat1:
+                with st.container(border=True):
+                    st.markdown("### 📊 Statistik Chat 24 Jam")
+                    st.metric("Pesan Terjawab", "142", delta="+24 Prospek Baru")
+                    st.metric("Avg. Response Time", "1.2 Detik", delta="Instan")
+            
+            with c_chat2:
+                with st.container(border=True):
+                    st.markdown("### 🛠️ Konfigurasi Agent")
+                    st.toggle("Aktifkan Auto-Closing (Penjualan)", value=True)
+                    st.toggle("Aktifkan Integrasi WhatsApp Cloud API", value=True)
+                    st.selectbox("Tone Bicara AI", ["Profesional & Tegas", "Ramah & Solutif", "Formal (Perbankan)"])
+            
+            st.divider()
+            st.write("📑 **Log Chat Terbaru (Lead Terdeteksi):**")
+            st.code("""
+[10:15] Lead: 'Pak, tertarik paket V-PRO untuk kafe saya.'
+[10:15] AI: 'Halo! V-PRO sangat cocok untuk kafe. Fitur VCS kami akan mengaudit mutasi bank Anda...'
+[10:16] AI: 'Data terkirim ke CRM. Menunggu follow up tim sales.'
+            """)
         with t1:
             st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
             with st.container(border=True):
