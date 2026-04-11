@@ -59,9 +59,11 @@ if menu == "Visi & Misi":
         st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
         st.markdown(f"""
 <div style="text-align: justify; line-height: 1.8; color: #d1d5db; font-size: 15px;">
-# GANTI HANYA BLOK CSS INI (Baris 68 - 82)
+elif menu == "Produk & Layanan":
+    st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
+    
+    # 1. BLOK CSS (Kunci Desain Kartu agar Seragam)
     st.markdown("""
-       st.markdown("""
         <style>
         .service-card {
             background-color: #ffffff;
@@ -71,100 +73,123 @@ if menu == "Visi & Misi":
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 10px;
             color: #31333F;
+            height: 480px; /* Tinggi ditambah agar muat semua list fitur */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
+        .price-container {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: auto;
+        }
+        .price-text { margin: 0; font-weight: bold; color: #007bff; font-size: 0.9em; }
+        .target-text { color: #e91e63; font-size: 0.75em; font-weight: bold; margin-bottom: 15px; }
         </style>
     """, unsafe_allow_html=True)
+
+    # 2. DEFINISI URL & KOLOM
+    wa_link = "https://wa.me/6282122190885?text="
     col1, col2, col3, col4, col5 = st.columns(5)
 
-    # Base link WhatsApp Bapak
-    wa_link = "https://wa.me/6282122190885?text="
-
+    # --- KOLOM 1: V-LITE ---
     with col1:
-        st.markdown(f"""
-    with col1:
-       with col1:
-        st.markdown(f"""
-        <div class="service-card">
-            <h3 style="text-align: center;">V-LITE</h3>
-            <p style="color: #e91e63; font-size: 0.75em;">Target: Mikro / 1 Kasir</p>
-            <ul style='font-size: 0.8em; padding-left: 15px;'>
-                <li>AI Fraud Detector Dasar</li>
-                <li>Daily WA Summary</li>
-                <li>Monthly PDF Report</li>
-            </ul>
-            <div class="price-tag">
-                <p class="price-text">Aktivasi: 750 rb</p>
-                <p class="price-text">Bulanan: 350 rb</p>
+        st.markdown("""
+            <div class="service-card">
+                <h3 style="text-align: center;">📦 V-LITE</h3>
+                <p class="target-text" style="text-align: center;">🎯 Target: Mikro / 1 Kasir</p>
+                <ul style="font-size: 0.8em; padding-left: 15px; color: #444;">
+                    <li>AI Fraud Detector Dasar</li>
+                    <li>Daily WA Summary</li>
+                    <li>Monthly PDF Report</li>
+                </ul>
+                <div class="price-container">
+                    <p class="price-text">Aktivasi: 1.5 Jt</p>
+                    <p class="price-text">Bulanan: 750 rb</p>
+                </div>
             </div>
-        </div>
         """, unsafe_allow_html=True)
-        st.link_button("Pilih V-LITE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-LITE", use_container_width=True)True)
+        st.link_button("Pilih V-LITE", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-LITE", use_container_width=True)
 
+    # --- KOLOM 2: V-PRO ---
     with col2:
-        with col2:
-        st.markdown(f"""
-        <div class="service-card">
-            <h3 style="text-align: center;">V-PRO</h3>
-            <p style="color: #e91e63; font-size: 0.75em;">Target: Retail / 2-3 Kasir</p>
-                <li>VCS Integration</li>
-                <li>Bank Audit</li>
-                <li>H-7 Auto-Invoice</li>
-            </ul>
-            <div class="price-tag">
-                <p class="price-text">Aktivasi: 1.5 jt</p>
-                <p class="price-text">Bulanan: 800 rb</p>
+        st.markdown("""
+            <div class="service-card">
+                <h3 style="text-align: center;">📦 V-PRO</h3>
+                <p class="target-text" style="text-align: center;">🎯 Target: Retail & Kafe</p>
+                <ul style="font-size: 0.8em; padding-left: 15px; color: #444;">
+                    <li>VCS Integration</li>
+                    <li>Bank Audit</li>
+                    <li>H-7 Auto-Invoice</li>
+                </ul>
+                <div class="price-container">
+                    <p class="price-text">Aktivasi: 3 Jt</p>
+                    <p class="price-text">Bulanan: 1.5 Jt</p>
+                </div>
             </div>
-        </div>
         """, unsafe_allow_html=True)
-        st.link_button("Pilih V-PRO", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-PRO", use_container_width=True)
+        st.link_button("Pilih V-PRO", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-PRO", use_container_width=True)
 
-    with col3: # Ganti sesuai nomor kolom (col1, col2, col3, dst)
+    # --- KOLOM 3: V-SIGHT ---
+    with col3:
         st.markdown("""
-            with col3:
-        st.markdown("""
-        <div class="service-card">
-            <h3 style="text-align: center;">V-SIGHT</h3>
-            <p style="color: #e91e63; font-size: 0.75em;">Target: Keamanan & Analitik</p>
-            <p style="font-size: 14px; color: #666;">Monitoring AI untuk deteksi anomali real-time.</p>
-        </div>
+            <div class="service-card">
+                <h3 style="text-align: center;">📦 V-SIGHT</h3>
+                <p class="target-text" style="text-align: center;">🎯 Target: Gudang & Toko</p>
+                <ul style="font-size: 0.8em; padding-left: 15px; color: #444;">
+                    <li>CCTV AI Behavior</li>
+                    <li>Visual Cashier Audit</li>
+                    <li>Real-Time Stock</li>
+                </ul>
+                <div class="price-container">
+                    <p class="price-text">Aktivasi: 7,5 Jt</p>
+                    <p class="price-text">Bulanan: 3,5 Jt</p>
+                </div>
+            </div>
         """, unsafe_allow_html=True)
-        st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-SIGHT", use_container_width=True)
+        st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-SIGHT", use_container_width=True)
+
+    # --- KOLOM 4: V-ENTERPRISE ---
     with col4:
-        st.markdown(f"""
-        <div class="service-card">
-            <h3>📦 V-ENTERPRISE</h3>
-            <p style='color: #e91e63; font-size: 0.75em;'>🎯 Target: Korporasi</p>
-            <ul style='font-size: 0.8em; padding-left: 15px;'>
-                <li>The Core Brain</li>
-                <li>Forensic AI (1 Thn)</li>
-                <li>Custom AI SOP</li>
-            </ul>
-            <div class="price-tag">
-                <p class="price-text">Aktivasi: 15 Jt</p>
-                <p class="price-text">Bulanan: 10 Jt</p>
+        st.markdown("""
+            <div class="service-card">
+                <h3 style="text-align: center;">📦 V-ENTERPRISE</h3>
+                <p class="target-text" style="text-align: center;">🎯 Target: Korporasi</p>
+                <ul style="font-size: 0.8em; padding-left: 15px; color: #444;">
+                    <li>The Core Brain</li>
+                    <li>Forensic AI (1 Thn)</li>
+                    <li>Custom AI SOP</li>
+                </ul>
+                <div class="price-container">
+                    <p class="price-text">Aktivasi: 15 Jt</p>
+                    <p class="price-text">Bulanan: 10 Jt</p>
+                </div>
             </div>
-        </div>
         """, unsafe_allow_html=True)
-        st.link_button("Pilih V-ENTERPRISE", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-ENTERPRISE", use_container_width=True)
+        st.link_button("Pilih V-ENTERPRISE", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-ENTERPRISE", use_container_width=True)
 
+    # --- KOLOM 5: V-ULTRA ---
     with col5:
-        st.markdown(f"""
-        <div class="service-card" style="border: 2px solid #FFD700;">
-            <h3>👑 V-ULTRA</h3>
-            <p style='color: #e91e63; font-size: 0.75em;'>🎯 Target: Investor/VIP</p>
-            <ul style='font-size: 0.8em; padding-left: 15px;'>
-                <li>Executive Dashboard</li>
-                <li>Leakage Heatmap</li>
-                <li>White-Label Branding</li>
-                <li>VIP Priority</li>
-            </ul>
-            <div class="price-tag">
-                <p class="price-text">Aktivasi: 25 Jt</p>
-                <p class="price-text">Bulanan: 14.9 Jt</p>
+        st.markdown("""
+            <div class="service-card" style="border: 2px solid #FFD700;">
+                <h3 style="text-align: center;">👑 V-ULTRA</h3>
+                <p class="target-text" style="text-align: center;">🎯 Target: Investor/VIP</p>
+                <ul style="font-size: 0.8em; padding-left: 15px; color: #444;">
+                    <li>Executive Dashboard</li>
+                    <li>Leakage Heatmap</li>
+                    <li>White-Label Branding</li>
+                    <li>VIP Priority</li>
+                </ul>
+                <div class="price-container">
+                    <p class="price-text">Aktivasi: 25 Jt</p>
+                    <p class="price-text">Bulanan: 14.9 Jt</p>
+                </div>
             </div>
-        </div>
         """, unsafe_allow_html=True)
-        st.link_button("Pilih V-ULTRA", f"{wa_link}Halo%20Admin%20V-GUARD,%20saya%20tertarik%20paket%20V-ULTRA", use_container_width=True)
+        st.link_button("Pilih V-ULTRA", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-ULTRA", use_container_width=True)
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
