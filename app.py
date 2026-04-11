@@ -65,7 +65,7 @@ with st.sidebar:
     st.error("🚨 FIRE ALARM: ACTIVE")
 
 # --- 4. NARASI STRATEGIS (250 KATA) ---
-STRATEGIC_CONTENT = """
+
 ### **Visi Trust**
 V-Guard AI hadir sebagai jangkar teknologi global dalam misi **Digitalisasi Kepercayaan (Digitizing Trust)**. Kami mentransformasi ekosistem bisnis konvensional menjadi entitas digital yang sepenuhnya transparan, aman, dan berintegritas tinggi. Visi kami adalah menghapuskan paradigma kerugian akibat kelalaian manusia dan kecurangan sistemik melalui perlindungan mandiri yang bekerja otomatis di setiap lini transaksi. Kami membangun dunia di mana setiap pemilik usaha memiliki ketenangan pikiran total, memastikan bahwa pertumbuhan ekonomi perusahaan berdiri di atas pondasi kejujuran yang divalidasi oleh kecerdasan buatan, menjamin setiap rupiah yang masuk adalah murni hasil produktivitas yang terlindungi.
 
