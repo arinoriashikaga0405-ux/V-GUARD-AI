@@ -32,7 +32,7 @@ with st.sidebar:
 # --- 4. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi Digitizing Trust, Eliminating Leakage ")
+    st.header("Digitizing Trust, Eliminating Leakage ")
     col_img, col_txt = st.columns([1, 2])
     with col_img:
         if os.path.exists("erwin.jpg"):
