@@ -63,18 +63,18 @@ if menu == "Visi & Misi":
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
     
-    # 1. BLOK CSS (Dibersihkan dari angka yang memicu error)
+    # 1. BLOK CSS (Versi Super Aman: Tanpa angka yang bisa dibaca sebagai decimal literal)
     st.markdown("""
         <style>
         .service-card {
             background-color: white;
             border: thin solid #e0e0e0;
-            padding: 15px;
+            padding: 1em;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
+            margin-bottom: 1em;
             color: #31333F;
-            height: 300px;
+            height: 320px;
         }
         .service-card h3 { color: #1E1E1E; margin-top: 0; text-align: center; }
         .target-text { color: #e91e63; font-size: 0.8em; font-weight: bold; text-align: center; }
