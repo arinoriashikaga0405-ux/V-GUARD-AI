@@ -19,13 +19,10 @@ if API_KEY:
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# CSS UNTUK TAMPILAN ELEGAN & SIMETRIS
 st.markdown("""
     <style>
     .main-slogan { text-align: center; font-size: 32px; font-weight: 800; color: #1e3a8a; margin-bottom: 30px; }
     .justified-text { text-align: justify; line-height: 1.8; font-size: 15px; color: #333; background: #fff; padding: 20px; border-radius: 12px; }
-    
-    /* Layout Kartu Produk 5 Kolom */
     .product-card { 
         border: 1px solid #e2e8f0; border-radius: 15px; padding: 20px; 
         text-align: center; height: 550px; background: #fff; 
@@ -40,7 +37,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. HEADER & VISI MISI (250 KATA) ---
+# --- 3. HEADER & VISI MISI ---
 st.markdown('<div class="main-slogan">"Digitizing Trust, Eliminating Leakage"</div>', unsafe_allow_html=True)
 
 col_f, col_v = st.columns([1, 2.5])
@@ -53,15 +50,47 @@ with col_f:
 with col_v:
     st.markdown('<div class="justified-text">', unsafe_allow_html=True)
     st.write("""
-    **VISI: Menjadi Jangkar Kepercayaan Digital dan Standar Global Integritas Bisnis** V-Guard AI Intelligence bervisi untuk menjadi pilar utama dalam ekosistem bisnis global yang mengedepankan transparansi mutlak dan keamanan aset berbasis kecerdasan buatan terdepan. Di tengah era volatilitas digital yang serba cepat, kami memposisikan diri sebagai "jangkar kepercayaan" bagi para pemilik bisnis dan investor. Kami tidak sekadar membangun perangkat lunak; kami membangun standar baru di mana integritas bisnis tidak lagi bersifat abstrak, melainkan menjadi data yang terukur, dapat diverifikasi, dan tidak dapat dimanipulasi secara sepihak. Kami bercita-cita untuk menciptakan dunia usaha yang bebas dari risiko sistemik, di mana setiap transaksi divalidasi oleh kebenaran digital yang absolut.
+    **VISI: Menjadi Jangkar Kepercayaan Digital dan Standar Global Integritas Bisnis** V-Guard AI Intelligence bervisi untuk menjadi pilar utama dalam ekosistem bisnis global yang mengedepankan transparansi mutlak dan keamanan aset berbasis kecerdasan buatan terdepan. Di tengah era volatilitas digital yang serba cepat, kami memposisikan diri sebagai "jangkar kepercayaan" bagi para pemilik bisnis dan investor. Kami tidak sekadar membangun perangkat lunak; kami membangun standar baru di mana integritas bisnis tidak lagi bersifat abstrak, melainkan menjadi data yang terukur secara akurat.
 
-    **MISI: Eliminasi Kebocoran Aset Melalui Edge Intelligence dan Perlindungan Siber Berlapis** Misi utama kami adalah memberdayakan pelaku bisnis melalui penerapan teknologi **Edge Filtering** yang mutakhir untuk membangun infrastruktur integritas digital yang mampu mengubah etika kerja menjadi parameter performa yang akurat. Dengan algoritma deteksi dini, V-Guard secara proaktif mengidentifikasi anomali finansial tepat di titik kejadian transaksi, guna mengeliminasi potensi kebocoran sebelum dampak kerugian meluas. Lebih dari itu, kami menjaga disiplin pengembangan sistem yang sangat ketat guna melindungi warisan bisnis klien dari risiko siber maupun kecurangan internal secara berkelanjutan. Melalui inovasi tanpa henti, V-Guard berupaya mendigitalkan rasa aman, memastikan bahwa setiap unit usaha dapat tumbuh secara eksponensial dalam ekosistem yang bersih, efisien, dan terlindungi selamanya.
+    **MISI: Eliminasi Kebocoran Aset Melalui Edge Intelligence** Misi utama kami adalah memberdayakan pelaku bisnis melalui penerapan teknologi **Edge Filtering** yang mutakhir untuk membangun infrastruktur integritas digital yang mampu mengubah etika kerja menjadi parameter performa yang akurat. Dengan algoritma deteksi dini, V-Guard secara proaktif mengidentifikasi anomali finansial tepat di titik kejadian transaksi, guna mengeliminasi potensi kebocoran sebelum dampak kerugian meluas. Melalui inovasi tanpa henti, V-Guard berupaya mendigitalkan rasa aman bagi setiap unit usaha.
     """)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- 4. PRODUK & LAYANAN (5 KOLOM SIMETRIS) ---
+# --- 4. PRODUK & LAYANAN (5 KOLOM LENGKAP) ---
 st.markdown('<div class="section-title">🏷️ PRODUK & LAYANAN STRATEGIS</div>', unsafe_allow_html=True)
 
 pkgs = {
     "V-LITE": {"t": "Mikro / 1 Kasir", "f": ["• Anomali Filter Lokal", "• WA Summary", "• Cloud Secure"], "a": "1.5 Jt", "b": "750 rb"},
-    "V-PRO": {"t": "Retail & Kafe", "f": ["• VCS Integration", "• Fraud-Only API Upload", "• Bank Audit Link"], "a": "
+    "V-PRO": {"t": "Retail & Kafe", "f": ["• VCS Integration", "• Fraud-Only API Upload", "• Bank Audit Link"], "a": "3 Jt", "b": "1.5 Jt"},
+    "V-SIGHT": {"t": "Gudang & Toko", "f": ["• CCTV AI Behavior", "• Stock Monitor", "• Visual Audit"], "a": "7,5 Jt", "b": "3,5 Jt"},
+    "V-ENTERPRISE": {"t": "Korporasi", "f": ["• The Core Brain", "• Dedicated Server", "• Custom AI SOP"], "a": "15 Jt", "b": "10 Jt"},
+    "V-ULTRA": {"t": "Investor/VIP", "f": ["• Executive Dash", "• Heatmap", "• VIP Priority Support"], "a": "25 Jt", "b": "14.9 Jt"}
+}
+
+cols = st.columns(5)
+for i, (name, info) in enumerate(pkgs.items()):
+    with cols[i]:
+        st.markdown(f"""
+        <div class="product-card">
+            <div>
+                <div class="product-title">{name}</div>
+                <div class="target-text">{info['t']}</div><hr>
+                <div class="feature-list">{"<br>".join(info['f'])}</div>
+            </div>
+            <div class="price-box">
+                <small style="font-size:11px;">Aktivasi: {info['a']}</small><br>
+                <b style="color: #2563eb; font-size: 18px;">Bln: {info['b']}</b>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.button(f"Pilih {name}", key=f"btn_{i}", use_container_width=True)
+
+# --- 5. PORTAL & ADMIN ---
+st.write("---")
+c1, c2 = st.columns(2)
+with c1:
+    st.markdown('<div class="section-title">📱 PENDAFTARAN KLIEN</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.text_input("Nama Klien (KTP)")
+        st.file_uploader("Upload KTP", type=['jpg', 'png'])
+        st.button("Kirim Form", type
