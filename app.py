@@ -85,7 +85,7 @@ elif menu == "Produk & Layanan":
                 st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
                 st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
                 
-    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+        | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
     | **Biaya Pemasaran** | 750 rb | 1.5Jt | 5 Jt | 15 Jt |
