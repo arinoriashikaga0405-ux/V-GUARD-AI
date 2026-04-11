@@ -63,21 +63,21 @@ if menu == "Visi & Misi":
         setiap organisasi adalah menjaga integritas di setiap lini. Oleh karena itu, kami hadir untuk 
         mendigitalisasi kepercayaan tersebut, memastikan bahwa setiap interaksi dan proses bisnis 
         tercatat dengan presisi yang tidak dapat dimanipulasi.
-        <br><br>
+    <br><br>
         Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang dapat 
         diadaptasi oleh <b>seluruh sektor jenis usaha</b>, mulai dari manufaktur, ritel, jasa, hingga 
         pengelolaan properti skala besar. Melalui teknologi deteksi visual tingkat lanjut, kami bertekad 
         menghilangkan segala bentuk kebocoran (leakage)—baik itu kebocoran finansial, inefisiensi tenaga kerja, 
         maupun potensi kehilangan aset fisik. Kami mengubah sistem keamanan yang awalnya bersifat pasif 
         menjadi asisten analitik proaktif yang bekerja 24/7.
-        <br><br>
+    <br><br>
         Dengan membangun infrastruktur digital yang kokoh di tingkat nasional, V-GUARD AI berkomitmen 
         untuk mengoptimalkan profitabilitas klien kami melalui eliminasi celah operasional secara total. 
         Kami percaya bahwa melalui transparansi data yang dihasilkan oleh AI, setiap pemilik usaha dapat 
         mengambil keputusan strategis dengan tingkat keyakinan yang lebih tinggi. Kami adalah mitra 
         strategis Anda dalam menjaga masa depan bisnis yang bersih, efisien, dan berkelanjutan 
         di seluruh pelosok nusantara.
-        </div>
+    </div>
         """, unsafe_allow_html=True)
 
         st.markdown("---")
