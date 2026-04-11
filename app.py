@@ -64,9 +64,9 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
         elif menu == "Produk & Layanan":
-    st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
-    st.markdown("""
-<style>
+        st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
+        st.markdown("""
+        <style>
 st.markdown("""
         <style>
         .service-card {
