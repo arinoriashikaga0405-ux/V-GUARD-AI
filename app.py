@@ -37,7 +37,7 @@ def proses_transaksi(total, data_input):
     # Threshold lokal: Jika transaksi di bawah 5 juta, anggap aman (0 biaya API)
     if total < 5000000:
         return "PASS (Auto)", False
-    
+
     # Hanya panggil AI jika transaksi besar/mencurigakan (Hanya bayar 20% penggunaan)
     response = model_gemini.generate_content(f"Cek: {data_input}")
     return response.text, True
