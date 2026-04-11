@@ -53,7 +53,7 @@ if menu == "Visi & Misi":
 
     with col_teks:
     st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
-        # Narasi 250 Kata mencakup semua sektor usaha
+    # Narasi 250 Kata mencakup semua sektor usaha
     st.markdown(f"""
 <div style="text-align: justify; line-height: 1.7; color: #d1d5db; font-size: 15px;">
 <b>V-GUARD AI Intelligence</b> didirikan atas dasar keyakinan bahwa kepercayaan di era digital 
