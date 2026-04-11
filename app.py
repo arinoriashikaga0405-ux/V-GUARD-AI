@@ -59,30 +59,27 @@ if menu == "Visi & Misi":
         st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
         st.markdown(f"""
 <div style="text-align: justify; line-height: 1.8; color: #d1d5db; font-size: 15px;">
+
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
     
-    # 1. BLOK CSS (Dibuat sangat rapat agar tidak ada error karakter)
-    css_code = """
-    <style>
-    .service-card {
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        margin-bottom: 10px;
-        color: #31333F;
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        justify-content:间-between;
-    }
-    .service-card h3 { color: #1E1E1E; margin-top: 0; }
-    .target-text { color: #e91e63; font-size: 0.85em; font-weight: bold; }
-    </style>
-    """
-    st.markdown(css_code, unsafe_allow_html=True)
+    # 1. BLOK CSS (Dibersihkan dari karakter ilegal)
+    st.markdown("""
+        <style>
+        .service-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
+            color: #31333F;
+            height: 280px;
+        }
+        .service-card h3 { color: #1E1E1E; margin-top: 0; }
+        .target-text { color: #e91e63; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
+        </style>
+    """, unsafe_allow_html=True)
 
     # 2. DEFINISI URL & KOLOM
     wa_link = "https://wa.me/6282122190885?text="
@@ -134,6 +131,7 @@ elif menu == "Produk & Layanan":
             <p style="font-size: 13px; color: #666;">Solusi AI Custom penuh dengan infrastruktur eksklusif.</p>
         </div>""", unsafe_allow_html=True)
         st.link_button("Konsultasi ULTRA", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-ULTRA", use_container_width=True)
+        
 elif menu == "Analisis ROI Kerugian":
         st.header("📊 Analisis Potensi Kerugian vs ROI")
         col_a, col_b = st.columns(2)
