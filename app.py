@@ -84,9 +84,9 @@ if menu == "Visi & Misi":
     with col1:
        with col1:
         st.markdown(f"""
-            <div class="service-card">
-                <h3 style="text-align: center;">V-LITE</h3>
-                <p style='color: #e91e63; font-size: 0.75em;'>🎯 Target: Mikro / 1 Kasir</p>
+        <div class="service-card">
+            <h3 style="text-align: center;">V-LITE</h3>
+            <p style="color: #e91e63; font-size: 0.75em;">Target: Mikro / 1 Kasir</p>
             <ul style='font-size: 0.8em; padding-left: 15px;'>
                 <li>AI Fraud Detector Dasar</li>
                 <li>Daily WA Summary</li>
