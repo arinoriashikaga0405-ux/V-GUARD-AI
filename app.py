@@ -174,4 +174,4 @@ elif menu == "🎮 ADMIN CONTROL CENTER":
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("<center>© 2026 V-GUARD AI | Digital Integrity Powered by Erwin Sinaga</center>", unsafe_allow_html=True)
+st.markdown("<center>© 2026 V-GUARD AI | Digital Integrity</center>", unsafe_allow_html=True)
