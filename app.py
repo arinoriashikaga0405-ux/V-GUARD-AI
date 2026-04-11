@@ -56,14 +56,14 @@ elif menu == "Produk & Layanan":
     packages = {
         "V-LITE": [
             "Mikro / 1 Kasir", 
-            "1.5 Jt", 
             "750 rb", 
+            "350 rb", 
             "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"
         ],
         "V-PRO": [
             "Retail & Kafe", 
-            "3 Jt", 
             "1.5 Jt", 
+            "850 rb", 
             "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"
         ],
         "V-SIGHT": [
