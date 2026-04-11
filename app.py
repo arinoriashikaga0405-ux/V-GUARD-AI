@@ -68,10 +68,10 @@ elif menu == "Produk & Layanan":
     st.markdown("""
 <style>
 .service-card {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            padding: 15px;
-            border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 10px;
     margin-bottom: 10px;
     color: #31333F;
 }
