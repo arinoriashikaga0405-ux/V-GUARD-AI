@@ -61,10 +61,3 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-elif menu == "Produk & Layanan":
-    st.header("🛡️ Paket Layanan V-Guard AI")
-    c1, c2, c3, c4 = st.columns(4)
-    
-    # Data Produk dengan Harga Baru yang Bapak minta
-    produk = {
-    "V-L
