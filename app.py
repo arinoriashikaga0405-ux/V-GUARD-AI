@@ -1,113 +1,153 @@
 import streamlit as st
+import os
 import pandas as pd
 
-# --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="VGUARD AI Systems - Executive Platform", page_icon="🛡️", layout="wide")
+# --- 1. KONFIGURASI HALAMAN & TEMA ---
+st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# Inisialisasi State Halaman
-if 'page' not in st.session_state:
-    st.session_state.page = "Visi & Misi"
-
-# --- 2. CSS CUSTOM (CLEAN & PREMIUM) ---
+# CSS Premium Eksekutif (Berdasarkan Struktur Dokumen) [cite: 306-313]
 st.markdown("""
     <style>
-    .block-container { padding-top: 1rem; }
-    .main { background-color: #f8fafc; }
-    [data-testid="stSidebar"] { background-color: #0f172a !important; }
-    
-    /* Box Narasi Premium */
+    .main { background-color: #0e1117; }
+    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
+    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
+    div[data-testid="stMetricValue"] { font-size: 22px; color: #238636; }
     .mission-box { 
-        background-color: #ffffff; padding: 40px; border-radius: 15px; 
-        border-left: 10px solid #1e3a8a; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-    .founder-sidebar-text { color: white; text-align: center; margin-top: 10px; }
-    .card-paket {
-        background-color: white; padding: 20px; border-radius: 12px;
-        border: 1px solid #e2e8f0; text-align: center;
+        text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;
+        background-color: #1e293b; padding: 25px; border-radius: 15px; border-left: 10px solid #238636;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR (NAVIGASI LENGKAP) ---
+# --- 2. SIDEBAR NAVIGATION [cite: 314-321] ---
 with st.sidebar:
-    try:
+    st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
+    if os.path.exists("erwin.jpg"):
         st.image("erwin.jpg", use_container_width=True)
-    except:
-        st.info("Founder Photo (erwin.jpg)")
-    
-    st.markdown('<div class="founder-sidebar-text">', unsafe_allow_html=True)
-    st.markdown("### **Erwin Sinaga**")
-    st.caption("Founder & CEO V-GUARD AI")
-    st.markdown('</div>', unsafe_allow_html=True)
-    
+    st.markdown("<div style='text-align:center;'><p style='color:white; font-weight:bold; margin-bottom:0;'>Erwin Sinaga</p><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
     st.markdown("---")
-    # Menu Navigasi Sesuai Permintaan
-    st.session_state.page = st.radio("STRATEGIC MENU", [
+    
+    menu = st.radio("NAVIGASI UTAMA", [
         "Visi & Misi", 
-        "Layanan Produk", 
-        "ROI Analysis", 
+        "Produk & Layanan", 
+        "Analisis ROI Kerugian", 
         "Portal Klien", 
-        "Admin Center"
+        "Admin Control Center"
     ])
     
     st.markdown("---")
-    st.success("📉 Hemat API & Server: 20%")
+    # Penambahan Fitur Efisiensi 20% yang diminta
+    st.success("📉 Efisiensi Server & API: 20%") 
     st.error("🚨 FIRE ALARM: ACTIVE")
 
-# --- 4. KONTEN STRATEGIS ---
+# --- 3. LOGIKA MENU UTAMA ---
 
-# A. HALAMAN VISI & MISI (250 KATA)
-if st.session_state.page == "Visi & Misi":
-    st.markdown("<h1 style='text-align:center; color:#1e3a8a;'>🛡️ VGUARD AI SYSTEMS</h1>", unsafe_allow_html=True)
-    col_l, col_m, col_r = st.columns([0.5, 4, 0.5])
-    with col_m:
+# A. VISI & MISI [cite: 323-342]
+if menu == "Visi & Misi":
+    st.header("Visi & Misi V-Guard AI Intelligence")
+    col_img, col_txt = st.columns([1, 2])
+    with col_img:
+        if os.path.exists("erwin.jpg"):
+            st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
+    with col_txt:
         st.markdown(f"""
         <div class="mission-box">
-        <h3>Visi Strategis: Digitizing Trust</h3>
-        <p>V-Guard AI hadir sebagai jangkar teknologi global dalam misi <b>Digitalisasi Kepercayaan (Digitizing Trust)</b>. Kami mentransformasi ekosistem bisnis konvensional menjadi entitas digital yang sepenuhnya transparan, aman, dan berintegritas tinggi. Visi kami adalah menghapuskan paradigma kerugian akibat kelalaian manusia dan kecurangan sistemik melalui perlindungan mandiri yang bekerja otomatis di setiap lini transaksi. Kami membangun dunia di mana setiap pemilik usaha memiliki ketenangan pikiran total, memastikan bahwa pertumbuhan ekonomi perusahaan berdiri di atas pondasi kejujuran yang divalidasi oleh kecerdasan buatan, menjamin setiap rupiah yang masuk adalah murni hasil produktivitas yang terlindungi.</p>
-        <br>
-        <h3>Misi Operasional: Eliminating Leakage</h3>
-        1. <b>Infrastruktur Integritas:</b> Membangun sistem digital yang mengonversi etika operasional menjadi data terukur secara real-time.<br>
-        2. <b>Eliminasi Kebocoran (Leakage):</b> Teknologi Edge Filtering presisi tinggi untuk deteksi anomali finansial.<br>
-        3. <b>Efisiensi API 20%:</b> Optimasi pemrosesan lokal untuk menekan biaya server dan cloud API.<br>
-        4. <b>Kedaulatan Command Center:</b> Akses kontrol mutlak bagi Owner melalui sistem terenkripsi.<br>
-        5. <b>Standarisasi SOP:</b> Disiplin pengembangan perangkat lunak sesuai standar operasional baku.
+        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman 10 tahun di perbankan, kami memahami bahwa celah sistem adalah potensi kerugian fatal.<br><br>
+        Misi kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui audit cerdas otonom 24 jam. Dengan optimasi <b>Efisiensi API & Server sebesar 20%</b>, kami memastikan perlindungan aset yang maksimal dengan biaya infrastruktur yang lebih ringan bagi klien.<br><br>
+        Visi kami adalah menjadi standar global dalam "Integrity Assurance", menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional.
         </div>
         """, unsafe_allow_html=True)
 
-# B. LAYANAN PRODUK
-elif st.session_state.page == "Layanan Produk":
-    st.title("📦 Layanan Produk & Paket")
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown('<div class="card-paket"><h3>V-LITE</h3><p>Proteksi Dasar Sensor & Laci</p><h4>Rp 2.5jt/bln</h4></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="card-paket"><h3>V-PRO</h3><p>AI Fraud Detection & API Integration</p><h4>Rp 5jt/bln</h4></div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown('<div class="card-paket"><h3>V-ULTIMATE</h3><p>Full System & Visual Intelligence</p><h4>Custom</h4></div>', unsafe_allow_html=True)
+# B. PRODUK & LAYANAN [cite: 343-382]
+elif menu == "Produk & Layanan":
+    st.header("🛡️ Portfolio Layanan V-Guard AI")
+    wa_number = "6282122190885"
+    c1, c2, c3, c4 = st.columns(4)
+    
+    packages = {
+        "V-LITE": ["Mikro", "1.5 Jt", "750 rb", "AI Fraud Detector Dasar, Laporan WA"],
+        "V-PRO": ["Retail", "3 Jt", "1.5 Jt", "VCS Integration, Audit Bank, H-7 Invoice"],
+        "V-SIGHT": ["Gudang", "7.5 Jt", "3.5 Jt", "CCTV AI Behavior, Real-Time Stock, Alarm"],
+        "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI, Dedicated Server"]
+    }
+    
+    for i, (name, details) in enumerate(packages.items()):
+        with [c1, c2, c3, c4][i]:
+            with st.container(border=True):
+                st.markdown(f"### 📦 {name}")
+                st.caption(f"🎯 Target: {details[0]}")
+                st.write(f"- {details[3]}")
+                st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
+                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*")
 
-# C. ROI ANALYSIS
-elif st.session_state.page == "ROI Analysis":
-    st.title("📊 ROI Analysis")
-    st.write("Analisis penghematan biaya operasional dengan efisiensi API 20%.")
-    st.metric("Estimasi Penghematan", "20%", "+Rp 15.000.000 / bln")
+# C. ANALISIS ROI [cite: 398-415]
+elif menu == "Analisis ROI Kerugian":
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
+    with col_b:
+        st.success(f"💰 Profit Diselamatkan: Rp {loss * 0.8:,.0f} / bln")
+        st.caption("ROI dihitung berdasarkan pencegahan kebocoran & efisiensi biaya server 20%.")
 
-# D. PORTAL KLIEN
-elif st.session_state.page == "Portal Klien":
-    st.title("🔑 Client Access Portal")
-    with st.columns(3)[1]:
-        st.text_input("Username")
-        st.text_input("Password", type="password")
-        st.button("Login Ke Dashboard", use_container_width=True)
+# D. PORTAL KLIEN [cite: 416-435]
+elif menu == "Portal Klien":
+    st.header("🔑 Portal Klien V-Guard AI")
+    c_reg, c_log = st.columns(2)
+    with c_reg:
+        st.subheader("📝 Registrasi Klien Baru")
+        with st.container(border=True):
+            st.text_input("Nama Usaha")
+            st.selectbox("Paket Pilihan", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.button("Kirim Registrasi")
+    with c_log:
+        st.subheader("🔑 Akses User")
+        with st.container(border=True):
+            st.text_input("Username")
+            pw = st.text_input("Password", type="password")
+            if st.button("Masuk"):
+                if pw == "vguardklien2026": st.success("Selamat Datang!")
+                else: st.error("Password Salah.")
 
-# E. ADMIN CENTER
-elif st.session_state.page == "Admin Center":
-    st.title("🎮 Admin Command Center")
-    pwd = st.text_input("Master Key", type="password")
-    if pwd == "vguard2026":
-        st.subheader("🤖 Status 10 AI Squad")
-        squad = pd.DataFrame({"Agen": ["Visionary", "Watchdog", "Sentinel", "Analyst", "Growth", "Liaison", "Treasurer", "Legalist", "Strategist", "Concierge"], "Status": ["Online"]*10})
-        st.table(squad)
+# E. ADMIN CONTROL CENTER [cite: 436-588]
+elif menu == "Admin Control Center":
+    st.header("🔒 Admin Control Center")
+    if "admin_logged_in" not in st.session_state:
+        st.session_state.admin_logged_in = False
+    
+    if not st.session_state.admin_logged_in:
+        admin_input = st.text_input("Administrator Password", type="password")
+        if admin_input == "w1nbju8282":
+            st.session_state.admin_logged_in = True
+            st.rerun()
+    else:
+        if st.button("Log Out"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
+            
+        t1, t2, t3, t4 = st.tabs(["🖥️ Ekosistem AI", "📈 Performa", "👁️ V-SIGHT", "💎 V-ULTRA"])
+        
+        with t1:
+            st.subheader("🌐 Global AI Ecosystem")
+            st.write("Google Gemini AI & Vision AI Status: **ONLINE**")
+            st.info("Efisiensi Logika Lokal (Edge): **Aktif 20%**")
+            
+        with t2:
+            st.subheader("📈 Monitoring Laba")
+            st.metric("Dana Terselamatkan", "Rp 15.700.000", delta="AI Fraud Detector Aktif")
+            
+        with t3:
+            st.subheader("👁️ Visual Command Center")
+            st.warning("AI Behavior: Memantau laci kasir & stok gudang secara real-time.")
+            
+        with t4:
+            st.subheader("💎 V-ULTRA Enterprise")
+            st.code("Dedicated Server IP: 10.0.88.24\nEncryption: AES-256")
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Thn", delta="Efisiensi 20%")
 
+# FOOTER [cite: 590]
 st.markdown("---")
-st.markdown("<center>© 2026 V-GUARD AI | Digital Integrity Powered by Erwin Sinaga</center>", unsafe_allow_html=True)
+st.markdown("<center><small>V-Guard AI Intelligence | © 2026 Powered by Erwin Sinaga</small></center>", unsafe_allow_html=True)
