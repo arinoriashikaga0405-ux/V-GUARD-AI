@@ -65,24 +65,30 @@ Dengan membangun infrastruktur digital yang kokoh dan tersebar di tingkat nasion
 </div>
 """, unsafe_allow_html=True)
 
-    # CSS Terbaru: Putih Bersih & Profesional
+# --- LANJUT KE MENU BERIKUTNYA AGAR CSS TIDAK TERCECER ---
+elif menu == "Produk & Layanan":
+    st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     st.markdown("""
         <style>
-        .service-card {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 10px;
-            min-height: 440px;
-            color: #31333F;
-            display: flex;
-            flex-direction: column;
-        }
-        .price-tag {
+        .service-card { 
             background-color: #ffffff; 
-            border: 1px solid #eeeeee;
+            border: 1px solid #e0e0e0; 
+            padding: 15px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            margin-bottom: 10px; 
+            min-height: 440px; 
+            color: #31333F; 
+        }
+        .price-tag { 
+            background-color: #f8f9fa; 
+            border: 1px solid #eeeeee; 
+            padding: 8px; 
+            border-radius: 8px; 
+            text-align: center; 
+        }
+        </style>
+    """, unsafe_allow_html=True)
             padding: 8px;
             border-radius: 8px;
             margin-top: auto;
