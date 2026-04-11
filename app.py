@@ -67,17 +67,19 @@ elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     st.markdown("""
 <style>
-.service-card {
-    background-color: #ffffff;
-    border 1px solid #e0e0e0;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    color: #31333F;
-}
-</style>
-""", unsafe_allow_html=True)
-
+st.markdown("""
+        <style>
+        .service-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
+            color: #31333F;
+        }
+        </style>
+    """, unsafe_allow_html=True)
     # Membuat 5 Kolom Sejajar
     col1, col2, col3, col4, col5 = st.columns(5)
     
