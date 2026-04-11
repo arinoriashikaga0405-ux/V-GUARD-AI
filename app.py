@@ -26,7 +26,6 @@ st.markdown("""
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
     .stTextInput>div>div>input { background-color: #1e293b; color: white; }
-    div[data-testid="stMetricValue"] { font-size: 28px; color: #e74c3c; font-weight: bold; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -50,18 +49,27 @@ with st.sidebar:
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Digitizing Trust, Eliminating Leakage")
-    st.markdown("""
-    <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
-    <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade di industri perbankan dan manajemen aset, kami memahami bahwa celah terkecil dalam sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi.<br><br>
-    Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang memiliki keterbatasan, melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat dan real-time.<br><br>
-    Visi kami adalah menjadi standar global dalam " Eliminating Leakage ", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional saat ini.
-    </div>
-    """, unsafe_allow_html=True)
+    
+    # MENAMPILKAN FOTO FOUNDER DI HALAMAN VISI & MISI
+    col_img, col_txt = st.columns([1, 2])
+    with col_img:
+        if os.path.exists("erwin.jpg"):
+            st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
+        else:
+            st.info("File erwin.jpg tidak ditemukan di direktori.")
+
+    with col_txt:
+        st.markdown("""
+        <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
+        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade di industri perbankan dan manajemen aset, kami memahami bahwa celah terkecil dalam sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi.<br><br>
+        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang memiliki keterbatasan, melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat dan real-time.<br><br>
+        Visi kami adalah menjadi standar global dalam " Eliminating Leakage ", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional saat ini.
+        </div>
+        """, unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
-    
     c1, c2, c3, c4 = st.columns(4)
     packages = {
         "V-LITE": ["Mikro / 1 Kasir", "1.5 Jt", "750 rb", "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"],
@@ -69,28 +77,13 @@ elif menu == "Produk & Layanan":
         "V-SIGHT": ["Gudang & Toko", "7,5 Jt", "3,5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"],
         "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"]
     }
-    
     for i, (name, details) in enumerate(packages.items()):
         with [c1, c2, c3, c4][i]:
             with st.container(border=True):
                 st.markdown(f"### 📦 {name}")
-                st.caption(f"🎯 Target: {details[0]}")
                 st.markdown(f"- {details[3]}")
                 st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
                 st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
-
-    st.markdown("---")
-    st.subheader("📊 Tabel Perbandingan Eksekutif")
-    st.markdown("""
-    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
-    | :--- | :---: | :---: | :---: | :---: |
-    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
-    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 7.5 Jt | 15 Jt |
-    | **Biaya Langganan** | 750 rb | 1.5 Jt | 3,5 Jt | 10 Jt |
-    """)
 
 elif menu == "ROI Kerugian Klien":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
@@ -101,12 +94,7 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
     with col_b:
-        opsi_biaya = {
-            "Rp 750.000 (V-LITE)": 750000,
-            "Rp 1.500.000 (V-PRO)": 1500000,
-            "Rp 3.500.000 (V-SIGHT)": 3500000,
-            "Rp 10.000.000 (V-ENTERPRISE)": 10000000
-        }
+        opsi_biaya = {"Rp 750.000 (V-LITE)": 750000, "Rp 1.500.000 (V-PRO)": 1500000, "Rp 3.500.000 (V-SIGHT)": 3500000, "Rp 10.000.000 (V-ENTERPRISE)": 10000000}
         pilihan_label = st.selectbox("Pilih Paket Investasi (Biaya Langganan)", list(opsi_biaya.keys()))
         biaya = opsi_biaya[pilihan_label]
         st.success(f"💰 Profit Diselamatkan: Rp {loss - biaya:,.0f} / bln")
@@ -142,7 +130,5 @@ elif menu == "Admin Control Center":
         if st.button("Proses Analisis"):
             hasil, panggil_ai = proses_transaksi(nominal, detail)
             st.subheader(f"Status: {hasil}")
-            if panggil_ai: st.caption("Analisis AI Aktif (Biaya API Terpakai)")
-            else: st.caption("Filter Lokal (Hemat Biaya API 100%)")
     else:
         st.warning("Silakan masukkan password admin.")
