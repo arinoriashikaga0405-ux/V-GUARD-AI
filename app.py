@@ -1,11 +1,52 @@
 import streamlit as st
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-# --- 1. KONFIGURASI ENGINE AI ---
-GEMINI_API_KEY = ""
-genai.configure(api_key=GEMINI_API_KEY)
-model_gemini = genai.GenerativeModel('gemini-1.5-flash')
+# --- 1. MEMUAT KUNCI API ---
+# Membaca file .env
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") 
+
+# Inisialisasi API
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+else:
+    st.error("API Key tidak ditemukan. Pastikan file .env sudah benar.")
+
+# --- 2. OPTIMASI BIAYA (COST REDUCTION < 20%) ---
+generation_config = {
+    "temperature": 0.5,        # Diturunkan agar respon lebih to-the-point
+    "top_p": 0.8,
+    "max_output_tokens": 512,  # Batasan lebih ketat untuk penghematan maksimal
+}
+
+# Gunakan instruksi sistem untuk memaksa jawaban singkat (Hemat Token)
+model_gemini = genai.GenerativeModel(
+    model_name='gemini-1.5-flash',
+    generation_config=generation_config,
+    system_instruction="Berikan jawaban yang sangat ringkas dan teknis saja."
+)
+
+# --- 3. KONFIGURASI HALAMAN ---
+st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+
+# CSS Kustom
+st.markdown("""
+<style>
+    .main { background-color: #0e1117; }
+    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
+    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
+</style>
+""", unsafe_allow_html=True)
+
+# Tes Singkat (Opsional)
+if st.button("Cek Status API"):
+    try:
+        response = model_gemini.generate_content("Ping")
+        st.success("API Berhasil Terhubung!")
+    except Exception as e:
+        st.error(f"Gagal terhubung: {e}")
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
