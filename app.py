@@ -63,7 +63,7 @@ Misi strategis kami melampaui batasan industri tradisional; kami merancang solus
 Dengan membangun infrastruktur digital yang kokoh di tingkat nasional, V-GUARD AI berkomitmen untuk mengoptimalkan profitabilitas klien kami melalui eliminasi celah operasional secara total. Kami percaya bahwa melalui transparansi data yang dihasilkan oleh kecerdasan buatan (AI), setiap pemilik usaha dapat mengambil keputusan strategis dengan tingkat keyakinan yang lebih tinggi. Kami adalah mitra strategis Anda dalam menjaga masa depan bisnis yang bersih, efisien, dan berkelanjutan di seluruh pelosok nusantara.
 </div>
 """, unsafe_allow_html=True)
-""", unsafe_allow_html=True)
+
 
         st.markdown("---")
 
