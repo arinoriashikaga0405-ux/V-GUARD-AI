@@ -3,6 +3,8 @@ import os
 import google.generativeai as genai
 
 # --- 1. KONFIGURASI ENGINE AI ---
+# Inisialisasi Google Gemini Pro
+# API Key: AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA
 GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 genai.configure(api_key=GEMINI_API_KEY)
 model_gemini = genai.GenerativeModel('gemini-1.5-flash')
@@ -10,213 +12,359 @@ model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# Custom CSS Premium (Clean & Professional)
+# CSS Kustom untuk Tampilan Putih/Abu-abu Muda (Sidebar & Kartu)
+# Berdasarkan desain kustom profil Erwin Sinaga (Gambar 1, 2)
+# Menghapus semua referensi warna hijau dan menggunakan warna putih saja
 st.markdown("""
     <style>
-    .main { background-color: #f8fafc; }
-    /* Sidebar styling */
-    [data-testid="stSidebar"] { background-color: #ffffff; border-right: 1px solid #e2e8f0; }
-    
-    /* Tombol Navigasi Hijau Solid */
-    .stButton>button { 
-        width: 100%; border-radius: 8px; background-color: #2e7d32; 
-        color: white !important; font-weight: bold; height: 45px; border: none; margin-bottom: 10px;
+    /* Styling Sidebar Erwin Sinaga Kustom */
+    [data-testid="stSidebar"] {
+        background-color: #f8fafc;
+        border-right: 1px solid #e2e8f0;
     }
-    .stButton>button:hover { background-color: #1b5e20; border: none; }
-    
-    /* Squad Agent Cards */
-    .agent-card { 
-        padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; 
-        text-align: center; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    .main {
+        background-color: #ffffff;
     }
-    .status-online { color: #22c55e; font-weight: bold; font-size: 13px; }
-    .status-active { color: #f59e0b; font-weight: bold; font-size: 13px; }
-    .status-processing { color: #3b82f6; font-weight: bold; font-size: 13px; }
-    
-    /* ROI & Edge Filtering Box */
-    .edge-box { 
-        border: 2px dashed #22c55e; background-color: #f0fdf4; 
-        padding: 20px; border-radius: 15px; text-align: center; 
+
+    /* Styling Menu Utama (Tombol Radio Putih Kustom) */
+    div.stRadio > div {
+        background-color: transparent;
     }
-    .roi-display {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        color: white; padding: 25px; border-radius: 15px; text-align: center;
+    label[data-testid="stWidgetLabel"] > div > p {
+        color: #1e3a8a;
+        font-weight: bold;
+    }
+    div.stRadio > div > label {
+        color: #475569;
+        font-weight: bold;
+    }
+
+    /* Styling Kartu Produk Putih & Tombol Pilih Putih */
+    .product-card {
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+        text-align: center;
+        background-color: #ffffff;
+        min-height: 480px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .product-title {
+        color: #1e3a8a;
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 16px;
+    }
+    .product-details {
+        color: #64748b;
+        font-size: 14px;
+        text-align: left;
+    }
+    .pilih-button {
+        background-color: #ffffff;
+        color: #1e3a8a;
+        border: 2px solid #1e3a8a;
+        border-radius: 8px;
+        padding: 10px;
+        width: 100%;
+        margin-top: 16px;
+        font-weight: bold;
+    }
+
+    /* Styling Metrik & Bagian Admin */
+    div[data-testid="stMetricValue"] > div {
+        color: #1e3a8a;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .edge-box {
+        border: 2px dashed #22c55e;
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+        background-color: #f0fdf4;
+    }
+
+    /* Styling Bagian Admin (Executive Control) */
+    .admin-header {
+        color: #1e3a8a;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    div.stTextInput > div > div > input {
+        color: #ffffff;
+        background-color: #1e293b;
+        border: none;
+        border-radius: 4px;
+    }
+
+    /* Styling Status Agen AI */
+    .status-online { color: #22c55e; font-weight: bold; }
+    .status-active { color: #f59e0b; font-weight: bold; }
+    .status-processing { color: #3b82f6; font-weight: bold; }
+    .status-idle { color: #94a3b8; font-weight: bold; }
+
+    /* Metrik Dasbor Pemasaran */
+    div[data-testid="stMetricValue"] {
+        font-size: 22px;
+    }
+    div.stSelectbox > div > div > div > div {
+        background-color: transparent;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. SESSION STATE MANAGEMENT ---
-if 'menu' not in st.session_state:
-    st.session_state.menu = "Visi & Misi"
-if 'admin_logged_in' not in st.session_state:
-    st.session_state.admin_logged_in = False
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
-
-# --- 4. SIDEBAR NAVIGATION ---
+# --- 3. SIDEBAR NAVIGATION (KUSTOM ERWIN SINAGA) ---
 with st.sidebar:
-    st.markdown("<h2 style='text-align:center; color: #1e3a8a;'>🛡️ V-GUARD AI</h2>", unsafe_allow_html=True)
-    
-    # Menampilkan Foto Founder jika ada
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
-    else:
-        st.markdown("<div style='height:150px; background:#eee; border-radius:10px; display:flex; align-items:center; justify-content:center;'>Foto Founder</div>", unsafe_allow_html=True)
-    
-    st.markdown("<div style='text-align:center; margin-top:10px;'><b>Erwin Sinaga</b><br><small>Founder & CEO V-Guard AI</small></div>", unsafe_allow_html=True)
-    st.markdown("---")
-    
-    # Navigation Buttons (Green)
-    if st.button("🏠 Visi & Misi"): st.session_state.menu = "Visi & Misi"
-    if st.button("📦 Produk & Layanan"): st.session_state.menu = "Produk & Layanan"
-    if st.button("📊 ROI & Analisis OPEX"): st.session_state.menu = "ROI"
-    if st.button("🔐 Admin Control Center"): st.session_state.menu = "Admin"
-    
-    st.markdown("---")
-    st.info("SOP Status: **ACTIVE**")
-    st.caption("Digitizing Trust, Eliminating Leakage")
+    # Logo kustom V-Guard AI (biru muda)
+    col_logo, col_vguard = st.columns([1, 4])
+    with col_logo:
+        # Placeholder untuk logo perisai biru (misal, Gambar 0/1)
+        st.markdown("<h1 style='color: #1e3a8a; margin: 0;'>🛡️</h1>", unsafe_allow_html=True)
+    with col_vguard:
+        st.markdown("<h2 style='color: #1e3a8a; font-weight: 800; margin: 0; padding-top: 10px;'>V-Guard AI</h2>", unsafe_allow_html=True)
 
-# --- 5. LOGIKA MENU ---
+    # Foto profil Erwin Sinaga (memegang perisai holografik "Cyber Security Tech" di sirkuit - Gambar 1, 2)
+    st.image("path/to/erwin_sinaga_cyber_photo.jpg", caption="Erwin Sinaga - Founder V-Guard AI", use_column_width=True) # Ganti path sesuai kebutuhan
 
-# --- MENU: VISI & MISI ---
-if st.session_state.menu == "Visi & Misi":
+    # Daftar Navigasi Utama (Tombol Radio Putih Kustom - Gambar 1, 2)
+    # Diperbarui untuk menampilkan "Portal Klien" dan membuang menu OPEX utama
+    st.markdown("### NAVIGASI UTAMA")
+    menu = st.radio("", ["Visi & Misi", "Produk & Layanan", "Portal Klien", "Admin Control Center"], key="main_nav")
+
+    # Ikon radio default merah kustom untuk Admin (Gambar 1, 2)
+    st.markdown("<h2 style='color: #ef4444; font-size: 20px; font-weight: bold; padding-left: 20px;'>🛑 Admin Control Center</h2>", unsafe_allow_html=True)
+
+    # Informasi SOP ACTIVE di bawah
+    st.markdown("<div class='edge-box' style='background-color: #f1f5f9; border-color: #cbd5e1; border-style: solid; margin-top: 20px;'>\
+        <h3 style='color: #1e3a8a; font-weight: bold;'>SOP Status: ACTIVE</h3></div>", unsafe_allow_html=True)
+
+# --- 4. LOGIKA MENU DAN KONTEN UTAMA ---
+
+if menu == "Visi & Misi":
     st.header("Visi & Misi V-Guard AI Intelligence")
-    col_img, col_txt = st.columns([1, 2.5])
+    col_img, col_txt = st.columns([1, 2])
     with col_img:
-        if os.path.exists("erwin.jpg"): st.image("erwin.jpg", use_container_width=True)
+        # Gunakan foto profil kustom Erwin Sinaga (Gambar 1, 2)
+        st.image("path/to/erwin_sinaga_cyber_photo.jpg", use_column_width=True) # Ganti path sesuai kebutuhan
     with col_txt:
         st.markdown("""
-        <div style="text-align: justify; line-height: 1.8; font-size: 16px;">
-        <b>V-Guard AI Intelligence</b> hadir untuk menjadi benteng pertahanan terakhir bagi aset bisnis Anda. 
-        Kami menggabungkan audit cerdas berbasis AI dengan transparansi mutlak untuk mengeliminasi segala bentuk kebocoran finansial. 
-        <br><br>
-        Visi kami adalah menciptakan ekosistem bisnis global yang bersih dan terpercaya, di mana setiap transaksi divalidasi oleh 
-        kecerdasan buatan yang bekerja secara otonom 24/7.
-        </div>
-        """, unsafe_allow_html=True)
+        ### VISI
+        Menjadi pilar utama global dalam pengamanan aset digital dan integritas finansial, menciptakan lingkungan bisnis yang sepenuhnya bersih dari fraud melalui Digital Trust.
 
-# --- MENU: PRODUK & LAYANAN ---
-elif st.session_state.menu == "Produk & Layanan":
-    st.header("🛡️ Portofolio Layanan V-Guard")
-    p1, p2, p3, p4, p5 = st.columns(5)
-    pkgs = {
-        "V-LITE": "Mikro / 1 Kasir",
-        "V-PRO": "Retail & Kafe",
-        "V-SIGHT": "Gudang & Toko",
-        "V-ENTERPRISE": "Korporasi",
-        "V-ULTRA": "Investor & VIP"
+        ### MISI
+        1.  **Dukungan Audit Cerdas:** Memberikan platform AI audit cerdas berbasis Digital Trust untuk memverifikasi data dan audit kasir/bank secara presisi.
+        2.  **Edge Filtering:** Membangun deteksi anomali real-time di titik transaksi (Edge) untuk mengeliminasi potensi kebocoran sebelum data mencapai cloud.
+        3.  **V-SIGHT Global:** Mengimplementasikan solusi vision AI V-SIGHT untuk pemantauan perilaku visual di kasir dan gudang guna mencegah kecurangan fisik.
+        4.  **Forensic AI:** Memberikan insight forensik mendalam berbasis data jangka panjang untuk kepatuhan SOP dan investigasi.
+        5.  **Perlindungan ROI:** Berinvestasi dalam teknologi yang mengamankan ROI (Potensi Dana Aman) klien sebagai benteng pertahanan terakhir.
+        """)
+
+elif menu == "Produk & Layanan":
+    st.header("🛡️ Portofolio Layanan Strategis V-Guard")
+    st.write("V-Guard AI Intelligence menghadirkan perlindungan aset digital dan fisik dengan lima paket layanan strategis.")
+
+    # Spanduk Potensi Dana Aman (Gambar 0)
+    st.markdown("<div class='roi-box' style='background-color: #1e3a8a; color: white; padding: 20px; border-radius: 12px; margin-bottom: 24px;'>\
+        <h2 style='text-align: center; color: white; margin-bottom: 8px;'>Potensi Dana Aman: Rp 20,000,000</h2>\
+        <p style='text-align: center; color: white; margin: 0;'>Kebocoran yang berhasil dihentikan oleh sistem V-Guard AI</p></div>", unsafe_allow_html=True)
+
+    # 1. Kartu Produk (Putih dengan Tombol Putih Kustom - Gambar 0, 8)
+    # Menggunakan lima paket produk: V-LITE, V-PRO, V-SIGHT, V-ENTERPRISE, V-ULTRA
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    # Paket V-LITE
+    with col1:
+        st.markdown("<div class='product-card'>\
+            <div class='product-title'>V-LITE</div>\
+            <div class='product-details'>🎯 Mikro / 1 Kasir<br>• Fraud Detection<br>• Real-time Alert</div>\
+            <button class='pilih-button'>Pilih V-LITE</button></div>", unsafe_allow_html=True)
+
+    # Paket V-PRO
+    with col2:
+        st.markdown("<div class='product-card'>\
+            <div class='product-title'>V-PRO</div>\
+            <div class='product-details'>🎯 Retail & Kafe<br>• Fraud Detection<br>• Real-time Alert</div>\
+            <button class='pilih-button'>Pilih V-PRO</button></div>", unsafe_allow_html=True)
+
+    # Paket V-SIGHT
+    with col3:
+        st.markdown("<div class='product-card'>\
+            <div class='product-title'>V-SIGHT</div>\
+            <div class='product-details'>🎯 Gudang & Toko<br>• Fraud Detection<br>• Real-time Alert</div>\
+            <button class='pilih-button'>Pilih V-SIGHT</button></div>", unsafe_allow_html=True)
+
+    # Paket V-ENTERPRISE
+    with col4:
+        st.markdown("<div class='product-card'>\
+            <div class='product-title'>V-ENTERPRISE</div>\
+            <div class='product-details'>🎯 Korporasi<br>• Fraud Detection<br>• Real-time Alert</div>\
+            <button class='pilih-button'>Pilih V-ENTERPRISE</button></div>", unsafe_allow_html=True)
+
+    # Paket V-ULTRA
+    with col5:
+        st.markdown("<div class='product-card'>\
+            <div class='product-title'>V-ULTRA</div>\
+            <div class='product-details'>🎯 Investor & VIP<br>• Fraud Detection<br>• Real-time Alert</div>\
+            <button class='pilih-button'>Pilih V-ULTRA</button></div>", unsafe_allow_html=True)
+
+    # 2. Tabel Perbandingan Eksekutif Kustom
+    st.markdown("---")
+    st.subheader("📊 Tabel Perbandingan Eksekutif V-Guard AI")
+    
+    tabel_data = {
+        "Fitur Utama": ["Metode Audit", "Data Integrity", "Vision AI (Visual)", "Jangkauan Data", "Keamanan Server"],
+        "V-LITE": ["Cerdas (API Kasir)", "Cek Void Harian", "-", "1 Kasir", "Shared"],
+        "V-PRO": ["Cerdas (API Kasir/Bank)", "Cek Split Harian", "-", "Retail Kafe", "Shared"],
+        "V-SIGHT": ["Visual (Vision AI)", "Cek Void Harian", "Pemantauan CCTV", "Gudang/Toko", "Dedicated"],
+        "V-ENTERPRISE": ["Forensik (Deep AI)", "Audit SOP Forensik", "-", "Korporasi Nasional", "Dedicated"],
+        "V-ULTRA": ["Forensik (Deep AI)", "Audit SOP Forensik", "Pemantauan CCTV", "VIP/Investor", "Dedicated Server"]
     }
-    for i, (name, target) in enumerate(pkgs.items()):
-        with [p1, p2, p3, p4, p5][i]:
-            with st.container(border=True):
-                st.subheader(name)
-                st.caption(f"🎯 {target}")
-                st.write("- Fraud Detection\n- Real-time Alert")
-                st.button(f"Pilih {name}", key=f"btn_{name}")
+    st.table(tabel_data)
 
-# --- MENU: ROI & ANALISIS OPEX (LOGIKA EFISIENSI 20%) ---
-elif st.session_state.menu == "ROI":
-    st.header("📊 Analisis ROI & Efisiensi Biaya API")
-    c1, c2 = st.columns(2)
-    with c1:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-        leak_pct = st.slider("Estimasi Kebocoran (%)", 1, 30, 15)
-        dana_aman = omzet * (leak_pct / 100)
-        st.markdown(f"""<div class="roi-display"><h3>Potensi Dana Diselamatkan</h3><h2>Rp {dana_aman:,.0f}</h2><small>Per Bulan</small></div>""", unsafe_allow_html=True)
-    
-    with c2:
-        st.write("### Optimasi OPEX Server")
-        biaya_raw = st.number_input("Biaya API/Server Normal (Rp)", value=5000000)
-        # Efisiensi 20% karena data difilter di lokal (Edge Filtering)
-        biaya_net = biaya_raw * 0.8
-        st.markdown(f"""
-            <div class="edge-box">
-                <h4 style="color:#166534;">🛡️ EDGE FILTERING SOP ACTIVE</h4>
-                <p>Hanya anomali transaksi yang dikirim ke Cloud.</p>
-                <h2 style="color:#166534;">Biaya Net: Rp {biaya_net:,.0f}</h2>
-                <span style="color:#166534; font-weight:bold;">Hemat: Rp {biaya_raw * 0.2:,.0f} (20%)</span>
-            </div>
-        """, unsafe_allow_html=True)
+elif menu == "Portal Klien":
+    st.header("📱 Portal Klien V-Guard AI")
+    st.write("Akses Registrasi dan Dasbor Klien V-Guard.")
 
-# --- MENU: ADMIN CONTROL CENTER ---
-elif st.session_state.menu == "Admin":
-    st.header("🔒 Admin Control Center")
+    # Bagian Registrasi Klien Baru
+    st.subheader("📝 Registrasi Klien Baru")
+    with st.container(border=True):
+        st.text_input("Nama Lengkap Owner")
+        st.text_input("Nama Perusahaan / Bisnis")
+        st.text_input("Harga Paket Investasi (Rp)")
+        st.selectbox("Pilih Paket V-Guard", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
+        st.file_uploader("Upload Bukti Transfer Pemasangan")
+        st.file_uploader("Upload KTP")
+        
+        # Tombol Kirim Registrasi Putih Kustom
+        st.markdown("<button class='pilih-button' style='width: 320px; margin-top: 10px;'>Kirim Registrasi Baru</button>", unsafe_allow_html=True)
+
+    # Bagian Akses Dasbor Klien Aktif
+    st.markdown("---")
+    st.subheader("🔑 Akses Dasbor Klien Aktif")
+    with st.container(border=True):
+        st.text_input("Username Klien")
+        st.text_input("Password", type="password")
+        
+        # Tombol Masuk Putih Kustom
+        st.markdown("<button class='pilih-button' style='width: 200px; margin-top: 10px;'>Masuk ke Dasbor</button>", unsafe_allow_html=True)
+
+elif menu == "Admin Control Center":
+    # --- 1. Alur Login Admin (Gambar 3) ---
+    # Password Admin: w1nbju8282
+    ADMIN_PASSWORD = "w1nbju8282"
     
+    # Periksa status login admin
+    if 'admin_logged_in' not in st.session_state:
+        st.session_state.admin_logged_in = False
+
     if not st.session_state.admin_logged_in:
-        with st.container(border=True):
-            st.write("Akses Terbatas: Masukkan Password Eksekutif")
-            pwd = st.text_input("Password", type="password")
-            if st.button("Buka Dashboard"):
-                if pwd == "w1nbju8282":
-                    st.session_state.admin_logged_in = True
-                    st.rerun()
-                else:
-                    st.error("Akses Ditolak!")
+        # Halaman Login Admin Kustom
+        st.markdown("<div class='admin-header' style='text-align: center; margin-bottom: 24px;'>\
+            🛡️ V-Guard AI Intelligence | ©2026</div>", unsafe_allow_html=True)
+        st.markdown("<h2 class='admin-header'><center>Akses Executive Control</center></h2>", unsafe_allow_html=True)
+        
+        # Form Login
+        with st.container(border=True, key="login_container"):
+            # Gunakan kotak teks password gelap kustom (Gambar 3)
+            col_icon, col_title = st.columns([1, 10])
+            with col_icon:
+                st.markdown("### 🔐")
+            with col_title:
+                st.markdown("<h3 style='margin: 0; padding-top: 5px;'>Executive Admin Control</h3>", unsafe_allow_html=True)
+            
+            # Input Password
+            admin_input_pass = st.text_input("Password", type="password", key="admin_pwd", label_visibility="collapsed")
+            
+            col_login, col_placeholder = st.columns([1, 4])
+            with col_login:
+                if st.button("Masuk"):
+                    if admin_input_pass == ADMIN_PASSWORD:
+                        st.session_state.admin_logged_in = True
+                        st.rerun()
+                    elif admin_input_pass != "":
+                        st.error("Password Salah. Akses Ditolak.")
+
     else:
-        col_st, col_lo = st.columns([5,1])
-        col_st.success("Sesi Eksekutif Aktif")
-        if col_lo.button("Logout"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
+        # --- 2. Dashboard Admin (Gambar 1, 5, 6, 7 - Tanpa Warna Hijau!) ---
+        # Judul: Executive Admin Dashboard
+        st.header("🔒 Executive Admin Dashboard")
+        
+        # Section Utama: Dasbor Squad Agent Kustom
+        # Tampilkan status agen (Visionary, Concierge, dst. - Gambar 1, 5, 6)
+        st.markdown("## 👥 Squad AI AGENT Status")
+        col_v, col_c, col_g, col_l, col_a = st.columns(5)
+        
+        with col_v:
+            st.markdown("<b>👁️ Visionary</b><br><span class='status-online'>Online</span>", unsafe_allow_html=True)
+        with col_c:
+            st.markdown("<b>🔑 Concierge</b><br><span class='status-active'>Active</span>", unsafe_allow_html=True)
+        with col_g:
+            st.markdown("<b>📈 Growth</b><br><span class='status-online'>Online</span>", unsafe_allow_html=True)
+        with col_l:
+            st.markdown("<b>🤝 Liaison</b><br><span class='status-online'>Online</span>", unsafe_allow_html=True)
+        with col_a:
+            st.markdown("<b>🧠 Analyst</b><br><span class='status-processing'>Processing</span>", unsafe_allow_html=True)
 
-        # 10 TABS SESUAI INSTRUKSI BAPAK
-        t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
-            "👤 Klien", "🖥️ Ekosistem", "⚙️ Pengaturan", "📊 Laporan", 
-            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", 
-            "💎 V-ULTRA", "👥 SQUAD AI AGENT"
-        ])
+        # Bagian Pertumbuhan & Pemasaran Kustom
+        st.divider()
+        st.markdown("### 📈 GROWTH & MARKETING CENTER")
+        st.markdown("#### Dasbor Multi-Channel Marketing Control")
+        
+        col_s1, col_s2, col_s3 = st.columns(3)
+        with col_s1:
+            # Metrik kustom (Gambar 1, 5, 6)
+            st.metric(label="Ad Spend (MTD)", value="Rp 4.5M", delta="-5% Vs MTD Lalu", delta_color="inverse")
+        with col_s2:
+            st.metric(label="Total Reach", value="850K", delta="+15% Vs Hari Lalu")
+        with col_s3:
+            st.metric(label="New Leads", value="142", delta="+22% Vs Hari Lalu")
 
-        with t10:
-            st.subheader("👥 Squad AI Agent Command Center")
-            st.info("Siloisasi Data: Setiap agen memiliki batasan akses sesuai fungsinya.")
+        # Top Leads Today Kustom
+        st.divider()
+        st.markdown("🚨 Top Leads Today")
+        st.markdown("- Bpk. Andi (Property Developer - JKT)")
+        st.markdown("- Ibu Sinta (Founder Kafe - BANDUNG)")
+
+        # Section: Analisis ROI & OPEX Kerugian (Pindah dari menu utama ke Admin)
+        # Menampilkan section kustom (Gambar 7 - Tanpa Tombol Hijau)
+        st.divider()
+        st.header("⚖️ Analisis ROI & Efisiensi OPEX Kerugian")
+        
+        col_oi1, col_oi2 = st.columns(2)
+        with col_oi1:
+            # Placeholder untuk input ROI (Potensi Dana Aman)
+            st.number_input("Omzet Usaha (Rp)", value=200000000)
+            st.number_input("OPEX Kasir (Rp)", value=20000000)
+            st.slider("Persentase OPEX Kebocoran (%)", 1, 30, 20)
             
-            # Agent Status Bar (Sesuai Screenshot)
-            s1, s2, s3, s4, s5 = st.columns(5)
-            agents = [
-                ("Visionary", "Online", "status-online", s1),
-                ("Concierge", "Active", "status-active", s2),
-                ("Growth", "Online", "status-online", s3),
-                ("Liaison", "Online", "status-online", s4),
-                ("Analyst", "Processing", "status-processing", s5)
-            ]
-            for n, s, c, col in agents:
-                col.markdown(f"""<div class="agent-card"><b>{n}</b><br><span class="{c}">{s}</span></div>""", unsafe_allow_html=True)
+            # Tombol Hitung Analisis Kerugian Putih
+            st.markdown("<button class='pilih-button' style='width: 240px;'>Hitung Analisis Kerugian</button>", unsafe_allow_html=True)
 
+        with col_oi2:
+            # Section metrik ROI kustom
+            st.markdown("#### Metrik Efisiensi Dasbor (Potensi)")
+            
+            c_oi2_1, c_oi2_2 = st.columns(2)
+            with c_oi2_1:
+                # Metrik Laba Bersih
+                st.metric(label="Laba Bersih", value="Rp 400.250.000", delta="Normal", delta_color="inverse")
+            with c_oi2_2:
+                # Metrik Dana Aman
+                st.metric(label="Dana Aman", value="Rp 15.700.000", delta="Fraud Detector Aktif")
+
+            # Ikon Edge Filtering (Hijau Dashed - Gambar 7)
+            st.markdown("<div class='edge-box'>\
+                🤖 Edge Filtering Active<br>VOID / SPLIT Transaction Monitoring</div>", unsafe_allow_html=True)
+
+            # Tombol Logout Admin Putih
             st.divider()
-            
-            # Interactive Chat with Silo Security
-            sel_agent = st.selectbox("Pilih Agent untuk Instruksi:", ["Analyst", "Growth", "Sentinel"])
-            
-            # Security Policy per Agent
-            policies = {
-                "Analyst": "Audit keuangan & deteksi fraud. Dilarang akses strategi marketing.",
-                "Growth": "Analisis pasar & ekspansi. Dilarang akses detail arus kas bank.",
-                "Sentinel": "Keamanan server & enkripsi. Dilarang bocorkan password admin."
-            }
+            if st.button("Keluar Admin (Log Out)"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
 
-            # Tampilan Chat
-            for msg in st.session_state.chat_history:
-                st.chat_message(msg["role"]).write(msg["content"])
-
-            if prompt := st.chat_input("Berikan perintah eksekutif..."):
-                st.session_state.chat_history.append({"role": "user", "content": prompt})
-                st.chat_message("user").write(prompt)
-                
-                # Mengirim ke Gemini dengan System Prompt Keamanan
-                full_query = f"Role: {sel_agent}. Policy: {policies[sel_agent]}. Instruksi: {prompt}"
-                
-                with st.spinner(f"{sel_agent} sedang bekerja..."):
-                    try:
-                        res = model_gemini.generate_content(full_query)
-                        st.session_state.chat_history.append({"role": "assistant", "content": res.text})
-                        st.chat_message("assistant").write(res.text)
-                    except:
-                        st.error("Gagal terhubung ke AI. Periksa API Key.")
-
-        with t9:
-            st.header("💎 V-ULTRA Enterprise Dashboard")
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="35% Efisiensi")
-
-# Footer
+# --- 5. FOOTER ---
 st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | Digitizing Trust, Eliminating Leakage | ©2026</small></center>", unsafe_allow_html=True)
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026 | Digitizing Trust</small></center>", unsafe_allow_html=True)
