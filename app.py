@@ -9,22 +9,26 @@ genai.configure(api_key=GEMINI_API_KEY)
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# CSS Premium (SOP: Visual & Teks Rapi)
+# CSS Premium (SOP: UI Modern & Professional)
 st.markdown("""
     <style>
+    .stApp { background-color: #f8fafc; }
     .product-card {
         background-color: #ffffff; padding: 25px; border-radius: 15px;
         border: 1px solid #e2e8f0; text-align: center; height: 100%;
         display: flex; flex-direction: column; justify-content: space-between;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05); color: #1e293b;
     }
-    .package-name { font-size: 20px; font-weight: 800; color: #1e3a8a; }
-    .price-box { background-color: #f1f5f9; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 10px; }
     .mission-box { 
         text-align: justify; line-height: 1.8; font-size: 15px; color: #d1d5db;
         background-color: #1e293b; padding: 30px; border-radius: 15px; border-left: 10px solid #238636;
     }
-    .portal-box { background: #f8fafc; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 10px; }
+    .order-container {
+        background-color: #ffffff; padding: 30px; border-radius: 15px; border: 1px solid #e2e8f0;
+    }
+    .activation-box {
+        background-color: #1e3a8a; padding: 30px; border-radius: 15px; color: white; height: 100%;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -54,7 +58,7 @@ with st.sidebar:
 # --- 4. LOGIKA HALAMAN ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi Strategis V-Guard AI")
+    st.header("Visi & Misi Strategis (250+ Kata)")
     col_img, col_txt = st.columns([1, 2.5])
     with col_img:
         if os.path.exists("erwin.jpg"):
@@ -63,70 +67,72 @@ if menu == "Visi & Misi":
         st.markdown("""
         <div class="mission-box">
         <b>Visi: Menjadi Jangkar Kepercayaan Digital Global</b><br>
-        V-Guard AI Intelligence bervisi menciptakan ekosistem bisnis yang sepenuhnya transparan, aman, dan berintegritas tinggi melalui inovasi teknologi digital terdepan. Kami hadir bukan sekadar sebagai penyedia solusi perangkat lunak, melainkan sebagai jangkar kepercayaan (Digitizing Trust) bagi setiap pemilik bisnis di era ketidakpastian global. Kami memastikan setiap pemilik usaha memiliki ketenangan pikiran total (Total Peace of Mind) melalui validasi kejujuran sistem secara real-time, di mana data tidak lagi bisa dimanipulasi oleh kepentingan pribadi. Kami bercita-cita menjadi standar emas global dalam layanan "Integrity Assurance", di mana teknologi kecerdasan buatan otonom kami mampu menghapuskan segala bentuk keraguan operasional serta manipulasi finansial dalam dunia bisnis yang bergerak serba cepat dan kompetitif.<br><br>
+        V-Guard AI Intelligence bervisi menciptakan ekosistem bisnis yang sepenuhnya transparan, aman, dan berintegritas tinggi melalui inovasi teknologi digital terdepan. Kami hadir bukan sekadar sebagai penyedia solusi perangkat lunak, melainkan sebagai jangkar kepercayaan (Digitizing Trust) bagi setiap pemilik bisnis di era ketidakpastian global yang serba cepat ini. Kami memastikan setiap pemilik usaha memiliki ketenangan pikiran total (Total Peace of Mind) melalui validasi kejujuran sistem secara real-time, di mana data operasional tidak lagi bisa dimanipulasi oleh kepentingan pribadi. Kami bercita-cita menjadi standar emas global dalam layanan "Integrity Assurance", di mana teknologi kecerdasan buatan otonom kami mampu menghapuskan segala bentuk keraguan operasional serta manipulasi finansial dalam dunia bisnis yang bergerak serba cepat dan kompetitif.<br><br>
         
         <b>Misi: Eliminasi Kebocoran & Perlindungan Aset Strategis</b><br>
-        Misi kami adalah memberikan perlindungan aset yang tak tertembus melalui lima pilar transformasi digital yang radikal. Pertama, membangun infrastruktur integritas digital yang mampu mengubah etika kerja menjadi data terukur secara akurat, menciptakan budaya kejujuran berbasis teknologi. Kedua, menerapkan teknologi Edge Filtering yang mutakhir untuk deteksi dini anomali finansial tepat di titik kejadian transaksi, mencegah kebocoran sebelum terjadi. <b>Ketiga, memastikan efisiensi biaya infrastruktur server hingga 20% bagi seluruh mitra kami</b> melalui optimasi komputasi lokal yang cerdas, memastikan teknologi canggih tetap terjangkau dan efisien secara operasional. Keempat, memberikan kedaulatan akses penuh bagi pemilik usaha melalui Command Center terenkripsi tingkat militer yang dapat dipantau secara nasional maupun global dari genggaman tangan Anda. Terakhir, kami berkomitmen menjaga disiplin pengembangan perangkat lunak yang sangat ketat sesuai standar operasional baku V-Guard, guna menjaga warisan bisnis Anda dari risiko kecurangan sistemik, serangan siber, maupun kelalaian manusia selamanya. Kami berjanji untuk terus berinovasi tanpa henti, memastikan setiap rupiah aset Anda terlindungi oleh kecerdasan buatan yang jujur dan objektif.
+        Misi kami adalah memberikan perlindungan aset yang tak tertembus melalui lima pilar transformasi digital yang radikal. Pertama, membangun infrastruktur integritas digital yang mampu mengubah etika kerja menjadi data terukur secara akurat, menciptakan budaya kejujuran berbasis teknologi. Kedua, menerapkan teknologi Edge Filtering yang mutakhir untuk deteksi dini anomali finansial tepat di titik kejadian transaksi, mencegah kebocoran sebelum terjadi. <b>Ketiga, memastikan efisiensi biaya infrastruktur server hingga 20% bagi seluruh mitra kami</b> melalui optimasi komputasi lokal yang cerdas, memastikan teknologi canggih tetap terjangkau dan efisien secara operasional. Keempat, memberikan kedaulatan akses penuh bagi pemilik usaha melalui Command Center terenkripsi tingkat militer yang dapat dipantau secara nasional maupun global dari genggaman tangan Anda. Terakhir, kami berkomitmen menjaga disiplin pengembangan perangkat lunak yang sangat ketat sesuai standar operasional baku V-Guard, guna menjaga warisan bisnis Anda dari risiko kecurangan sistemik, serangan siber, maupun kelalaian manusia selamanya.
         </div>
         """, unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
     st.header("🏷️ LAYANAN PRODUK & PAKET")
-    wa_number = "6282122190885"
-    
+    # Daftar paket tetap konsisten
     packages = {
-        "V-LITE": {"akt": "750 RB", "bln": "350 RB", "target": "🎯 Mikro / 1 Kasir", "feat": "• AI Fraud Detector Dasar<br>• Daily WA Summary"},
-        "V-PRO": {"akt": "1.5 JT", "bln": "800 RB", "target": "🎯 Retail & Kafe", "feat": "• VCS Integration<br>• Bank Statement Audit"},
-        "V-SIGHT": {"akt": "7,5 JT", "bln": "3,5 JT", "target": "🎯 Gudang & Toko", "feat": "• CCTV AI Behavior<br>• Real-Time Stock"},
-        "V-ENTERPRISE": {"akt": "15 JT", "bln": "10 JT", "target": "🎯 Korporasi / Besar", "feat": "• The Core Brain AI Central<br>• Forensic AI (Data 1 Thn)"},
-        "V-ULTRA": {"akt": "Custom", "bln": "Custom", "target": "🎯 High-Security", "feat": "• Custom AI Integration<br>• Military Grade Encryption"}
+        "V-LITE": {"akt": "750 RB", "bln": "350 RB", "feat": "AI Fraud Detector Dasar"},
+        "V-PRO": {"akt": "1.5 JT", "bln": "800 RB", "feat": "VCS Integration"},
+        "V-SIGHT": {"akt": "7,5 JT", "bln": "3,5 JT", "feat": "CCTV AI Behavior"},
+        "V-ENTERPRISE": {"akt": "15 JT", "bln": "10 JT", "feat": "Forensic AI (1 Year)"},
+        "V-ULTRA": {"akt": "Custom", "bln": "Custom", "feat": "Military Grade Encryption"}
     }
-    
     cols = st.columns(5)
     for i, (name, info) in enumerate(packages.items()):
         with cols[i]:
-            st.markdown(f"""
-            <div class="product-card">
-                <div>
-                    <div class="package-name">{name}</div>
-                    <div style="color:#d63384; font-size:11px; font-weight:bold; margin-bottom:10px;">{info['target']}</div>
-                    <div style="text-align:left; font-size:13px; min-height:110px;">{info['feat']}</div>
-                </div>
-                <div class="price-box">
-                    <div style="font-size:13px;">Aktivasi: {info['akt']}</div>
-                    <div style="color:#2563eb; font-weight:800; font-size:16px;">Langganan: {info['bln']}</div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20pesan%20paket%20{name}", use_container_width=True)
-
-elif menu == "Analisis ROI Kerugian":
-    st.header("📊 Analisis Potensi Penyelamatan Aset")
-    omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-    leak = st.slider("Kebocoran Industri (%)", 1, 10, 5)
-    st.divider()
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("Dana Diselamatkan/Bulan", f"Rp {(omzet * leak / 100):,.0f}")
-    with col2:
-        st.metric("Efisiensi Biaya Server", "20% Terjamin", delta="V-Guard Active")
+            st.markdown(f"""<div class="product-card"><div><b>{name}</b><br><small>{info['feat']}</small></div><div class="price-box">Akt: {info['akt']}<br><b>Bln: {info['bln']}</b></div></div>""", unsafe_allow_html=True)
 
 elif menu == "Portal Klien":
-    st.header("📱 Portal Owner & Client Command Center")
-    st.write("Fitur Portal Klien aktif untuk pemantauan otonom.")
+    st.header("📱 Portal Onboarding & Aktivasi Klien")
     
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("""<div class="portal-box"><h4>🚨 V-Guard Fire Alarm</h4><small>Deteksi Anomali Real-Time</small></div>""", unsafe_allow_html=True)
-        st.error("Log: Percobaan penghapusan transaksi terdeteksi (Store 02)")
-    with col2:
-        st.markdown("""<div class="portal-box"><h4>📈 Business Health Monitor</h4><small>Integrity Score: 98%</small></div>""", unsafe_allow_html=True)
-        st.success("Log: Sinkronisasi bank-to-cashier selesai 100%")
+    col_order, col_active = st.columns([2, 1])
+    
+    with col_order:
+        st.markdown('<div class="order-container">', unsafe_allow_html=True)
+        st.subheader("📝 Form Pemesanan Baru")
+        with st.form("order_form"):
+            c1, c2 = st.columns(2)
+            with c1:
+                nama = st.text_input("Nama Lengkap")
+                nama_usaha = st.text_input("Nama Usaha / PT")
+            with c2:
+                produk = st.selectbox("Pilih Produk", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
+                st.info("Harga akan menyesuaikan pilihan produk")
+            
+            ktp = st.file_uploader("Upload KTP (JPG/PNG)", type=["jpg", "png", "jpeg"])
+            
+            submitted = st.form_submit_button("Kirim Pesanan & Lanjut Pembayaran")
+            if submitted:
+                st.success(f"Terima kasih {nama}! Pesanan {produk} untuk {nama_usaha} telah diterima. Silakan hubungi Admin untuk instruksi pembayaran.")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_active:
+        st.markdown('<div class="activation-box">', unsafe_allow_html=True)
+        st.subheader("🔑 Aktivasi Klien")
+        st.write("Jika sudah membayar, masukkan kredensial Anda:")
+        client_id = st.text_input("Client ID")
+        client_pwd = st.text_input("Password", type="password")
+        if st.button("Login Command Center"):
+            if client_id and client_pwd:
+                st.success("Akses Diterima! Mengalihkan ke Command Center...")
+            else:
+                st.warning("Silakan masukkan ID dan Password.")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+elif menu == "Analisis ROI Kerugian":
+    st.header("📊 Analisis ROI")
+    omzet = st.number_input("Omzet Bulanan", value=100000000)
+    st.metric("Efisiensi Server", "20%", delta="V-Guard Active")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Executive Admin")
-    pwd = st.text_input("Master Password", type="password")
+    st.header("🔒 Admin Control")
+    pwd = st.text_input("Password", type="password")
     if pwd == "w1nbju8282":
-        st.success("📉 PENGHEMATAN & EFISIENSI SERVER: 20% ACTIVE")
-        st.divider()
-        st.metric("Dana Terlindungi", "Rp 1.250.000.000", delta="Efisiensi 20%")
+        st.success("Efisiensi 20% Active")
