@@ -67,7 +67,7 @@ if menu == "Visi & Misi":
         st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
         st.markdown("""
         <style>
-st.markdown("""
+
         <style>
         .service-card {
             background-color: #ffffff;
