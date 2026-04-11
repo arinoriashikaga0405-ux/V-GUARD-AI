@@ -15,7 +15,7 @@ st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", la
 class VGuardCoreEngine:
     @staticmethod
     def edge_filter_process(data_type, raw_data):
-        """Memfilter data di tingkat lokal agar cost API < 20%"""
+        """Memfilter data di tingkat lokal agar cost API lebih hemat"""
         is_anomaly = False
         reason = ""
         if data_type == "V-PRO":
