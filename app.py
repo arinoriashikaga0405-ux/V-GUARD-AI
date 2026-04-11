@@ -61,11 +61,11 @@ with col_teks:
 <br><br>
 Misi strategis kami melampaui batasan industri tradisional; kami merancang solusi cerdas yang universal dan dapat diadaptasi secara sempurna oleh <b>seluruh sektor jenis usaha</b>. Mulai dari sektor manufaktur berat, ritel, jasa profesional, hingga pengelolaan aset properti skala nasional. Melalui teknologi deteksi visual tingkat lanjut dan analisis data real-time, kami bertekad menghilangkan segala bentuk kebocoran (leakage), baik yang bersifat finansial akibat kecurangan, inefisiensi tenaga kerja yang tidak terpantau, maupun risiko kehilangan aset fisik yang merugikan. Kami mentransformasi sistem keamanan konvensional yang pasif menjadi asisten analitik proaktif yang bekerja tanpa henti selama 24/7.
 <br><br>
-Dengan membangun infrastruktur digital yang kokoh dan tersebar di tingkat nasional, V-GUARD AI berkomitmen untuk terus mengoptimalkan profitabilitas klien kami melalui eliminasi total terhadap celah operasional yang tersembunyi. Kami percaya bahwa transparansi data yang dihasilkan oleh kecerdasan buatan akan melahirkan budaya kerja yang lebih berintegritas dan efisien. V-GUARD AI bukan sekadar penyedia perangkat lunak, melainkan mitra strategis Anda dalam menjaga masa depan bisnis yang bersih, efisien, kompetitif, dan berkelanjutan di seluruh pelosok nusantara demi kemajuan ekonomi digital Indonesia.
+Dengan membangun infrastruktur digital yang kokoh dan tersebar di tingkat nasional, V-GUARD AI berkomitmen untuk terus mengoptimalkan profitabilitas klien kami melalui eliminasi total terhadap celah operasional yang tersembunyi. Kami percaya bahwa transparansi data yang dihasilkan oleh kecerdasan buatan akan melahirkan budaya kerja yang lebih berintegritas dan efisien. V-GUARD AI bukan sekadar penyedia perangkat lunak, melainkan mitra strategis Anda dalam mengawal masa depan bisnis yang lebih bersih, efisien, kompetitif, dan berkelanjutan di seluruh pelosok nusantara demi kemajuan ekonomi digital Indonesia.
 </div>
 """, unsafe_allow_html=True)
 
-# --- MULAI MENU PRODUK (PASTIKAN INDENTASI SEJAJAR) ---
+# --- MULAI MENU PRODUK (PASTIKAN INDENTASI SEJAJAR DENGAN IF DI ATAS) ---
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     st.markdown("""
@@ -81,8 +81,6 @@ elif menu == "Produk & Layanan":
         }
         </style>
     """, unsafe_allow_html=True)
-            text-align: center;
-        }
         .price-text {
             color: #1a73e8;
             font-weight: bold;
