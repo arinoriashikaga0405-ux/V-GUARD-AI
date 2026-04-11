@@ -63,33 +63,34 @@ if menu == "Visi & Misi":
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI</h2>", unsafe_allow_html=True)
     
-    # 1. BLOK CSS (Dibersihkan dari karakter ilegal)
-    st.markdown("""
-        <style>
-        .service-card {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 10px;
-            color: #31333F;
-            height: 280px;
-        }
-        .service-card h3 { color: #1E1E1E; margin-top: 0; }
-        .target-text { color: #e91e63; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
-        </style>
-    """, unsafe_allow_html=True)
+    # 1. BLOK CSS (Dibungkus variabel agar Python tidak bingung)
+    vguard_style = """
+    <style>
+    .service-card {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        margin-bottom: 10px;
+        color: #31333F;
+        height: 280px;
+    }
+    .service-card h3 { color: #1E1E1E; margin-top: 0; text-align: center; }
+    .target-text { color: #e91e63; font-size: 0.8em; font-weight: bold; text-align: center; }
+    </style>
+    """
+    st.markdown(vguard_style, unsafe_allow_html=True)
 
-    # 2. DEFINISI URL & KOLOM
+    # 2. KONFIGURASI WHATSAPP & KOLOM
     wa_link = "https://wa.me/6282122190885?text="
     col1, col2, col3, col4, col5 = st.columns(5)
 
     # --- KOLOM 1: V-LITE ---
     with col1:
         st.markdown("""<div class="service-card">
-            <h3 style="text-align: center;">📦 V-LITE</h3>
-            <p class="target-text" style="text-align: center;">🎯 Target: Mikro / 1 Kasir</p>
+            <h3>📦 V-LITE</h3>
+            <p class="target-text">🎯 Target: Mikro / 1 Kasir</p>
             <p style="font-size: 13px; color: #666;">Pencatatan transaksi & stok otomatis untuk UMKM.</p>
             <p style="font-weight: bold; font-size: 13px;">Aktivasi: 750 rb<br>Bulanan: 350 rb</p>
         </div>""", unsafe_allow_html=True)
@@ -98,8 +99,8 @@ elif menu == "Produk & Layanan":
     # --- KOLOM 2: V-PRO ---
     with col2:
         st.markdown("""<div class="service-card">
-            <h3 style="text-align: center;">🚀 V-PRO</h3>
-            <p class="target-text" style="text-align: center;">🎯 Target: Retail / 2-3 Kasir</p>
+            <h3>🚀 V-PRO</h3>
+            <p class="target-text">🎯 Target: Retail / 2-3 Kasir</p>
             <p style="font-size: 13px; color: #666;">Manajemen multi-kasir & laporan keuangan lengkap.</p>
             <p style="font-weight: bold; font-size: 13px;">Aktivasi: 1.5 jt<br>Bulanan: 500 rb</p>
         </div>""", unsafe_allow_html=True)
@@ -108,8 +109,8 @@ elif menu == "Produk & Layanan":
     # --- KOLOM 3: V-SIGHT ---
     with col3:
         st.markdown("""<div class="service-card">
-            <h3 style="text-align: center;">👁️ V-SIGHT</h3>
-            <p class="target-text" style="text-align: center;">🎯 Target: Keamanan & Analitik</p>
+            <h3>👁️ V-SIGHT</h3>
+            <p class="target-text">🎯 Target: Keamanan & Analitik</p>
             <p style="font-size: 13px; color: #666;">Monitoring AI untuk deteksi anomali transaksi real-time.</p>
         </div>""", unsafe_allow_html=True)
         st.link_button("Pilih V-SIGHT", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-SIGHT", use_container_width=True)
@@ -117,8 +118,8 @@ elif menu == "Produk & Layanan":
     # --- KOLOM 4: V-ENTERPRISE ---
     with col4:
         st.markdown("""<div class="service-card">
-            <h3 style="text-align: center;">🏢 V-ENTERPRISE</h3>
-            <p class="target-text" style="text-align: center;">🎯 Target: Cabang / Franchise</p>
+            <h3>🏢 V-ENTERPRISE</h3>
+            <p class="target-text">🎯 Target: Cabang / Franchise</p>
             <p style="font-size: 13px; color: #666;">Integrasi ERP & kontrol stok antar gudang otomatis.</p>
         </div>""", unsafe_allow_html=True)
         st.link_button("Pilih ENTERPRISE", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-ENTERPRISE", use_container_width=True)
@@ -126,8 +127,8 @@ elif menu == "Produk & Layanan":
     # --- KOLOM 5: V-ULTRA ---
     with col5:
         st.markdown("""<div class="service-card">
-            <h3 style="text-align: center;">💎 V-ULTRA</h3>
-            <p class="target-text" style="text-align: center;">🎯 Target: Bisnis Skala Besar</p>
+            <h3>💎 V-ULTRA</h3>
+            <p class="target-text">🎯 Target: Bisnis Skala Besar</p>
             <p style="font-size: 13px; color: #666;">Solusi AI Custom penuh dengan infrastruktur eksklusif.</p>
         </div>""", unsafe_allow_html=True)
         st.link_button("Konsultasi ULTRA", f"{wa_link}Halo%20V-Guard,%20saya%20tertarik%20V-ULTRA", use_container_width=True)
