@@ -63,7 +63,7 @@ if menu == "Visi & Misi":
 
 import streamlit as st
 
-# --- CSS CUSTOM (Wajib disertakan agar tampilan persis seperti gambar) ---
+# --- 1. CSS CUSTOM (Wajib untuk tampilan kartu yang rapi) ---
 st.markdown("""
     <style>
     .product-card {
@@ -90,15 +90,17 @@ st.markdown("""
     }
     .price-active { color: #0f172a; font-weight: bold; font-size: 15px; margin-bottom: 4px; }
     .price-monthly { color: #2563eb; font-weight: 800; font-size: 18px; }
-    .wa-tag { color: #059669; font-weight: bold; font-size: 12px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- LOGIKA NAVIGASI LAYANAN PRODUK ---
-st.header("🏷️ Layanan Produk & Paket V-Guard AI")
+# --- 2. LOGIKA HALAMAN PRODUK & LAYANAN ---
+# Pastikan bagian ini berada di bawah 'elif menu == "Produk & Layanan":'
 
-# Data Konfigurasi
+st.header("🏷️ LAYANAN PRODUK & PAKET")
+
+# Data Konfigurasi WhatsApp
 wa_number = "6282122190885"
+
 packages = {
     "V-LITE": {
         "target": "🎯 Mikro / 1 Kasir",
@@ -126,12 +128,13 @@ packages = {
     }
 }
 
-# Tampilan Grid Kartu
-cols = st.columns(4)
+# Membuat Grid 4 Kolom
+p1, p2, p3, p4 = st.columns(4)
+cols = [p1, p2, p3, p4]
 
 for i, (name, info) in enumerate(packages.items()):
     with cols[i]:
-        # Visual Kartu
+        # Tampilan Visual Kartu
         st.markdown(f"""
         <div class="product-card">
             <div>
@@ -141,14 +144,12 @@ for i, (name, info) in enumerate(packages.items()):
             </div>
             <div class="price-box">
                 <div class="price-active">Aktivasi: {info['aktivasi']}</div>
-                <div class="price-monthly">Langanan: {info['bulanan']}</div>
-                <div class="wa-tag">✅ Terhubung ke WhatsApp</div>
+                <div class="price-monthly">Langganan: {info['bulanan']}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Tombol Link WhatsApp
-        pesan_wa = f"Halo Pak Erwin, saya tertarik untuk memesan paket *{name}* V-Guard AI."
+        # Tombol WhatsApp di bawah masing-masing kartu
+        pesan_wa = f"Halo Pak Erwin, saya ingin memesan paket *{name}* V-Guard AI."
         wa_link = f"https://wa.me/{wa_number}?text={pesan_wa.replace(' ', '%20')}"
         st.link_button(f"Pilih {name}", wa_link, use_container_width=True)
-
