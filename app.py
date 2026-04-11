@@ -61,6 +61,7 @@ if menu == "Visi & Misi":
 <div style="text-align: justify; line-height: 1.8; color: #d1d5db; font-size: 15px;">
 # GANTI HANYA BLOK CSS INI (Baris 68 - 82)
     st.markdown("""
+       st.markdown("""
         <style>
         .service-card {
             background-color: #ffffff;
@@ -73,8 +74,6 @@ if menu == "Visi & Misi":
         }
         </style>
     """, unsafe_allow_html=True)
-
-    # Membuat 5 Kolom Sejajar
     col1, col2, col3, col4, col5 = st.columns(5)
 
     # Base link WhatsApp Bapak
