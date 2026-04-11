@@ -75,7 +75,6 @@ V-Guard AI hadir sebagai jangkar teknologi global dalam misi **Digitalisasi Kepe
 3. **Efisiensi Server & API 20%:** Mengoptimalkan pemrosesan logika di tingkat lokal untuk menekan biaya API dan infrastruktur server sebesar 20%, memberikan margin keuntungan lebih tinggi bagi pengguna.
 4. **Kedaulatan Command Center:** Memberikan akses kontrol mutlak kepada Founder melalui sistem Admin yang terenkripsi, memastikan visibilitas data 100% terhadap aktivitas nasional.
 5. **Standarisasi SOP V-Guard:** Menjaga disiplin tinggi dalam pengembangan perangkat lunak sesuai standar operasional baku di seluruh jaringan mitra V-Guard.
-"""
 
 # --- 5. LOGIKA HALAMAN ---
 
