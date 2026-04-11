@@ -142,8 +142,8 @@ elif menu == "Produk & Layanan":
                 <li>Monthly PDF Report</li>
             </ul>
             <div class="price-tag">
-                <p class="price-text">Aktivasi: 1.5 Jt</p>
-                <p class="price-text">Bulanan: 750 rb</p>
+                <p class="price-text">Aktivasi: 750 rb</p>
+                <p class="price-text">Bulanan: 350 rb</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -160,8 +160,8 @@ elif menu == "Produk & Layanan":
                 <li>H-7 Auto-Invoice</li>
             </ul>
             <div class="price-tag">
-                <p class="price-text">Aktivasi: 3 Jt</p>
-                <p class="price-text">Bulanan: 1.5 Jt</p>
+                <p class="price-text">Aktivasi: 1.5 jt</p>
+                <p class="price-text">Bulanan: 800 rb</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
