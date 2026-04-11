@@ -73,7 +73,7 @@ elif menu == "Produk & Layanan":
     c1, c2, c3, c4 = st.columns(4)
     packages = {
         "V-LITE": ["Mikro / 1 Kasir", "750 rb", "350 brb", "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"],
-        "V-PRO": ["Retail & Kafe", "1.5 Jt", "85 rb", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"],
+        "V-PRO": ["Retail & Kafe", "1.5 Jt", "850 rb", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"],
         "V-SIGHT": ["Gudang & Toko", "7,5 Jt", "3,5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"],
         "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"]
     }
@@ -84,6 +84,20 @@ elif menu == "Produk & Layanan":
                 st.markdown(f"- {details[3]}")
                 st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
                 st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
+                
+    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
+    | **Biaya Pemasaran** | 750 rb | 1.5Jt | 5 Jt | 15 Jt |
+    | **Biaya Langganan** | 350 rb | 850 rb | 3,5 Jt | 10 Jt |
+    """)
+
+    # 3. Footer Tambahan (Opsional)
+    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
+           
+
+
+
 
 elif menu == "ROI Kerugian Klien":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
