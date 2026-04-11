@@ -51,7 +51,7 @@ with st.sidebar:
 # --- 4. LOGIKA HALAMAN ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi Strategis (250+ Kata)")
+    st.header("Visi & Misi Strategis")
     col_img, col_txt = st.columns([1, 2.5])
     
     with col_img:
@@ -114,7 +114,7 @@ elif menu == "Analisis ROI Kerugian":
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "Portal Klien":
-    st.header("📱 Portal Onboarding & Aktivasi")
+  
     c1, c2 = st.columns([2, 1])
     with c1:
         st.subheader("Form Pemesanan")
