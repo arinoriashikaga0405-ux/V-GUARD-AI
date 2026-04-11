@@ -2,93 +2,10 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# --- 1. ADMIN CONTROL CENTER (SIDEBAR) ---
-with st.sidebar:
-    st.header("⚙️ Admin Control Center")
-    
-    admin_pass = st.text_input("Admin Password", type="password")
-    
-    # Password dari .env Anda
-    if admin_pass == "w1nbju8282":
-        st.success("Akses Admin Diterima")
-        
-        api_input = st.text_input("Update Gemini API Key", 
-                                 value="AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA", 
-                                 type="password")
-        
-        # Tambahkan key unik pada tombol di sidebar
-        if st.button("Simpan & Refresh Konfigurasi", key="btn_admin_save"):
-            st.session_state['api_key'] = api_input
-            st.rerun()
-    else:
-        st.warning("Masukkan password admin untuk mengubah setelan.")
-
-# --- 2. INISIALISASI ENGINE ---
-current_api_key = st.session_state.get('api_key', "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA")
-
-if current_api_key:
-    try:
-        genai.configure(api_key=current_api_key)
-        # Konfigurasi hemat biaya (Cost < 20%)
-        model_gemini = genai.GenerativeModel(
-            model_name='gemini-1.5-flash',
-            generation_config={"temperature": 0.5, "max_output_tokens": 512}
-        )
-        api_status = "✅ Aktif"
-    except Exception:
-        api_status = "❌ Error Konfigurasi"
-else:
-    api_status = "⚠️ Belum Terkonfigurasi"
-
-# --- 3. TAMPILAN UTAMA ---
-st.title("🛡️ V-Guard AI Intelligence")
-st.info(f"Status Sistem: {api_status}")
-
-# Tambahkan key unik pada tombol di halaman utama
-if st.button("Cek Status API", key="btn_main_check"):
-    if current_api_key:
-        try:
-            response = model_gemini.generate_content("Ping")
-            st.write("Respon AI:", response.text)
-        except Exception as e:
-            st.error(f"Gagal: {e}")
-    else:
-        st.error("API Key tidak ditemukan.")
-
-# --- 3. TAMPILAN UTAMA ---
-st.title("🛡️ V-Guard AI Intelligence")
-st.info(f"Status Sistem: {api_status}")
-
-if st.button("Cek Status API"):
-    if current_api_key:
-        try:
-            response = model_gemini.generate_content("Ping")
-            st.write("Respon AI:", response.text)
-        except Exception as e:
-            st.error(f"Gagal: {e}")
-    else:
-            st.error("API Key tidak ditemukan di Admin Center.")
-
-
-# --- 3. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-
-# CSS Kustom
-st.markdown("""
-<style>
-    .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
-    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
-</style>
-""", unsafe_allow_html=True)
-
-# Tes Singkat (Opsional)
-if st.button("Cek Status API"):
-    try:
-        response = model_gemini.generate_content("Ping")
-        st.success("API Berhasil Terhubung!")
-    except Exception as e:
-        st.error(f"Gagal terhubung: {e}")
+# --- 1. KONFIGURASI ENGINE AI ---
+GEMINI_API_KEY = ""
+genai.configure(api_key=GEMINI_API_KEY)
+model_gemini = genai.GenerativeModel('gemini-1.5-flash')
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
@@ -115,7 +32,7 @@ with st.sidebar:
 # --- 4. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
-    st.header("Digitizing Trust Eliminating Leakage ")
+    st.header("Visi & Misi Digitizing Trust, Eliminating Leakage ")
     col_img, col_txt = st.columns([1, 2])
     with col_img:
         if os.path.exists("erwin.jpg"):
@@ -139,14 +56,14 @@ elif menu == "Produk & Layanan":
     packages = {
         "V-LITE": [
             "Mikro / 1 Kasir", 
+            "1.5 Jt", 
             "750 rb", 
-            "350 rb", 
             "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"
         ],
         "V-PRO": [
             "Retail & Kafe", 
+            "3 Jt", 
             "1.5 Jt", 
-            "850 rb", 
             "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"
         ],
         "V-SIGHT": [
@@ -183,8 +100,8 @@ elif menu == "Produk & Layanan":
     | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
     | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 750 rb| 1.5 Jt | 5 Jt | 15 Jt |
-    | **Biaya Langganan** | 350 rb | 850 rb | 3,5 Jt | 10 Jt |
+    | **Biaya Pemasaran** | 1.5 Jt | 3 Jt | 5 Jt | 15 Jt |
+    | **Biaya Langganan** | 750 rb | 1.5 Jt | 3,5 Jt | 10 Jt |
     """)
 
     # 3. Footer Tambahan (Opsional)
