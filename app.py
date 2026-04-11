@@ -61,7 +61,7 @@ if st.button("Cek Status API"):
         except Exception as e:
             st.error(f"Gagal: {e}")
     else:
-        st.error("API Key tidak ditemukan di Admin Center.")
+            st.error("API Key tidak ditemukan di Admin Center.")
 )
 
 # --- 3. KONFIGURASI HALAMAN ---
