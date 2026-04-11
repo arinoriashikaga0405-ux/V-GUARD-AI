@@ -54,7 +54,6 @@ if menu == "Visi & Misi":
     with col_teks:
 with col_teks:
         st.subheader("Visi & Misi: Digitizing Trust, Eliminating Leakage")
-        # Narasi Strategis Komprehensif (250+ Kata)
         st.markdown(f"""
 <div style="text-align: justify; line-height: 1.8; color: #d1d5db; font-size: 15px;">
 <b>V-GUARD AI Intelligence</b> didirikan atas dasar keyakinan fundamental bahwa di era transformasi digital yang masif, "kepercayaan" tidak lagi bisa hanya disandarkan pada janji verbal, melainkan harus didukung oleh data yang objektif, presisi, dan transparan. Visi utama kami, <b>Digitizing Trust, Eliminating Leakage</b>, adalah sebuah manifestasi dari komitmen kami untuk memberikan kepastian operasional mutlak bagi para pemimpin bisnis dan pemilik modal di seluruh Indonesia. Kami memahami bahwa tantangan terbesar dalam mengelola organisasi modern adalah menjaga integritas di setiap lini operasional. Oleh karena itu, V-GUARD hadir sebagai jembatan teknologi yang mendigitalisasi nilai kepercayaan tersebut, memastikan setiap proses bisnis berjalan sesuai koridor yang seharusnya tanpa ada celah sedikitpun untuk manipulasi data atau tindakan ilegal.
@@ -65,7 +64,7 @@ Dengan membangun infrastruktur digital yang kokoh dan tersebar di tingkat nasion
 </div>
 """, unsafe_allow_html=True)
 
-# --- BLOK MENU BERIKUTNYA ---
+# --- MULAI MENU PRODUK (PASTIKAN INDENTASI SEJAJAR) ---
 elif menu == "Produk & Layanan":
     st.markdown("<h2 style='text-align: center;'>🛡️ Portfolio Layanan V-Guard AI </h2>", unsafe_allow_html=True)
     st.markdown("""
@@ -81,8 +80,6 @@ elif menu == "Produk & Layanan":
         }
         </style>
     """, unsafe_allow_html=True)
-            padding: 8px; 
-            border-radius: 8px; 
             text-align: center; 
         }
         </style>
