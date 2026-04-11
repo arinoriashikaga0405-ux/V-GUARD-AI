@@ -2,23 +2,58 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# --- 1. KONFIGURASI ENGINE AI ---
-GEMINI_API_KEY = ""
+# --- 1. KONFIGURASI ENGINE & SECURITY ---
+# Mengambil API Key secara aman (Gunakan st.secrets di produksi)
+GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA") 
 genai.configure(api_key=GEMINI_API_KEY)
-model_gemini = genai.GenerativeModel('gemini-1.5-flash')
+
+# Konfigurasi Efisiensi Biaya (Cost < 20%)
+generation_config = {
+    "temperature": 0.2,        # Rendah agar hasil konsisten
+    "max_output_tokens": 50,   # Sangat pendek untuk menghemat kuota
+}
+
+model_gemini = genai.GenerativeModel(
+    model_name='gemini-1.5-flash',
+    generation_config=generation_config,
+    system_instruction="Analisa transaksi. Jika Fraud/Anomali balas 'ALERT'. Jika normal balas 'PASS'."
+)
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
 # CSS Premium Eksekutif
 st.markdown("""
-    <style>
+<style>
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
     .stTextInput>div>div>input { background-color: #1e293b; color: white; }
     div[data-testid="stMetricValue"] { font-size: 22px; color: #238636; }
-    </style>
-    """, unsafe_allow_html=True)
+</style>
+""", unsafe_allow_html=True)
+
+# --- 3. LOGIKA V-GUARD (PENYARING BIAYA) ---
+def proses_transaksi(total, data_input):
+    # Threshold lokal: Jika transaksi di bawah 5 juta, anggap aman (0 biaya API)
+    if total < 5000000:
+        return "PASS (Auto)", False
+    
+    # Hanya panggil AI jika transaksi besar/mencurigakan (Hanya bayar 20% penggunaan)
+    response = model_gemini.generate_content(f"Cek: {data_input}")
+    return response.text, True
+
+# UI Contoh
+st.title("Admin Control Center")
+nominal = st.number_input("Total Transaksi", value=0)
+detail = st.text_input("Detail Barang")
+
+if st.button("Kirim Data", key="btn_kirim"):
+    hasil, panggil_ai = proses_transaksi(nominal, detail)
+    st.write(f"Status: {hasil}")
+    if panggil_ai:
+        st.caption("Analisis dilakukan oleh AI (Biaya Terpakai)")
+    else:
+        st.caption("Analisis Lokal (Hemat Biaya 100%)")
 
 # --- 3. SIDEBAR NAVIGATION ---
 with st.sidebar:
