@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+from PIL import Image
 import google.generativeai as genai
 
 # --- 1. KONFIGURASI ENGINE AI ---
@@ -9,18 +10,33 @@ genai.configure(api_key=GEMINI_API_KEY)
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
-# CSS Minimalis (Hanya untuk perbaikan teks)
+# CSS Minimalis Profesional
 st.markdown("""
     <style>
     .justified-text { text-align: justify; line-height: 1.8; font-size: 16px; }
     </style>
     """, unsafe_allow_html=True)
 
+# Fungsi Penanganan Foto (Anti-Crash)
+def load_founder_image(image_path):
+    if os.path.exists(image_path):
+        try:
+            img = Image.open(image_path)
+            return img
+        except Exception:
+            return None
+    return None
+
 # --- 3. SIDEBAR NAVIGATION ---
 with st.sidebar:
     st.title("🛡️ V-Guard AI")
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
+    
+    founder_img = load_founder_image("erwin.jpg")
+    if founder_img:
+        st.image(founder_img, use_container_width=True)
+    else:
+        st.warning("👤 Foto Founder belum terunggah/format salah.")
+        
     st.markdown("**Erwin Sinaga** \nFounder & CEO")
     st.write("---")
     menu = st.radio("NAVIGATION", [
@@ -44,42 +60,41 @@ if menu == "Visi & Misi":
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
-    st.header("Produk & Layanan")
+    st.header("Daftar Produk & Layanan")
     st.table([
-        {"Produk": "V-LITE", "Target": "Mikro / 1 Kasir", "Harga Aktivasi": "750 RB", "Bulanan": "350 RB"},
-        {"Produk": "V-PRO", "Target": "Retail & Kafe", "Harga Aktivasi": "1.5 JT", "Bulanan": "800 RB"},
-        {"Produk": "V-SIGHT", "Target": "Gudang & Toko", "Harga Aktivasi": "7.5 JT", "Bulanan": "3.5 JT"},
-        {"Produk": "V-ENTERPRISE", "Target": "Korporasi / Besar", "Harga Aktivasi": "15 JT", "Bulanan": "10 JT"},
-        {"Produk": "V-ULTRA", "Target": "High-Security", "Harga Aktivasi": "Custom", "Bulanan": "Custom"},
+        {"Produk": "V-LITE", "Target": "Mikro / 1 Kasir", "Aktivasi": "750 RB", "Bulanan": "350 RB"},
+        {"Produk": "V-PRO", "Target": "Retail & Kafe", "Aktivasi": "1.5 JT", "Bulanan": "800 RB"},
+        {"Produk": "V-SIGHT", "Target": "Gudang & Toko", "Aktivasi": "7.5 JT", "Bulanan": "3.5 JT"},
+        {"Produk": "V-ENTERPRISE", "Target": "Korporasi / Besar", "Aktivasi": "15 JT", "Bulanan": "10 JT"},
+        {"Produk": "V-ULTRA", "Target": "High-Security", "Aktivasi": "Custom", "Bulanan": "Custom"},
     ])
 
 elif menu == "Portal Klien":
-    st.header("Portal Onboarding & Aktivasi")
+    st.header("Portal Onboarding & Akses Klien")
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.subheader("Form Pemesanan")
-        nama = st.text_input("Nama Lengkap")
-        usaha = st.text_input("Nama Usaha")
-        produk = st.selectbox("Pilihan Produk", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
-        ktp = st.file_uploader("Upload KTP")
-        if st.button("Kirim Pesanan"):
-            st.success("Pesanan Terkirim.")
+        st.subheader("Pemesanan Baru")
+        st.text_input("Nama Lengkap")
+        st.text_input("Nama Usaha")
+        st.selectbox("Produk", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE", "V-ULTRA"])
+        st.file_uploader("Upload KTP")
+        st.button("Kirim Pesanan")
 
     with col2:
-        st.subheader("Aktivasi Klien")
-        st.text_input("Client ID")
+        st.subheader("Aktivasi & Login")
+        st.text_input("ID Klien")
         st.text_input("Password", type="password")
-        st.button("Login")
+        st.button("Masuk Command Center")
 
 elif menu == "Analisis ROI Kerugian":
     st.header("Analisis ROI")
     omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-    st.write(f"Efisiensi Biaya Server: **20%**")
-    st.write(f"Potensi Penyelamatan: **Rp {(omzet * 0.05):,.0f}** /bulan")
+    st.write(f"Efisiensi Server: **20%**")
+    st.write(f"Estimasi Dana Diselamatkan: **Rp {(omzet * 0.05):,.0f}** /bulan")
 
 elif menu == "Admin Control Center":
     st.header("Admin Control")
     if st.text_input("Master Password", type="password") == "w1nbju8282":
-        st.metric("Status Efisiensi", "20% Active")
-        st.metric("Aset Terlindungi", "Rp 1.250.000.000")
+        st.metric("Status Server", "Efisiensi 20% Active")
+        st.metric("Aset Terpantau", "Rp 1.250.000.000")
