@@ -114,21 +114,16 @@ elif menu == "ROI Kerugian Klien":
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
 
-    # --- 1. INISIALISASI (WAJIB ADA AGAR TIDAK ERROR) ---
+    # 1. INISIALISASI SESSION (Wajib agar tidak Error)
     if "auth_status" not in st.session_state:
         st.session_state.auth_status = False
     if "db_klien" not in st.session_state:
         st.session_state.db_klien = {}
     if "client_data" not in st.session_state:
-        st.session_state.client_data = {}
+        st.session_state.client_data = {'nama': 'User'} # Default value agar tidak KeyError
 
-    # --- 2. LOGIKA TAMPILAN ---
+    # 2. TAMPILAN LOGIN & REGISTRASI
     if not st.session_state.auth_status:
-        c_reg, c_log = st.columns(2)
-        
-        with c_reg: 
-            st.subheader("📝 Form Order Baru")
-            # ... sisa kode form order Anda ...
         c_reg, c_log = st.columns(2)
         
         with c_reg: 
@@ -138,7 +133,6 @@ elif menu == "Portal Klien":
                 n_usaha = st.text_input("Nama Usaha")
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
-                # Data biaya sesuai tabel eksekutif
                 biaya_data = {
                     "V-LITE": {"pasang": "750 rb", "bulan": "375 rb"},
                     "V-PRO": {"pasang": "1.5 Jt", "bulan": "850 rb"},
@@ -148,23 +142,24 @@ elif menu == "Portal Klien":
                 
                 st.warning(f"⚡ **Biaya Pasang: Rp {biaya_data[p_pilihan]['pasang']}**")
                 st.info(f"📅 **Biaya Bulanan: Rp {biaya_data[p_pilihan]['bulan']}**")
-                
                 file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
                 
-                if st.button("Kirim Registrasi", use_container_width=True):
+                # Gunakan warna default (putih) dengan menghapus 'use_container_width=True' jika ingin tombol kecil standar
+                if st.button("Kirim Registrasi"): 
                     if n_pelanggan and file_ktp:
                         st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                        st.success("Data Terkirim! Silakan Login.")
+                        st.success("Data Terkirim!")
 
-        with c_log: # Sejajar dengan with c_reg
+        with c_log: 
             st.subheader("🔓 Akses User Aktif")
             with st.container(border=True):
                 user_in = st.text_input("ID Klien / Email")
                 pass_in = st.text_input("Token Akses", type="password")
                 
-                if st.button("Connect to Cloud Server", use_container_width=True):
+                if st.button("Connect to Cloud Server"): 
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
+                        # Update data klien saat login berhasil
                         st.session_state.client_data = {
                             "nama": user_in,
                             "paket": st.session_state.db_klien[user_in]["paket"]
@@ -172,16 +167,13 @@ elif menu == "Portal Klien":
                         st.rerun()
                     else:
                         st.error("User tidak ditemukan atau Token salah.")
-    # 3. TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
 
-        # Masukkan kode "CLOUD DASHBOARD INTERFACE" yang ada grafik dan CCTV tadi di sini
-        # (Kode Modul 1, Modul 2, dsb)
-        st.subheader(f"Selamat Datang, {st.session_state.client_data['nama']}")
+    # 3. TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
+    else:
+        st.subheader(f"Selamat Datang, {st.session_state.client_data.get('nama', 'User')}") # Gunakan .get agar anti-error
         if st.button("🔌 Disconnect"):
             st.session_state.auth_status = False
             st.rerun()
-        
-        # ... sisa kode dashboard ...
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
