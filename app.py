@@ -194,7 +194,7 @@ if not st.session_state.auth_status:
                 else:
                     st.error("User tidak ditemukan atau Token salah.")
     # 3. Dashboard Admin (Muncul setelah password benar)
-                else:
+    else:
         col_header, col_logout = st.columns([5, 1])
         with col_header:
             st.success("Akses Eksekutif Aktif")
