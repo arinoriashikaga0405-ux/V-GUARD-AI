@@ -115,7 +115,7 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-eelif menu == "Portal Klien":
+elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     
     # URL Google Sheets Bapak
