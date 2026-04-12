@@ -134,7 +134,7 @@ elif menu == "Portal Klien":
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
                 else: st.error("Password Salah.")
 
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+    st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
