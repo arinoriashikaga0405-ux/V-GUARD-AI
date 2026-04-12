@@ -140,7 +140,6 @@ elif menu == "Admin Control Center":
         st.write("Database Cloud Siap Dikelola.")
         # Status admin
         if "admin_logged_in" not in st.session_state:
-            st.session_state.admin_logged_in = False
 
     # 2. Kotak Login
     if not st.session_state.admin_logged_in:
