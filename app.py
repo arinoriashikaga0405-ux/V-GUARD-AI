@@ -31,7 +31,7 @@ model_gemini = genai.GenerativeModel(
 )
 
 # --- 2. KONFIGURASI HALAMAN ---
-  # PASTIKAN SEMUA BARIS DI BAWAH INI MENPEL KE KIRI (TIDAK ADA SPASI)
+# PASTIKAN SEMUA BARIS DI BAWAH INI MENPEL KE KIRI (TIDAK ADA SPASI)
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
 if 'auth_status' not in st.session_state:
