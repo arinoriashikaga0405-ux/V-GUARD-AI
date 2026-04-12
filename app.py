@@ -267,19 +267,19 @@ with sq1:
                 st.caption("Status: Memantau Fraud")
                 st.write("Menganalisa anomali transaksi kasir.")
         
-        with sq2:
+ with sq2:
             with st.container(border=True):
                 st.markdown("💰 **Agent: Auditor**")
                 st.caption("Status: VCS Sync")
                 st.write("Sinkronisasi mutasi bank & laporan POS.")
         
-        with sq3:
+ with sq3:
             with st.container(border=True):
                 st.markdown("📦 **Agent: Stocker**")
                 st.caption("Status: Visual Check")
                 st.write("Cek stok fisik gudang melalui CCTV AI.")
         
-        with sq4:
+  with sq4:
             with st.container(border=True):
                 st.markdown("📑 **Agent: Invoicer**")
                 st.caption("Status: H-7 Ready")
