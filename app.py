@@ -148,22 +148,63 @@ elif menu == "Portal Klien":
                             from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
                             
-                            new_row = pd.DataFrame([{
-                                "Nama Pelanggan": n_pelanggan,
-                                "Nama Usaha": n_usaha,
-                                "Paket": p_pilihan,
-                                "Status": "Waiting for Payment"
-                            }])
-                            
-                            # Kirim ke URL Sheets Anda
-                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
-                            
-                            # Simpan di memori sementara agar bisa langsung login
-                            st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                            st.success("✅ Terkirim ke Cloud & Google Sheets!")
-                        except Exception as e:
-                            st.error(f"Gagal koneksi Sheets: {e}")
+                            # --- LANJUTAN SETELAH PORTAL KLIEN (BARIS 151) ---
 
+elif menu == "Admin Control Center":
+    st.header("🛡️ V-Guard Admin Panel")
+
+    # 1. Inisialisasi status login admin
+    if "admin_auth" not in st.session_state:
+        st.session_state.admin_auth = False
+
+    # 2. Sistem Kunci (Login)
+    if not st.session_state.admin_auth:
+        with st.container(border=True):
+            st.subheader("🔐 Login Founder & Administrator")
+            ad_user = st.text_input("Username Admin", key="admin_user_login")
+            ad_pass = st.text_input("Password Admin", type="password", key="admin_pass_login")
+            
+            if st.button("Unlock Admin Access"):
+                # Username: admin | Password: vguard-ceo
+                if ad_user == "admin" and ad_pass == "vguard-ceo":
+                    st.session_state.admin_auth = True
+                    st.success("Akses Diterima, Pak Erwin!")
+                    st.rerun()
+                else:
+                    st.error("Akses Ditolak! Kredensial salah.")
+    else:
+        # 3. TAMPILAN ADMIN SETELAH LOGIN
+        st.info("Status: Terkoneksi sebagai Founder")
+        if st.button("🔒 Lock & Logout Admin"):
+            st.session_state.admin_auth = False
+            st.rerun()
+
+        st.divider()
+
+        # FITUR: MONITOR DATABASE GOOGLE SHEETS
+        try:
+            from streamlit_gsheets import GSheetsConnection
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            url_sheets = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
+            df_admin = conn.read(spreadsheet=url_sheets)
+            
+            st.subheader("📊 Database Klien (Excel Cloud)")
+            st.dataframe(df_admin, use_container_width=True)
+            
+            # Tombol Download untuk Arsip Bapak
+            csv_admin = df_admin.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Export Full Database (CSV/Excel)",
+                data=csv_admin,
+                file_name='vguard_database_full.csv',
+                mime='text/csv',
+            )
+        except:
+            st.warning("Belum ada data pendaftaran yang tersinkronisasi.")
+
+# --- FOOTER APLIKASI (AKHIR FILE) ---
+st.sidebar.markdown("---")
+st.sidebar.caption("V-Guard AI Intelligence © 2026")
         with c_log:
             st.subheader("🔓 Akses User Aktif")
             with st.container(border=True):
@@ -219,7 +260,7 @@ elif menu == "Portal Klien":
             with st.container(border=True):
                 st.markdown("💰 **Agent: Auditor**")
                 st.caption("Status: VCS Sync")
-                st.write("Sinkronisasi mutasi bank & laporan POS.")
+                st.write("Sinkronisasi mutasi bank & laporan POS.")elif menu == "Admin Control Center
         with sq3:
             with st.container(border=True):
                 st.markdown("📦 **Agent: Stocker**")
