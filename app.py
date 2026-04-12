@@ -144,21 +144,20 @@ elif menu == "Portal Klien":
         st.info(f"Selamat datang kembali di sistem V-Guard AI.")
         
         # Tombol Logout (Baris 131-133)
-        if st.button("🔌 Logout"):
+        f st.button("🔌 Logout"):
             st.session_state.auth_status = False
             st.rerun()
 
 # --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
-    
     # Gunakan .get() juga di sini agar aman
     if not st.session_state.get('admin_logged_in', False):
-        admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+       admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         
-        if admin_pwd == "w1nbju8282":
-            st.session_state.admin_logged_in = True
-            st.rerun()
+       if admin_pwd == "w1nbju8282":
+           st.session_state.admin_logged_in = True
+           st.rerun()
     else:
         st.success("Akses Eksekutif Aktif")
         if st.button("Log Out Admin"):
