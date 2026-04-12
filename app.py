@@ -112,25 +112,57 @@ elif menu == "ROI Kerugian Klien":
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
 elif menu == "Portal Klien":
-    st.header("Portal Klien V-Guard AI")
-    c_reg, c_log = st.columns(2)
-    with c_reg:
-        st.subheader("📝 Form Order Baru")
-        with st.container(border=True):
-            st.text_input("Nama Pelanggan")
-            st.text_input("Nama Usaha")
-            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.text_input("Harga Paket (Rp)")
-            st.file_uploader("Upload KTP")
-            st.button("Kirim Registrasi")
-    with c_log:
-        st.subheader("🔑 Akses User Aktif")
-        with st.container(border=True):
-            st.text_input("Username")
-            pw = st.text_input("Password", type="password")
-            if st.button("Masuk"):
-                if pw == "vguardklien2026": st.success("Selamat Datang!")
-                else: st.error("Password Salah.")
+    st.header("🌐 V-Guard Cloud Intelligence Portal")
+    
+    # 1. LOGIKA CLOUD SESSION (Wajib Ada)
+    if "auth_status" not in st.session_state:
+        st.session_state.auth_status = False
+        st.session_state.client_data = {}
+
+    # 2. TAMPILAN JIKA BELUM LOGIN (Menampilkan Form Order + Login)
+    if not st.session_state.auth_status:
+        c_reg, c_log = st.columns(2)
+        
+        with c_reg: # FITUR LAMA ANDA TETAP DISINI
+            st.subheader("📝 Form Order Baru")
+            with st.container(border=True):
+                st.text_input("Nama Pelanggan")
+                st.text_input("Nama Usaha")
+                st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                st.text_input("Harga Paket (Rp)")
+                st.file_uploader("Upload KTP")
+                st.button("Kirim Registrasi")
+        
+        with c_log: # FITUR LOGIN CLOUD BARU
+            st.subheader("🔓 Akses User Aktif")
+            with st.container(border=True):
+                input_user = st.text_input("ID Klien / Email")
+                input_pass = st.text_input("Token Akses", type="password")
+                
+                if st.button("Connect to Cloud Server", use_container_width=True):
+                    if input_pass == "vguard2026": # Token dari Admin
+                        st.session_state.auth_status = True
+                        st.session_state.client_data = {
+                            "nama": input_user,
+                            "paket": "V-PRO", # Bisa dibuat dinamis nantinya
+                            "exp": "2027-01-01",
+                            "node": "Singapore-S1"
+                        }
+                        st.success("Connected!")
+                        st.rerun()
+                    else:
+                        st.error("Token Salah. Hubungi Admin.")
+
+    # 3. TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
+    else:
+        # Masukkan kode "CLOUD DASHBOARD INTERFACE" yang ada grafik dan CCTV tadi di sini
+        # (Kode Modul 1, Modul 2, dsb)
+        st.subheader(f"Selamat Datang, {st.session_state.client_data['nama']}")
+        if st.button("🔌 Disconnect"):
+            st.session_state.auth_status = False
+            st.rerun()
+        
+        # ... sisa kode dashboard ...
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
