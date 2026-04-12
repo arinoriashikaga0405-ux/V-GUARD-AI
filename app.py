@@ -20,7 +20,7 @@ model_gemini = genai.GenerativeModel(
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
- if "auth_status" not in st.session_state:
+if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
 
 if "db_klien" not in st.session_state:
@@ -120,6 +120,7 @@ elif menu == "ROI Kerugian Klien":
 
 # --- MULAI DARI BARIS 114 (Hapus yang lama, ganti dengan ini) ---
 elif menu == "Portal Klien":
+    # Baris 145 sekarang aman karena auth_status sudah dibuat di atas
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
@@ -142,7 +143,7 @@ elif menu == "Portal Klien":
                 file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
 
                 if st.button("Kirim Registrasi"):
-                if n_pelanggan and file_ktp:
+                    if n_pelanggan and file_ktp:
                         try:
                             from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
@@ -157,6 +158,7 @@ elif menu == "Portal Klien":
                             # Kirim ke URL Sheets Anda
                             conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
                             
+                            # Simpan di memori sementara agar bisa langsung login
                             st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
                             st.success("✅ Terkirim ke Cloud & Google Sheets!")
                         except Exception as e:
@@ -169,13 +171,18 @@ elif menu == "Portal Klien":
                 pass_in = st.text_input("Token Akses", type="password")
 
                 if st.button("Connect to Cloud Server"):
+                    # Mengecek apakah user ada di memori pendaftaran tadi
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
-                        st.session_state.client_data = {"nama": user_in, "paket": st.session_state.db_klien[user_in]["paket"]}
+                        st.session_state.client_data = {
+                            "nama": user_in, 
+                            "paket": st.session_state.db_klien[user_in]["paket"]
+                        }
                         st.rerun()
                     else:
-                        st.error("User tidak ditemukan atau token salah.")
+                        st.error("User tidak ditemukan atau Token salah.")
     else:
+        # Tampilan jika sudah login
         st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
         if st.button("🔌 Disconnect"):
             st.session_state.auth_status = False
