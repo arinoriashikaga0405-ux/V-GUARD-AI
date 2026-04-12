@@ -257,7 +257,8 @@ if st.button("Log Out Admin"):
 # --- FOOTER PALING BAWAH ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-       t.markdown("#### 🤖 Status V-Guard AI Agent Squad")
+
+       st.markdown("#### 🤖 Status V-Guard AI Agent Squad")
         sq1, sq2, sq3, sq4 = st.columns(4)
         
         with sq1:
