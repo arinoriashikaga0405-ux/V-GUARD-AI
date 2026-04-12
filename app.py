@@ -111,7 +111,7 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+ st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
