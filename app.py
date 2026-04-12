@@ -130,7 +130,7 @@ if "client_data" not in st.session_state:
 # ----------------------------------------
 
 # Baru kemudian masuk ke kode yang error tadi:
-if not st.session_state.auth_status:
+    if not st.session_state.auth_status:
     # ... isi form registrasi & login ...
         st.session_state.db_klien = {}
 if "client_data" not in st.session_state:
