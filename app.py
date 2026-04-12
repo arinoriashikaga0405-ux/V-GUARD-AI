@@ -128,9 +128,9 @@ eelif menu == "Portal Klien":
         with c_reg:
             st.subheader("📝 Registrasi & Order")
             with st.container(border=True):
-                 nama = st.text_input("Nama Pelanggan")
-                 usaha = st.text_input("Nama Usaha")
-                 paket = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                  nama = st.text_input("Nama Pelanggan")
+                  usaha = st.text_input("Nama Usaha")
+                  paket = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
                 if st.button("Kirim Registrasi"):
                     try:
