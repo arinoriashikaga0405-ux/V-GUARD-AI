@@ -104,7 +104,8 @@ if menu == "Visi & Misi":
 
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
-# --- BARIS 107 (RATA KIRI) ---
+
+# --- BARIS 108 (RATA KIRI) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI") # BARIS 92
     
@@ -133,11 +134,12 @@ elif menu == "Portal Klien":
 # --- BARIS BERIKUTNYA (RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
+    # Pastikan kode Admin di sini masuk ke dalam (ada spasi)
     if st.text_input("Admin Password", type="password") == "vguard-ceo":
         st.write("Database Cloud Siap Dikelola.")
-    # 1. Cek status login di session state
-    if "admin_logged_in" not in st.session_state:
-        st.session_state.admin_logged_in = False
+        # Status admin
+        if "admin_logged_in" not in st.session_state:
+            st.session_state.admin_logged_in = False
 
     # 2. Kotak Login
     if not st.session_state.admin_logged_in:
