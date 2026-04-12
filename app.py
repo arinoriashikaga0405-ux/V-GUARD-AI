@@ -111,10 +111,10 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-# Baris 114
-# --- GANTI BARIS 115 SAMPAI SELESAI MENU PORTAL KLIEN DENGAN INI ---
+# --- MULAI DARI BARIS 114 (Hapus yang lama, ganti dengan ini) ---
 elif menu == "Portal Klien":
-    # 1. Inisialisasi Memori Global (Agar Tidak AttributeError)
+    # 1. INISIALISASI MEMORI (Agar Tidak AttributeError)
+    # Ini harus ada di paling atas agar sistem mengenal variabel ini sebelum digunakan
     if "auth_status" not in st.session_state:
         st.session_state.auth_status = False
     if "db_klien" not in st.session_state:
@@ -122,7 +122,7 @@ elif menu == "Portal Klien":
     if "client_data" not in st.session_state:
         st.session_state.client_data = {"nama": "User", "paket": "None"}
 
-    # 2. Logika Tampilan: Belum Login vs Sudah Login
+    # 2. LOGIKA TAMPILAN
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
@@ -147,8 +147,10 @@ elif menu == "Portal Klien":
                 if st.button("Kirim Registrasi"):
                     if n_pelanggan and file_ktp:
                         try:
-                            # Koneksi Otomatis ke Google Sheets Anda
+                            # Koneksi ke Google Sheets Bapak
+                            from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
+                            
                             new_row = pd.DataFrame([{
                                 "Nama Pelanggan": n_pelanggan,
                                 "Nama Usaha": n_usaha,
@@ -157,12 +159,18 @@ elif menu == "Portal Klien":
                                 "Biaya Bulanan": biaya_data[p_pilihan]['bulan'],
                                 "Status": "Waiting for Payment"
                             }])
-                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
                             
+                            # Mengirim data ke URL Sheets Anda
+                            conn.create(
+                                spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit",
+                                data=new_row
+                            )
+                            
+                            # Simpan di memori lokal agar bisa langsung login
                             st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                            st.success("✅ Registrasi Berhasil & Tersimpan di Cloud!")
+                            st.success("✅ Berhasil! Data sudah masuk ke Google Sheets.")
                         except Exception as e:
-                            st.error("Gagal Sinkron. Pastikan akses Google Sheets sudah 'Editor'.")
+                            st.error(f"Koneksi Gagal: {e}. Pastikan Google Sheets sudah 'Anyone with link can Editor'.")
 
         with c_log:
             st.subheader("🔓 Akses User Aktif")
@@ -171,7 +179,6 @@ elif menu == "Portal Klien":
                 pass_in = st.text_input("Token Akses", type="password")
 
                 if st.button("Connect to Cloud Server"):
-                    # Cek di memori sementara
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
                         st.session_state.client_data = {
@@ -183,17 +190,13 @@ elif menu == "Portal Klien":
                         st.error("User tidak ditemukan atau Token salah.")
 
     else:
-        # TAMPILAN DASHBOARD KLIEN (Sudah Login)
-        st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
-        st.info(f"Paket Aktif: **{st.session_state.client_data['paket']}**")
+        # Tampilan setelah login berhasil
+        st.header(f"👋 Selamat Datang, {st.session_state.client_data['nama']}!")
+        st.success(f"Paket Aktif: {st.session_state.client_data['paket']}")
+        if st.button("🔌 Disconnect"):
+            st.session_state.auth_status = False
+            st.rerun()
         
-        c1, c2 = st.columns(2)
-        with c1:
-            st.metric("Status Koneksi AI", "Online", delta="Stable")
-        with c2:
-            if st.button("🔌 Disconnect / Logout"):
-                st.session_state.auth_status = False
-                st.rerun()
 # --- SELESAI BLOK PORTAL KLIEN ---
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
