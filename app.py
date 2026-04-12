@@ -1,7 +1,16 @@
 import streamlit as st
 import os
 import google.generativeai as genai
+# --- BOOTSTRAP SYSTEM (Taruh di Baris 4) ---
+if 'auth_status' not in st.session_state:
+    st.session_state.auth_status = False
 
+if 'admin_logged_in' not in st.session_state:
+    st.session_state.admin_logged_in = False
+
+if 'client_info' not in st.session_state:
+    st.session_state.client_info = {"nama": "User", "paket": "V-LITE"}
+    
 # --- 1. KONFIGURASI ENGINE & SECURITY ---
 GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
 genai.configure(api_key=GEMINI_API_KEY)
