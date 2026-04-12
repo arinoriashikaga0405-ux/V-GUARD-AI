@@ -120,6 +120,7 @@ elif menu == "Portal Klien":
     
     if "klien_aktif" not in st.session_state:
         st.session_state.klien_aktif = False
+        st.session_state.paket_aktif = "V-PRO" # Default paket
 
     if not st.session_state.klien_aktif:
         c_reg, c_log = st.columns(2)
@@ -128,7 +129,8 @@ elif menu == "Portal Klien":
             with st.container(border=True):
                 st.text_input("Nama Pelanggan")
                 st.text_input("Nama Usaha")
-                st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                # Pilihan Paket sesuai Produk Bapak
+                st.session_state.paket_aktif = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 st.text_input("Harga Paket (Rp)")
                 st.file_uploader("Upload KTP")
                 st.button("Kirim Registrasi")
@@ -136,7 +138,7 @@ elif menu == "Portal Klien":
         with c_log:
             st.subheader("🔑 Akses User Aktif")
             with st.container(border=True):
-                user_input = st.text_input("Username")
+                st.text_input("Username")
                 pw = st.text_input("Password", type="password")
                 if st.button("Masuk"):
                     if pw == "vguardklien2026": 
@@ -145,60 +147,81 @@ elif menu == "Portal Klien":
                     else: 
                         st.error("Password Salah.")
     else:
-        # --- DASHBOARD MANAJEMEN KLIEN ---
+        # --- DASHBOARD DINAMIS SESUAI PRODUK ---
+        p = st.session_state.paket_aktif
         col_head, col_out = st.columns([5, 1])
-        col_head.subheader("🛡️ Dashboard Management Klien")
+        col_head.subheader(f"🛡️ Dashboard Management - {p}")
         if col_out.button("Keluar"):
             st.session_state.klien_aktif = False
             st.rerun()
         
-        tabs = st.tabs(["📊 Ringkasan", "🕵️ Audit Kasir (V-PRO)", "💰 VCS Bank Sync", "👁️ Visual Monitoring"])
-        
-        with tabs[0]:
-            st.markdown("### Performa Bisnis")
-            c1, c2 = st.columns(2)
-            c1.metric("Omzet Hari Ini", "Rp 12,500,000", delta="+5%")
-            c2.metric("Kebocoran Dicegah", "Rp 1,200,000", delta="Aman")
+        # Logika Tab berdasarkan Fitur Produk Bapak
+        tabs_list = ["📊 Summary"]
+        if p in ["V-PRO", "V-SIGHT", "V-ENTERPRISE"]:
+            tabs_list.append("💰 VCS Bank Sync")
+        if p in ["V-SIGHT", "V-ENTERPRISE"]:
+            tabs_list.append("👁️ Visual AI")
+        if p == "V-ENTERPRISE":
+            tabs_list.append("🧠 Forensic AI")
 
-        with tabs[1]:
-            st.info("Fokus: Monitoring Void, Refund, & Diskon Kasir")
+        my_tabs = st.tabs(tabs_list)
+
+        # 1. Tab Summary (Semua Paket: V-LITE, V-PRO, dll)
+        with my_tabs[0]:
+            st.markdown(f"### Performa {p}")
+            c1, c2 = st.columns(2)
+            c1.metric("Omzet Harian", "Rp 12,500,000", delta="+5%")
+            c2.metric("Leakage Saved", "Rp 1,200,000", delta="Aman")
+            
+            st.markdown("**Log Fraud Detector Dasar**")
             st.table([
                 {"Waktu": "10:15", "Tipe": "Void", "Nilai": "Rp 500,000", "Status": "⚠️ ALERT"},
                 {"Waktu": "12:05", "Tipe": "Normal", "Nilai": "Rp 75,000", "Status": "PASS"},
             ])
-            
-        with tabs[2]:
-            st.subheader("VCS: Bank Statement Audit")
-            st.metric("Dana Masuk Bank", "Match 100%", delta="Verified")
+            if p == "V-LITE":
+                st.info("💡 Paket V-LITE: Laporan harian akan dikirim via WA/Email.")
 
-        with tabs[3]:
-            st.write("Fitur Visual AI (CCTV) - Standar V-SIGHT")
-            st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", width=400)
+        # 2. Tab VCS (V-PRO ke atas)
+        if "💰 VCS Bank Sync" in tabs_list:
+            with my_tabs[tabs_list.index("💰 VCS Bank Sync")]:
+                st.subheader("VCS: Bank Statement Audit")
+                st.write("Sinkronisasi otomatis mutasi bank dengan laporan kasir.")
+                st.metric("Akurasi Dana", "100%", delta="Match Verified")
+                st.success("H-7 Auto-Invoice: System Ready")
 
-# BARIS DI BAWAH INI HARUS SEJAJAR DENGAN 'elif menu == "Portal Klien"' DI ATAS
+        # 3. Tab Visual (V-SIGHT ke atas)
+        if "👁️ Visual AI" in tabs_list:
+            with my_tabs[tabs_list.index("👁️ Visual AI")]:
+                st.subheader("CCTV AI Behavior Analysis")
+                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", width=500)
+                st.warning("Visual Cashier Audit: Monitoring Real-Time Stock...")
+
+        # 4. Tab Forensic (Khusus V-ENTERPRISE)
+        if "🧠 Forensic AI" in tabs_list:
+            with my_tabs[tabs_list.index("🧠 Forensic AI")]:
+                st.subheader("V-ENTERPRISE: Core Brain Forensic")
+                st.code("Otonom Audit: Data 1 Tahun Terakhir Tersimpan Safe.")
+
+# --- MENU ADMIN (LURUS DENGAN ELIF PORTAL KLIEN) ---
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
-    
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
 
     if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        admin_input = st.text_input("Admin Password", type="password")
         if admin_input == "w1nbju8282":
             st.session_state.admin_logged_in = True
             st.rerun()
-        elif admin_input != "":
-            st.error("Password Salah. Akses Ditolak.")
-   # 3. Dashboard Admin (Muncul setelah password benar)
-   else:
-       col_header, col_logout = st.columns([5, 1])
-       with col_header:
-           st.success("Akses Eksekutif Aktif")
-       with col_logout:
-           if st.button("Log Out"):
-               st.session_state.admin_logged_in = False
-               st.rerun()
- 
+    else:
+        st.success("Akses Admin Aktif")
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
+
+# FOOTER PALING BAWAH
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
        
        # Panel Biaya API & Efisiensi
