@@ -222,7 +222,8 @@ elif menu == "Admin Control Center":
 # FOOTER PALING BAWAH
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-       st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+
+st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
        
        # Panel Biaya API & Efisiensi
        c_api1, c_api2, c_api3 = st.columns(3)
