@@ -105,55 +105,29 @@ if menu == "Visi & Misi":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
+# --- BARIS 107 (RATA KIRI) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
-    # URL Cloud Excel Bapak (Gunakan link yang Bapak berikan)
+    # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # LOGIKA AKSES (Hanya jalan di menu ini)
-    if not st.session_state.auth_status:
+    # SEMUA KODE DI BAWAH INI HARUS MENJOROK KE DALAM (INDENTASI)
+    if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan")
-                n_usaha = st.text_input("Nama Usaha")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"])
-                
-                if st.button("Kirim Registrasi"):
-                    try:
-                        from streamlit_gsheets import GSheetsConnection
-                        conn = st.connection("gsheets", type=GSheetsConnection)
-                        # Simpan ke Excel Cloud
-                        new_row = pd.DataFrame([{"Nama": n_pelanggan, "Usaha": n_usaha, "Paket": p_pilihan, "Status": "Pending"}])
-                        conn.create(spreadsheet=url_cloud, data=new_row)
-                        st.success("✅ Terdaftar! Data sudah masuk ke Cloud Excel Bapak.")
-                    except:
-                        st.error("Gagal koneksi Cloud.")
-
+            # ... Masukkan kode text_input n_pelanggan dll di sini ...
+            # Pastikan tombol "Kirim Registrasi" ada di bawah sini
+            
         with c_log:
             st.subheader("🔑 Login Dashboard")
-            with st.container(border=True):
-                u_id = st.text_input("ID Klien")
-                u_token = st.text_input("Token Akses", type="password")
-                if st.button("Masuk"):
-                    # Verifikasi token Bapak
-                    if u_token == "vguard2026":
-                        st.session_state.auth_status = True
-                        st.rerun()
-                    else:
-                        st.error("Token salah atau Akun belum diaktivasi Admin.")
-    
-    # JIKA SUDAH LOGIN (DASHBOARD)
+            # ... Masukkan kode login u_id dan u_token di sini ...
     else:
-        st.subheader("📊 Dashboard Utama")
-        # Masukkan kode metric Bapak di sini agar tidak bocor ke menu Visi & Misi
-        st.info("Selamat Datang! Akun Anda aktif di Cloud Server.")
-        if st.button("🔌 Logout"):
-            st.session_state.auth_status = False
-            st.rerun()
+        # DASHBOARD UTAMA (Hanya muncul jika sudah login)
+        st.subheader("📊 Dashboard Utama Klien")
+        # PINDAHKAN KODE st.metric YANG ERROR TADI KE SINI
 
 # --- MENU ADMIN (RATA KIRI KEMBALI) ---
 elif menu == "Admin Control Center":
