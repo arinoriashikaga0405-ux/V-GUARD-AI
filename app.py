@@ -135,6 +135,75 @@ elif menu == "Portal Klien":
            if st.button("Masuk"):
                if pw == "vguardklien2026": st.success("Selamat Datang!")
                else: st.error("Password Salah.")
+else:
+        # --- DASHBOARD MANAJEMEN KLIEN (SETELAH LOGIN) ---
+        col_head, col_out = st.columns([5, 1])
+        # Menampilkan Nama Paket di Header (Gunakan session state agar dinamis)
+        paket_klien = st.session_state.get('client_packet', 'V-PRO') 
+        col_head.subheader(f"🛡️ Dashboard Management - {paket_klien}")
+        
+        if col_out.button("Keluar"):
+            st.session_state.klien_aktif = False
+            st.rerun()
+        
+        # Pengaturan Tab berdasarkan fitur di gambar produk yang Bapak kirim
+        tabs = ["📊 Ringkasan"]
+        if paket_klien in ["V-PRO", "V-SIGHT", "V-ENTERPRISE"]:
+            tabs.append("💰 VCS Bank Sync")
+        if paket_klien in ["V-SIGHT", "V-ENTERPRISE"]:
+            tabs.append("👁️ Visual AI (CCTV)")
+        if paket_klien == "V-ENTERPRISE":
+            tabs.append("🧠 Core Brain Forensic")
+            
+        active_tabs = st.tabs(tabs)
+        
+        # --- TAB 1: RINGKASAN (Semua Paket) ---
+        with active_tabs[0]:
+            st.markdown(f"### Performa {paket_klien}")
+            c1, c2, c3 = st.columns(3)
+            c1.metric("Omzet Hari Ini", "Rp 12.500.000")
+            c2.metric("Pencegahan Leakage", "Rp 1.200.000")
+            c3.metric("Status AI", "Active", delta="Protected")
+            
+            st.markdown("#### Log Audit Transaksi")
+            st.table([
+                {"Waktu": "10:15", "Tipe": "Void", "Nilai": "Rp 500,000", "Status": "⚠️ ALERT"},
+                {"Waktu": "12:05", "Tipe": "Normal", "Nilai": "Rp 75,000", "Status": "PASS"},
+            ])
+            if paket_klien == "V-LITE":
+                st.info("💡 Upgrade ke V-PRO untuk fitur Sinkronisasi Bank (VCS)")
+
+        # --- TAB 2: VCS BANK SYNC (V-PRO ke atas) ---
+        if "💰 VCS Bank Sync" in tabs:
+            with active_tabs[tabs.index("💰 VCS Bank Sync")]:
+                st.subheader("VCS: Bank Statement Audit")
+                st.write("Sinkronisasi otomatis mutasi bank dengan laporan kasir.")
+                st.metric("Kesesuaian Kas vs Bank", "100%", delta="Match")
+                st.success("H-7 Auto-Invoice System: Ready")
+
+        # --- TAB 3: VISUAL MONITORING (V-SIGHT & ENTERPRISE) ---
+        if "👁️ Visual AI (CCTV)" in tabs:
+            with active_tabs[tabs.index("👁️ Visual AI (CCTV)")]:
+                st.subheader("V-SIGHT: Visual Behavior Analysis")
+                col_v1, col_v2 = st.columns(2)
+                col_v1.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV Kasir")
+                col_v2.markdown("""
+                **Deteksi AI:**
+                - Real-Time Stock Check: ✅ OK
+                - Fraud Alarm: 🟢 Normal
+                - Visual Cashier Audit: Active
+                """)
+
+        # --- TAB 4: FORENSIC (Hanya ENTERPRISE) ---
+        if "🧠 Core Brain Forensic" in tabs:
+            with active_tabs[tabs.index("🧠 Core Brain Forensic")]:
+                st.subheader("The Core Brain: Forensic AI Analysis")
+                st.code("Running Forensic Audit 1 Year Data... 100% Complete")
+                st.write("Dedicated Server IP: 10.0.88.24")
+
+# Penutup Footer (Pastikan sejajar dengan baris paling awal 'if menu == ...')
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
  
 elif menu == "Admin Control Center":
    st.header("🔒 Admin Control Center")
