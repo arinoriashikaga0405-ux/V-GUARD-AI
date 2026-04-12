@@ -112,24 +112,27 @@ elif menu == "Portal Klien":
     # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # SEMUA KODE DI BAWAH INI HARUS MENJOROK KE DALAM (INDENTASI)
+    # --- BARIS INI HARUS MASUK KE DALAM (INDENTASI) ---
     if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            # ... Masukkan kode text_input n_pelanggan dll di sini ...
-            # Pastikan tombol "Kirim Registrasi" ada di bawah sini
+            # Masukkan kode input n_pelanggan, n_usaha, p_pilihan di sini
             
         with c_log:
             st.subheader("🔑 Login Dashboard")
-            # ... Masukkan kode login u_id dan u_token di sini ...
+            # Masukkan kode input u_id, u_token, dan tombol masuk di sini
+            
     else:
-        # DASHBOARD UTAMA (Hanya muncul jika sudah login)
-        st.subheader("📊 Dashboard Utama Klien")
-        # PINDAHKAN KODE st.metric YANG ERROR TADI KE SINI
+        # TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
+        st.subheader("📊 Dashboard Utama")
+        # Masukkan semua metric dan progres bar Bapak di sini
+        if st.button("🔌 Logout"):
+            st.session_state.auth_status = False
+            st.rerun()
 
-# --- MENU ADMIN (RATA KIRI KEMBALI) ---
+# --- BARIS BERIKUTNYA (RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
     if st.text_input("Admin Password", type="password") == "vguard-ceo":
