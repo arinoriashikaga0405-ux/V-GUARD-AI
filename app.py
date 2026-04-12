@@ -172,7 +172,57 @@ elif menu == "Portal Klien":
                 st.subheader("Integrasi Bank VCS")
                 st.write("Sinkronisasi otomatis mutasi bank dengan kasir.")
 
-# --- 2. MENU ADMIN CONTROL CENTER (DI SINI ELIF YANG TADI ERROR) ---
+# --- 1. MENU PORTAL KLIEN ---
+elif menu == "Portal Klien":
+    st.header("Portal Klien V-Guard AI")
+    
+    if "klien_aktif" not in st.session_state:
+        st.session_state.klien_aktif = False
+        st.session_state.paket_aktif = "V-PRO"
+
+    if not st.session_state.klien_aktif:
+        c_reg, c_log = st.columns(2)
+        with c_reg:
+            st.subheader("📝 Order & Registrasi")
+            with st.container(border=True):
+                st.session_state.paket_aktif = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"], key="sel_klien_pkg")
+                st.text_input("Nama Usaha", key="usaha_klien")
+                st.button("Kirim Registrasi", key="btn_regist")
+        
+        with c_log:
+            st.subheader("🔑 Login Dashboard")
+            with st.container(border=True):
+                st.text_input("Username", key="user_login_k")
+                pw_k = st.text_input("Password", type="password", key="pw_login_k")
+                if st.button("Masuk", key="btn_login_k"):
+                    if pw_k == "vguardklien2026": 
+                        st.session_state.klien_aktif = True
+                        st.rerun()
+                    else:
+                        st.error("Password Salah.")
+    else:
+        # Dashboard Klien Aktif
+        p = st.session_state.paket_aktif
+        col_t, col_l = st.columns([4, 1])
+        col_t.subheader(f"🛡️ Management Dashboard - {p}")
+        if col_l.button("Keluar", key="btn_logout_k_fix"):
+            st.session_state.klien_aktif = False
+            st.rerun()
+
+        # Logika Tab Dinamis Portal Klien
+        tab_titles = ["📊 Summary"]
+        if p in ["V-PRO", "V-SIGHT", "V-ENTERPRISE"]: tab_titles.append("💰 VCS Bank")
+        if p in ["V-SIGHT", "V-ENTERPRISE"]: tab_titles.append("👁️ Visual AI")
+        if p == "V-ENTERPRISE": tab_titles.append("🧠 Forensic AI")
+        
+        t_klien = st.tabs(tab_titles)
+        with t_klien[0]:
+            st.markdown(f"### Status Operasional {p}")
+            m1, m2 = st.columns(2)
+            m1.metric("Omzet Terpantau", "Rp 12,500,000", delta="+5%")
+            m2.metric("Kebocoran Dicegah", "Rp 1,200,000")
+
+# --- 2. MENU ADMIN CONTROL CENTER ---
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
     if "admin_logged_in" not in st.session_state:
@@ -189,173 +239,59 @@ elif menu == "Admin Control Center":
         if st.button("Log Out Admin", key="btn_logout_adm_real"):
             st.session_state.admin_logged_in = False
             st.rerun()
-
-# --- 3. GLOBAL FOOTER & SQUAD (PASTIKAN MEPET KIRI) ---
-st.write("")
-st.markdown("---")
-st.markdown("### 🤖 V-Guard AI Squad Status")
-sq_cols = st.columns(4)
-with sq_cols[0]: st.metric("Sentinel", "Active")
-with sq_cols[1]: st.metric("Auditor", "Active")
-with sq_cols[2]: st.metric("Stocker", "Standby")
-with sq_cols[3]: st.metric("Invoicer", "Active")
-
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-
-# --- MENU ADMIN (PASTIKAN MEPET KIRI) ---
-elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
-    
-    if "admin_logged_in" not in st.session_state:
-        st.session_state.admin_logged_in = False
-
-    if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_main")
-        if st.button("Masuk Admin", key="btn_login_admin"):
-            if admin_input == "w1nbju8282":
-                st.session_state.admin_logged_in = True
-                st.rerun()
-            else:
-                st.error("Password Salah.")
-    else:
-        st.success("Akses Eksekutif Aktif")
-        # Tombol Log Out hanya ada di sini, di dalam menu Admin
-        if st.button("Keluar dari Panel Admin", key="btn_logout_admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-
-# --- PANEL GLOBAL: V-GUARD AI SQUAD AGENTS (MUNCUL DI SEMUA MENU) ---
-st.write("")
-st.markdown("---")
-st.markdown("### 🤖 V-Guard AI Squad Agents")
-
-# Membuat kolom baru agar tidak NameError
-col_sq1, col_sq2, col_sq3, col_sq4 = st.columns(4)
-
-with col_sq1:
-    with st.container(border=True):
-        st.markdown("**Agent: Sentinel**")
-        st.caption("Status: Active")
-
-with col_sq2:
-    with st.container(border=True):
-        st.markdown("**Agent: Auditor**")
-        st.caption("Status: Active")
-
-with col_sq3:
-    with st.container(border=True):
-        st.markdown("**Agent: Stocker**")
-        st.caption("Status: Standby")
-
-with col_sq4:
-    with st.container(border=True):
-        st.markdown("**Agent: Invoicer**")
-        st.caption("Status: Active")
-
-# --- FOOTER PALING AKHIR ---
-st.write("")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-# --- FOOTER PINDAH KE PALING BAWAH SEKALI ---
-st.write("") 
-st.markdown("---")
-st.markdown("### 🤖 V-Guard AI Squad Agents")
-
-if st.button("Log Out Admin"):
-    st.session_state.admin_logged_in = False
-    st.rerun()
-
-# --- FOOTER PALING BAWAH ---
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-
-st.markdown("#### 🤖 Status V-Guard AI Agent Squad")
-sq1, sq2, sq3, sq4 = st.columns(4)
         
-# --- PANEL STATUS GLOBAL (Muncul di Bawah Setiap Menu) ---
-st.write("") # Spasi kosong
+        st.divider()
+        # --- TABS ADMIN (Aktivasi Klien, Ekosistem, dll) ---
+        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
+            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
+        ])
+
+        with t1:
+            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
+            with st.container(border=True):
+                col_a1, col_a2 = st.columns(2)
+                col_a1.text_input("Username Klien", key="admin_new_user")
+                col_a2.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"], key="admin_new_pkg")
+                if st.button("Aktifkan Akun & Kirim Kredensial", key="btn_aktifkan"):
+                    st.success("Akun BERHASIL DIAKTIFKAN.")
+
+        with t2:
+            st.subheader("🌐 V-Guard Global AI Ecosystem")
+            ca1, ca2 = st.columns(2)
+            ca1.info("🧠 **Google Gemini AI**\n\nProses data audit kompleks.")
+            ca2.info("👁️ **YOLO / Vision AI**\n\nMemantau pergerakan visual.")
+
+        with t9:
+            st.header("💎 V-ULTRA: Enterprise Command Center")
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+
+# --- 3. GLOBAL SQUAD AGENTS (Paling Bawah, Muncul di Semua Menu) ---
 st.write("")
 st.markdown("---")
-st.subheader("🤖 V-Guard AI Squad Agents")
-
-# Mendefinisikan kolom untuk Agent agar tidak NameError
+st.subheader("🤖 V-Guard AI Squad Agents Status")
 sq1, sq2, sq3, sq4 = st.columns(4)
 
 with sq1:
     with st.container(border=True):
         st.markdown("**Agent: Sentinel**")
-        st.caption("V-LITE AI")
-        st.write("Status: Active")
+        st.caption("V-LITE | Active")
 
 with sq2:
     with st.container(border=True):
         st.markdown("**Agent: Auditor**")
-        st.caption("V-PRO AI")
-        st.write("Status: Active")
+        st.caption("V-PRO | Active")
 
 with sq3:
     with st.container(border=True):
         st.markdown("**Agent: Stocker**")
-        st.caption("V-SIGHT AI")
-        st.write("Status: Standby")
+        st.caption("V-SIGHT | Standby")
 
 with sq4:
     with st.container(border=True):
         st.markdown("**Agent: Invoicer**")
-        st.caption("V-ULTRA AI")
-        st.write("Status: Active")
+        st.caption("V-ULTRA | Active")
 
-# --- FOOTER PALING BAWAH ---
-st.write("")
+# --- FOOTER SATU SAJA DI PALING BAWAH ---
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
 
-# --- FOOTER PALING BAWAH (SEJAJAR PINGGIR KIRI) ---
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
- 
-st.divider()
-t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-    "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
-    "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
-])
- 
-with t1:
-           st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-           with st.container(border=True):
-               col1, col2 = st.columns(2)
-               with col1:
-                   new_user = st.text_input("Username Klien")
-                   new_mail = st.text_input("Email Bisnis")
-               with col2:
-                   paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                   tgl_bayar = st.date_input("Tanggal Pembayaran")
-               if st.button("Aktifkan Akun & Kirim Kredensial"):
-                   st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
- 
-with t2:
-           st.subheader("🌐 V-Guard Global AI Ecosystem")
-           c1, c2 = st.columns(2)
-           with c1:
-               with st.container(border=True):
-                   st.markdown("### 🧠 Google Gemini AI")
-                   st.write("Analis utama yang memproses data audit kompleks.")
-           with c2:
-               with st.container(border=True):
-                   st.markdown("### 👁️ YOLO / Vision AI")
-                   st.write("'Mata' digital yang memantau pergerakan visual.")
-with t9:
-           st.header("💎 V-ULTRA: Enterprise Command Center")
-           col_u1, col_u2 = st.columns(2)
-           with col_u1:
-               st.success("🧠 **The Core Brain (AI Central)**")
-               st.progress(100)
-           with col_u2:
-               st.info("🖥️ **Dedicated Server Status**")
-               st.code("IP: 10.0.88.24\nUptime: 99.99%")
-           st.divider()
-           st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
- 
-st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
