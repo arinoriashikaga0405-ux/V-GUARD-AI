@@ -112,111 +112,89 @@ elif menu == "ROI Kerugian Klien":
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
 # Baris 114
+# --- GANTI BARIS 115 SAMPAI SELESAI MENU PORTAL KLIEN DENGAN INI ---
 elif menu == "Portal Klien":
-    # BARIS DI BAWAH INI WAJIB MENJOROK KE DALAM (4 SPASI)
+    # 1. Inisialisasi Memori Global (Agar Tidak AttributeError)
     if "auth_status" not in st.session_state:
         st.session_state.auth_status = False
-
     if "db_klien" not in st.session_state:
         st.session_state.db_klien = {}
-
     if "client_data" not in st.session_state:
-        st.session_state.client_data = {"nama": "User"}
+        st.session_state.client_data = {"nama": "User", "paket": "None"}
+
+    # 2. Logika Tampilan: Belum Login vs Sudah Login
+    if not st.session_state.auth_status:
+        c_reg, c_log = st.columns(2)
         
-    # Lanjutkan kode Portal Klien di bawahnya...
+        with c_reg:
+            st.subheader("📝 Form Order Baru")
+            with st.container(border=True):
+                n_pelanggan = st.text_input("Nama Pelanggan")
+                n_usaha = st.text_input("Nama Usaha")
+                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                
+                biaya_data = {
+                    "V-LITE": {"pasang": "750 rb", "bulan": "375 rb"},
+                    "V-PRO": {"pasang": "1.5 Jt", "bulan": "850 rb"},
+                    "V-SIGHT": {"pasang": "7,5 Jt", "bulan": "3,5 Jt"},
+                    "V-ENTERPRISE": {"pasang": "15 Jt", "bulan": "10 Jt"}
+                }
+                
+                st.warning(f"⚡ **Biaya Pasang: Rp {biaya_data[p_pilihan]['pasang']}**")
+                st.info(f"📅 **Biaya Bulanan: Rp {biaya_data[p_pilihan]['bulan']}**")
+                file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
 
-if "client_data" not in st.session_state:
-    st.session_state.client_data = {"nama": "User"}
-# ----------------------------------------
+                if st.button("Kirim Registrasi"):
+                    if n_pelanggan and file_ktp:
+                        try:
+                            # Koneksi Otomatis ke Google Sheets Anda
+                            conn = st.connection("gsheets", type=GSheetsConnection)
+                            new_row = pd.DataFrame([{
+                                "Nama Pelanggan": n_pelanggan,
+                                "Nama Usaha": n_usaha,
+                                "Paket": p_pilihan,
+                                "Biaya Pasang": biaya_data[p_pilihan]['pasang'],
+                                "Biaya Bulanan": biaya_data[p_pilihan]['bulan'],
+                                "Status": "Waiting for Payment"
+                            }])
+                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
+                            
+                            st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
+                            st.success("✅ Registrasi Berhasil & Tersimpan di Cloud!")
+                        except Exception as e:
+                            st.error("Gagal Sinkron. Pastikan akses Google Sheets sudah 'Editor'.")
 
-# Baru kemudian masuk ke kode yang error tadi:
-if not st.session_state.auth_status:
-    # ... isi form registrasi & login ...
-        st.session_state.db_klien = {}
-if "client_data" not in st.session_state:
-        st.session_state.client_data = {'nama': 'User'} # Default value agar tidak KeyError
+        with c_log:
+            st.subheader("🔓 Akses User Aktif")
+            with st.container(border=True):
+                user_in = st.text_input("ID Klien / Email")
+                pass_in = st.text_input("Token Akses", type="password")
 
-    # 2. TAMPILAN LOGIN & REGISTRASI
-    # Tambahkan library ini di baris paling atas (Baris 1)
-import pandas as pd
-from streamlit_gsheets import GSheetsConnection
+                if st.button("Connect to Cloud Server"):
+                    # Cek di memori sementara
+                    if user_in in st.session_state.db_klien and pass_in == "vguard2026":
+                        st.session_state.auth_status = True
+                        st.session_state.client_data = {
+                            "nama": user_in, 
+                            "paket": st.session_state.db_klien[user_in]["paket"]
+                        }
+                        st.rerun()
+                    else:
+                        st.error("User tidak ditemukan atau Token salah.")
 
-# Kode di dalam menu "Portal Klien"
-if not st.session_state.auth_status:
-    c_reg, c_log = st.columns(2)
-    
-    with c_reg:
-        st.subheader("📝 Form Order Baru")
-        with st.container(border=True):
-            n_pelanggan = st.text_input("Nama Pelanggan")
-            n_usaha = st.text_input("Nama Usaha")
-            p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            
-            biaya_data = {
-                "V-LITE": {"pasang": "750 rb", "bulan": "375 rb"},
-                "V-PRO": {"pasang": "1.5 Jt", "bulan": "850 rb"},
-                "V-SIGHT": {"pasang": "7,5 Jt", "bulan": "3,5 Jt"},
-                "V-ENTERPRISE": {"pasang": "15 Jt", "bulan": "10 Jt"}
-            }
-            
-            st.warning(f"⚡ **Biaya Pasang: Rp {biaya_data[p_pilihan]['pasang']}**")
-            st.info(f"📅 **Biaya Bulanan: Rp {biaya_data[p_pilihan]['bulan']}**")
-            file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
-
-            if st.button("Kirim Registrasi"):
-                if n_pelanggan and file_ktp:
-                    # --- KONEKSI GOOGLE SHEETS ---
-                    try:
-                        conn = st.connection("gsheets", type=GSheetsConnection)
-                        
-                        # Data baru dalam format DataFrame
-                        new_row = pd.DataFrame([{
-                            "Nama Pelanggan": n_pelanggan,
-                            "Nama Usaha": n_usaha,
-                            "Paket": p_pilihan,
-                            "Biaya Pasang": biaya_data[p_pilihan]['pasang'],
-                            "Biaya Bulanan": biaya_data[p_pilihan]['bulan'],
-                            "Status": "Waiting for Payment"
-                        }])
-                        
-                        # Kirim ke URL Google Sheets Anda
-                        conn.create(
-                            spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit",
-                            data=new_row
-                        )
-                        
-                        # Simpan di memori sementara juga agar bisa login langsung
-                        st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                        st.success("✅ Registrasi Berhasil & Tersimpan di Cloud!")
-                    except Exception as e:
-                        st.error(f"Gagal koneksi ke Sheets: {e}")
-
-    with c_log:
-        st.subheader("🔓 Akses User Aktif")
-        with st.container(border=True):
-            user_in = st.text_input("ID Klien / Email")
-            pass_in = st.text_input("Token Akses", type="password")
-
-            if st.button("Connect to Cloud Server"):
-                if user_in in st.session_state.db_klien and pass_in == "vguard2026":
-                    st.session_state.auth_status = True
-                    st.session_state.client_data = {
-                        "nama": user_in,
-                        "paket": st.session_state.db_klien[user_in]["paket"]
-                    }
-                    st.rerun()
-                else:
-                    st.error("User tidak ditemukan atau Token salah.")
-    # 3. Dashboard Admin (Muncul setelah password benar)
-else:
-        col_header, col_logout = st.columns([5, 1])
-        with col_header:
-            st.success("Akses Eksekutif Aktif")
-        with col_logout:
-            if st.button("Log Out"):
-             st.session_state.admin_logged_in = False
-             st.rerun()
-
+    else:
+        # TAMPILAN DASHBOARD KLIEN (Sudah Login)
+        st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
+        st.info(f"Paket Aktif: **{st.session_state.client_data['paket']}**")
+        
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric("Status Koneksi AI", "Online", delta="Stable")
+        with c2:
+            if st.button("🔌 Disconnect / Logout"):
+                st.session_state.auth_status = False
+                st.rerun()
+# --- SELESAI BLOK PORTAL KLIEN ---
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
         
