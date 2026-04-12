@@ -166,6 +166,14 @@ elif menu == "Admin Control Center":
         if st.button("Log Out Admin"):
             st.session_state.admin_logged_in = False
             st.rerun()
+        elif admin_pwd != "":
+            st.error("Password Salah.")
+    else:
+        st.success("Akses Eksekutif Aktif")
+        # Masukkan dashboard AI Squad Bapak di sini
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
     else:
         st.success("Akses Eksekutif Aktif")
         
