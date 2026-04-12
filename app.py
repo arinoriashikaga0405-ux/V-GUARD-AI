@@ -23,8 +23,49 @@ with st.sidebar:
 # --- 4. LOGIKA MENU ---
 
 if menu == "Home":
-    st.header("Selamat Datang di V-Guard AI")
-    st.write("Sistem integritas dan keamanan otomatis untuk bisnis Anda.")
+    st.header("🛡️ V-Guard AI Intelligence")
+    st.subheader("Digitizing Trust, Eliminating Leakage")
+    
+    st.markdown("---")
+    
+    # Bagian Visi & Misi
+    col_v, col_m = st.columns(2)
+    with col_v:
+        st.markdown("### 🎯 Visi")
+        st.write("Menjadi standar global dalam otomatisasi integritas bisnis melalui teknologi AI yang jujur, transparan, dan efisien.")
+    
+    with col_m:
+        st.markdown("### 🚀 Misi")
+        st.write("Menghilangkan kebocoran operasional secara real-time dan membangun kepercayaan digital bagi para pelaku usaha.")
+
+    st.divider()
+
+    # Profil Founder di bawah Visi & Misi
+    col_profile1, col_profile2 = st.columns([1, 2])
+    
+    with col_profile1:
+        # Menggunakan file erwin.jpg yang sudah Bapak siapkan
+        try:
+            st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO")
+        except:
+            st.warning("Foto 'erwin.jpg' belum ditemukan di folder GitHub. Pastikan nama file sudah benar.")
+        
+    with col_profile2:
+        st.subheader("Profil Founder")
+        st.markdown("""
+        **Erwin Sinaga** adalah Founder & CEO dari **V-Guard AI Intelligence**. 
+        Beliau membangun V-Guard dengan filosofi *"Digitizing Trust"*, di mana teknologi 
+        bukan sekadar alat, melainkan fondasi kepercayaan dalam setiap transaksi bisnis.
+        
+        Dengan fokus pada *Eliminating Leakage*, beliau merancang sistem yang mampu 
+        mendeteksi anomali secara otonom, memastikan setiap rupiah dan aset milik 
+        pengusaha terlindungi 24/7 tanpa beban biaya Cloud yang berlebihan.
+        
+        V-Guard adalah manifestasi dari pengalaman beliau dalam menyatukan 
+        strategi produk yang tajam dengan efisiensi teknologi masa depan.
+        """)
+
+    st.info("💡 Gunakan menu di samping untuk mengeksplorasi fitur Dashboard dan Portal Klien.")
 
 elif menu == "Produk & Layanan":
     st.header("📦 Paket Layanan V-Guard AI")
