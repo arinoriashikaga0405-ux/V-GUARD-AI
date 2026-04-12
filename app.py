@@ -21,9 +21,8 @@ model_gemini = genai.GenerativeModel(
 # --- 2. KONFIGURASI HALAMAN ---
     st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 # --- DI BARIS 23 ---
-if "auth_status" not in st.session_state: 
+if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
-
 if "client_info" not in st.session_state:
     st.session_state.client_info = None
     st.markdown("""
@@ -115,88 +114,59 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
+# --- BARIS 116: AKHIR DARI MENU PRODUK & LAYANAN ---
+    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
+
+# --- BARIS 118: MULAI MENU PORTAL KLIEN (RATA KIRI) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
-    # 1. Pastikan variabel login sudah siap (Penyelamat Error Baris 133)
-    if "auth_status" not in st.session_state:
-        st.session_state.auth_status = False
+    # URL Cloud Excel Bapak
+    url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # 2. Logika jika User BELUM Login
+    # Jika Belum Login
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
         with c_reg:
-            st.subheader("📝 Registrasi & Order")
+            st.subheader("📝 Form Order Baru")
             with st.container(border=True):
-                nama = st.text_input("Nama Pelanggan", key="reg_nama")
-                usaha = st.text_input("Nama Usaha", key="reg_usaha")
-                paket = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                n_pelanggan = st.text_input("Nama Pelanggan")
+                n_usaha = st.text_input("Nama Usaha")
+                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"])
                 
                 if st.button("Kirim Registrasi"):
                     try:
                         from streamlit_gsheets import GSheetsConnection
                         conn = st.connection("gsheets", type=GSheetsConnection)
-                        # Link Google Sheets Bapak
-                        url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
-                        
-                        new_row = pd.DataFrame([{
-                            "Nama Pelanggan": nama,
-                            "Nama Usaha": usaha,
-                            "Paket": paket,
-                            "Status": "Waiting for Payment"
-                        }])
+                        new_row = pd.DataFrame([{"Nama": n_pelanggan, "Usaha": n_usaha, "Paket": p_pilihan, "Status": "Pending"}])
                         conn.create(spreadsheet=url_cloud, data=new_row)
-                        st.success("✅ Data terkirim ke Cloud! Admin akan segera memproses.")
-                    except Exception as e:
-                        st.error(f"Gagal koneksi Cloud: {e}")
+                        st.success("✅ Terdaftar! Data sudah masuk ke Cloud Excel Bapak.")
+                    except:
+                        st.error("Gagal koneksi Cloud.")
 
         with c_log:
-            st.subheader("🔓 Akses User Aktif")
+            st.subheader("🔑 Login Dashboard")
             with st.container(border=True):
-                user_in = st.text_input("ID Klien / Email")
-                pass_in = st.text_input("Token Akses", type="password")
-                
-                if st.button("Connect to Cloud Server"):
-                    # Token akses sementara sesuai keinginan Bapak
-                    if pass_in == "vguard2026":
+                u_id = st.text_input("ID Klien")
+                u_token = st.text_input("Token Akses", type="password")
+                if st.button("Masuk"):
+                    if u_token == "vguard2026": # Sesuaikan token Bapak
                         st.session_state.auth_status = True
                         st.rerun()
-                    else:
-                        st.error("Token salah atau Akun belum diaktivasi Admin.")
-
-    # 3. Logika jika User SUDAH Login (Dashboard Muncul di Sini)
+    
+    # Jika Sudah Login (DASHBOARD KLIEN)
     else:
-        st.subheader("📊 Dashboard Utama Klien")
-        st.info("Status: Terhubung ke Cloud Excel ✅")
-        
-        # Ringkasan Eksekutif (Pindahkan kode dari Screenshot 090353 ke sini)
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Anggaran API Bulanan", "Rp 10.000.000")
-        c2.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)")
-        c3.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
-        
-        st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
-        
-        st.divider()
-        
-        # Fitur AI Squad (Hanya muncul di dashboard setelah login)
-        st.markdown("### 🤖 V-Guard AI Squad Agents")
-        col_a, col_b = st.columns(2)
-        with col_a:
-            with st.container(border=True):
-                st.markdown("**🕵️ Agent: Sentinel**")
-                st.caption("Status: Memantau Fraud")
-        with col_b:
-            with st.container(border=True):
-                st.markdown("**💰 Agent: Auditor**")
-                st.caption("Status: VCS Sync")
-
-        if st.button("🔌 Disconnect from Cloud"):
+        st.subheader("📊 Dashboard Utama")
+        # Pindahkan SEMUA kode metric Bapak ke sini
+        st.info("Selamat Datang! Akun Anda aktif di Cloud Server.")
+        if st.button("🔌 Logout"):
             st.session_state.auth_status = False
             st.rerun()
+
+# --- MENU BERIKUTNYA (RATA KIRI) ---
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
+    st.header("🛡️ Admin Panel")
 
     # 1. Cek status login di session state
     if "admin_logged_in" not in st.session_state:
