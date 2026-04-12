@@ -337,6 +337,28 @@ elif menu == "Admin Control Center":
                 st.code("IP: 10.0.88.24\nUptime: 99.99%")
             st.divider()
             st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+         with t7:
+         st.subheader("💾 System Data Recovery & Backup")
+
+    if "db_klien" in st.session_state and st.session_state.db_klien:
+        import pandas as pd
+        # Mengambil data dari memori pendaftaran portal
+        df_backup = pd.DataFrame.from_dict(st.session_state.db_klien, orient='index')
+        
+        st.write("Daftar Klien Terdeteksi di Memori:")
+        st.dataframe(df_backup)
+        
+        # Fitur untuk Admin menarik data dalam format CSV
+        csv = df_backup.to_csv().encode('utf-8')
+        st.download_button(
+            label="📥 Tarik Data Backup (.CSV/Excel)",
+            data=csv,
+            file_name='vguard_backup_data.csv',
+            mime='text/csv',
+        )
+    else:
+        st.info("Belum ada data pendaftaran baru yang bisa ditarik.")
+
 
         st.markdown("---")
         st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
