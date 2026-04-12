@@ -22,12 +22,11 @@ model_gemini = genai.GenerativeModel(
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 # --- DI BARIS 23 (RATA KIRI) ---
 
+# --- BARIS 23 ---
 if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
-
 if "admin_auth" not in st.session_state:
     st.session_state.admin_auth = False
-
 if "db_klien" not in st.session_state:
     st.session_state.db_klien = {}
 
