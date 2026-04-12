@@ -129,8 +129,8 @@ elif menu == "Portal Klien":
         c_reg, c_log = st.columns(2)
         
         with c_reg:
-        st.subheader("📝 Form Order Baru")
-        with st.container(border=True):
+         st.subheader("📝 Form Order Baru")
+          with st.container(border=True):
                 n_pelanggan = st.text_input("Nama Pelanggan")
                 n_usaha = st.text_input("Nama Usaha")
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
