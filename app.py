@@ -244,7 +244,7 @@ elif menu == "Admin Control Center":
 # --- FOOTER PINDAH KE PALING BAWAH SEKALI ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-       st.subheader("🤖 V-Guard AI Squad Agents")
+st.subheader("🤖 V-Guard AI Squad Agents")
        sq1, sq2, sq3, sq4 = st.columns(4)
        with sq1:
            with st.container(border=True):
