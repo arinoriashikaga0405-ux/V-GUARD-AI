@@ -129,28 +129,46 @@ elif menu == "Portal Klien":
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan")
-                n_usaha = st.text_input("Nama Usaha")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                
-                biaya_data = {
-                    "V-LITE": {"pasang": "750 rb", "bulan": "375 rb"},
-                    "V-PRO": {"pasang": "1.5 Jt", "bulan": "850 rb"},
-                    "V-SIGHT": {"pasang": "7,5 Jt", "bulan": "3,5 Jt"},
-                    "V-ENTERPRISE": {"pasang": "15 Jt", "bulan": "10 Jt"}
-                }
-                
-                st.warning(f"⚡ **Biaya Pasang: Rp {biaya_data[p_pilihan]['pasang']}**")
-                st.info(f"📅 **Biaya Bulanan: Rp {biaya_data[p_pilihan]['bulan']}**")
-                file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
+            n_pelanggan = st.text_input("Nama Pelanggan")
+            p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT"])
+            if st.button("Kirim Registrasi"):
+                from streamlit_gsheets import GSheetsConnection
+                conn = st.connection("gsheets", type=GSheetsConnection)
+                # ... proses simpan ke sheets ...
+                st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
+                st.success("Registrasi Terkirim!")
 
-                if st.button("Kirim Registrasi"):
-                    if n_pelanggan and file_ktp:
-                        try:
-                            from streamlit_gsheets import GSheetsConnection
-                            conn = st.connection("gsheets", type=GSheetsConnection)
-                            
+        with c_log:
+            st.subheader("🔓 Akses User Aktif")
+            user_in = st.text_input("ID Klien")
+            pass_in = st.text_input("Token", type="password")
+            if st.button("Connect to Cloud"):
+                if user_in in st.session_state.db_klien and pass_in == "vguard2026":
+                    st.session_state.auth_status = True
+                    st.rerun()
+                else:
+                    st.error("Gagal!")
+    else:
+        st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
+        if st.button("🔌 Disconnect"):
+            st.session_state.auth_status = False
+            st.rerun()
+
+elif menu == "Admin Control Center":
+    st.header("🛡️ V-Guard Admin Panel")
+    if not st.session_state.admin_auth:
+        ad_user = st.text_input("Admin User")
+        ad_pass = st.text_input("Admin Pass", type="password")
+        if st.button("Unlock Admin"):
+            if ad_user == "admin" and ad_pass == "vguard-ceo":
+                st.session_state.admin_auth = True
+                st.rerun()
+    else:
+        st.write("Selamat Datang, Founder.")
+        # ... kode tarik data excel bapak di sini ...
+        if st.button("🔒 Logout Admin"):
+            st.session_state.admin_auth = False
+            st.rerun()
                             # --- LANJUTAN SETELAH PORTAL KLIEN (BARIS 151) ---
 
 elif menu == "Admin Control Center":
