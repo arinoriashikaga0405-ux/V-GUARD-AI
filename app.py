@@ -1,8 +1,10 @@
 import streamlit as st
 import os
-import google.generativeai as genai
-import streamlit as st
-import os
+if 'auth_status' not in st.session_state:
+    st.session_state.auth_status = False
+
+if 'client_info' not in st.session_state:
+    st.session_state.client_info = {"nama": "User", "paket": "V-LITE"}
 import google.generativeai as genai
 
 # --- TAMBAHKAN INI DI SINI (Mulai Baris 4) ---
