@@ -52,7 +52,7 @@ with st.sidebar:
 # --- 5. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi Digitizing Trust, Eliminating Leakage")
+    st.header("Digitizing Trust, Eliminating Leakage")
     # MENAMPILKAN FOTO FOUNDER DI HALAMAN VISI & MISI
     col_img, col_txt = st.columns([1, 2])
     with col_img:
@@ -141,8 +141,8 @@ elif menu == "Admin Control Center":
         # Status admin
         if "admin_logged_in" not in st.session_state:
 
-    # 2. Kotak Login
-    if not st.session_state.admin_logged_in:
+        # 2. Kotak Login
+        if not st.session_state.admin_logged_in:
         admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         if admin_input == "w1nbju8282":
             st.session_state.admin_logged_in = True
@@ -150,7 +150,7 @@ elif menu == "Admin Control Center":
         elif admin_input != "":
             st.error("Password Salah. Akses Ditolak.")
     
-    # 3. Dashboard Admin (Muncul setelah password benar)
+        # 3. Dashboard Admin (Muncul setelah password benar)
     else:
         col_header, col_logout = st.columns([5, 1])
         with col_header:
