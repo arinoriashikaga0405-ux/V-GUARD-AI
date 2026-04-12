@@ -3,21 +3,19 @@ import os
 import google.generativeai as genai
 
 # --- 1. KONFIGURASI ENGINE & SECURITY ---
-try:
-    _API_SECURE_KEY = st.secrets["GEMINI_API_KEY"]
-except:
-    # Jika belum diatur di Cloud, gunakan variabel environment internal
-    _API_SECURE_KEY = os.getenv("API_KEY_SECURE")
+# --- 1. KEAMANAN TINGKAT TINGGI (API KEY GONE) ---
+# Menggunakan st.secrets: Kunci tidak ditulis di sini, tapi dipanggil dari sistem
+if "GEMINI_API_KEY" in st.secrets:
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+else:
+    # Jika Bapak jalankan lokal, sistem akan mencari di file secrets.toml
+    st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
 
-if _API_SECURE_KEY:
-    genai.configure(api_key=_API_SECURE_KEY)
-
-# --- 2. LOGIKA V-GUARD (PENYARING BIAYA API) ---
-generation_config = {"temperature": 0.2, "max_output_tokens": 50}
 model_vguard = genai.GenerativeModel(
     model_name='gemini-1.5-flash',
-    generation_config=generation_config,
-    system_instruction="Analisa transaksi. Jika Fraud/Anomali balas 'ALERT'. Jika normal balas 'PASS'."
+    generation_config={"temperature": 0.2, "max_output_tokens": 50},
+    system_instruction="Analisa transaksi: ALERT jika fraud, PASS jika aman."
+)
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
