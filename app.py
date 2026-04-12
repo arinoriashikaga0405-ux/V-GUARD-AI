@@ -244,7 +244,10 @@ elif menu == "Admin Control Center":
 # --- FOOTER PINDAH KE PALING BAWAH SEKALI ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-st.subheader("🤖 V-Guard AI Squad Agents") 
+st.write("") # Spasi kosong
+st.write("")
+st.markdown("---")
+st.subheader("🤖 V-Guard AI Squad Agents")
 sq1.metric("V-LITE AI", "Active")
 sq2.metric("V-PRO AI", "Active")
 sq3.metric("V-SIGHT AI", "Standby")
