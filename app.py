@@ -142,7 +142,7 @@ elif menu == "Portal Klien":
                 file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
 
                 if st.button("Kirim Registrasi"):
-                    if n_pelanggan and file_ktp:
+                if n_pelanggan and file_ktp:
                         try:
                             from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
