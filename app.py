@@ -323,7 +323,7 @@ with t2:
                with st.container(border=True):
                    st.markdown("### 👁️ YOLO / Vision AI")
                    st.write("'Mata' digital yang memantau pergerakan visual.")
- with t9:
+with t9:
            st.header("💎 V-ULTRA: Enterprise Command Center")
            col_u1, col_u2 = st.columns(2)
            with col_u1:
