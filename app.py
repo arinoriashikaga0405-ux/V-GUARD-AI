@@ -108,7 +108,7 @@ elif menu == "Produk & Layanan":
         "V-SIGHT": ["Gudang & Toko", "7,5 Jt", "3,5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"],
         "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"]
          }
-    for i, (name, details) in enumerate(packages.items()):
+       for i, (name, details) in enumerate(packages.items()):
         with [c1, c2, c3, c4][i]:
             with st.container(border=True):
                  st.markdown(f"### 📦 {name}")
