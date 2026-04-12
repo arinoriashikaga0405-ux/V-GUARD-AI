@@ -20,7 +20,7 @@ model_gemini = genai.GenerativeModel(
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-if "auth_status" not in st.session_state:
+ if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
 
 if "db_klien" not in st.session_state:
