@@ -234,7 +234,7 @@ elif menu == "Admin Control Center":
         with c_api3:
             st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
             
-        st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
+        st.progress(0.12, text="Penggunaan Kuota API Cloud: 20%")
         st.divider()
 
         if st.button("Log Out Admin"):
@@ -257,26 +257,40 @@ if st.button("Log Out Admin"):
 # --- FOOTER PALING BAWAH ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-       with sq1:
-           with st.container(border=True):
-               st.markdown("🕵️ **Agent: Sentinel**")
-               st.caption("Status: Memantau Fraud")
-               st.write("Menganalisa anomali transaksi kasir.")
-       with sq2:
-           with st.container(border=True):
-               st.markdown("💰 **Agent: Auditor**")
-               st.caption("Status: VCS Sync")
-               st.write("Sinkronisasi mutasi bank & laporan POS.")
-       with sq3:
-           with st.container(border=True):
-               st.markdown("📦 **Agent: Stocker**")
-               st.caption("Status: Visual Check")
-               st.write("Cek stok fisik gudang melalui CCTV AI.")
-       with sq4:
-           with st.container(border=True):
-               st.markdown("📄 **Agent: Invoicer**")
-               st.caption("Status: H-7 Ready")
-               st.write("Otomatisasi pengiriman invoice klien.")
+       t.markdown("#### 🤖 Status V-Guard AI Agent Squad")
+        sq1, sq2, sq3, sq4 = st.columns(4)
+        
+        with sq1:
+            with st.container(border=True):
+                st.markdown("🕵️ **Agent: Sentinel**")
+                st.caption("Status: Memantau Fraud")
+                st.write("Menganalisa anomali transaksi kasir.")
+        
+        with sq2:
+            with st.container(border=True):
+                st.markdown("💰 **Agent: Auditor**")
+                st.caption("Status: VCS Sync")
+                st.write("Sinkronisasi mutasi bank & laporan POS.")
+        
+        with sq3:
+            with st.container(border=True):
+                st.markdown("📦 **Agent: Stocker**")
+                st.caption("Status: Visual Check")
+                st.write("Cek stok fisik gudang melalui CCTV AI.")
+        
+        with sq4:
+            with st.container(border=True):
+                st.markdown("📑 **Agent: Invoicer**")
+                st.caption("Status: H-7 Ready")
+                st.write("Otomatisasi pengiriman invoice klien.")
+
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
+
+# --- FOOTER PALING BAWAH (SEJAJAR PINGGIR KIRI) ---
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
  
        st.divider()
        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
