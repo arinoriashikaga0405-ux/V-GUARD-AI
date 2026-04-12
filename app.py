@@ -47,7 +47,7 @@ if 'admin_logged_in' not in st.session_state:
     /* Tambahkan gaya desain lainnya di sini */
     </style>
 """, unsafe_allow_html=True)
-    .# --- COPY & PASTE INI UNTUK MENGGANTI BARIS 44 ---
+    # Hapus baris 44 sampai 55, lalu ganti dengan ini:
 st.markdown("""
     <style>
     .stButton>button { 
@@ -59,9 +59,6 @@ st.markdown("""
         height: 45px; 
     }
     </style>
-""", unsafe_allow_html=True)
-    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
-</style>
 """, unsafe_allow_html=True)
 
 # --- 3. LOGIKA V-GUARD (PENYARING BIAYA API 20%) ---
