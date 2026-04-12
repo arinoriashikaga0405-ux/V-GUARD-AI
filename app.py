@@ -197,14 +197,13 @@ elif menu == "Portal Klien":
                 st.warning("Visual Cashier Audit: Monitoring Real-Time Stock...")
 
         # --- TAB 4: FORENSIC (Khusus ENTERPRISE) ---
-        if "🧠 Forensic AI" in tabs_list:
-            idx = tabs_list.index("🧠 Forensic AI")
-            with my_tabs[idx]:
-                st.subheader("V-ENTERPRISE: Core Brain Forensic")
-                st.code("Otonom Audit: Analisis Data Historis 1 Tahun Aktif.")
+        if "🧠 Core Brain Forensic" in tabs:
+            with active_tabs[tabs.index("🧠 Core Brain Forensic")]:
+                st.subheader("The Core Brain: Forensic AI Analysis")
+                st.code("Running Forensic Audit 1 Year Data... 100% Complete")
                 st.write("Dedicated Server IP: 10.0.88.24")
 
-# --- BARIS INI HARUS MEPET KE KIRI (SEJAJAR DENGAN MENU LAIN) ---
+# --- MENU ADMIN (PASTIKAN MEPET KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
     
@@ -212,35 +211,51 @@ elif menu == "Admin Control Center":
         st.session_state.admin_logged_in = False
 
     if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Admin Password", type="password", key="admin_pass")
-        if st.button("Log In Admin"):
+        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_main")
+        if st.button("Masuk Admin", key="btn_login_admin"):
             if admin_input == "w1nbju8282":
                 st.session_state.admin_logged_in = True
                 st.rerun()
             else:
-                st.error("Akses Ditolak.")
+                st.error("Password Salah.")
     else:
-        st.success("Mode Eksekutif Aktif")
-        
-        # --- BAGIAN RINGKASAN EKSEKUTIF (PINDAH KE SINI AGAR TIDAK ERROR) ---
-        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
-        
-        # Panel Biaya API & Efisiensi
-        c_api1, c_api2, c_api3 = st.columns(3)
-        with c_api1:
-            st.metric("Anggaran API Bulanan", "Rp 10.000.000")
-        with c_api2:
-            st.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)")
-        with c_api3:
-            st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
-            
-        st.progress(0.12, text="Penggunaan Kuota API Cloud: 20%")
-        st.divider()
-
-        if st.button("Log Out Admin"):
+        st.success("Akses Eksekutif Aktif")
+        # Tombol Log Out hanya ada di sini, di dalam menu Admin
+        if st.button("Keluar dari Panel Admin", key="btn_logout_admin"):
             st.session_state.admin_logged_in = False
             st.rerun()
 
+# --- PANEL GLOBAL: V-GUARD AI SQUAD AGENTS (MUNCUL DI SEMUA MENU) ---
+st.write("")
+st.markdown("---")
+st.markdown("### 🤖 V-Guard AI Squad Agents")
+
+# Membuat kolom baru agar tidak NameError
+col_sq1, col_sq2, col_sq3, col_sq4 = st.columns(4)
+
+with col_sq1:
+    with st.container(border=True):
+        st.markdown("**Agent: Sentinel**")
+        st.caption("Status: Active")
+
+with col_sq2:
+    with st.container(border=True):
+        st.markdown("**Agent: Auditor**")
+        st.caption("Status: Active")
+
+with col_sq3:
+    with st.container(border=True):
+        st.markdown("**Agent: Stocker**")
+        st.caption("Status: Standby")
+
+with col_sq4:
+    with st.container(border=True):
+        st.markdown("**Agent: Invoicer**")
+        st.caption("Status: Active")
+
+# --- FOOTER PALING AKHIR ---
+st.write("")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 # --- FOOTER PINDAH KE PALING BAWAH SEKALI ---
 st.write("") 
 st.markdown("---")
