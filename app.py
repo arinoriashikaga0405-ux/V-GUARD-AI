@@ -121,7 +121,17 @@ if not st.session_state.auth_status:
                 n_usaha = st.text_input("Nama Usaha")
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
-                # Data biaya dari tabel eksekutif
+                if not st.session_state.auth_status:
+        c_reg, c_log = st.columns(2)
+        
+        with c_reg: 
+            st.subheader("📝 Form Order Baru")
+            with st.container(border=True):
+                n_pelanggan = st.text_input("Nama Pelanggan")
+                n_usaha = st.text_input("Nama Usaha")
+                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                
+                # Data biaya sesuai tabel eksekutif
                 biaya_data = {
                     "V-LITE": {"pasang": "750 rb", "bulan": "375 rb"},
                     "V-PRO": {"pasang": "1.5 Jt", "bulan": "850 rb"},
@@ -137,13 +147,14 @@ if not st.session_state.auth_status:
                 if st.button("Kirim Registrasi", use_container_width=True):
                     if n_pelanggan and file_ktp:
                         st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                        st.success("Data Terkirim!")
+                        st.success("Data Terkirim! Silakan Login di sebelah kanan.")
 
-        with c_log: # Baris 192 - Pastikan sejajar dengan 'with c_reg' di atas
+        with c_log: 
             st.subheader("🔓 Akses User Aktif")
             with st.container(border=True):
                 user_in = st.text_input("ID Klien / Email")
                 pass_in = st.text_input("Token Akses", type="password")
+                
                 if st.button("Connect to Cloud Server", use_container_width=True):
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
@@ -154,7 +165,6 @@ if not st.session_state.auth_status:
                         st.rerun()
                     else:
                         st.error("User tidak ditemukan atau Token salah.")
-
     # 3. TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
 
         # Masukkan kode "CLOUD DASHBOARD INTERFACE" yang ada grafik dan CCTV tadi di sini
