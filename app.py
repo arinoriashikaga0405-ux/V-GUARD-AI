@@ -20,15 +20,18 @@ model_gemini = genai.GenerativeModel(
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+# --- DI BARIS 23 (RATA KIRI) ---
 if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
+
+if "admin_auth" not in st.session_state:
+    st.session_state.admin_auth = False
 
 if "db_klien" not in st.session_state:
     st.session_state.db_klien = {}
 
 if "client_data" not in st.session_state:
     st.session_state.client_data = {"nama": "User", "paket": "None"}
-st.markdown("""
 <style>
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
