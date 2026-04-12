@@ -261,7 +261,7 @@ st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", 
 st.markdown("#### 🤖 Status V-Guard AI Agent Squad")
 sq1, sq2, sq3, sq4 = st.columns(4)
         
-        with sq1:
+with sq1:
             with st.container(border=True):
                 st.markdown("🕵️ **Agent: Sentinel**")
                 st.caption("Status: Memantau Fraud")
