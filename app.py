@@ -250,9 +250,9 @@ sq2.metric("V-PRO AI", "Active")
 sq3.metric("V-SIGHT AI", "Standby")
 sq4.metric("CORE AI", "Active")
 
-        if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
+if st.button("Log Out Admin"):
+    st.session_state.admin_logged_in = False
+    st.rerun()
 
 # --- FOOTER PALING BAWAH ---
 st.markdown("---")
