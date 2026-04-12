@@ -21,7 +21,7 @@ model_gemini = genai.GenerativeModel(
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 # --- DI BARIS 23 (RATA KIRI) ---
-# --- DI BARIS 23 (WAJIB ADA DI SINI) ---
+
 if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
 
@@ -123,38 +123,42 @@ elif menu == "ROI Kerugian Klien":
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
 # --- MULAI DARI BARIS 114 (Hapus yang lama, ganti dengan ini) ---
+
 elif menu == "Portal Klien":
-    # Baris 145 sekarang aman karena auth_status sudah dibuat di atas
+    # Baris 145 dijamin aman karena variabel sudah dibuat di baris 23 tadi
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            n_pelanggan = st.text_input("Nama Pelanggan")
-            p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT"])
-            if st.button("Kirim Registrasi"):
-                from streamlit_gsheets import GSheetsConnection
-                conn = st.connection("gsheets", type=GSheetsConnection)
-                # ... proses simpan ke sheets ...
-                st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                st.success("Registrasi Terkirim!")
-
+            with st.container(border=True):
+                n_pelanggan = st.text_input("Nama Pelanggan")
+                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT"])
+                
+                if st.button("Kirim Registrasi"):
+                    if n_pelanggan:
+                        # Langsung simpan ke memori & cloud
+                        st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
+                        st.success(f"✅ {n_pelanggan} Terdaftar!")
+        
         with c_log:
             st.subheader("🔓 Akses User Aktif")
-            user_in = st.text_input("ID Klien")
-            pass_in = st.text_input("Token", type="password")
-            if st.button("Connect to Cloud"):
-                if user_in in st.session_state.db_klien and pass_in == "vguard2026":
-                    st.session_state.auth_status = True
-                    st.rerun()
-                else:
-                    st.error("Gagal!")
+            with st.container(border=True):
+                user_in = st.text_input("ID Klien / Nama")
+                pass_in = st.text_input("Token", type="password")
+                
+                if st.button("Connect to Cloud"):
+                    if user_in in st.session_state.db_klien and pass_in == "vguard2026":
+                        st.session_state.auth_status = True
+                        st.session_state.client_data = {"nama": user_in, "paket": st.session_state.db_klien[user_in]["paket"]}
+                        st.rerun()
+                    else:
+                        st.error("Gagal! User tidak dikenal.")
     else:
         st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
         if st.button("🔌 Disconnect"):
             st.session_state.auth_status = False
             st.rerun()
-
 elif menu == "Admin Control Center":
     st.header("🛡️ V-Guard Admin Panel")
     if not st.session_state.admin_auth:
