@@ -293,7 +293,7 @@ if st.button("Log Out Admin"):
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
  
-       st.divider()
+st.divider()
        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
