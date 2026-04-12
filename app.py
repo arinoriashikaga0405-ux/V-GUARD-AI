@@ -168,72 +168,71 @@ elif menu == "Admin Control Center":
                 st.session_state.admin_logged_in = False
                 st.rerun()
         
-        st.divider()
-        st.markdown("### 📊 Business Intelligence & API Strategy")
-        c_api1, c_api2, c_api3 = st.columns(3)
-        with c_api1: st.metric("Budget API", "Rp 10.000.000")
-        with c_api2: st.metric("Used API", "Rp 1.850.000", delta="-7.5% (Safe)")
-        with c_api3: st.metric("Efficiency Rate", "92%")
+        sst.divider()
+        st.markdown("### 📊 Business Intelligence & API Strategy (Capped 20%)")
         
-        # Progress bar menunjukkan penggunaan 18% (Target < 20% terpenuhi)
-        st.progress(0.18, text="Cloud API Traffic: 18.5% (Hanya Data Anomali)")
+        # --- LOGIKA KEUANGAN V-GUARD (20% DARI OMSET KOTOR) ---
+        omset_kotor = 50000000  # Contoh Simulasi Omset Rp 50 Jt
+        plafon_api = omset_kotor * 0.20  # Limit 20% = Rp 10 Jt
+        biaya_api_realitas = 1850000  # Penggunaan saat ini
+        
+        c_api1, c_api2, c_api3 = st.columns(3)
+        with c_api1: 
+            st.metric("Budget API (20% Omset)", f"Rp {plafon_api:,.0f}")
+        with c_api2: 
+            st.metric("Used API (Current)", f"Rp {biaya_api_realitas:,.0f}", delta="-11.5% (Safe)")
+        with c_api3: 
+            st.metric("Efficiency Rate", "92.5%")
+        
+        # Indikator visual efisiensi
+        persentase_pakai = (biaya_api_realitas / plafon_api)
+        st.progress(persentase_pakai, text=f"Konsumsi API: {persentase_pakai*100:.1f}% dari Plafon Omset")
         
         st.divider()
 
-        # --- AI SQUAD AGENTS SECTION ---
-        st.subheader("🤖 V-Guard AI Squad Agents (24/7 Monitoring)")
+        # --- AI SQUAD AGENTS DENGAN FILTER OTONOM ---
+        st.subheader("🤖 V-Guard AI Squad Agents (Filtering Mode)")
+        st.caption("Sistem secara otomatis memfilter data lokal. Hanya Fraud/Anomali yang dikirim ke Cloud AI.")
+        
         sq1, sq2, sq3, sq4 = st.columns(4)
         with sq1:
             with st.container(border=True):
-                st.markdown("🕵️ **Sentinel**")
-                st.caption("Status: **Filtering Fraud**")
+                st.markdown("🕵️ **Agent: Sentinel**")
+                st.info("Status: **Filtering**")
+                st.write("Mencegah data normal masuk Cloud (Hemat Biaya).")
         with sq2:
             with st.container(border=True):
-                st.markdown("💰 **Auditor**")
-                st.caption("Status: **VCS Syncing**")
+                st.markdown("💰 **Agent: Auditor**")
+                st.info("Status: **VCS Sync**")
+                st.write("Rekonsiliasi mutasi bank secara otonom.")
         with sq3:
             with st.container(border=True):
-                st.markdown("📦 **Stocker**")
-                st.caption("Status: **Visual Check**")
+                st.markdown("📦 **Agent: Stocker**")
+                st.info("Status: **Vision Scan**")
+                st.write("Audit visual stok fisik via CCTV AI.")
         with sq4:
             with st.container(border=True):
-                st.markdown("📄 **Invoicer**")
-                st.caption("Status: **Billing H-7**")
+                st.markdown("📄 **Agent: Invoicer**")
+                st.info("Status: **Auto Bill**")
+                st.write("Pengiriman invoice otomatis H-7.")
 
         st.divider()
 
-        # --- 10 TABS STRATEGIS ---
-        t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
+        # --- 10 TABS STRATEGIS V-GUARD ---
+        tabs = st.tabs([
             "👤 Aktivasi", "🖥️ Ekosistem AI", "📈 ROI Tracker", 
             "🛡️ Security", "💾 Backup", "🌐 Jaringan", 
             "📊 Analytics", "📩 Marketing", "💎 V-ULTRA", "⚙️ Config"
         ])
-
-        with t1:
-            st.subheader("📝 Aktivasi Akun Klien")
+        
+        with tabs[0]: # Tab Aktivasi
+            st.subheader("📝 Manajemen Aktivasi Klien")
             with st.container(border=True):
-                col1, col2 = st.columns(2)
-                with col1: st.text_input("Username Klien", key="adm_usr")
-                with col2: st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"], key="adm_pkt")
-                if st.button("Aktifkan Akun"):
-                    st.success("Status: Akun Active & License Key Sent!")
-
-        with t2:
-            st.subheader("🖥️ Global AI Ecosystem")
-            st.write("Gemini 1.5 Flash (Filtered Mode): **Operational**")
-            st.info("Logika Filter: Kirim ke Cloud jika Transaksi > 5jt / Anomali Log.")
-
-        with t3:
-            st.subheader("📈 ROI & Penyelamatan Aset")
-            st.metric("Total Asset Saved", "Rp 1.250.000.000", delta="35% vs Last Year")
-
-        with t9:
-            st.header("💎 V-ULTRA: Core Brain")
-            st.markdown("Enterprise Command Center - Full Integrity Protection.")
-
-        # Tab lainnya (t4-t8, t10) tetap sebagai placeholder fungsional
-        with t10:
-            st.write("System v2.1 | API Filter Threshold: 20%")
+                c1, c2 = st.columns(2)
+                with c1: st.text_input("Username Klien", key="adm_usr_final")
+                with c2: st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"], key="adm_pkt_final")
+                if st.button("Aktifkan Akun & Lisensi"):
+                    st.success("Lisensi Aktif. Dashboard Klien Siap!")
 
 # --- FOOTER ---
 st.markdown("---")
