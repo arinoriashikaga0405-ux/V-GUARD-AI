@@ -19,15 +19,15 @@ model_gemini = genai.GenerativeModel(
 )
 
 # --- 2. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+    st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 # --- DI BARIS 23 ---
-if "auth_status" not in st.session_state:
+if "auth_status" not in st.session_state: 
     st.session_state.auth_status = False
 
 if "client_info" not in st.session_state:
     st.session_state.client_info = None
-st.markdown("""
-<style>
+    st.markdown("""
+    <style>
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
     .stTextInput>div>div>input { background-color: #1e293b; color: white; }
@@ -54,7 +54,6 @@ with st.sidebar:
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Digitizing Trust, Eliminating Leakage")
-    
     # MENAMPILKAN FOTO FOUNDER DI HALAMAN VISI & MISI
     col_img, col_txt = st.columns([1, 2])
     with col_img:
@@ -73,15 +72,15 @@ if menu == "Visi & Misi":
         """, unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
-    st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
-    wa_number = "6282122190885"
-    c1, c2, c3, c4 = st.columns(4)
-    packages = {
+      st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
+      wa_number = "6282122190885"
+      c1, c2, c3, c4 = st.columns(4)
+      packages = {
         "V-LITE": ["Mikro / 1 Kasir", "750 rb", "350 brb", "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"],
         "V-PRO": ["Retail & Kafe", "1.5 Jt", "850 rb", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"],
         "V-SIGHT": ["Gudang & Toko", "7,5 Jt", "3,5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"],
         "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"]
-    }
+         }
     for i, (name, details) in enumerate(packages.items()):
         with [c1, c2, c3, c4][i]:
             with st.container(border=True):
