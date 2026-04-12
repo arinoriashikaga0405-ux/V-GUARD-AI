@@ -111,19 +111,24 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-if not st.session_state.auth_status:
+elif menu == "Portal Klien":
+    st.header("Portal Klien V-Guard AI")
+
+    # --- 1. INISIALISASI (WAJIB ADA AGAR TIDAK ERROR) ---
+    if "auth_status" not in st.session_state:
+        st.session_state.auth_status = False
+    if "db_klien" not in st.session_state:
+        st.session_state.db_klien = {}
+    if "client_data" not in st.session_state:
+        st.session_state.client_data = {}
+
+    # --- 2. LOGIKA TAMPILAN ---
+    if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
         with c_reg: 
             st.subheader("📝 Form Order Baru")
-            with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan")
-                n_usaha = st.text_input("Nama Usaha")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                
-        # Baris 124: Pastikan ada titik dua (:) di ujung if
-if not st.session_state.auth_status:
-        # Baris 125: Harus lebih menjorok ke kanan dibanding baris 124
+            # ... sisa kode form order Anda ...
         c_reg, c_log = st.columns(2)
         
         with c_reg: 
