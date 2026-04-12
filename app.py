@@ -101,6 +101,17 @@ if menu == "Visi & Misi":
         Visi kami adalah menjadi standar global dalam " Eliminating Leakage ", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional saat ini.
         </div>
         """, unsafe_allow_html=True)
+
+
+elif menu == "ROI Kerugian Klien":
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
+
         
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
