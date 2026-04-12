@@ -107,7 +107,7 @@ if menu == "Visi & Misi":
 
 # --- BARIS 108 (RATA KIRI) ---
 elif menu == "Portal Klien":
-    st.header("🔑 Portal Klien V-Guard AI") # BARIS 92
+    st.header("🔑 Portal Klien V-Guard AI")
     
     # URL Cloud Excel
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
