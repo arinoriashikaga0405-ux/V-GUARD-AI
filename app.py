@@ -117,15 +117,13 @@ if menu == "Visi & Misi":
     st.markdown("---")
     st.subheader("📊 Tabel Perbandingan Eksekutif")
     st.markdown(f"""
-    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
-    | :--- | :---: | :---: | :---: | :---: |
-    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
-    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 750 rb | 1.5 Jt | 5 Jt | 15 Jt |
-    | **Biaya Langganan** | 375 rb | 850 rb | 3,5 Jt | 10 Jt |
-    """)
+    |# --- COPY & PASTE INI UNTUK MENAMPILKAN TABEL HARGA ---
+st.markdown("""
+| Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ULTRA |
+| :--- | :---: | :---: | :---: | :---: |
+| **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+| **Analisa Fraud AI** | Dasar | Menengah | Tinggi | Real-time |
+""", unsafe_allow_html=True)
 
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
