@@ -145,8 +145,8 @@ elif menu == "Admin Control Center":
         if not st.session_state.admin_logged_in:
         admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         if admin_input == "w1nbju8282":
-            st.session_state.admin_logged_in = True
-            st.rerun()
+             st.session_state.admin_logged_in = True
+             st.rerun()
         elif admin_input != "":
             st.error("Password Salah. Akses Ditolak.")
     
