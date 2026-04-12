@@ -112,7 +112,8 @@ elif menu == "Portal Klien":
     # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # --- PENGAMAN UTAMA (Gunakan .get agar tidak AttributeError) ---
+    # --- PERBAIKAN TOTAL DI SINI (Gunakan .get) ---
+    # Menggunakan .get mencegah AttributeError di baris 133/145
     if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
         
@@ -131,33 +132,31 @@ elif menu == "Portal Klien":
             u_token = st.text_input("Token Akses", type="password", key="log_token")
             
             if st.button("Masuk"):
-                # Contoh logika sederhana:
                 if u_id == "admin" and u_token == "123":
                     st.session_state.auth_status = True
                     st.rerun()
                 else:
                     st.error("ID atau Token salah.")
-            
     else:
-        # Tampilan jika sudah login (Dashboard Utama)
+        # Tampilan jika sudah login
         st.subheader("📊 Dashboard Utama")
         st.info(f"Selamat datang kembali di sistem V-Guard AI.")
         
-        # Tombol Logout (Baris 131-133)
-        f st.button("🔌 Logout"):
+        if st.button("🔌 Logout"):
             st.session_state.auth_status = False
             st.rerun()
 
 # --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
-    # Gunakan .get() juga di sini agar aman
+    
+    # Gunakan .get() agar tidak error meskipun variabel admin_logged_in belum ada
     if not st.session_state.get('admin_logged_in', False):
-       admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         
-       if admin_pwd == "w1nbju8282":
-           st.session_state.admin_logged_in = True
-           st.rerun()
+        if admin_pwd == "w1nbju8282":
+            st.session_state.admin_logged_in = True
+            st.rerun()
     else:
         st.success("Akses Eksekutif Aktif")
         if st.button("Log Out Admin"):
