@@ -116,26 +116,69 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-elif menu == "Portal Klien":
+eelif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
-    c_reg, c_log = st.columns(2)
-    with c_reg:
-        st.subheader("📝 Form Order Baru")
-        with st.container(border=True):
-            st.text_input("Nama Pelanggan")
-            st.text_input("Nama Usaha")
-            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.text_input("Harga Paket (Rp)")
-            st.file_uploader("Upload KTP")
-            st.button("Kirim Registrasi")
-    with c_log:
-        st.subheader("🔑 Akses User Aktif")
-        with st.container(border=True):
-            st.text_input("Username")
-            pw = st.text_input("Password", type="password")
-            if st.button("Masuk"):
-                if pw == "vguardklien2026": st.success("Selamat Datang!")
-                else: st.error("Password Salah.")
+    
+    # URL Google Sheets Bapak
+    url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
+
+    if not st.session_state.auth_status:
+        c_reg, c_log = st.columns(2)
+        
+        with c_reg:
+            st.subheader("📝 Registrasi & Order")
+            with st.container(border=True):
+                nama = st.text_input("Nama Pelanggan")
+                usaha = st.text_input("Nama Usaha")
+                paket = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                
+                if st.button("Kirim Registrasi"):
+                    try:
+                        from streamlit_gsheets import GSheetsConnection
+                        conn = st.connection("gsheets", type=GSheetsConnection)
+                        # Data dikirim ke Excel dengan status 'Waiting Activation'
+                        new_data = pd.DataFrame([{"Nama": nama, "Usaha": usaha, "Paket": paket, "Status": "Waiting Activation"}])
+                        conn.create(spreadsheet=url_cloud, data=new_data)
+                        st.success("✅ Terdaftar di Cloud! Silakan hubungi Admin untuk aktivasi.")
+                    except:
+                        st.error("Gagal koneksi ke Cloud Excel.")
+
+        with c_log:
+            st.subheader("🔑 Login Klien")
+            with st.container(border=True):
+                u_user = st.text_input("ID Klien (Nama)")
+                u_pass = st.text_input("Token / Password", type="password")
+                
+                if st.button("Connect to Dashboard"):
+                    try:
+                        from streamlit_gsheets import GSheetsConnection
+                        conn = st.connection("gsheets", type=GSheetsConnection)
+                        df_cloud = conn.read(spreadsheet=url_cloud)
+                        
+                        # Cek apakah User ada, Password 'vguardklien2026', dan Status 'Aktif'
+                        check = df_cloud[(df_cloud['Nama'] == u_user) & (df_cloud['Status'] == 'Aktif')]
+                        
+                        if not check.empty and u_pass == "vguardklien2026":
+                            st.session_state.auth_status = True
+                            st.session_state.client_info = check.iloc[0].to_dict()
+                            st.rerun()
+                        else:
+                            st.warning("Akses Ditolak. Pastikan status Akun 'Aktif' di Excel Admin.")
+                    except:
+                        st.error("Gagal verifikasi Cloud.")
+
+    # --- TAMPILAN DASHBOARD (JIKA SUDAH AKTIF) ---
+    else:
+        info = st.session_state.client_info
+        st.subheader(f"📊 Dashboard {info['Paket']} - {info['Nama']}")
+        st.write(f"Selamat Datang, data Anda terhubung langsung ke Cloud Server.")
+        
+        # Dashboard Spesifik Paket
+        st.info(f"Fitur Khusus {info['Paket']} telah diaktifkan oleh Admin.")
+        
+        if st.button("🔌 Logout"):
+            st.session_state.auth_status = False
+            st.rerun()
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
