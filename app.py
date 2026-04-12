@@ -122,7 +122,7 @@ if not st.session_state.auth_status:
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
         # Baris 124: Pastikan ada titik dua (:) di ujung if
-    if not st.session_state.auth_status:
+        if not st.session_state.auth_status:
         # Baris 125: Harus lebih menjorok ke kanan dibanding baris 124
         c_reg, c_log = st.columns(2)
         
