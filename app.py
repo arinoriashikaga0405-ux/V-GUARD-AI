@@ -130,7 +130,7 @@ eelif menu == "Portal Klien":
             with st.container(border=True):
                 nama = st.text_input("Nama Pelanggan")
                 usaha = st.text_input("Nama Usaha")
-                paket = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+                 paket = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
                 if st.button("Kirim Registrasi"):
                     try:
