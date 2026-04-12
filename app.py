@@ -112,7 +112,8 @@ elif menu == "Portal Klien":
     # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # --- PAKAI .get() AGAR TIDAK ERROR DI BARIS 133/145 ---
+    # --- PROTEKSI TOTAL: MENGGUNAKAN .GET AGAR TIDAK ATTRIBUTEERROR ---
+    # .get memastikan jika variabel belum ada, sistem memberi nilai False (Bukan Error)
     if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
         
@@ -138,7 +139,7 @@ elif menu == "Portal Klien":
                     st.error("ID atau Token salah.")
             
     else:
-        # Dashboard Klien
+        # Tampilan Dashboard Utama Klien (Baris 129 ke atas)
         st.subheader("📊 Dashboard Utama")
         st.info("Selamat datang kembali di sistem V-Guard AI.")
         
@@ -146,6 +147,29 @@ elif menu == "Portal Klien":
             st.session_state.auth_status = False
             st.rerun()
 
+# --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
+elif menu == "Admin Control Center":
+    st.header("🛡️ Admin Panel")
+    
+    # .get() di sini mencegah error di baris 145 saat Bapak buka menu lain
+    if not st.session_state.get('admin_logged_in', False):
+        admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        
+        if admin_pwd == "w1nbju8282":
+            st.session_state.admin_logged_in = True
+            st.rerun()
+        elif admin_pwd != "":
+            st.error("Password Salah. Akses Ditolak.")
+            
+    else:
+        st.success("Akses Eksekutif Aktif")
+        
+        # --- LANJUTKAN DENGAN FITUR AI SQUAD & MONITORING BIAYA BAPAK ---
+        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+        
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
 # --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
