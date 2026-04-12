@@ -105,15 +105,15 @@ if menu == "Visi & Misi":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-# --- BARIS 108 (WAJIB RATA KIRI) ---
-# --- BARIS 108 (WAJIB RATA KIRI) ---
+## --- BARIS 108 (WAJIB RATA KIRI) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
     # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # --- PROTEKSI TOTAL: MENGGUNAKAN .GET AGAR TIDAK ATTRIBUTEERROR ---
+    # --- PROTEKSI ANTI-ERROR (MENGGUNAKAN .GET) ---
+    # Jika variabel auth_status belum ada, sistem akan otomatis menganggap False (Jangan Error)
     if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
         
@@ -132,7 +132,7 @@ elif menu == "Portal Klien":
             u_token = st.text_input("Token Akses", type="password", key="log_token")
             
             if st.button("Masuk"):
-                # Login sederhana untuk testing
+                # Login sederhana
                 if u_id == "admin" and u_token == "123":
                     st.session_state.auth_status = True
                     st.rerun()
@@ -158,6 +158,17 @@ elif menu == "Admin Control Center":
         
         if admin_pwd == "w1nbju8282":
             st.session_state.admin_logged_in = True
+            st.rerun()
+        elif admin_pwd != "":
+            st.error("Password Salah. Akses Ditolak.")
+    else:
+        st.success("Akses Eksekutif Aktif")
+        
+        # --- MASUKKAN FITUR AI SQUAD BAPAK DI SINI ---
+        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+        
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
             st.rerun()
     else:
         st.success("Akses Eksekutif Aktif")
