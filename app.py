@@ -114,46 +114,41 @@ elif menu == "Produk & Layanan":
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
 # --- MULAI DARI BARIS 121 (Hapus semua ke bawah, ganti dengan ini) ---
-
 elif menu == "Portal Klien":
-    # 1. PROTEKSI INSTAN (Agar baris 145 tidak error lagi)
-    if "auth_status" not in st.session_state:
-        st.session_state.auth_status = False
-    if "db_klien" not in st.session_state:
-        st.session_state.db_klien = {}
+    st.header("Portal Klien V-Guard AI")
+    c_reg, c_log = st.columns(2)
+    with c_reg:
+        st.subheader("📝 Form Order Baru")
+        with st.container(border=True):
+            st.text_input("Nama Pelanggan")
+            st.text_input("Nama Usaha")
+            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.text_input("Harga Paket (Rp)")
+            st.file_uploader("Upload KTP")
+            st.button("Kirim Registrasi")
+    with c_log:
+        st.subheader("🔑 Akses User Aktif")
+        with st.container(border=True):
+            st.text_input("Username")
+            pw = st.text_input("Password", type="password")
+            if st.button("Masuk"):
+                if pw == "vguardklien2026": st.success("Selamat Datang!")
+                else: st.error("Password Salah.")
 
-    if not st.session_state.auth_status:
-        c_reg, c_log = st.columns(2)
-        
-        with c_reg:
-            st.subheader("📝 Form Order Baru")
-            with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan", key="reg_nama")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT"], key="reg_paket")
-                
-                if st.button("Kirim Registrasi"):
-                    if n_pelanggan:
-                        st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                        st.success(f"✅ {n_pelanggan} Terdaftar!")
-        
-        with c_log:
-            st.subheader("🔓 Akses User Aktif")
-            with st.container(border=True):
-                user_in = st.text_input("ID Klien", key="login_user")
-                pass_in = st.text_input("Token", type="password", key="login_pass")
-                
-                if st.button("Connect to Cloud"):
-                    if user_in in st.session_state.db_klien and pass_in == "vguard2026":
-                        st.session_state.auth_status = True
-                        st.session_state.client_data = {"nama": user_in}
-                        st.rerun()
-                    else:
-                        st.error("Gagal! Data tidak cocok.")
-    else:
-        st.header(f"👋 Halo, {st.session_state.client_data.get('nama', 'User')}!")
-        if st.button("🔌 Disconnect"):
-            st.session_state.auth_status = False
-            st.rerun()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 elif menu == "Admin Control Center":
     st.header("🛡️ V-Guard Admin Panel")
