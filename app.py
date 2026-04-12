@@ -39,8 +39,14 @@ if 'auth_status' not in st.session_state:
 
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
+    st.markdown("""
     <style>
-    .main { background-color: #0e1117; }
+    .stApp {
+        background-color: #0d1117;
+    }
+    /* Tambahkan gaya desain lainnya di sini */
+    </style>
+""", unsafe_allow_html=True)
     .# --- COPY & PASTE INI UNTUK MENGGANTI BARIS 44 ---
 st.markdown("""
     <style>
