@@ -205,7 +205,7 @@ else:
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 
-   elif menu == "Admin Control Center":
+elif menu == "Admin Control Center":
    st.header("🔒 Admin Control Center")
    
    # 1. Cek status login di session state
