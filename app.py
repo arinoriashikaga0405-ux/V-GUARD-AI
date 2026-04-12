@@ -112,12 +112,20 @@ elif menu == "ROI Kerugian Klien":
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
 elif menu == "Portal Klien":
-    st.header("Portal Klien V-Guard AI")
+    # --- INI WAJIB ADA DI BAGIAN ATAS KODE ---
+if "auth_status" not in st.session_state:
+    st.session_state.auth_status = False
 
-    # 1. INISIALISASI SESSION (Wajib agar tidak Error)
-    if "auth_status" not in st.session_state:
-        st.session_state.auth_status = False
-    if "db_klien" not in st.session_state:
+if "db_klien" not in st.session_state:
+    st.session_state.db_klien = {}
+
+if "client_data" not in st.session_state:
+    st.session_state.client_data = {"nama": "User"}
+# ----------------------------------------
+
+# Baru kemudian masuk ke kode yang error tadi:
+if not st.session_state.auth_status:
+    # ... isi form registrasi & login ...
         st.session_state.db_klien = {}
     if "client_data" not in st.session_state:
         st.session_state.client_data = {'nama': 'User'} # Default value agar tidak KeyError
