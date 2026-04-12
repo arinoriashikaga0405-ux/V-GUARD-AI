@@ -71,7 +71,7 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-elif menu == "Produk & Layanan":
+  elif menu == "Produk & Layanan":
       st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
       wa_number = "6282122190885"
       c1, c2, c3, c4 = st.columns(4)
@@ -84,10 +84,10 @@ elif menu == "Produk & Layanan":
     for i, (name, details) in enumerate(packages.items()):
         with [c1, c2, c3, c4][i]:
             with st.container(border=True):
-                st.markdown(f"### 📦 {name}")
-                st.markdown(f"- {details[3]}")
-                st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
-                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
+                 st.markdown(f"### 📦 {name}")
+                 st.markdown(f"- {details[3]}")
+                 st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
+                 st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
                 
     # 2. Tabel Perbandingan Eksekutif
     st.markdown("---")
