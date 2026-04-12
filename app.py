@@ -121,7 +121,9 @@ if not st.session_state.auth_status:
                 n_usaha = st.text_input("Nama Usaha")
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
-                if not st.session_state.auth_status:
+        # Baris 124: Pastikan ada titik dua (:) di ujung if
+    if not st.session_state.auth_status:
+        # Baris 125: Harus lebih menjorok ke kanan dibanding baris 124
         c_reg, c_log = st.columns(2)
         
         with c_reg: 
@@ -147,9 +149,9 @@ if not st.session_state.auth_status:
                 if st.button("Kirim Registrasi", use_container_width=True):
                     if n_pelanggan and file_ktp:
                         st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                        st.success("Data Terkirim! Silakan Login di sebelah kanan.")
+                        st.success("Data Terkirim! Silakan Login.")
 
-        with c_log: 
+        with c_log: # Sejajar dengan with c_reg
             st.subheader("🔓 Akses User Aktif")
             with st.container(border=True):
                 user_in = st.text_input("ID Klien / Email")
