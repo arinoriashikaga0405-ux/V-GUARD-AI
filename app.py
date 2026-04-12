@@ -129,8 +129,8 @@ elif menu == "Portal Klien":
         st.subheader("📊 Dashboard Utama") # Baris 129
         # Masukkan koding metric/grafik Bapak di sini
         if st.button("🔌 Logout"): # Baris 131
-            st.session_state.auth_status = False # Baris 132
-           st.rerun() # Baris 133
+             st.session_state.auth_status = False # Baris 132
+             st.rerun() # Baris 133
             
 # --- BARIS BERIKUTNYA (RATA KIRI) ---
 elif menu == "Admin Control Center":
