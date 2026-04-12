@@ -162,7 +162,7 @@ elif menu == "Admin Control Center":
             if st.button("Log Out"):
                 st.session_state.admin_logged_in = False
                 st.rerun()
-    st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+     st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
