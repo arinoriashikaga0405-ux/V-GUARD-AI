@@ -12,7 +12,7 @@ if 'client_info' not in st.session_state:
     st.session_state.client_info = {"nama": "User", "paket": "V-LITE"}
     
 # --- 1. KONFIGURASI ENGINE & SECURITY ---
-GEMINI_API_KEY = "AIzaSyAcEAe31MPleCbfJCXOn51I_DmdCU0tKrA"
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Konfigurasi Efisiensi Biaya API < 20%
