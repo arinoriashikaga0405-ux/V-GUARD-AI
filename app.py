@@ -105,60 +105,65 @@ if menu == "Visi & Misi":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-# --- BARIS 108 (RATA KIRI) ---
+# --- BARIS 108 (WAJIB RATA KIRI) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
-    # URL Cloud Excel
+    # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # LOGIKA AKSES (HARUS MENJOROK 4 SPASI KE DALAM)
+    # --- PENGAMAN UTAMA (Gunakan .get agar tidak AttributeError) ---
     if not st.session_state.get('auth_status', False):
-        c_reg, c_log = st.columns(2) # BARIS 117
+        c_reg, c_log = st.columns(2)
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            # Masukkan koding input (n_pelanggan, n_usaha, p_pilihan) di sini
+            n_pelanggan = st.text_input("Nama Pelanggan", key="reg_nama")
+            n_usaha = st.text_input("Nama Usaha", key="reg_usaha")
+            p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"], key="reg_paket")
             
+            if st.button("Kirim Registrasi"):
+                st.success("Data sedang diproses ke Cloud.")
+                
         with c_log:
             st.subheader("🔑 Login Dashboard")
-            # Masukkan koding login (u_id, u_token) di sini
+            u_id = st.text_input("ID Klien", key="log_id")
+            u_token = st.text_input("Token Akses", type="password", key="log_token")
+            
+            if st.button("Masuk"):
+                # Contoh logika sederhana:
+                if u_id == "admin" and u_token == "123":
+                    st.session_state.auth_status = True
+                    st.rerun()
+                else:
+                    st.error("ID atau Token salah.")
             
     else:
-        # Tampilan jika sudah login
-        st.subheader("📊 Dashboard Utama") # Baris 129
-        # Masukkan koding metric/grafik Bapak di sini
-        if st.button("🔌 Logout"): # Baris 131
-            st.session_state.auth_status = False # Baris 132
-            st.rerun() # Baris 133
-            
-# --- BARIS BERIKUTNYA (RATA KIRI) ---
+        # Tampilan jika sudah login (Dashboard Utama)
+        st.subheader("📊 Dashboard Utama")
+        st.info(f"Selamat datang kembali di sistem V-Guard AI.")
+        
+        # Tombol Logout (Baris 131-133)
+        if st.button("🔌 Logout"):
+            st.session_state.auth_status = False
+            st.rerun()
+
+# --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
-    # Pastikan kode Admin di sini masuk ke dalam (ada spasi)
-    if st.text_input("Admin Password", type="password") == "vguard-ceo":
-        st.write("Database Cloud Siap Dikelola.")
-        # Status admin
-        if "admin_logged_in" not in st.session_state:
-
-        # 2. Kotak Login
-        if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
-        if admin_input == "w1nbju8282":
-             st.session_state.admin_logged_in = True
-             st.rerun()
-        elif admin_input != "":
-            st.error("Password Salah. Akses Ditolak.")
     
-        # 3. Dashboard Admin (Muncul setelah password benar)
+    # Gunakan .get() juga di sini agar aman
+    if not st.session_state.get('admin_logged_in', False):
+        admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        
+        if admin_pwd == "w1nbju8282":
+            st.session_state.admin_logged_in = True
+            st.rerun()
     else:
-        col_header, col_logout = st.columns([5, 1])
-        with col_header:
-            st.success("Akses Eksekutif Aktif")
-        with col_logout:
-            if st.button("Log Out"):
-                st.session_state.admin_logged_in = False
-                st.rerun()
+        st.success("Akses Eksekutif Aktif")
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
 
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
