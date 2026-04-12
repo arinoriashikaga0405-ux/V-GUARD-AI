@@ -156,7 +156,7 @@ if not st.session_state.auth_status:
                         st.error("User tidak ditemukan atau Token salah.")
 
     # 3. TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
-                    else:
+
         # Masukkan kode "CLOUD DASHBOARD INTERFACE" yang ada grafik dan CCTV tadi di sini
         # (Kode Modul 1, Modul 2, dsb)
         st.subheader(f"Selamat Datang, {st.session_state.client_data['nama']}")
