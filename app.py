@@ -120,16 +120,6 @@ elif menu == "ROI Kerugian Klien":
 
 # --- MULAI DARI BARIS 114 (Hapus yang lama, ganti dengan ini) ---
 elif menu == "Portal Klien":
-    # 1. INISIALISASI MEMORI (Agar Tidak AttributeError)
-    # Ini harus ada di paling atas agar sistem mengenal variabel ini sebelum digunakan
-    if "auth_status" not in st.session_state:
-        st.session_state.auth_status = False
-    if "db_klien" not in st.session_state:
-        st.session_state.db_klien = {}
-    if "client_data" not in st.session_state:
-        st.session_state.client_data = {"nama": "User", "paket": "None"}
-
-    # 2. LOGIKA TAMPILAN
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
@@ -154,7 +144,6 @@ elif menu == "Portal Klien":
                 if st.button("Kirim Registrasi"):
                     if n_pelanggan and file_ktp:
                         try:
-                            # Koneksi ke Google Sheets Bapak
                             from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
                             
@@ -162,22 +151,16 @@ elif menu == "Portal Klien":
                                 "Nama Pelanggan": n_pelanggan,
                                 "Nama Usaha": n_usaha,
                                 "Paket": p_pilihan,
-                                "Biaya Pasang": biaya_data[p_pilihan]['pasang'],
-                                "Biaya Bulanan": biaya_data[p_pilihan]['bulan'],
                                 "Status": "Waiting for Payment"
                             }])
                             
-                            # Mengirim data ke URL Sheets Anda
-                            conn.create(
-                                spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit",
-                                data=new_row
-                            )
+                            # Kirim ke URL Sheets Anda
+                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
                             
-                            # Simpan di memori lokal agar bisa langsung login
                             st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                            st.success("✅ Berhasil! Data sudah masuk ke Google Sheets.")
+                            st.success("✅ Terkirim ke Cloud & Google Sheets!")
                         except Exception as e:
-                            st.error(f"Koneksi Gagal: {e}. Pastikan Google Sheets sudah 'Anyone with link can Editor'.")
+                            st.error(f"Gagal koneksi Sheets: {e}")
 
         with c_log:
             st.subheader("🔓 Akses User Aktif")
@@ -188,22 +171,15 @@ elif menu == "Portal Klien":
                 if st.button("Connect to Cloud Server"):
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
-                        st.session_state.client_data = {
-                            "nama": user_in, 
-                            "paket": st.session_state.db_klien[user_in]["paket"]
-                        }
+                        st.session_state.client_data = {"nama": user_in, "paket": st.session_state.db_klien[user_in]["paket"]}
                         st.rerun()
                     else:
-                        st.error("User tidak ditemukan atau Token salah.")
-
+                        st.error("User tidak ditemukan atau token salah.")
     else:
-        # Tampilan setelah login berhasil
-        st.header(f"👋 Selamat Datang, {st.session_state.client_data['nama']}!")
-        st.success(f"Paket Aktif: {st.session_state.client_data['paket']}")
+        st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
         if st.button("🔌 Disconnect"):
             st.session_state.auth_status = False
             st.rerun()
-        
 # --- SELESAI BLOK PORTAL KLIEN ---
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
