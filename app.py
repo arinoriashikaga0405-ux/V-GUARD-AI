@@ -119,14 +119,12 @@ elif menu == "Produk & Layanan":
 # 2. Tabel Perbandingan Eksekutif
 st.markdown("---")
 st.subheader("📊 Tabel Perbandingan Eksekutif")
-st.markdown(f"""
-|# --- COPY & PASTE INI UNTUK MENAMPILKAN TABEL HARGA ---
-st.markdown("""     
+st.markdown("""
 | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ULTRA |
 | :--- | :---: | :---: | :---: | :---: |
 | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
 | **Analisa Fraud AI** | Dasar | Menengah | Tinggi | Real-time |
-""", unsafe_allow_html=True)
+""")
 
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
