@@ -115,93 +115,98 @@ elif menu == "ROI Kerugian Klien":
        loss = omzet * (leak / 100)
        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
  
+# --- 1. MENU PORTAL KLIEN (DASHBOARD KLIEN LENGKAP) ---
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     
     if "klien_aktif" not in st.session_state:
         st.session_state.klien_aktif = False
-        st.session_state.paket_aktif = "V-PRO" # Default paket
+        st.session_state.paket_aktif = "V-PRO"
 
     if not st.session_state.klien_aktif:
         c_reg, c_log = st.columns(2)
         with c_reg:
-            st.subheader("📝 Form Order Baru")
+            st.subheader("📝 Registrasi Layanan")
             with st.container(border=True):
-                st.text_input("Nama Pelanggan")
-                st.text_input("Nama Usaha")
-                # Pilihan Paket sesuai Produk Bapak
-                st.session_state.paket_aktif = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                st.text_input("Harga Paket (Rp)")
-                st.file_uploader("Upload KTP")
-                st.button("Kirim Registrasi")
+                st.session_state.paket_aktif = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"], key="sel_paket")
+                st.text_input("Nama Usaha", key="usaha_name")
+                st.button("Kirim Registrasi", key="btn_reg_klien")
         
         with c_log:
-            st.subheader("🔑 Akses User Aktif")
+            st.subheader("🔑 Login Akses")
             with st.container(border=True):
-                st.text_input("Username")
-                pw = st.text_input("Password", type="password")
-                if st.button("Masuk"):
-                    if pw == "vguardklien2026": 
+                user_k = st.text_input("Username", key="user_klien")
+                pw_k = st.text_input("Password", type="password", key="pw_klien")
+                if st.button("Masuk ke Dashboard", key="btn_log_klien"):
+                    if pw_k == "vguardklien2026": 
                         st.session_state.klien_aktif = True
                         st.rerun()
-                    else: 
-                        st.error("Password Salah.")
+                    else:
+                        st.error("Password salah.")
     else:
-        # --- DASHBOARD DINAMIS SESUAI PRODUK ---
+        # --- TAMPILAN DASHBOARD KLIEN AKTIF ---
         p = st.session_state.paket_aktif
-        col_head, col_out = st.columns([5, 1])
-        col_head.subheader(f"🛡️ Dashboard Management - {p}")
-        if col_out.button("Keluar"):
+        col_title, col_logout = st.columns([4, 1])
+        col_title.subheader(f"🛡️ Management Dashboard - {p}")
+        if col_logout.button("Log Out", key="btn_logout_k_final"):
             st.session_state.klien_aktif = False
             st.rerun()
+
+        # Logika Tab berdasarkan Paket
+        list_tabs = ["📊 Ringkasan"]
+        if p in ["V-PRO", "V-SIGHT", "V-ENTERPRISE"]: list_tabs.append("💰 VCS Bank")
+        if p in ["V-SIGHT", "V-ENTERPRISE"]: list_tabs.append("👁️ Visual AI")
+        if p == "V-ENTERPRISE": list_tabs.append("🧠 Forensic AI")
+
+        tabs_klien = st.tabs(list_tabs)
         
-        # Logika Tab berdasarkan Fitur Produk Bapak
-        tabs_list = ["📊 Summary"]
-        if p in ["V-PRO", "V-SIGHT", "V-ENTERPRISE"]:
-            tabs_list.append("💰 VCS Bank Sync")
-        if p in ["V-SIGHT", "V-ENTERPRISE"]:
-            tabs_list.append("👁️ Visual AI")
-        if p == "V-ENTERPRISE":
-            tabs_list.append("🧠 Forensic AI")
-
-        my_tabs = st.tabs(tabs_list)
-
-        # 1. Tab Summary (Semua Paket: V-LITE, V-PRO, dll)
-        with my_tabs[0]:
-            st.markdown(f"### Performa {p}")
+        with tabs_klien[0]:
+            st.markdown(f"### Status Operasional {p}")
             c1, c2 = st.columns(2)
-            c1.metric("Omzet Harian", "Rp 12,500,000", delta="+5%")
-            c2.metric("Leakage Saved", "Rp 1,200,000", delta="Aman")
-            
-            st.markdown("**Log Fraud Detector Dasar**")
-            st.table([
-                {"Waktu": "10:15", "Tipe": "Void", "Nilai": "Rp 500,000", "Status": "⚠️ ALERT"},
-                {"Waktu": "12:05", "Tipe": "Normal", "Nilai": "Rp 75,000", "Status": "PASS"},
-            ])
-            if p == "V-LITE":
-                st.info("💡 Paket V-LITE: Laporan harian akan dikirim via WA/Email.")
+            c1.metric("Omzet Terpantau", "Rp 12,500,000", delta="+5%")
+            c2.metric("Kebocoran Dicegah", "Rp 1,200,000")
+            st.info(f"Sistem V-Guard {p} sedang memantau transaksi Anda secara real-time.")
 
-        # 2. Tab VCS (V-PRO ke atas)
-        if "💰 VCS Bank Sync" in tabs_list:
-            with my_tabs[tabs_list.index("💰 VCS Bank Sync")]:
-                st.subheader("VCS: Bank Statement Audit")
-                st.write("Sinkronisasi otomatis mutasi bank dengan laporan kasir.")
-                st.metric("Akurasi Dana", "100%", delta="Match Verified")
-                st.success("H-7 Auto-Invoice: System Ready")
+        if "💰 VCS Bank" in list_tabs:
+            with tabs_klien[list_tabs.index("💰 VCS Bank")]:
+                st.subheader("Integrasi Bank VCS")
+                st.write("Sinkronisasi otomatis mutasi bank dengan kasir.")
 
-        # 3. Tab Visual (V-SIGHT ke atas)
-        if "👁️ Visual AI" in tabs_list:
-            with my_tabs[tabs_list.index("👁️ Visual AI")]:
-                st.subheader("CCTV AI Behavior Analysis")
-                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", width=500)
-                st.warning("Visual Cashier Audit: Monitoring Real-Time Stock...")
+        if "👁️ Visual AI" in list_tabs:
+            with tabs_klien[list_tabs.index("👁️ Visual AI")]:
+                st.subheader("Analisis CCTV Vision AI")
+                st.write("Memantau pergerakan mencurigakan di area kasir/gudang.")
 
-        # --- TAB 4: FORENSIC (Khusus ENTERPRISE) ---
-        if "🧠 Core Brain Forensic" in tabs:
-            with active_tabs[tabs.index("🧠 Core Brain Forensic")]:
-                st.subheader("The Core Brain: Forensic AI Analysis")
-                st.code("Running Forensic Audit 1 Year Data... 100% Complete")
-                st.write("Dedicated Server IP: 10.0.88.24")
+# --- 2. MENU ADMIN CONTROL CENTER ---
+elif menu == "Admin Control Center":
+    st.header("🔒 Admin Control Center")
+    if "admin_logged_in" not in st.session_state:
+        st.session_state.admin_logged_in = False
+
+    if not st.session_state.admin_logged_in:
+        adm_pw = st.text_input("Admin Password", type="password", key="pw_admin_main")
+        if st.button("Login Admin", key="btn_admin_main"):
+            if adm_pw == "w1nbju8282":
+                st.session_state.admin_logged_in = True
+                st.rerun()
+    else:
+        st.success("Mode Eksekutif Aktif")
+        if st.button("Log Out Admin", key="btn_logout_adm_main"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
+        st.write("Selamat datang di panel kendali utama.")
+
+# --- 3. GLOBAL SQUAD AGENTS (MUNCUL DI SEMUA HALAMAN) ---
+st.write("")
+st.markdown("---")
+st.markdown("### 🤖 V-Guard AI Squad Status")
+sq_cols = st.columns(4)
+with sq_cols[0]: st.metric("Sentinel (LITE)", "Active")
+with sq_cols[1]: st.metric("Auditor (PRO)", "Active")
+with sq_cols[2]: st.metric("Stocker (SIGHT)", "Standby")
+with sq_cols[3]: st.metric("Invoicer (ULTRA)", "Active")
+
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 
 # --- MENU ADMIN (PASTIKAN MEPET KIRI) ---
 elif menu == "Admin Control Center":
