@@ -129,7 +129,7 @@ elif menu == "Portal Klien":
         c_reg, c_log = st.columns(2)
         
         with c_reg:
-         st.subheader("📝 Form Order Baru")
+          st.subheader("📝 Form Order Baru")
            with st.container(border=True):
                 n_pelanggan = st.text_input("Nama Pelanggan")
                 n_usaha = st.text_input("Nama Usaha")
