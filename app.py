@@ -98,7 +98,7 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-  elif menu == "Produk & Layanan":
+elif menu == "Produk & Layanan":
       st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
       wa_number = "6282122190885"
       c1, c2, c3, c4 = st.columns(4)
