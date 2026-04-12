@@ -342,7 +342,7 @@ else:
         with t7:
          st.subheader("💾 System Data Recovery & Backup")
 
-    if "db_klien" in st.session_state and st.session_state.db_klien:
+if "db_klien" in st.session_state and st.session_state.db_klien:
         import pandas as pd
         # Mengambil data dari memori pendaftaran portal
         df_backup = pd.DataFrame.from_dict(st.session_state.db_klien, orient='index')
