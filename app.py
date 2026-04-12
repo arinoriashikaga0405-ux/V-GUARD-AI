@@ -130,7 +130,7 @@ st.markdown("""
 st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
 # --- BARIS 108: MENU PORTAL KLIEN (PLUG & PLAY) ---
-elif menu == "Portal Klien":
+ elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
     if not st.session_state.get('auth_status', False):
