@@ -112,24 +112,16 @@ elif menu == "Produk & Layanan":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-    # --- MULAI DARI BARIS 121 (Hapus semua ke bawah, ganti dengan ini) ---
-
-    # --- LANJUTAN MENU (MULAI BARIS 116) ---
-
-elif menu == "Portal Klien":
+    elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     
-    # Inisialisasi Memori (Penting agar tidak error di menu lain)
-    if "auth_status" not in st.session_state:
-        st.session_state.auth_status = False
-
-    # JIKA BELUM LOGIN
+    # Cek Login
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
         with c_reg:
-           st.subheader("📝 Form Order Baru")
-           with st.container(border=True):
+            st.subheader("📝 Form Order Baru")
+            with st.container(border=True):
                 n_pelanggan = st.text_input("Nama Pelanggan")
                 n_usaha = st.text_input("Nama Usaha")
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
@@ -139,60 +131,35 @@ elif menu == "Portal Klien":
                         try:
                             from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
-                            # Simpan ke Excel Cloud dengan Status 'Pending'
+                            # Simpan ke Excel Cloud
                             new_row = pd.DataFrame([{"Nama": n_pelanggan, "Usaha": n_usaha, "Paket": p_pilihan, "Status": "Pending"}])
                             conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
-                            st.success("✅ Terdaftar! Silahkan bayar & tunggu aktivasi Admin.")
+                            st.success("✅ Terdaftar! Silahkan hubungi Admin untuk aktivasi.")
                         except:
-                            st.error("Koneksi Cloud Gagal.")
+                            st.error("Gagal koneksi Cloud.")
 
         with c_log:
             st.subheader("🔑 Akses User Aktif")
             with st.container(border=True):
                 u_login = st.text_input("Username")
                 p_login = st.text_input("Password", type="password")
-                
                 if st.button("Masuk"):
-                    # Di sini sistem akan cek ke Excel: Jika Status=='Aktif', baru boleh masuk
                     if p_login == "vguardklien2026":
                         st.session_state.auth_status = True
                         st.rerun()
-                    else:
-                        st.error("Akses Ditolak.")
-    
-    # JIKA SUDAH LOGIN (DASHBOARD KLIEN)
     else:
-        st.subheader("📊 Dashboard Utama Klien")
-        # Kode dashboard sesuai paket diletakkan di sini agar tidak bocor ke Visi & Misi
-        st.info("Selamat Datang! Akun Anda telah aktif melalui sinkronisasi Cloud.")
-        if st.button("🔌 Log Out"):
+        st.subheader("📊 Dashboard Dashboard Klien")
+        st.info("Akun Anda Aktif (Sinkronisasi Cloud Excel)")
+        if st.button("🔌 Logout"):
             st.session_state.auth_status = False
             st.rerun()
 
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
-    # Bagian ini hanya untuk Pak Erwin aktivasi klien & tarik Excel
+    # Bagian ini untuk Bapak mengubah status 'Pending' jadi 'Aktif' di Excel
     if st.text_input("Admin Key", type="password") == "vguard-ceo":
+        st.session_state.admin_auth = True
         st.write("Akses Database Diterima.")
-                st.error("Salah!")
-    else:
-        st.success("Selamat Datang, Founder.")
-        # Tombol Logout Admin
-        if st.button("🔒 Lock Admin"):
-            st.session_state.admin_auth = False
-            st.rerun()
-        
-        st.divider()
-        # Menampilkan Data dari Sheets
-        try:
-            from streamlit_gsheets import GSheetsConnection
-            conn = st.connection("gsheets", type=GSheetsConnection)
-            url_sheets = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
-            df = conn.read(spreadsheet=url_sheets)
-            st.dataframe(df)
-        except:
-            st.info("Menunggu data masuk...")
-
 # --- AKHIR KODE ---
             
             # Tombol Download untuk Arsip Bapak
