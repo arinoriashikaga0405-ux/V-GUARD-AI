@@ -106,14 +106,14 @@ if menu == "Visi & Misi":
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
 # --- BARIS 108 (WAJIB RATA KIRI) ---
+# --- BARIS 108 (WAJIB RATA KIRI) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
     # URL Cloud Excel Bapak
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # --- PERBAIKAN TOTAL DI SINI (Gunakan .get) ---
-    # Menggunakan .get mencegah AttributeError di baris 133/145
+    # --- PROTEKSI TOTAL: MENGGUNAKAN .GET AGAR TIDAK ATTRIBUTEERROR ---
     if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
         
@@ -132,6 +132,7 @@ elif menu == "Portal Klien":
             u_token = st.text_input("Token Akses", type="password", key="log_token")
             
             if st.button("Masuk"):
+                # Login sederhana untuk testing
                 if u_id == "admin" and u_token == "123":
                     st.session_state.auth_status = True
                     st.rerun()
@@ -139,9 +140,9 @@ elif menu == "Portal Klien":
                     st.error("ID atau Token salah.")
             
     else:
-        # Tampilan jika sudah login
+        # Tampilan jika sudah login (Dashboard Utama)
         st.subheader("📊 Dashboard Utama")
-        st.info(f"Selamat datang kembali di sistem V-Guard AI.")
+        st.info("Selamat datang kembali di sistem V-Guard AI.")
         
         if st.button("🔌 Logout"):
             st.session_state.auth_status = False
@@ -151,12 +152,22 @@ elif menu == "Portal Klien":
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
     
-    # Gunakan .get() agar tidak error meskipun variabel admin_logged_in belum ada
+    # Gunakan .get() agar baris 145 tidak crash lagi
     if not st.session_state.get('admin_logged_in', False):
         admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
         
         if admin_pwd == "w1nbju8282":
             st.session_state.admin_logged_in = True
+            st.rerun()
+    else:
+        st.success("Akses Eksekutif Aktif")
+        
+        # --- LANJUTKAN DENGAN DASHBOARD ADMIN BAPAK (AI SQUAD, DLL) ---
+        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+        
+        # Contoh tombol logout admin
+        if st.button("Log Out Admin"):
+            st.session_state.admin_logged_in = False
             st.rerun()
     else:
         st.success("Akses Eksekutif Aktif")
