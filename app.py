@@ -111,13 +111,19 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
+# Baris 114
 elif menu == "Portal Klien":
-    # --- INI WAJIB ADA DI BAGIAN ATAS KODE ---
-if "auth_status" not in st.session_state:
-    st.session_state.auth_status = False
+    # BARIS DI BAWAH INI WAJIB MENJOROK KE DALAM (4 SPASI)
+    if "auth_status" not in st.session_state:
+        st.session_state.auth_status = False
 
-if "db_klien" not in st.session_state:
-    st.session_state.db_klien = {}
+    if "db_klien" not in st.session_state:
+        st.session_state.db_klien = {}
+
+    if "client_data" not in st.session_state:
+        st.session_state.client_data = {"nama": "User"}
+        
+    # Lanjutkan kode Portal Klien di bawahnya...
 
 if "client_data" not in st.session_state:
     st.session_state.client_data = {"nama": "User"}
