@@ -22,48 +22,71 @@ with st.sidebar:
 
 # --- 4. LOGIKA MENU ---
 
-if menu == "Home":
-    st.header("🛡️ V-Guard AI Intelligence")
-    st.subheader("Digitizing Trust, Eliminating Leakage")
-    
-    st.markdown("---")
-    
-    # Bagian Visi & Misi
-    col_v, col_m = st.columns(2)
-    with col_v:
-        st.markdown("### 🎯 Visi")
-        st.write("Menjadi standar global dalam otomatisasi integritas bisnis melalui teknologi AI yang jujur, transparan, dan efisien.")
-    
-    with col_m:
-        st.markdown("### 🚀 Misi")
-        st.write("Menghilangkan kebocoran operasional secara real-time dan membangun kepercayaan digital bagi para pelaku usaha.")
+if menu == "Visi & Misi":
+    # 1. Header & Slogan Utama
+    st.markdown("""
+        <div style="text-align: center; padding: 20px;">
+            <h1 style="color: #white; margin-bottom: 0;">🛡️ V-Guard AI Intelligence</h1>
+            <h3 style="color: #238636; font-style: italic; font-weight: 400; margin-top: 5px;">
+                "Digitizing Trust, Eliminating Leakage"
+            </h3>
+        </div>
+        <hr style="border: 0.5px solid #30363d;">
+    """, unsafe_allow_html=True)
 
-    st.divider()
-
-    # Profil Founder di bawah Visi & Misi
-    col_profile1, col_profile2 = st.columns([1, 2])
+    # 2. Konten Utama (Foto & Narasi)
+    col_img, col_txt = st.columns([1, 2], gap="large")
     
-    with col_profile1:
-        # Menggunakan file erwin.jpg yang sudah Bapak siapkan
-        try:
-            st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO")
-        except:
-            st.warning("Foto 'erwin.jpg' belum ditemukan di folder GitHub. Pastikan nama file sudah benar.")
-        
-    with col_profile2:
-        st.subheader("Profil Founder")
+    with col_img:
+        if os.path.exists("erwin.jpg"):
+            # Bingkai foto agar terlihat lebih premium
+            st.markdown("""
+                <div style="border: 2px solid #238636; border-radius: 15px; padding: 5px;">
+            """, unsafe_allow_html=True)
+            st.image("erwin.jpg", use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+            st.markdown("""
+                <div style="text-align: center; margin-top: 10px;">
+                    <h4 style="margin-bottom: 0; color: white;">Erwin Sinaga</h4>
+                    <p style="color: #8892b0; font-size: 14px;">Founder & CEO V-Guard AI</p>
+                </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.info("File erwin.jpg tidak ditemukan.")
+
+    with col_txt:
+        # Narasi Profil & Visi dengan styling tipografi yang kuat
         st.markdown("""
-        **Erwin Sinaga** adalah Founder & CEO dari **V-Guard AI Intelligence**. 
-        Beliau membangun V-Guard dengan filosofi *"Digitizing Trust"*, di mana teknologi 
-        bukan sekadar alat, melainkan fondasi kepercayaan dalam setiap transaksi bisnis.
-        
-        Dengan fokus pada *Eliminating Leakage*, beliau merancang sistem yang mampu 
-        mendeteksi anomali secara otonom, memastikan setiap rupiah dan aset milik 
-        pengusaha terlindungi 24/7 tanpa beban biaya Cloud yang berlebihan.
-        
-        V-Guard adalah manifestasi dari pengalaman beliau dalam menyatukan 
-        strategi produk yang tajam dengan efisiensi teknologi masa depan.
-        """)
+            <div style="text-align: justify; line-height: 1.8; font-size: 17px; color: #e6f1ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <p>
+                <span style="font-size: 24px; color: #238636; font-weight: bold;">V-Guard AI Intelligence</span> lahir dari urgensi integritas finansial di era transformasi digital. 
+                Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade di industri perbankan dan manajemen aset, 
+                kami memahami bahwa celah terkecil dalam sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis.
+                </p>
+                
+                <p>
+                Misi utama kami adalah <b>mendigitalisasi kepercayaan (Digital Trust)</b> melalui pembuktian matematis dan audit cerdas 
+                 yang bekerja secara otonom 24 jam nonstop tanpa kompromi. Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung 
+                 pada pengawasan manusia yang memiliki keterbatasan, melainkan harus dibangun di atas fondasi teknologi AI yang presisi.
+                </p>
+                
+                <p style="background-color: #112240; padding: 15px; border-radius: 10px; border-left: 4px solid #238636;">
+                <i>"V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda."</i>
+                </p>
+                
+                <p>
+                Visi kami adalah menjadi standar global dalam <b>"Eliminating Leakage"</b>, di mana setiap pemilik bisnis—mulai dari UMKM hingga 
+                korporasi besar—dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. 
+                Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi 
+                teknologi yang melampaui standar audit konvensional.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # 3. Footer Tambahan
+    st.divider()
+    st.caption("Filosofi V-Guard AI: Integritas Matematis untuk Keberlanjutan Bisnis.")
 
     st.info("💡 Gunakan menu di samping untuk mengeksplorasi fitur Dashboard dan Portal Klien.")
 
