@@ -111,16 +111,17 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-with c_reg: 
+if not st.session_state.auth_status:
+        c_reg, c_log = st.columns(2)
+        
+        with c_reg: 
             st.subheader("📝 Form Order Baru")
             with st.container(border=True):
                 n_pelanggan = st.text_input("Nama Pelanggan")
                 n_usaha = st.text_input("Nama Usaha")
-                
-                # Dropdown Paket sesuai tabel terbaru
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
-                # --- DATA BIAYA BERDASARKAN TABEL EKSEKUTIF ---
+                # Data biaya dari tabel eksekutif
                 biaya_data = {
                     "V-LITE": {"pasang": "750 rb", "bulan": "375 rb"},
                     "V-PRO": {"pasang": "1.5 Jt", "bulan": "850 rb"},
@@ -128,73 +129,22 @@ with c_reg:
                     "V-ENTERPRISE": {"pasang": "15 Jt", "bulan": "10 Jt"}
                 }
                 
-                # Menampilkan rincian biaya yang harus dibayar klien di awal
-                st.warning(f"⚡ **Biaya Aktivasi (Pasang): Rp {biaya_data[p_pilihan]['pasang']}**")
-                st.info(f"📅 **Biaya Langganan: Rp {biaya_data[p_pilihan]['bulan']} / Bulan**")
+                st.warning(f"⚡ **Biaya Pasang: Rp {biaya_data[p_pilihan]['pasang']}**")
+                st.info(f"📅 **Biaya Bulanan: Rp {biaya_data[p_pilihan]['bulan']}**")
                 
-                st.caption("NB: Biaya pasang dibayarkan satu kali di awal aktivasi sistem.")
-                
-                # Fitur Upload KTP
-                file_ktp = st.file_uploader("Upload KTP Pemilik (JPG/PNG)", type=['jpg', 'jpeg', 'png'])
-                
-                if st.button("Kirim Registrasi", use_container_width=True):
-                    if n_pelanggan and file_ktp:
-                        # Menyimpan data lengkap ke database simulasi
-                        st.session_state.db_klien[n_pelanggan] = {
-                            "paket": p_pilihan,
-                            "tagihan_awal": biaya_data[p_pilihan]['pasang'],
-                            "status": "Waiting for Payment"
-                        }
-                        st.success(f"Registrasi {n_pelanggan} Berhasil! Data biaya telah tercatat.")
-                    else:
-                        st.error("Silakan lengkapi Nama dan Upload KTP.")
-                # --- FITUR HARGA OTOMATIS ---
-                harga_map = {
-                    "V-LITE": "Rp 500.000 / Bulan",
-                    "V-PRO": "Rp 1.500.000 / Bulan",
-                    "V-SIGHT": "Rp 3.000.000 / Bulan",
-                    "V-ENTERPRISE": "Hubungi Sales (Custom)"
-                }
-                st.info(f"💰 Harga Paket: **{harga_map[p_pilihan]}**")
-                
-                # --- FITUR UPLOAD KTP ---
-                file_ktp = st.file_uploader("Upload KTP (JPG/PNG)", type=['jpg', 'jpeg', 'png'])
+                file_ktp = st.file_uploader("Upload KTP", type=['jpg', 'jpeg', 'png'])
                 
                 if st.button("Kirim Registrasi", use_container_width=True):
                     if n_pelanggan and file_ktp:
                         st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                        st.success(f"Data {n_pelanggan} Terkirim!")
-                
-                # --- FITUR HARGA OTOMATIS ---
-                harga_map = {
-                    "V-LITE": "Rp 500.000 / Bulan",
-                    "V-PRO": "Rp 1.500.000 / Bulan",
-                    "V-SIGHT": "Rp 3.000.000 / Bulan",
-                    "V-ENTERPRISE": "Hubungi Sales (Custom)"
-                }
-                st.info(f"💰 Harga Paket: **{harga_map[p_pilihan]}**")
-                
-                # --- FITUR UPLOAD KTP ---
-                file_ktp = st.file_uploader("Upload KTP (JPG/PNG)", type=['jpg', 'jpeg', 'png'])
-                
-                if st.button("Kirim Registrasi", use_container_width=True):
-                    if n_pelanggan and file_ktp:
-                        # SIMPAN KE DATABASE SEMENTARA (Session State)
-                        st.session_state.db_klien[n_pelanggan] = {
-                            "paket": p_pilihan,
-                            "harga": harga_map[p_pilihan],
-                            "ktp_status": "Verified"
-                        }
-                        st.success(f"Data {n_pelanggan} Terkirim! Silakan Login di sebelah kanan.")
-                    else:
-                        st.error("Mohon lengkapi Nama dan Upload KTP Anda.")
-        
-        with c_log: # FITUR LOGIN OTOMATIS
+                        st.success("Data Terkirim!")
+
+        with c_log: # Baris 192 - Pastikan sejajar dengan 'with c_reg' di atas
             st.subheader("🔓 Akses User Aktif")
             with st.container(border=True):
                 user_in = st.text_input("ID Klien / Email")
                 pass_in = st.text_input("Token Akses", type="password")
-                if st.button("Connect to Cloud Server"):
+                if st.button("Connect to Cloud Server", use_container_width=True):
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
                         st.session_state.client_data = {
@@ -204,6 +154,7 @@ with c_reg:
                         st.rerun()
                     else:
                         st.error("User tidak ditemukan atau Token salah.")
+
     # 3. TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
     else:
         # Masukkan kode "CLOUD DASHBOARD INTERFACE" yang ada grafik dan CCTV tadi di sini
