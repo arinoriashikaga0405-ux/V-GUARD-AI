@@ -299,7 +299,7 @@ t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
     "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
 ])
  
-            with t1:
+with t1:
            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
            with st.container(border=True):
                col1, col2 = st.columns(2)
@@ -312,7 +312,7 @@ t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
                if st.button("Aktifkan Akun & Kirim Kredensial"):
                    st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
  
-       with t2:
+with t2:
            st.subheader("🌐 V-Guard Global AI Ecosystem")
            c1, c2 = st.columns(2)
            with c1:
@@ -323,8 +323,7 @@ t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
                with st.container(border=True):
                    st.markdown("### 👁️ YOLO / Vision AI")
                    st.write("'Mata' digital yang memantau pergerakan visual.")
- 
-       with t9:
+ with t9:
            st.header("💎 V-ULTRA: Enterprise Command Center")
            col_u1, col_u2 = st.columns(2)
            with col_u1:
