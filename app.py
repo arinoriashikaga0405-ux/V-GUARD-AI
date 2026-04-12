@@ -113,109 +113,82 @@ elif menu == "Produk & Layanan":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-elif menu == "ROI Kerugian Klien":
-    st.header("📊 Analisis Potensi Kerugian vs ROI")
-    col_a, col_b = st.columns(2)
-    with col_a:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
-        loss = omzet * (leak / 100)
-        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
-
-# --- MULAI DARI BARIS 114 (Hapus yang lama, ganti dengan ini) ---
+# --- MULAI DARI BARIS 121 (Hapus semua ke bawah, ganti dengan ini) ---
 
 elif menu == "Portal Klien":
-    # Baris 145 dijamin aman karena variabel sudah dibuat di baris 23 tadi
+    # 1. PROTEKSI INSTAN (Agar baris 145 tidak error lagi)
+    if "auth_status" not in st.session_state:
+        st.session_state.auth_status = False
+    if "db_klien" not in st.session_state:
+        st.session_state.db_klien = {}
+
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
             with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT"])
+                n_pelanggan = st.text_input("Nama Pelanggan", key="reg_nama")
+                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT"], key="reg_paket")
                 
                 if st.button("Kirim Registrasi"):
                     if n_pelanggan:
-                        # Langsung simpan ke memori & cloud
                         st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
                         st.success(f"✅ {n_pelanggan} Terdaftar!")
         
         with c_log:
             st.subheader("🔓 Akses User Aktif")
             with st.container(border=True):
-                user_in = st.text_input("ID Klien / Nama")
-                pass_in = st.text_input("Token", type="password")
+                user_in = st.text_input("ID Klien", key="login_user")
+                pass_in = st.text_input("Token", type="password", key="login_pass")
                 
                 if st.button("Connect to Cloud"):
                     if user_in in st.session_state.db_klien and pass_in == "vguard2026":
                         st.session_state.auth_status = True
-                        st.session_state.client_data = {"nama": user_in, "paket": st.session_state.db_klien[user_in]["paket"]}
+                        st.session_state.client_data = {"nama": user_in}
                         st.rerun()
                     else:
-                        st.error("Gagal! User tidak dikenal.")
+                        st.error("Gagal! Data tidak cocok.")
     else:
-        st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
+        st.header(f"👋 Halo, {st.session_state.client_data.get('nama', 'User')}!")
         if st.button("🔌 Disconnect"):
             st.session_state.auth_status = False
             st.rerun()
+
 elif menu == "Admin Control Center":
     st.header("🛡️ V-Guard Admin Panel")
+    
+    if "admin_auth" not in st.session_state:
+        st.session_state.admin_auth = False
+
     if not st.session_state.admin_auth:
-        ad_user = st.text_input("Admin User")
-        ad_pass = st.text_input("Admin Pass", type="password")
+        ad_user = st.text_input("Admin User", key="ad_user")
+        ad_pass = st.text_input("Admin Pass", type="password", key="ad_pass")
         if st.button("Unlock Admin"):
             if ad_user == "admin" and ad_pass == "vguard-ceo":
                 st.session_state.admin_auth = True
                 st.rerun()
+            else:
+                st.error("Salah!")
     else:
-        st.write("Selamat Datang, Founder.")
-        # ... kode tarik data excel bapak di sini ...
-        if st.button("🔒 Logout Admin"):
+        st.success("Selamat Datang, Founder.")
+        # Tombol Logout Admin
+        if st.button("🔒 Lock Admin"):
             st.session_state.admin_auth = False
             st.rerun()
-                            # --- LANJUTAN SETELAH PORTAL KLIEN (BARIS 151) ---
-
-elif menu == "Admin Control Center":
-    st.header("🛡️ V-Guard Admin Panel")
-
-    # 1. Inisialisasi status login admin
-    if "admin_auth" not in st.session_state:
-        st.session_state.admin_auth = False
-
-    # 2. Sistem Kunci (Login)
-    if not st.session_state.admin_auth:
-        with st.container(border=True):
-            st.subheader("🔐 Login Founder & Administrator")
-            ad_user = st.text_input("Username Admin", key="admin_user_login")
-            ad_pass = st.text_input("Password Admin", type="password", key="admin_pass_login")
-            
-            if st.button("Unlock Admin Access"):
-                # Username: admin | Password: vguard-ceo
-                if ad_user == "admin" and ad_pass == "vguard-ceo":
-                    st.session_state.admin_auth = True
-                    st.success("Akses Diterima, Pak Erwin!")
-                    st.rerun()
-                else:
-                    st.error("Akses Ditolak! Kredensial salah.")
-    else:
-        # 3. TAMPILAN ADMIN SETELAH LOGIN
-        st.info("Status: Terkoneksi sebagai Founder")
-        if st.button("🔒 Lock & Logout Admin"):
-            st.session_state.admin_auth = False
-            st.rerun()
-
+        
         st.divider()
-
-        # FITUR: MONITOR DATABASE GOOGLE SHEETS
+        # Menampilkan Data dari Sheets
         try:
             from streamlit_gsheets import GSheetsConnection
             conn = st.connection("gsheets", type=GSheetsConnection)
             url_sheets = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
-            df_admin = conn.read(spreadsheet=url_sheets)
-            
-            st.subheader("📊 Database Klien (Excel Cloud)")
-            st.dataframe(df_admin, use_container_width=True)
+            df = conn.read(spreadsheet=url_sheets)
+            st.dataframe(df)
+        except:
+            st.info("Menunggu data masuk...")
+
+# --- AKHIR KODE ---
             
             # Tombol Download untuk Arsip Bapak
             csv_admin = df_admin.to_csv(index=False).encode('utf-8')
