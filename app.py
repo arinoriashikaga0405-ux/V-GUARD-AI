@@ -125,15 +125,38 @@ elif menu == "Portal Klien":
         c_reg, c_log = st.columns(2)
         
         with c_reg: # FITUR PENDAFTARAN ANDA
+            with c_reg: # FITUR PENDAFTARAN OTOMATIS
             st.subheader("📝 Form Order Baru")
             with st.container(border=True):
                 n_pelanggan = st.text_input("Nama Pelanggan")
                 n_usaha = st.text_input("Nama Usaha")
+                
+                # Dropdown Paket
                 p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                if st.button("Kirim Registrasi"):
-                    # SIMPAN KE DATABASE SEMENTARA
-                    st.session_state.db_klien[n_pelanggan] = {"paket": p_pilihan}
-                    st.success(f"Data {n_pelanggan} Terkirim! Silakan Login di sebelah kanan.")
+                
+                # --- FITUR HARGA OTOMATIS ---
+                harga_map = {
+                    "V-LITE": "Rp 500.000 / Bulan",
+                    "V-PRO": "Rp 1.500.000 / Bulan",
+                    "V-SIGHT": "Rp 3.000.000 / Bulan",
+                    "V-ENTERPRISE": "Hubungi Sales (Custom)"
+                }
+                st.info(f"💰 Harga Paket: **{harga_map[p_pilihan]}**")
+                
+                # --- FITUR UPLOAD KTP ---
+                file_ktp = st.file_uploader("Upload KTP (JPG/PNG)", type=['jpg', 'jpeg', 'png'])
+                
+                if st.button("Kirim Registrasi", use_container_width=True):
+                    if n_pelanggan and file_ktp:
+                        # SIMPAN KE DATABASE SEMENTARA (Session State)
+                        st.session_state.db_klien[n_pelanggan] = {
+                            "paket": p_pilihan,
+                            "harga": harga_map[p_pilihan],
+                            "ktp_status": "Verified"
+                        }
+                        st.success(f"Data {n_pelanggan} Terkirim! Silakan Login di sebelah kanan.")
+                    else:
+                        st.error("Mohon lengkapi Nama dan Upload KTP Anda.")
         
         with c_log: # FITUR LOGIN OTOMATIS
             st.subheader("🔓 Akses User Aktif")
