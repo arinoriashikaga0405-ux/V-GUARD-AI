@@ -358,7 +358,7 @@ if "db_klien" in st.session_state and st.session_state.db_klien:
             file_name='vguard_backup_data.csv',
             mime='text/csv',
         )
-    else:
+else:
         st.info("Belum ada data pendaftaran baru yang bisa ditarik.")
 
 
