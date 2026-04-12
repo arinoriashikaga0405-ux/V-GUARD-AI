@@ -41,7 +41,19 @@ if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
     <style>
     .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
+    .# --- COPY & PASTE INI UNTUK MENGGANTI BARIS 44 ---
+st.markdown("""
+    <style>
+    .stButton>button { 
+        width: 100%; 
+        border-radius: 5px; 
+        background-color: #238636; 
+        color: white !important; 
+        font-weight: bold; 
+        height: 45px; 
+    }
+    </style>
+""", unsafe_allow_html=True)
     .stTextInput>div>div>input { background-color: #1e293b; color: white; }
 </style>
 """, unsafe_allow_html=True)
