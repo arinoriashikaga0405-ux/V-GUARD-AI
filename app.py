@@ -285,7 +285,7 @@ with sq4:
                 st.caption("Status: H-7 Ready")
                 st.write("Otomatisasi pengiriman invoice klien.")
 
-        if st.button("Log Out Admin"):
+ if st.button("Log Out Admin"):
             st.session_state.admin_logged_in = False
             st.rerun()
 
