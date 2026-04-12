@@ -196,47 +196,54 @@ elif menu == "Portal Klien":
                 st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", width=500)
                 st.warning("Visual Cashier Audit: Monitoring Real-Time Stock...")
 
-        # 4. Tab Forensic (Khusus V-ENTERPRISE)
+        # --- TAB 4: FORENSIC (Khusus ENTERPRISE) ---
         if "🧠 Forensic AI" in tabs_list:
-            with my_tabs[tabs_list.index("🧠 Forensic AI")]:
+            idx = tabs_list.index("🧠 Forensic AI")
+            with my_tabs[idx]:
                 st.subheader("V-ENTERPRISE: Core Brain Forensic")
-                st.code("Otonom Audit: Data 1 Tahun Terakhir Tersimpan Safe.")
+                st.code("Otonom Audit: Analisis Data Historis 1 Tahun Aktif.")
+                st.write("Dedicated Server IP: 10.0.88.24")
 
-# --- MENU ADMIN (LURUS DENGAN ELIF PORTAL KLIEN) ---
+# --- BARIS INI HARUS MEPET KE KIRI (SEJAJAR DENGAN MENU LAIN) ---
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
+    
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
 
     if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Admin Password", type="password")
-        if admin_input == "w1nbju8282":
-            st.session_state.admin_logged_in = True
-            st.rerun()
+        admin_input = st.text_input("Admin Password", type="password", key="admin_pass")
+        if st.button("Log In Admin"):
+            if admin_input == "w1nbju8282":
+                st.session_state.admin_logged_in = True
+                st.rerun()
+            else:
+                st.error("Akses Ditolak.")
     else:
-        st.success("Akses Admin Aktif")
+        st.success("Mode Eksekutif Aktif")
+        
+        # --- BAGIAN RINGKASAN EKSEKUTIF (PINDAH KE SINI AGAR TIDAK ERROR) ---
+        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+        
+        # Panel Biaya API & Efisiensi
+        c_api1, c_api2, c_api3 = st.columns(3)
+        with c_api1:
+            st.metric("Anggaran API Bulanan", "Rp 10.000.000")
+        with c_api2:
+            st.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)")
+        with c_api3:
+            st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
+            
+        st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
+        st.divider()
+
         if st.button("Log Out Admin"):
             st.session_state.admin_logged_in = False
             st.rerun()
 
-# FOOTER PALING BAWAH
+# --- FOOTER PINDAH KE PALING BAWAH SEKALI ---
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-
-st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
-       
-       # Panel Biaya API & Efisiensi
-       c_api1, c_api2, c_api3 = st.columns(3)
-       with c_api1:
-           st.metric("Anggaran API Bulanan", "Rp 10.000.000")
-       with c_api2:
-           st.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)", delta_color="normal")
-       with c_api3:
-           st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
-       
-       st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
-       st.divider()
-       
        st.subheader("🤖 V-Guard AI Squad Agents")
        sq1, sq2, sq3, sq4 = st.columns(4)
        with sq1:
