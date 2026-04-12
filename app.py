@@ -113,9 +113,9 @@ elif menu == "Produk & Layanan":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-# --- MULAI DARI BARIS 121 (Hapus semua ke bawah, ganti dengan ini) ---
+    # --- MULAI DARI BARIS 121 (Hapus semua ke bawah, ganti dengan ini) ---
 
-elif menu == "Portal Klien":
+    elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     
     # --- 1. INISIALISASI SESSION STATE ---
