@@ -111,6 +111,8 @@ elif menu == "ROI Kerugian Klien":
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+
 elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     c_reg, c_log = st.columns(2)
@@ -131,6 +133,8 @@ elif menu == "Portal Klien":
             if st.button("Masuk"):
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
                 else: st.error("Password Salah.")
+
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
