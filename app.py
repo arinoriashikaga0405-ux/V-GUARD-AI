@@ -127,7 +127,7 @@ st.markdown("""
 """)
 
     # 3. Footer Tambahan (Opsional)
-    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
+st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
 # --- BARIS 108: MENU PORTAL KLIEN (PLUG & PLAY) ---
 elif menu == "Portal Klien":
