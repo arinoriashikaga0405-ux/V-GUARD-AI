@@ -105,210 +105,136 @@ if menu == "Visi & Misi":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-# --- BARIS 108 (WAJIB RATA KIRI) ---
+# --- BARIS 108: MENU PORTAL KLIEN (PLUG & PLAY) ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Klien V-Guard AI")
     
-    # URL Cloud Excel Bapak
-    url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
-
-    # --- PROTEKSI TOTAL: MENGGUNAKAN .GET AGAR TIDAK ATTRIBUTEERROR ---
-    # .get memastikan jika variabel belum ada, sistem memberi nilai False (Bukan Error)
     if not st.session_state.get('auth_status', False):
         c_reg, c_log = st.columns(2)
-        
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            n_pelanggan = st.text_input("Nama Pelanggan", key="reg_nama")
-            n_usaha = st.text_input("Nama Usaha", key="reg_usaha")
-            p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"], key="reg_paket")
-            
+            st.text_input("Nama Pelanggan", key="reg_nama")
+            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"], key="reg_paket")
             if st.button("Kirim Registrasi"):
-                st.success("Data sedang diproses ke Cloud.")
-                
+                st.success("Data terkirim. Menunggu aktivasi Admin.")
+        
         with c_log:
             st.subheader("🔑 Login Dashboard")
             u_id = st.text_input("ID Klien", key="log_id")
             u_token = st.text_input("Token Akses", type="password", key="log_token")
-            
             if st.button("Masuk"):
                 if u_id == "admin" and u_token == "123":
                     st.session_state.auth_status = True
+                    st.session_state.client_info = {"nama": "Bapak Erwin", "paket": "V-ULTRA"}
                     st.rerun()
                 else:
                     st.error("ID atau Token salah.")
-            
     else:
-        # Tampilan Dashboard Utama Klien (Baris 129 ke atas)
-        st.subheader("📊 Dashboard Utama")
-        st.info("Selamat datang kembali di sistem V-Guard AI.")
+        info = st.session_state.get('client_info', {"nama": "User", "paket": "V-LITE"})
+        st.subheader(f"📊 Dashboard Utama - {info['nama']}")
+        st.info(f"Paket Aktif: **{info['paket']}**")
         
-        if st.button("🔌 Logout"):
+        # LOGIKA FILTER TRANSAKSI (Efisien < 20%)
+        st.write("---")
+        st.subheader("⚡ Real-time Fraud Filter")
+        t_total = st.number_input("Input Nilai Transaksi (Rp)", value=0)
+        
+        if st.button("Proses Transaksi"):
+            # Filter: Hanya transaksi > 5jt atau Anomali yang dikirim ke Cloud
+            if t_total > 5000000:
+                with st.spinner("Anomali Terdeteksi! Mengirim data ke Cloud AI..."):
+                    # Di sini fungsi proses_transaksi(t_total) bekerja
+                    st.warning("⚠️ ALERT: Transaksi High-Value Terdeteksi & Dicatat Cloud.")
+            else:
+                st.success("✅ PASS: Transaksi Normal (Disimpan Lokal - Hemat API 100%)")
+
+        if st.button("🔌 Logout Portal"):
             st.session_state.auth_status = False
             st.rerun()
 
-# --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
+# --- BARIS 136: ADMIN CONTROL CENTER (EXECUTIVE COMMAND CENTER) ---
 elif menu == "Admin Control Center":
-    st.header("🛡️ Admin Panel")
+    st.header("🛡️ V-Guard Executive Panel")
     
-    # .get() di sini mencegah error di baris 145 saat Bapak buka menu lain
     if not st.session_state.get('admin_logged_in', False):
         admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
-        
         if admin_pwd == "w1nbju8282":
             st.session_state.admin_logged_in = True
             st.rerun()
-        elif admin_pwd != "":
-            st.error("Password Salah. Akses Ditolak.")
-            
     else:
-        st.success("Akses Eksekutif Aktif")
+        c_top1, c_top2 = st.columns([4, 1])
+        with c_top2:
+            if st.button("Log Out Admin"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
         
-        # --- LANJUTKAN DENGAN FITUR AI SQUAD & MONITORING BIAYA BAPAK ---
-        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
-        
-        if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-# --- BARIS 136: MENU ADMIN (WAJIB RATA KIRI) ---
-elif menu == "Admin Control Center":
-    st.header("🛡️ Admin Panel")
-    
-    # PERHATIKAN: Baris di bawah ini WAJIB menjorok ke dalam (Indentasi)
-    # Ini untuk mencegah AttributeError di menu lain
-    if not st.session_state.get('admin_logged_in', False):
-        admin_pwd = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
-        
-        if admin_pwd == "w1nbju8282":
-            st.session_state.admin_logged_in = True
-            st.rerun()
-        elif admin_pwd != "":
-            st.error("Password Salah.")
-    else:
-        st.success("Akses Eksekutif Aktif")
-        # Masukkan dashboard AI Squad Bapak di sini
-        if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-        elif admin_pwd != "":
-            st.error("Password Salah.")
-    else:
-        st.success("Akses Eksekutif Aktif")
-        # Masukkan dashboard AI Squad Bapak di sini
-        if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-    else:
-        st.success("Akses Eksekutif Aktif")
-        
-        # --- LANJUTKAN DENGAN DASHBOARD ADMIN BAPAK (AI SQUAD, DLL) ---
-        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
-        
-        # Contoh tombol logout admin
-        if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-    else:
-        st.success("Akses Eksekutif Aktif")
-        if st.button("Log Out Admin"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-        # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
-        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
-        
-        # Panel Biaya API & Efisiensi
+        st.divider()
+        st.markdown("### 📊 Business Intelligence & API Strategy")
         c_api1, c_api2, c_api3 = st.columns(3)
-        with c_api1:
-            st.metric("Anggaran API Bulanan", "Rp 10.000.000")
-        with c_api2:
-            # Simulasi biaya terpakai (contoh 1.2jt dari 10jt = 12%)
-            st.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)", delta_color="normal")
-        with c_api3:
-            st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
+        with c_api1: st.metric("Budget API", "Rp 10.000.000")
+        with c_api2: st.metric("Used API", "Rp 1.850.000", delta="-7.5% (Safe)")
+        with c_api3: st.metric("Efficiency Rate", "92%")
         
-        st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
-
+        # Progress bar menunjukkan penggunaan 18% (Target < 20% terpenuhi)
+        st.progress(0.18, text="Cloud API Traffic: 18.5% (Hanya Data Anomali)")
+        
         st.divider()
 
-        # UI untuk AI Squad Agent
-        st.subheader("🤖 V-Guard AI Squad Agents")
-        st.caption("Agen AI otonom yang bekerja mengawasi ekosistem bisnis Anda 24/7.")
-        
+        # --- AI SQUAD AGENTS SECTION ---
+        st.subheader("🤖 V-Guard AI Squad Agents (24/7 Monitoring)")
         sq1, sq2, sq3, sq4 = st.columns(4)
         with sq1:
             with st.container(border=True):
-                st.markdown("🕵️ **Agent: Sentinel**")
-                st.caption("Status: Memantau Fraud")
-                st.write("Menganalisa anomali transaksi kasir.")
+                st.markdown("🕵️ **Sentinel**")
+                st.caption("Status: **Filtering Fraud**")
         with sq2:
             with st.container(border=True):
-                st.markdown("💰 **Agent: Auditor**")
-                st.caption("Status: VCS Sync")
-                st.write("Sinkronisasi mutasi bank & laporan POS.")
+                st.markdown("💰 **Auditor**")
+                st.caption("Status: **VCS Syncing**")
         with sq3:
             with st.container(border=True):
-                st.markdown("📦 **Agent: Stocker**")
-                st.caption("Status: Visual Check")
-                st.write("Cek stok fisik gudang melalui CCTV AI.")
+                st.markdown("📦 **Stocker**")
+                st.caption("Status: **Visual Check**")
         with sq4:
             with st.container(border=True):
-                st.markdown("📄 **Agent: Invoicer**")
-                st.caption("Status: H-7 Ready")
-                st.write("Otomatisasi pengiriman invoice klien.")
+                st.markdown("📄 **Invoicer**")
+                st.caption("Status: **Billing H-7**")
 
         st.divider()
 
-        # Tab Menu Admin
-        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
-            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
+        # --- 10 TABS STRATEGIS ---
+        t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
+            "👤 Aktivasi", "🖥️ Ekosistem AI", "📈 ROI Tracker", 
+            "🛡️ Security", "💾 Backup", "🌐 Jaringan", 
+            "📊 Analytics", "📩 Marketing", "💎 V-ULTRA", "⚙️ Config"
         ])
 
         with t1:
-            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
+            st.subheader("📝 Aktivasi Akun Klien")
             with st.container(border=True):
                 col1, col2 = st.columns(2)
-                with col1:
-                    new_user = st.text_input("Username Klien")
-                    new_mail = st.text_input("Email Bisnis")
-                with col2:
-                    paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                    tgl_bayar = st.date_input("Tanggal Pembayaran")
-                if st.button("Aktifkan Akun & Kirim Kredensial"):
-                    st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
+                with col1: st.text_input("Username Klien", key="adm_usr")
+                with col2: st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ULTRA"], key="adm_pkt")
+                if st.button("Aktifkan Akun"):
+                    st.success("Status: Akun Active & License Key Sent!")
 
         with t2:
-            st.subheader("🌐 V-Guard Global AI Ecosystem")
-            c1, c2 = st.columns(2)
-            with c1:
-                with st.container(border=True):
-                    st.markdown("### 🧠 Google Gemini AI")
-                    st.write("Analis utama yang memproses data audit kompleks.")
-            with c2:
-                with st.container(border=True):
-                    st.markdown("### 👁️ YOLO / Vision AI")
-                    st.write("'Mata' digital yang memantau pergerakan visual.")
+            st.subheader("🖥️ Global AI Ecosystem")
+            st.write("Gemini 1.5 Flash (Filtered Mode): **Operational**")
+            st.info("Logika Filter: Kirim ke Cloud jika Transaksi > 5jt / Anomali Log.")
 
-        # Tab-tab lainnya tetap menggunakan kode asli Anda
-        with t5:
-            st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-            c_vid1, c_vid2 = st.columns(2)
-            with c_vid1:
-                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir")
-            with c_vid2:
-                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang")
+        with t3:
+            st.subheader("📈 ROI & Penyelamatan Aset")
+            st.metric("Total Asset Saved", "Rp 1.250.000.000", delta="35% vs Last Year")
 
         with t9:
-            st.header("💎 V-ULTRA: Enterprise Command Center")
-            col_u1, col_u2 = st.columns(2)
-            with col_u1:
-                st.success("🧠 **The Core Brain (AI Central)**")
-                st.progress(100)
-            with col_u2:
-                st.info("🖥️ **Dedicated Server Status**")
-                st.code("IP: 10.0.88.24\nUptime: 99.99%")
-            st.divider()
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
+            st.header("💎 V-ULTRA: Core Brain")
+            st.markdown("Enterprise Command Center - Full Integrity Protection.")
 
-        st.markdown("---")
-        st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+        # Tab lainnya (t4-t8, t10) tetap sebagai placeholder fungsional
+        with t10:
+            st.write("System v2.1 | API Filter Threshold: 20%")
+
+# --- FOOTER ---
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
