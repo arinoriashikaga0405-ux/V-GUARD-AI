@@ -31,13 +31,14 @@ model_gemini = genai.GenerativeModel(
 )
 
 # --- 2. KONFIGURASI HALAMAN ---
-    st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-# --- DI BARIS 23 ---
-if "auth_status" not in st.session_state:
+  # PASTIKAN SEMUA BARIS DI BAWAH INI MENPEL KE KIRI (TIDAK ADA SPASI)
+st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+
+if 'auth_status' not in st.session_state:
     st.session_state.auth_status = False
-if "client_info" not in st.session_state:
-    st.session_state.client_info = None
-    st.markdown("""
+
+if 'admin_logged_in' not in st.session_state:
+    st.session_state.admin_logged_in = False
     <style>
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
