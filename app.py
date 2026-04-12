@@ -321,24 +321,32 @@ elif menu == "Portal Klien":
          st.subheader("💾 System Data Recovery & Backup")
 
 if "db_klien" in st.session_state and st.session_state.db_klien:
-        import pandas as pd
-        # Mengambil data dari memori pendaftaran portal
-        df_backup = pd.DataFrame.from_dict(st.session_state.db_klien, orient='index')
+# --- BAGIAN MENU BACKUP (Sync ke Google Sheets) ---
+        st.subheader("💾 System Data Recovery & Backup")
         
-        st.write("Daftar Klien Terdeteksi di Memori:")
-        st.dataframe(df_backup)
-        
-        # Fitur untuk Admin menarik data dalam format CSV
-        csv = df_backup.to_csv().encode('utf-8')
-        st.download_button(
-            label="📥 Tarik Data Backup (.CSV/Excel)",
-            data=csv,
-            file_name='vguard_backup_data.csv',
-            mime='text/csv',
-        )
-else:
-        st.info("Belum ada data pendaftaran baru yang bisa ditarik.")
-
-
-        st.markdown("---")
-        st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+        try:
+            from streamlit_gsheets import GSheetsConnection
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            
+            # Membaca data langsung dari Cloud Google Sheets
+            url_sheets = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
+            df_backup = conn.read(spreadsheet=url_sheets)
+            
+            if not df_backup.empty:
+                st.write("✅ Database Klien Terdeteksi di Cloud:")
+                st.dataframe(df_backup, use_container_width=True)
+                
+                # Fitur Download untuk Admin
+                csv = df_backup.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Tarik Data Backup (.CSV/Excel)",
+                    data=csv,
+                    file_name='vguard_backup_database.csv',
+                    mime='text/csv',
+                )
+            else:
+                st.info("Database di Google Sheets masih kosong.")
+                
+        except Exception as e:
+            st.error(f"Gagal sinkronisasi Cloud: {e}")
+            st.info("Pastikan Anda sudah melakukan registrasi pertama di Portal Klien.")
