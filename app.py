@@ -20,18 +20,8 @@ model_gemini = genai.GenerativeModel(
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-# --- DI BARIS 23 (RATA KIRI) ---
 
-# --- BARIS 23 ---
-if "auth_status" not in st.session_state:
-    st.session_state.auth_status = False
-if "admin_auth" not in st.session_state:
-    st.session_state.admin_auth = False
-if "db_klien" not in st.session_state:
-    st.session_state.db_klien = {}
-
-if "client_data" not in st.session_state:
-    st.session_state.client_data = {"nama": "User", "paket": "None"}
+st.markdown("""
 <style>
     .main { background-color: #0e1117; }
     .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
@@ -112,94 +102,62 @@ elif menu == "Produk & Layanan":
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-    elif menu == "Portal Klien":
-    st.header("Portal Klien V-Guard AI")
-    
-    # Cek Login
-    if not st.session_state.auth_status:
-        c_reg, c_log = st.columns(2)
-        
-        with c_reg:
-            st.subheader("📝 Form Order Baru")
-            with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan")
-                n_usaha = st.text_input("Nama Usaha")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                
-                if st.button("Kirim Registrasi"):
-                    if n_pelanggan:
-                        try:
-                            from streamlit_gsheets import GSheetsConnection
-                            conn = st.connection("gsheets", type=GSheetsConnection)
-                            # Simpan ke Excel Cloud
-                            new_row = pd.DataFrame([{"Nama": n_pelanggan, "Usaha": n_usaha, "Paket": p_pilihan, "Status": "Pending"}])
-                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
-                            st.success("✅ Terdaftar! Silahkan hubungi Admin untuk aktivasi.")
-                        except:
-                            st.error("Gagal koneksi Cloud.")
+elif menu == "ROI Kerugian Klien":
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-        with c_log:
-            st.subheader("🔑 Akses User Aktif")
-            with st.container(border=True):
-                u_login = st.text_input("Username")
-                p_login = st.text_input("Password", type="password")
-                if st.button("Masuk"):
-                    if p_login == "vguardklien2026":
-                        st.session_state.auth_status = True
-                        st.rerun()
-    else:
-        st.subheader("📊 Dashboard Dashboard Klien")
-        st.info("Akun Anda Aktif (Sinkronisasi Cloud Excel)")
-        if st.button("🔌 Logout"):
-            st.session_state.auth_status = False
-            st.rerun()
+elif menu == "Portal Klien":
+    st.header("Portal Klien V-Guard AI")
+    c_reg, c_log = st.columns(2)
+    with c_reg:
+        st.subheader("📝 Form Order Baru")
+        with st.container(border=True):
+            st.text_input("Nama Pelanggan")
+            st.text_input("Nama Usaha")
+            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.text_input("Harga Paket (Rp)")
+            st.file_uploader("Upload KTP")
+            st.button("Kirim Registrasi")
+    with c_log:
+        st.subheader("🔑 Akses User Aktif")
+        with st.container(border=True):
+            st.text_input("Username")
+            pw = st.text_input("Password", type="password")
+            if st.button("Masuk"):
+                if pw == "vguardklien2026": st.success("Selamat Datang!")
+                else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🛡️ Admin Panel")
-    # Bagian ini untuk Bapak mengubah status 'Pending' jadi 'Aktif' di Excel
-    if st.text_input("Admin Key", type="password") == "vguard-ceo":
-        st.session_state.admin_auth = True
-        st.write("Akses Database Diterima.")
-# --- AKHIR KODE ---
-            
-            # Tombol Download untuk Arsip Bapak
-            csv_admin = df_admin.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="📥 Export Full Database (CSV/Excel)",
-                data=csv_admin,
-                file_name='vguard_database_full.csv',
-                mime='text/csv',
-            )
-        except:
-            st.warning("Belum ada data pendaftaran yang tersinkronisasi.")
+    st.header("🔒 Admin Control Center")
 
-# --- FOOTER APLIKASI (AKHIR FILE) ---
-st.sidebar.markdown("---")
-st.sidebar.caption("V-Guard AI Intelligence © 2026")
-        with c_log:
-            st.subheader("🔓 Akses User Aktif")
-            with st.container(border=True):
-                user_in = st.text_input("ID Klien / Email")
-                pass_in = st.text_input("Token Akses", type="password")
+    # 1. Cek status login di session state
+    if "admin_logged_in" not in st.session_state:
+        st.session_state.admin_logged_in = False
 
-                if st.button("Connect to Cloud Server"):
-                    # Mengecek apakah user ada di memori pendaftaran tadi
-                    if user_in in st.session_state.db_klien and pass_in == "vguard2026":
-                        st.session_state.auth_status = True
-                        st.session_state.client_data = {
-                            "nama": user_in, 
-                            "paket": st.session_state.db_klien[user_in]["paket"]
-                        }
-                        st.rerun()
-                    else:
-                        st.error("User tidak ditemukan atau Token salah.")
-    else:
-        # Tampilan jika sudah login
-        st.header(f"👋 Halo, {st.session_state.client_data['nama']}!")
-        if st.button("🔌 Disconnect"):
-            st.session_state.auth_status = False
+    # 2. Kotak Login
+    if not st.session_state.admin_logged_in:
+        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        if admin_input == "w1nbju8282":
+            st.session_state.admin_logged_in = True
             st.rerun()
-# --- SELESAI BLOK PORTAL KLIEN ---
+        elif admin_input != "":
+            st.error("Password Salah. Akses Ditolak.")
+    
+    # 3. Dashboard Admin (Muncul setelah password benar)
+    else:
+        col_header, col_logout = st.columns([5, 1])
+        with col_header:
+            st.success("Akses Eksekutif Aktif")
+        with col_logout:
+            if st.button("Log Out"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
         
@@ -220,8 +178,8 @@ st.sidebar.caption("V-Guard AI Intelligence © 2026")
         # UI untuk AI Squad Agent
         st.subheader("🤖 V-Guard AI Squad Agents")
         st.caption("Agen AI otonom yang bekerja mengawasi ekosistem bisnis Anda 24/7.")
-        # --- BARIS 181: UPDATE KE 5 KOLOM ---
-        sq1, sq2, sq3, sq4, sq5 = st.columns(5)
+        
+        sq1, sq2, sq3, sq4 = st.columns(4)
         with sq1:
             with st.container(border=True):
                 st.markdown("🕵️ **Agent: Sentinel**")
@@ -231,7 +189,7 @@ st.sidebar.caption("V-Guard AI Intelligence © 2026")
             with st.container(border=True):
                 st.markdown("💰 **Agent: Auditor**")
                 st.caption("Status: VCS Sync")
-                st.write("Sinkronisasi mutasi bank & laporan POS.")elif menu == "Admin Control Center
+                st.write("Sinkronisasi mutasi bank & laporan POS.")
         with sq3:
             with st.container(border=True):
                 st.markdown("📦 **Agent: Stocker**")
@@ -242,55 +200,15 @@ st.sidebar.caption("V-Guard AI Intelligence © 2026")
                 st.markdown("📄 **Agent: Invoicer**")
                 st.caption("Status: H-7 Ready")
                 st.write("Otomatisasi pengiriman invoice klien.")
-        # TAMBAHAN AGENT BARU
-        with sq5:
-            with st.container(border=True):
-                st.markdown("💬 **Agent: Social-24**")
-                st.caption("Status: Social Media Chat")
-                st.write("Lead Gen & Support 24/7.")
 
         st.divider()
 
-        # --- BARIS 207: UPDATE KE 10 TAB ---
-        t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = st.tabs([
-            "👤 Aktivasi Klien", 
-            "🖥️ Ekosistem AI", 
-            "💬 AI Chat Agent", 
-            "⚙️ Pengaturan", 
-            "📊 Laporan", 
-            "🛡️ Keamanan", 
-            "💾 Backup", 
-            "🌐 Jaringan", 
-            "📈 Performa", 
-            "💎 V-ULTRA"
+        # Tab Menu Admin
+        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
+            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
+            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
         ])
 
-        # --- TAB 3: MODUL CHAT AGENT (Sisipkan di antara t2 dan t4) ---
-        with t3:
-            st.subheader("📱 AI Social Media Chat Agent (FB, IG, WA, TikTok)")
-            st.info("Agen ini aktif 24/7 untuk merespons prospek dan membantu klien di platform sosial.")
-            
-            c_chat1, c_chat2 = st.columns(2)
-            with c_chat1:
-                with st.container(border=True):
-                    st.markdown("### 📊 Statistik Chat 24 Jam")
-                    st.metric("Pesan Terjawab", "142", delta="+24 Prospek Baru")
-                    st.metric("Avg. Response Time", "1.2 Detik", delta="Instan")
-            
-            with c_chat2:
-                with st.container(border=True):
-                    st.markdown("### 🛠️ Konfigurasi Agent")
-                    st.toggle("Aktifkan Auto-Closing (Penjualan)", value=True)
-                    st.toggle("Aktifkan Integrasi WhatsApp Cloud API", value=True)
-                    st.selectbox("Tone Bicara AI", ["Profesional & Tegas", "Ramah & Solutif", "Formal (Perbankan)"])
-            
-            st.divider()
-            st.write("📑 **Log Chat Terbaru (Lead Terdeteksi):**")
-            st.code("""
-[10:15] Lead: 'Pak, tertarik paket V-PRO untuk kafe saya.'
-[10:15] AI: 'Halo! V-PRO sangat cocok untuk kafe. Fitur VCS kami akan mengaudit mutasi bank Anda...'
-[10:16] AI: 'Data terkirim ke CRM. Menunggu follow up tim sales.'
-            """)
         with t1:
             st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
             with st.container(border=True):
@@ -336,36 +254,6 @@ st.sidebar.caption("V-Guard AI Intelligence © 2026")
                 st.code("IP: 10.0.88.24\nUptime: 99.99%")
             st.divider()
             st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-        with t7:
-         st.subheader("💾 System Data Recovery & Backup")
 
-if "db_klien" in st.session_state and st.session_state.db_klien:
-# --- BAGIAN MENU BACKUP (Sync ke Google Sheets) ---
-        st.subheader("💾 System Data Recovery & Backup")
-        
-        try:
-            from streamlit_gsheets import GSheetsConnection
-            conn = st.connection("gsheets", type=GSheetsConnection)
-            
-            # Membaca data langsung dari Cloud Google Sheets
-            url_sheets = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
-            df_backup = conn.read(spreadsheet=url_sheets)
-            
-            if not df_backup.empty:
-                st.write("✅ Database Klien Terdeteksi di Cloud:")
-                st.dataframe(df_backup, use_container_width=True)
-                
-                # Fitur Download untuk Admin
-                csv = df_backup.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label="📥 Tarik Data Backup (.CSV/Excel)",
-                    data=csv,
-                    file_name='vguard_backup_database.csv',
-                    mime='text/csv',
-                )
-            else:
-                st.info("Database di Google Sheets masih kosong.")
-                
-        except Exception as e:
-            st.error(f"Gagal sinkronisasi Cloud: {e}")
-            st.info("Pastikan Anda sudah melakukan registrasi pertama di Portal Klien.")
+        st.markdown("---")
+        st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
