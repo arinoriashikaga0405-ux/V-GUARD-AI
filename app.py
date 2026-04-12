@@ -279,7 +279,7 @@ with sq3:
                 st.caption("Status: Visual Check")
                 st.write("Cek stok fisik gudang melalui CCTV AI.")
         
- with sq4:
+with sq4:
             with st.container(border=True):
                 st.markdown("📑 **Agent: Invoicer**")
                 st.caption("Status: H-7 Ready")
