@@ -12,10 +12,12 @@ except Exception:
     st.stop()
 
 # Konfigurasi Efisiensi Biaya API < 20%
-generation_config = {
-   "temperature": 0.2,
-   "max_output_tokens": 50,
-}
+generation_config = {"temperature": 0.2, "max_output_tokens": 100}
+model_gemini = genai.GenerativeModel(
+    model_name='gemini-1.5-flash',
+    generation_config=generation_config,
+    system_instruction="Analisa transaksi. Jika Fraud/Anomali atau melebihi batas OPEX, balas 'ALERT'. Jika normal balas 'PASS'."
+)
 
 model_gemini = genai.GenerativeModel(
    model_name='gemini-1.5-flash',
