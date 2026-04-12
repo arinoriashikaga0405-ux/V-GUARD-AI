@@ -116,12 +116,12 @@ elif menu == "Produk & Layanan":
                  st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
                  st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
                 
-    # 2. Tabel Perbandingan Eksekutif
-    st.markdown("---")
-    st.subheader("📊 Tabel Perbandingan Eksekutif")
-    st.markdown(f"""
-    |# --- COPY & PASTE INI UNTUK MENAMPILKAN TABEL HARGA ---
-st.markdown("""
+# 2. Tabel Perbandingan Eksekutif
+st.markdown("---")
+st.subheader("📊 Tabel Perbandingan Eksekutif")
+st.markdown(f"""
+|# --- COPY & PASTE INI UNTUK MENAMPILKAN TABEL HARGA ---
+st.markdown("""     
 | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ULTRA |
 | :--- | :---: | :---: | :---: | :---: |
 | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
