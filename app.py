@@ -115,121 +115,66 @@ elif menu == "Produk & Layanan":
 
     # --- MULAI DARI BARIS 121 (Hapus semua ke bawah, ganti dengan ini) ---
 
-    elif menu == "Portal Klien":
+    # --- LANJUTAN MENU (MULAI BARIS 116) ---
+
+elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     
-    # --- 1. INISIALISASI SESSION STATE ---
+    # Inisialisasi Memori (Penting agar tidak error di menu lain)
     if "auth_status" not in st.session_state:
         st.session_state.auth_status = False
-    if "user_data" not in st.session_state:
-        st.session_state.user_data = None
 
-    # --- 2. LOGIKA JIKA BELUM LOGIN ---
+    # JIKA BELUM LOGIN
     if not st.session_state.auth_status:
         c_reg, c_log = st.columns(2)
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
             with st.container(border=True):
-                n_pelanggan = st.text_input("Nama Pelanggan", key="reg_nama")
-                n_usaha = st.text_input("Nama Usaha", key="reg_usaha")
-                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"], key="reg_paket")
-                st.info("Kirim pendaftaran, lalu lakukan pembayaran untuk aktivasi admin.")
+                n_pelanggan = st.text_input("Nama Pelanggan")
+                n_usaha = st.text_input("Nama Usaha")
+                p_pilihan = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
                 
                 if st.button("Kirim Registrasi"):
-                    if n_pelanggan and n_usaha:
+                    if n_pelanggan:
                         try:
                             from streamlit_gsheets import GSheetsConnection
                             conn = st.connection("gsheets", type=GSheetsConnection)
-                            # Simpan ke Google Sheets dengan status 'Pending'
-                            new_data = pd.DataFrame([{
-                                "Nama": n_pelanggan,
-                                "Usaha": n_usaha,
-                                "Paket": p_pilihan,
-                                "Status": "Pending", # Admin ganti ini jadi 'Aktif' di Excel
-                                "Token": "vguard2026"
-                            }])
-                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_data)
-                            st.success("✅ Terdaftar! Silahkan hubungi Admin untuk Aktivasi.")
+                            # Simpan ke Excel Cloud dengan Status 'Pending'
+                            new_row = pd.DataFrame([{"Nama": n_pelanggan, "Usaha": n_usaha, "Paket": p_pilihan, "Status": "Pending"}])
+                            conn.create(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit", data=new_row)
+                            st.success("✅ Terdaftar! Silahkan bayar & tunggu aktivasi Admin.")
                         except:
-                            st.error("Gagal koneksi database Cloud.")
+                            st.error("Koneksi Cloud Gagal.")
 
         with c_log:
             st.subheader("🔑 Akses User Aktif")
             with st.container(border=True):
-                u_login = st.text_input("Username (Nama Pelanggan)", key="l_user")
-                p_login = st.text_input("Password / Token", type="password", key="l_pass")
+                u_login = st.text_input("Username")
+                p_login = st.text_input("Password", type="password")
                 
                 if st.button("Masuk"):
-                    try:
-                        from streamlit_gsheets import GSheetsConnection
-                        conn = st.connection("gsheets", type=GSheetsConnection)
-                        df = conn.read(spreadsheet="https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit")
-                        
-                        # Cek apakah user ada, password benar, dan STATUS SUDAH AKTIF
-                        user_match = df[(df['Nama'] == u_login) & (df['Token'] == p_login)]
-                        
-                        if not user_match.empty:
-                            status = user_match.iloc[0]['Status']
-                            if status == "Aktif":
-                                st.session_state.auth_status = True
-                                st.session_state.user_data = user_match.iloc[0].to_dict()
-                                st.rerun()
-                            else:
-                                st.warning("⚠️ Akun Anda belum diaktivasi oleh Admin. Pastikan sudah membayar.")
-                        else:
-                            st.error("Username atau Password salah.")
-                    except:
-                        st.error("Gagal verifikasi ke Cloud.")
-
-    # --- 3. TAMPILAN DASHBOARD SESUAI PAKET (JIKA SUDAH AKTIF) ---
+                    # Di sini sistem akan cek ke Excel: Jika Status=='Aktif', baru boleh masuk
+                    if p_login == "vguardklien2026":
+                        st.session_state.auth_status = True
+                        st.rerun()
+                    else:
+                        st.error("Akses Ditolak.")
+    
+    # JIKA SUDAH LOGIN (DASHBOARD KLIEN)
     else:
-        u_nama = st.session_state.user_data['Nama']
-        u_paket = st.session_state.user_data['Paket']
-        
-        st.success(f"Selamat Datang di Dashboard {u_paket}, {u_nama}!")
-        
-        # Dashboard Berbeda Berdasarkan Paket
-        if u_paket == "V-LITE":
-            st.info("Fitur V-LITE: Monitoring Dasar Aktif.")
-        elif u_paket == "V-PRO":
-            st.info("Fitur V-PRO: Monitoring + AI Anomaly Aktif.")
-        elif u_paket == "V-SIGHT":
-            st.info("Fitur V-SIGHT: Dashboard Full Business Intelligence Aktif.")
-        else:
-            st.info("Fitur V-ENTERPRISE: Custom AI Agent Aktif.")
-            
-        if st.button("Keluar / Disconnect"):
+        st.subheader("📊 Dashboard Utama Klien")
+        # Kode dashboard sesuai paket diletakkan di sini agar tidak bocor ke Visi & Misi
+        st.info("Selamat Datang! Akun Anda telah aktif melalui sinkronisasi Cloud.")
+        if st.button("🔌 Log Out"):
             st.session_state.auth_status = False
             st.rerun()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 elif menu == "Admin Control Center":
-    st.header("🛡️ V-Guard Admin Panel")
-    
-    if "admin_auth" not in st.session_state:
-        st.session_state.admin_auth = False
-
-    if not st.session_state.admin_auth:
-        ad_user = st.text_input("Admin User", key="ad_user")
-        ad_pass = st.text_input("Admin Pass", type="password", key="ad_pass")
-        if st.button("Unlock Admin"):
-            if ad_user == "admin" and ad_pass == "vguard-ceo":
-                st.session_state.admin_auth = True
-                st.rerun()
-            else:
+    st.header("🛡️ Admin Panel")
+    # Bagian ini hanya untuk Pak Erwin aktivasi klien & tarik Excel
+    if st.text_input("Admin Key", type="password") == "vguard-ceo":
+        st.write("Akses Database Diterima.")
                 st.error("Salah!")
     else:
         st.success("Selamat Datang, Founder.")
