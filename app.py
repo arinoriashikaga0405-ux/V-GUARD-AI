@@ -137,6 +137,7 @@ elif menu == "Portal Klien":
                     st.rerun()
                 else:
                     st.error("ID atau Token salah.")
+            
     else:
         # Tampilan jika sudah login
         st.subheader("📊 Dashboard Utama")
@@ -162,7 +163,6 @@ elif menu == "Admin Control Center":
         if st.button("Log Out Admin"):
             st.session_state.admin_logged_in = False
             st.rerun()
-
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
         
