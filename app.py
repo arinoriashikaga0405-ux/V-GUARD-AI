@@ -112,7 +112,6 @@ elif menu == "ROI Kerugian Klien":
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
 elif menu == "Portal Klien":
-    st.header("🌐 V-Guard Cloud Intelligence Portal")
     
     # 1. LOGIKA CLOUD SESSION (Wajib Ada)
     if "auth_status" not in st.session_state:
