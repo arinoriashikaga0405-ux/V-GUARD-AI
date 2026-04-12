@@ -104,34 +104,32 @@ if menu == "Visi & Misi":
 
     # 3. Footer Tambahan (Opsional)
     st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
-
 # --- BARIS 107 (RATA KIRI) ---
 elif menu == "Portal Klien":
-    st.header("🔑 Portal Klien V-Guard AI")
+    st.header("🔑 Portal Klien V-Guard AI") # BARIS 92
     
-    # URL Cloud Excel Bapak
+    # URL Cloud Excel
     url_cloud = "https://docs.google.com/spreadsheets/d/1SWK7sELm1jvnu7Mw3srrpqAMFaG8XfcvY1dWKZzzYZg/edit"
 
-    # --- BARIS INI HARUS MASUK KE DALAM (INDENTASI) ---
+    # LOGIKA AKSES (HARUS MENJOROK 4 SPASI KE DALAM)
     if not st.session_state.get('auth_status', False):
-        c_reg, c_log = st.columns(2)
+        c_reg, c_log = st.columns(2) # BARIS 117
         
         with c_reg:
             st.subheader("📝 Form Order Baru")
-            # Masukkan kode input n_pelanggan, n_usaha, p_pilihan di sini
+            # Masukkan koding input (n_pelanggan, n_usaha, p_pilihan) di sini
             
         with c_log:
             st.subheader("🔑 Login Dashboard")
-            # Masukkan kode input u_id, u_token, dan tombol masuk di sini
+            # Masukkan koding login (u_id, u_token) di sini
             
     else:
-        # TAMPILAN DASHBOARD (Hanya muncul jika sudah login)
+        # Tampilan jika sudah login
         st.subheader("📊 Dashboard Utama")
-        # Masukkan semua metric dan progres bar Bapak di sini
+        # Masukkan koding metric/grafik Bapak di sini
         if st.button("🔌 Logout"):
             st.session_state.auth_status = False
             st.rerun()
-
 # --- BARIS BERIKUTNYA (RATA KIRI) ---
 elif menu == "Admin Control Center":
     st.header("🛡️ Admin Panel")
