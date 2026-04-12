@@ -133,7 +133,7 @@ if "client_data" not in st.session_state:
 if not st.session_state.auth_status:
     # ... isi form registrasi & login ...
         st.session_state.db_klien = {}
-    if "client_data" not in st.session_state:
+if "client_data" not in st.session_state:
         st.session_state.client_data = {'nama': 'User'} # Default value agar tidak KeyError
 
     # 2. TAMPILAN LOGIN & REGISTRASI
