@@ -20,7 +20,12 @@ model_gemini = genai.GenerativeModel(
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+# --- DI BARIS 23 ---
+if "auth_status" not in st.session_state:
+    st.session_state.auth_status = False
 
+if "client_info" not in st.session_state:
+    st.session_state.client_info = None
 st.markdown("""
 <style>
     .main { background-color: #0e1117; }
