@@ -189,8 +189,8 @@ elif menu == "Admin Control Center":
             st.success("Akses Eksekutif Aktif")
         with col_logout:
             if st.button("Log Out"):
-                st.session_state.admin_logged_in = False
-                st.rerun()
+            st.session_state.admin_logged_in = False
+            st.rerun()
 
         # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
