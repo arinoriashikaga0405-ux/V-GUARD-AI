@@ -18,7 +18,8 @@ if gemini_key:
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-
+if "admin_logged_in" not in st.session_state:
+    st.session_state.admin_logged_in = False
 # CSS Custom untuk tampilan profesional
 st.markdown("""
 <style>
