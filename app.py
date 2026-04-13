@@ -261,7 +261,7 @@ if st.session_state.admin_logged_in:
         "Database Klien"
     ])
 
-    if st.session_state.admin_logged_in:
+    if menu_admin == "Dashboard Utama":
         # --- 1. STATUS AKTIVASI 10 AGEN AI (PLUG N PLAY) ---
         st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
     elif menu_admin == "Aktivasi Nasabah Baru":
