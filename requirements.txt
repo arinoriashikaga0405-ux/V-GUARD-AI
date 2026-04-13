@@ -1,6 +1,3 @@
 streamlit
-google-generativeai
-python-dotenv
-bcrypt
+pandas
 st-gsheets-connection
-gspread
