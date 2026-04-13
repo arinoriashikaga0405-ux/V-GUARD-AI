@@ -11,7 +11,7 @@ else:
     # Jika Bapak jalankan lokal, sistem akan mencari di file secrets.toml
     st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
 
-model_vguard = genai.GenerativeModel(
+    model_vguard = genai.GenerativeModel(
     model_name='gemini-1.5-flash',
     generation_config={"temperature": 0.2, "max_output_tokens": 50},
     system_instruction="Analisa transaksi: ALERT jika fraud, PASS jika aman."
