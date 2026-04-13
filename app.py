@@ -224,19 +224,23 @@ elif menu == "Portal Klien":
             # Checkbox Persetujuan
             setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan V-Guard AI Intelligence.")
 
-            if st.button("Kirim Pengajuan Aktivasi"):
-               if setuju_tc:
-                   if nama_owner and nama_usaha:
-                        # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
-                        with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
-                            st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
-                            st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
-                            status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
-                        st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
-                    else:
-                        st.warning("Mohon lengkapi data pendaftaran.")
-                else:
-                    st.error("🚨 Mohon setujui T&C terlebih dahulu.")
+            # --- BLOK PENDAFTARAN V-GUARD AI ---
+        if st.button("Kirim Pengajuan Aktivasi"):
+            if setuju_tc:
+                if nama_owner and nama_usaha:
+                    # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
+                    with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
+                        st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
+                        st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
+                        status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
+                    
+                    st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
+                
+                else: # <--- Baris 236: Sekarang sudah sejajar sempurna dengan 'if nama_owner'
+                    st.warning("Mohon lengkapi data pendaftaran.")
+            
+            else: # <--- Sejajar dengan 'if setuju_tc'
+                st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
