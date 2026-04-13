@@ -193,7 +193,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
-def admin center ():
+def admin_center_vguard():
     st.header("🔒 Admin Control Center - V-Guard AI Intelligence")
 
     # --- 1. SECURITY LAYER (LOGIN ADMIN) ---
