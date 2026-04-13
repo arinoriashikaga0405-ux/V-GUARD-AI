@@ -226,21 +226,17 @@ elif menu == "Portal Klien":
 
             if st.button("Kirim Pengajuan Aktivasi"):
                 if setuju_tc:
-            if nama_owner and nama_usaha:
-                # Menjalankan fungsi koordinasi agen
-                sentinel_recovery() # Memastikan sistem stabil
-                
-                with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
-                    st.write("🛡️ **The Legalist**: Mengamankan privasi data (Non-Disclosure Agreement).")
-                    st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud Intelligence Center.")
-                    st.write("🕵️ **The Watchdog**: Menyiapkan filter deteksi anomali real-time.")
-                    status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
-                
-                st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} untuk {nama_usaha} telah aktif secara otonom.")
-            else:
-                st.warning("Mohon lengkapi data pendaftaran.")
-        else:
-            st.error("🚨 Mohon setujui T&C terlebih dahulu.")
+                    if nama_owner and nama_usaha:
+                        # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
+                        with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
+                            st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
+                            st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
+                            status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
+                        st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
+                    else:
+                        st.warning("Mohon lengkapi data pendaftaran.")
+                else:
+                    st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
