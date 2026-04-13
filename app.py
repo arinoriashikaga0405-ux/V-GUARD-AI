@@ -329,5 +329,4 @@ def admin_center_vguard():
 
     st.markdown("<center><small>V-Guard AI Intelligence Admin Portal | ©2026</small></center>", unsafe_allow_html=True)
 
-# Panggil fungsi jika menu yang dipilih adalah Admin
-admin_center_vguard()
+
