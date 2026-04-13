@@ -286,8 +286,8 @@ def admin_center_vguard():
 
     with t4:
         st.subheader("📊 Laporan & Invoicer (H-7 Monitoring)")
-        # --- LOGIK INVOICER H-7 ---
         st.info("Agent Invoicer memindai jatuh tempo klien dalam 7 hari ke depan.")
+        
         # Simulasi Data
         test_data = pd.DataFrame([
             {"Klien": "Toko Maju", "Jatuh_Tempo": (datetime.now() + timedelta(days=7)).date(), "Nilai": "1.500.000"},
@@ -297,12 +297,12 @@ def admin_center_vguard():
         for _, row in test_data.iterrows():
             selisih = (row['Jatuh_Tempo'] - datetime.now().date()).days
             if selisih == 7:
-                with st.warning(border=True):
-                    st.write(f"🔔 **REMINDER H-7**: {row['Klien']}")
+                # Perbaikan: Gunakan container jika ingin pakai border, lalu masukkan warning di dalamnya
+                with st.container(border=True):
+                    st.warning(f"🔔 **REMINDER H-7**: {row['Klien']}")
                     st.write(f"Tagihan: Rp {row['Nilai']} | Jatuh Tempo: {row['Jatuh_Tempo']}")
                     if st.button(f"Kirim WA Reminder ke {row['Klien']}"):
                         st.success("Pesan Terjadwal!")
-
     with t5:
         st.subheader("🛡️ 10 Pilar Keamanan V-Guard AI")
         col_sec1, col_sec2 = st.columns(2)
