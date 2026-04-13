@@ -143,4 +143,4 @@ elif menu == "Dashboard Klien":
     st.metric("Efisiensi AI", "88%", delta="SOP Protected")
 
 st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | CEO Erwin Sinaga | ©2026</small></center>", unsafe_allow_html=True)
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
