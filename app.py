@@ -225,7 +225,8 @@ elif menu == "Portal Klien":
             setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan V-Guard AI Intelligence.")
 
             # --- BLOK PENDAFTARAN V-GUARD AI ---
-        if st.button("Kirim Pengajuan Aktivasi"):
+        # --- PROSES AKTIVASI OLEH ELITE AI SQUAD ---
+    if st.button("Kirim Pengajuan Aktivasi"):
         if setuju_tc:
             if nama_owner and nama_usaha:
                 # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
@@ -235,12 +236,11 @@ elif menu == "Portal Klien":
                     status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
                 
                 st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
-            
-            else: # <--- BARIS 236: Harus sejajar lurus ke atas dengan 'if nama_owner'
+            else:
                 st.warning("Mohon lengkapi data pendaftaran.")
-        
-        else: # <--- Sejajar lurus ke atas dengan 'if setuju_tc'
+        else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
+            
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
     if not st.session_state.admin_logged_in:
