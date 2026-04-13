@@ -1,10 +1,16 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from st_gsheets_connection import GSheetsConnection # Pastikan dieja persis begini
+
+# Import diletakkan di dalam try-except agar tidak langsung mematikan aplikasi jika gagal
+try:
+    from st_gsheets_connection import GSheetsConnection
+except ModuleNotFoundError:
+    st.error("Sistem sedang menginstal modul... Mohon tunggu 1 menit lalu Refresh halaman.")
+    st.stop()
 
 # Inisialisasi koneksi
-conn = st.connection("gsheets", type=GSheetsConnection)            
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 import time
 from datetime import datetime
