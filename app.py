@@ -195,6 +195,29 @@ elif menu == "Portal Klien":
             nama_owner = st.text_input("Nama Lengkap / Owner")
             nama_usaha = st.text_input("Nama Usaha")
             paket_pilihan = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+
+    # --- Masukkan di baris 199 (di atas tombol Kirim Pengajuan) ---
+            with st.expander("📄 Baca Syarat & Ketentuan (Terms & Conditions)"):
+                st.markdown("""
+                ### TERMS & CONDITIONS (T&C) – V-GUARD AI SYSTEMS
+                **1. Ruang Lingkup Layanan:** Sistem audit otonom berbasis Cloud via API (V-LITE & V-PRO).
+                **2. Keamanan Data:** Data terenkripsi dan tidak dibocorkan ke pihak ketiga (End-to-End Encryption).
+                **3. Mekanisme Alarm:** Notifikasi dikirim otomatis jika ada indikasi fraud (The Watchdog).
+                **4. Pembayaran:** Aktivasi dimulai setelah biaya diverifikasi (Activation Fee & Monthly).
+                **5. Tanggung Jawab:** V-Guard adalah alat bantu deteksi dengan akurasi tinggi (99.9%).
+                """)
+
+            # Checkbox Persetujuan
+            setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan V-Guard AI Intelligence.")
+
+            if st.button("Kirim Pengajuan Aktivasi"):
+                if setuju_tc:
+                    if nama_owner and nama_usaha:
+                        st.success(f"Terima Kasih Pak/Bu {nama_owner}. Pengajuan untuk {nama_usaha} (Paket {paket_pilihan}) telah diterima. Kami akan mengirimkan User ID via WhatsApp.")
+                    else:
+                        st.warning("Mohon lengkapi nama dan nama usaha Anda.")
+                else:
+                    st.error("🚨 Anda harus menyetujui Syarat & Ketentuan (T&C) sebelum melakukan aktivasi.")
             
             st.write("---")
             if st.button("Kirim Pengajuan Aktivasi"):
