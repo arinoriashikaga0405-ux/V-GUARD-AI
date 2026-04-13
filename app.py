@@ -1,7 +1,7 @@
 import streamlit as st
-import os
-import google.generativeai as genai
 import pandas as pd
+from datetime import datetime
+from st_gsheets_connection import GSheetsConnection
 import time
 from datetime import datetime
 
