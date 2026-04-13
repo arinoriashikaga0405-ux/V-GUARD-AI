@@ -1,14 +1,12 @@
 import streamlit as st
 import os
 import google.generativeai as genai
+from datetime import datetime
 
 # --- 1. KONFIGURASI ENGINE & SECURITY ---
-# --- 1. KEAMANAN TINGKAT TINGGI (API KEY GONE) ---
-# Menggunakan st.secrets: Kunci tidak ditulis di sini, tapi dipanggil dari sistem
 if "GEMINI_API_KEY" in st.secrets:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 else:
-    # Jika Bapak jalankan lokal, sistem akan mencari di file secrets.toml
     st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
 
 model_vguard = genai.GenerativeModel(
@@ -28,12 +26,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. LOGIKA V-GUARD (PENYARING BIAYA API 20%) ---
+# --- 3. LOGIKA V-GUARD ---
 def proses_transaksi(total, data_input):
     if total < 5000000:
         return "PASS (Auto)", False
-    response = model_gemini.generate_content(f"Cek: {data_input}")
-    return response.text, True
+    try:
+        response = model_vguard.generate_content(f"Cek: {data_input}")
+        return response.text, True
+    except:
+        return "ERROR: Cek API Key", False
 
 # --- 4. SIDEBAR NAVIGATION ---
 with st.sidebar:
@@ -47,59 +48,44 @@ with st.sidebar:
 # --- 5. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi Digitizing Trust, Eliminating Leakage")
-    
-    # MENAMPILKAN FOTO FOUNDER DI HALAMAN VISI & MISI
+    st.header("Visi & Misi: Digitizing Trust, Eliminating Leakage")
     col_img, col_txt = st.columns([1, 2])
     with col_img:
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
         else:
-            st.info("File erwin.jpg tidak ditemukan di direktori.")
+            st.info("Profil Founder V-Guard AI")
 
     with col_txt:
         st.markdown("""
         <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
-        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade di industri perbankan dan manajemen aset, kami memahami bahwa celah terkecil dalam sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi.<br><br>
-        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang memiliki keterbatasan, melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat dan real-time.<br><br>
-        Visi kami adalah menjadi standar global dalam " Eliminating Leakage ", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional saat ini.
+        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital. 
+        Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis 
+        dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi.<br><br>
+        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia, 
+        melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui ekosistem V-Guard, 
+        kami mengintegrasikan analisis data perbankan (VCS), visi komputer, dan deteksi anomali prediktif.
         </div>
         """, unsafe_allow_html=True)
 
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
-    c1, c2, c3, c4 = st.columns(4)
     packages = {
-        "V-LITE": ["Mikro / 1 Kasir", "750 rb", "350 brb", "AI Fraud Detector Dasar, Daily WA/Email Summary, Monthly PDF Report"],
-        "V-PRO": ["Retail & Kafe", "1.5 Jt", "850 rb", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF, H-7 Auto-Invoice"],
-        "V-SIGHT": ["Gudang & Toko", "7,5 Jt", "3,5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock, Fraud Alarm (🚨)"],
-        "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI (1 Thn), Dedicated Server, Custom AI SOP"]
+        "V-LITE": ["Mikro / 1 Kasir", "750 rb", "350 rb", "AI Fraud Detector Dasar, Daily WA/Email Summary"],
+        "V-PRO": ["Retail & Kafe", "1.5 Jt", "850 rb", "VCS Integration, Bank Statement Audit, Input Excel/CSV/PDF"],
+        "V-SIGHT": ["Gudang & Toko", "7.5 Jt", "3.5 Jt", "CCTV AI Behavior, Visual Cashier Audit, Real-Time Stock"],
+        "V-ENTERPRISE": ["Korporasi", "15 Jt", "10 Jt", "The Core Brain, Forensic AI, Custom AI SOP"]
     }
+    cols = st.columns(4)
     for i, (name, details) in enumerate(packages.items()):
-        with [c1, c2, c3, c4][i]:
+        with cols[i]:
             with st.container(border=True):
                 st.markdown(f"### 📦 {name}")
-                st.markdown(f"- {details[3]}")
-                st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
-                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
-                
-    # 2. Tabel Perbandingan Eksekutif
-    st.markdown("---")
-    st.subheader("📊 Tabel Perbandingan Eksekutif")
-    st.markdown(f"""
-    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
-    | :--- | :---: | :---: | :---: | :---: |
-    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
-    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
-    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
-    | **Biaya Pemasaran** | 750 rb | 1.5 Jt | 5 Jt | 15 Jt |
-    | **Biaya Langganan** | 375 rb | 850 rb | 3,5 Jt | 10 Jt |
-    """)
-
-    # 3. Footer Tambahan (Opsional)
-    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
+                st.caption(details[0])
+                st.write(details[3])
+                st.info(f"**Setup:** {details[1]}\n\n**Bulanan:** {details[2]}")
+                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20paket%20{name}")
 
 elif menu == "ROI Kerugian Klien":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
@@ -109,9 +95,11 @@ elif menu == "ROI Kerugian Klien":
         leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
         loss = omzet * (leak / 100)
         st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
+    with col_b:
+        st.success(f"ROI Penyelamatan dengan V-Guard: Rp {loss * 0.8:,.0f} / bulan")
 
 elif menu == "Portal Klien":
-    st.header("Portal Klien V-Guard AI")
+    st.header("🌐 Portal Klien V-Guard AI")
     c_reg, c_log = st.columns(2)
     with c_reg:
         st.subheader("📝 Form Order Baru")
@@ -119,140 +107,59 @@ elif menu == "Portal Klien":
             st.text_input("Nama Pelanggan")
             st.text_input("Nama Usaha")
             st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.text_input("Harga Paket (Rp)")
-            st.file_uploader("Upload KTP")
             st.button("Kirim Registrasi")
     with c_log:
         st.subheader("🔑 Akses User Aktif")
         with st.container(border=True):
-            st.text_input("Username")
-            pw = st.text_input("Password", type="password")
+            st.text_input("Username", key="client_user")
+            pw = st.text_input("Password", type="password", key="client_pw")
             if st.button("Masuk"):
                 if pw == "vguardklien2026": st.success("Selamat Datang!")
                 else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
-
-    # 1. Cek status login di session state
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
 
-    # 2. Kotak Login
     if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Administrator Password", type="password", key="admin_pwd_field")
+        admin_input = st.text_input("Administrator Password", type="password")
         if admin_input == "w1nbju8282":
             st.session_state.admin_logged_in = True
             st.rerun()
-        elif admin_input != "":
-            st.error("Password Salah. Akses Ditolak.")
-    
-    # 3. Dashboard Admin (Muncul setelah password benar)
     else:
         col_header, col_logout = st.columns([5, 1])
-        with col_header:
-            st.success("Akses Eksekutif Aktif")
+        with col_header: st.success("Akses Eksekutif Aktif")
         with col_logout:
             if st.button("Log Out"):
                 st.session_state.admin_logged_in = False
                 st.rerun()
 
-        # --- FITUR BARU: MONITORING BIAYA API & AI SQUAD ---
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
-        
-        # Panel Biaya API & Efisiensi
         c_api1, c_api2, c_api3 = st.columns(3)
-        with c_api1:
-            st.metric("Anggaran API Bulanan", "Rp 10.000.000")
-        with c_api2:
-            # Simulasi biaya terpakai (contoh 1.2jt dari 10jt = 12%)
-            st.metric("Biaya API Terpakai", "Rp 1.200.000", delta="-15% (Hemat)", delta_color="normal")
-        with c_api3:
-            st.metric("Efisiensi Sistem", "88%", delta="Target > 80%")
+        c_api1.metric("Anggaran API", "Rp 10.000.000")
+        c_api2.metric("Biaya Terpakai", "Rp 1.200.000", delta="-15% (Hemat)")
+        c_api3.metric("Efisiensi Sistem", "88%")
         
-        st.progress(0.12, text="Penggunaan Kuota API Cloud: 12%")
-
-        st.divider()
-
-        # UI untuk AI Squad Agent
+        st.progress(0.12, text="Kuota API Cloud: 12%")
+        
         st.subheader("🤖 V-Guard AI Squad Agents")
-        st.caption("Agen AI otonom yang bekerja mengawasi ekosistem bisnis Anda 24/7.")
-        
-        sq1, sq2, sq3, sq4 = st.columns(4)
-        with sq1:
-            with st.container(border=True):
-                st.markdown("🕵️ **Agent: Sentinel**")
-                st.caption("Status: Memantau Fraud")
-                st.write("Menganalisa anomali transaksi kasir.")
-        with sq2:
-            with st.container(border=True):
-                st.markdown("💰 **Agent: Auditor**")
-                st.caption("Status: VCS Sync")
-                st.write("Sinkronisasi mutasi bank & laporan POS.")
-        with sq3:
-            with st.container(border=True):
-                st.markdown("📦 **Agent: Stocker**")
-                st.caption("Status: Visual Check")
-                st.write("Cek stok fisik gudang melalui CCTV AI.")
-        with sq4:
-            with st.container(border=True):
-                st.markdown("📄 **Agent: Invoicer**")
-                st.caption("Status: H-7 Ready")
-                st.write("Otomatisasi pengiriman invoice klien.")
+        sq = st.columns(4)
+        agents = [("🕵️ Sentinel", "Memantau Fraud"), ("💰 Auditor", "VCS Sync"), ("📦 Stocker", "Visual Check"), ("📄 Invoicer", "H-7 Ready")]
+        for i, (name, status) in enumerate(agents):
+            with sq[i]:
+                with st.container(border=True):
+                    st.markdown(f"**{name}**")
+                    st.caption(status)
 
-        st.divider()
-
-        # Tab Menu Admin
-        t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-            "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
-            "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
-        ])
-
+        t1, t2, t3 = st.tabs(["👤 Aktivasi Klien", "🖥️ Ekosistem AI", "💎 V-ULTRA"])
         with t1:
-            st.subheader("📝 Pembuatan & Aktivasi Akun Klien (Paid)")
-            with st.container(border=True):
-                col1, col2 = st.columns(2)
-                with col1:
-                    new_user = st.text_input("Username Klien")
-                    new_mail = st.text_input("Email Bisnis")
-                with col2:
-                    paket_pilihan = st.selectbox("Paket yang Dibayar", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                    tgl_bayar = st.date_input("Tanggal Pembayaran")
-                if st.button("Aktifkan Akun & Kirim Kredensial"):
-                    st.success(f"Akun {new_user} paket {paket_pilihan} BERHASIL DIAKTIFKAN.")
-
+            st.text_input("Username Klien Baru")
+            st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.button("Aktifkan Akun")
         with t2:
-            st.subheader("🌐 V-Guard Global AI Ecosystem")
-            c1, c2 = st.columns(2)
-            with c1:
-                with st.container(border=True):
-                    st.markdown("### 🧠 Google Gemini AI")
-                    st.write("Analis utama yang memproses data audit kompleks.")
-            with c2:
-                with st.container(border=True):
-                    st.markdown("### 👁️ YOLO / Vision AI")
-                    st.write("'Mata' digital yang memantau pergerakan visual.")
+            st.write("Sistem terhubung ke Google Gemini 1.5 Flash & YOLO Vision Engine.")
+        with t3:
+            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun")
 
-        # Tab-tab lainnya tetap menggunakan kode asli Anda
-        with t5:
-            st.subheader("👁️ V-SIGHT: AI Visual Command Center")
-            c_vid1, c_vid2 = st.columns(2)
-            with c_vid1:
-                st.image("https://img.freepik.com/free-photo/security-camera-detecting-thief-store_23-2150914187.jpg", caption="CCTV 01 - Area Kasir")
-            with c_vid2:
-                st.image("https://img.freepik.com/free-photo/warehouse-management-system-concept_23-2148923140.jpg", caption="CCTV 02 - Rak Gudang")
-
-        with t9:
-            st.header("💎 V-ULTRA: Enterprise Command Center")
-            col_u1, col_u2 = st.columns(2)
-            with col_u1:
-                st.success("🧠 **The Core Brain (AI Central)**")
-                st.progress(100)
-            with col_u2:
-                st.info("🖥️ **Dedicated Server Status**")
-                st.code("IP: 10.0.88.24\nUptime: 99.99%")
-            st.divider()
-            st.metric("ROI Penyelamatan Aset", "Rp 1.250.000.000 / Tahun", delta="Efisiensi 35%")
-
-        st.markdown("---")
-        st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+st.markdown("---")
+st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
