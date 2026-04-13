@@ -3,15 +3,18 @@ import os
 import google.generativeai as genai
 
 # --- 1. KONFIGURASI ENGINE & SECURITY ---
-if "GEMINI_API_KEY" in st.secrets:
-    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-    model_vguard = genai.GenerativeModel(
-        model_name='gemini-1.5-flash',
-        generation_config={"temperature": 0.2, "max_output_tokens": 500},
-        system_instruction="Analisa transaksi: ALERT jika fraud, PASS jika aman."
-    )
-else:
-    st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
+i# GANTI KODE LAMA:
+# if "GEMINI_API_KEY" in st.secrets:
+
+# MENJADI KODE INI:
+try:
+    if "GEMINI_API_KEY" in st.secrets:
+        genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+        model_vguard = genai.GenerativeModel('gemini-1.5-flash')
+    else:
+        st.warning("⚠️ API Key tidak ditemukan di Variables Railway.")
+except Exception:
+    st.warning("⚠️ Variabel sistem (Secrets) belum dikonfigurasi di Railway.")
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
