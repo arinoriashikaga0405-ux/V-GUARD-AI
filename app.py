@@ -226,22 +226,21 @@ elif menu == "Portal Klien":
 
             # --- BLOK PENDAFTARAN V-GUARD AI ---
         if st.button("Kirim Pengajuan Aktivasi"):
-            if setuju_tc:
-                if nama_owner and nama_usaha:
-                    # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
-                    with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
-                        st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
-                        st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
-                        status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
-                    
-                    st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
+        if setuju_tc:
+            if nama_owner and nama_usaha:
+                # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
+                with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
+                    st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
+                    st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
+                    status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
                 
-                else: # <--- Baris 236: Sekarang sudah sejajar sempurna dengan 'if nama_owner'
-                    st.warning("Mohon lengkapi data pendaftaran.")
+                st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
             
-            else: # <--- Sejajar dengan 'if setuju_tc'
-                st.error("🚨 Mohon setujui T&C terlebih dahulu.")
-            
+            else: # <--- BARIS 236: Harus sejajar lurus ke atas dengan 'if nama_owner'
+                st.warning("Mohon lengkapi data pendaftaran.")
+        
+        else: # <--- Sejajar lurus ke atas dengan 'if setuju_tc'
+            st.error("🚨 Mohon setujui T&C terlebih dahulu.")
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
     if not st.session_state.admin_logged_in:
