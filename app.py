@@ -133,43 +133,25 @@ elif menu == "Produk & Layanan":
 
 import streamlit as st
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 from datetime import datetime
 
-# --- KONEKSI SPREADSHEET (FUNGSI GLOBAL) ---
+# --- 1. FUNGSI KONEKSI SPREADSHEET ---
 def sambung_spreadsheet():
-    # Pastikan file JSON kredensial Google Cloud Bapak ada di folder yang sama
+    # Menggunakan library google-auth yang lebih stabil
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("vguard_creds.json", scope)
+    
+    # Mengambil kredensial dari secrets Streamlit (Lebih Aman) atau file JSON
+    try:
+        creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
+    except:
+        # Cadangan jika Bapak masih pakai file lokal .json
+        creds = Credentials.from_service_account_file("vguard_creds.json", scopes=scope)
+        
     client = gspread.authorize(creds)
-    # Ganti dengan nama file Google Sheets Bapak
-    return client.open("Database_VGuard").sheet1 
+    return client.open("Database_VGuard").sheet1
 
-# --- FUNGSI DASHBOARD KLIEN ---
-def dashboard_klien_vguard():
-    st.header(f"🚀 Selamat Datang, {st.session_state.current_client['nama']}")
-    
-    # METRIC DASHBOARD
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Status Layanan", st.session_state.current_client['paket'], "Active")
-    c2.metric("Sisa Kontrak", "28 Hari", "-2")
-    c3.metric("Potensi Kebocoran Dicegah", "Rp 450.000")
-
-    st.divider()
-
-    t_rep, t_inv = st.tabs(["📊 Laporan Real-Time", "📄 Invoice & Tagihan"])
-    
-    with t_rep:
-        st.subheader("Integrasi AI Sentinel")
-        st.info("AI sedang memantau transaksi Anda secara real-time.")
-        # Di sini nanti bisa ditaruh grafik atau tabel dari database klien
-        st.write("Belum ada aktivitas mencurigakan terdeteksi hari ini.")
-
-    with t_inv:
-        st.subheader("Riwayat Pembayaran")
-        st.write("Invoice #VG-001 | Rp 750.000 | ✅ LUNAS")
-
-# --- LOGIKA NAVIGASI (DITARUH DI ATAS) ---
+# --- 2. LOGIKA NAVIGASI PORTAL KLIEN ---
 if menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
     
@@ -189,9 +171,9 @@ if menu == "Portal Klien":
                     try:
                         sheet = sambung_spreadsheet()
                         sheet.append_row([str(datetime.now()), nama_p, nama_u, pkt_p, "Menunggu Aktivasi"])
-                        st.success("Data Tersimpan di Spreadsheet! Admin akan segera menghubungi Anda.")
-                    except:
-                        st.error("Gagal terhubung ke Cloud. Pastikan file JSON kredensial benar.")
+                        st.success("Registrasi Terkirim ke Cloud! Admin akan segera memproses.")
+                    except Exception as e:
+                        st.error(f"Gagal Terhubung: {e}")
 
         with c_log:
             st.subheader("🔑 Akses User Aktif")
@@ -199,21 +181,22 @@ if menu == "Portal Klien":
                 u_login = st.text_input("Username")
                 p_login = st.text_input("Password", type="password")
                 if st.button("Masuk"):
-                    # Simulasi Login (Nanti bisa ditarik dari Spreadsheet)
                     if u_login == "klien1" and p_login == "vguardklien2026":
                         st.session_state.client_logged_in = True
                         st.session_state.current_client = {"nama": u_login, "paket": "V-PRO"}
                         st.rerun()
                     else:
-                        st.error("Akun belum aktif atau password salah.")
+                        st.error("Akun salah atau belum aktif.")
     else:
-        dashboard_klien_vguard()
-        if st.button("Log Out"):
+        # DASHBOARD KLIEN SETELAH LOGIN
+        st.subheader(f"🚀 Dashboard {st.session_state.current_client['nama']}")
+        st.metric("Status Layanan", st.session_state.current_client['paket'])
+        if st.button("Keluar Portal"):
             st.session_state.client_logged_in = False
             st.rerun()
 
-# --- PENUTUP MUTLAK (FUNGSI ADMIN DI BAWAHNYA) ---
+# --- 3. FUNGSI ADMIN (SEBAGAI PENUTUP) ---
 def admin_center_vguard():
-    # ... (Kode Admin Bapak yang sudah rapi sebelumnya) ...
-    # Berhenti di Tab 4 Keamanan sesuai perintah Bapak.
+    # ... isi fungsi admin bapak ...
+    # (Berhenti di Tab 4 Keamanan, tidak ada kodingan lagi setelahnya)
     pass
