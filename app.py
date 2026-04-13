@@ -193,15 +193,17 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
+# --- 1. DEFINISI FUNGSI ADMIN (Kode Bapak) ---
 def admin_center_vguard():
+    # Judul ini hanya akan muncul di dalam menu Admin
     st.header("🔒 Admin Control Center - V-Guard AI Intelligence")
 
-    # --- 1. SECURITY LAYER (LOGIN ADMIN) ---
+    # --- SECURITY LAYER ---
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
 
     if not st.session_state.admin_logged_in:
-        col_l, col_r = st.columns([1, 1])
+        col_l, _ = st.columns([1, 1])
         with col_l:
             admin_pwd = st.text_input("Administrator Password", type="password")
             if st.button("Buka Akses Kontrol"):
@@ -210,9 +212,9 @@ def admin_center_vguard():
                     st.rerun()
                 else:
                     st.error("Akses Ditolak.")
-        return
+        return # Berhenti di sini jika belum login
 
-    # --- 2. HEADER EKSEKUTIF ---
+    # --- KONTEN ADMIN (Hanya muncul jika sudah login) ---
     col_st, col_out = st.columns([5, 1])
     col_st.success("✅ Akses Eksekutif Aktif: Erwin Sinaga (Founder & CEO)")
     if col_out.button("Log Out"):
@@ -221,7 +223,7 @@ def admin_center_vguard():
 
     st.divider()
 
-    # --- 3. 10 AI AGENT SQUAD (OTONOM) ---
+    # --- 10 AI AGENT SQUAD ---
     st.subheader("🤖 V-Guard 10 Elite AI Agent Squad")
     agents = [
         {"name": "Sentinel", "task": "Fraud Detection", "icon": "🕵️"},
@@ -235,98 +237,69 @@ def admin_center_vguard():
         {"name": "Log-Master", "task": "System Logs", "icon": "📜"},
         {"name": "Forensic", "task": "Investigation", "icon": "🔍"}
     ]
-
     ag_cols = st.columns(5)
     for idx, ag in enumerate(agents):
         with ag_cols[idx % 5]:
             with st.container(border=True):
                 st.markdown(f"{ag['icon']} **{ag['name']}**")
                 st.caption(f"Status: 🟢 Running")
-                if st.button(f"Sync {ag['name']}", key=f"btn_{ag['name']}"):
-                    st.toast(f"{ag['name']} Berhasil Sinkronisasi.")
+                st.button(f"Sync {ag['name']}", key=f"sync_{ag['name']}")
 
     st.divider()
 
-    # --- 4. 9 TAB MANAJEMEN ADMIN ---
-    t1, t2, t3, t4, t5, t6, t7, t8, t9 = st.tabs([
-        "👤 Aktivasi Klien", "🖥️ Ekosistem AI", "⚙️ Pengaturan", "📊 Laporan", 
-        "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"
-    ])
-
-    with t1:
+    # --- TABS MANAJEMEN ---
+    tabs = st.tabs(["👤 Aktivasi", "🖥️ Ekosistem", "⚙️ Pengaturan", "📊 Laporan", "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"])
+    
+    with tabs[0]: # Aktivasi
         st.subheader("📝 Pembuatan & Aktivasi Akun Klien")
         with st.container(border=True):
             c_a, c_b = st.columns(2)
-            with c_a:
-                new_user = st.text_input("Username Klien")
-                new_mail = st.text_input("Email Bisnis")
-            with c_b:
-                paket = st.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-                tgl_bayar = st.date_input("Tanggal Bayar", value=datetime.now())
-            
-            if st.button("🚀 AKTIFKAN & SIMPAN CLOUD"):
-                # Logic: Simpan ke st.session_state.db_klien atau Google Sheets
-                st.success(f"Akun {new_user} aktif. Notifikasi selamat datang dikirim ke {new_mail}.")
+            new_user = c_a.text_input("Username Klien")
+            new_mail = c_a.text_input("Email Bisnis")
+            paket = c_b.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            tgl_bayar = c_b.date_input("Tanggal Bayar", value=datetime.now())
+            if st.button("🚀 AKTIFKAN & SIMPAN"):
+                st.success(f"Akun {new_user} Aktif!")
 
-    with t2:
-        st.subheader("🌐 Global AI Ecosystem (Daftar Teknologi)")
-        col_t1, col_t2 = st.columns(2)
-        with col_t1:
-            with st.container(border=True):
-                st.markdown("### 🧠 The Core Brain")
-                st.write("- **Google Gemini AI**: Analis audit kompleks.")
-                st.write("- **MindBridge**: Deteksi fraud & Audit Alarms.")
-                st.write("- **DataRobot**: Forecasting risiko.")
-        with col_t2:
-            with st.container(border=True):
-                st.markdown("### 👁️ Automation & Visi")
-                st.write("- **YOLO / Vision AI**: Monitoring visual.")
-                st.write("- **Alteryx**: Workflow data otomatis.")
-                st.write("- **Numeric.ai**: Notifikasi finansial ke HP.")
-
-    with t4:
+    with tabs[3]: # Laporan & Invoicer H-7
         st.subheader("📊 Laporan & Invoicer (H-7 Monitoring)")
-        st.info("Agent Invoicer memindai jatuh tempo klien dalam 7 hari ke depan.")
-        
-        # Simulasi Data
-        test_data = pd.DataFrame([
-            {"Klien": "Toko Maju", "Jatuh_Tempo": (datetime.now() + timedelta(days=7)).date(), "Nilai": "1.500.000"},
-            {"Klien": "Resto Berkah", "Jatuh_Tempo": (datetime.now() + timedelta(days=12)).date(), "Nilai": "750.000"}
-        ])
-        
-        for _, row in test_data.iterrows():
-            selisih = (row['Jatuh_Tempo'] - datetime.now().date()).days
-            if selisih == 7:
-                # Perbaikan: Gunakan container jika ingin pakai border, lalu masukkan warning di dalamnya
-                with st.container(border=True):
-                    st.warning(f"🔔 **REMINDER H-7**: {row['Klien']}")
-                    st.write(f"Tagihan: Rp {row['Nilai']} | Jatuh Tempo: {row['Jatuh_Tempo']}")
-                    if st.button(f"Kirim WA Reminder ke {row['Klien']}"):
-                        st.success("Pesan Terjadwal!")
-    with t5:
-        st.subheader("🛡️ 10 Pilar Keamanan V-Guard AI")
-        col_sec1, col_sec2 = st.columns(2)
-        with col_sec1:
-            st.write("1. **E2EE**: Enkripsi dari Kasir ke Server.")
-            st.write("2. **MFA**: Login Ganda (WA/Authenticator).")
-            st.write("3. **RBAC**: Hak akses tersekat.")
-            st.write("4. **File Scan**: Antivirus file upload.")
-            st.write("5. **Audit Logging**: Jejak digital admin.")
-        with col_sec2:
-            st.write("6. **Rate Limiting**: Anti DDoS/Bot.")
-            st.write("7. **Data Masking**: Info sensitif disembunyikan.")
-            st.write("8. **Pen-Testing**: Uji coba pembobolan rutin.")
-            st.write("9. **Compliance UU PDP**: Patuh regulasi data pribadi.")
-            st.write("10. **Incident Response**: Prosedur darurat kebocoran.")
+        st.info("Agent Invoicer memindai jatuh tempo dalam 7 hari.")
+        # Simulasi H-7
+        with st.container(border=True):
+            st.warning("🔔 **REMINDER H-7**: Toko Maju")
+            st.write("Tagihan: Rp 1.500.000 | Jatuh Tempo: 20 April 2026")
+            st.button("Kirim WA Reminder")
 
-    with t9:
-        st.header("💎 V-ULTRA: Enterprise Command Center")
-        c_u1, c_u2 = st.columns(2)
-        with c_u1:
-            st.metric("ROI Penyelamatan Aset", "Rp 1,25 M / Thn", "+35%")
-        with c_u2:
-            st.code("SERVER: 10.0.88.24\nUPTIME: 99.99%\nSTATUS: ENCRYPTED")
+    with tabs[4]: # 10 Pilar Keamanan
+        st.subheader("🛡️ 10 Pilar Keamanan V-Guard AI")
+        c1, c2 = st.columns(2)
+        c1.write("1. **E2EE** | 2. **MFA** | 3. **RBAC** | 4. **File Scan** | 5. **Audit Log**")
+        c2.write("6. **Rate Limit** | 7. **Data Masking** | 8. **Pen-Test** | 9. **PDP** | 10. **Incident Response**")
 
     st.markdown("<center><small>V-Guard AI Intelligence Admin Portal | ©2026</small></center>", unsafe_allow_html=True)
 
+# --- 2. SISTEM NAVIGASI UTAMA (PENTING!) ---
+with st.sidebar:
+    st.title("🛡️ V-Guard AI")
+    # Menu pilihan
+    menu = st.radio("NAVIGASI UTAMA", 
+                    ["Visi & Misi", "Produk & Layanan", "ROI Kerugian Klien", "Portal Klien", "Admin Control Center"])
 
+# --- 3. EKSEKUSI MENU (SEKAT KETAT) ---
+if menu == "Visi & Misi":
+    st.header("Visi & Misi")
+    st.write("Target: Zero Leakage, High Integrity.")
+
+elif menu == "Produk & Layanan":
+    st.header("Produk & Layanan")
+    st.write("Integrasi: MindBridge, DataRobot, Alteryx.")
+
+elif menu == "ROI Kerugian Klien":
+    st.header("ROI Kerugian Klien")
+
+elif menu == "Portal Klien":
+    st.header("Portal Klien")
+
+elif menu == "Admin Control Center":
+    # DI SINI KITA PANGGIL FUNGSI ADMINNYA
+    admin_center_vguard()
