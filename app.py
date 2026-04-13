@@ -1,9 +1,11 @@
-import streamlit as st                          
-import pandas as pd                           
-from datetime import datetime                
+import streamlit as st
+import pandas as pd
+from datetime import datetime
+from st_gsheets_connection import GSheetsConnection # Pastikan dieja persis begini
 
-# Baris 6: Koneksi ke Google Sheets (Hanya satu kali saja)
-conn = st.connection("gsheets", type=GSheetsConnection)
+# Inisialisasi koneksi
+conn = st.connection("gsheets", type=GSheetsConnection)            
+
 import time
 from datetime import datetime
 
