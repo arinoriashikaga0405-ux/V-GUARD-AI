@@ -194,14 +194,18 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # --- 1. DEFINISI FUNGSI ADMIN (Kode Bapak) ---
+# --- 1. LOGIKA NAVIGASI (Ditaruh di ATAS agar fungsi Admin bisa jadi penutup) ---
 if menu == "Admin Control Center":
     admin_center_vguard()
 
 elif menu == "Visi & Misi":
     st.header("Visi & Misi")
-    # Panggil konten Visi Misi Bapak di sini
+    st.image("poster_vguard.png", use_container_width=True)
 
-    # --- SECURITY LAYER ---
+# --- 2. FUNGSI UTAMA ADMIN (Diletakkan paling bawah) ---
+def admin_center_vguard():
+    st.header("🔒 Admin Control Center - V-Guard AI Intelligence")
+
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
 
@@ -215,9 +219,8 @@ elif menu == "Visi & Misi":
                     st.rerun()
                 else:
                     st.error("Akses Ditolak.")
-  return # Berhenti di sini jika belum login
+        return 
 
-    # --- KONTEN ADMIN (Hanya muncul jika sudah login) ---
     col_st, col_out = st.columns([5, 1])
     col_st.success("✅ Akses Eksekutif Aktif: Erwin Sinaga (Founder & CEO)")
     if col_out.button("Log Out"):
@@ -250,37 +253,32 @@ elif menu == "Visi & Misi":
 
     st.divider()
 
-    # --- TABS MANAJEMEN ---
     tabs = st.tabs(["👤 Aktivasi", "🖥️ Ekosistem", "⚙️ Pengaturan", "📊 Laporan", "🛡️ Keamanan", "💾 Backup", "🌐 Jaringan", "📈 Performa", "💎 V-ULTRA"])
     
-    with tabs[0]: # Aktivasi
+    with tabs[0]: 
         st.subheader("📝 Pembuatan & Aktivasi Akun Klien")
         with st.container(border=True):
             c_a, c_b = st.columns(2)
             new_user = c_a.text_input("Username Klien")
             new_mail = c_a.text_input("Email Bisnis")
             paket = c_b.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            # Pastikan variabel datetime sudah diimport di bagian atas file app.py
             tgl_bayar = c_b.date_input("Tanggal Bayar", value=datetime.now())
             if st.button("🚀 AKTIFKAN & SIMPAN"):
                 st.success(f"Akun {new_user} Aktif!")
 
-    with tabs[3]: # Laporan & Invoicer H-7
+    with tabs[3]: 
         st.subheader("📊 Laporan & Invoicer (H-7 Monitoring)")
         st.info("Agent Invoicer memindai jatuh tempo dalam 7 hari.")
-        # Simulasi H-7
         with st.container(border=True):
             st.warning("🔔 **REMINDER H-7**: Toko Maju")
             st.write("Tagihan: Rp 1.500.000 | Jatuh Tempo: 20 April 2026")
             st.button("Kirim WA Reminder")
 
-    with tabs[4]: # 10 Pilar Keamanan
+    with tabs[4]: 
         st.subheader("🛡️ 10 Pilar Keamanan V-Guard AI")
         c1, c2 = st.columns(2)
         c1.write("1. **E2EE** | 2. **MFA** | 3. **RBAC** | 4. **File Scan** | 5. **Audit Log**")
         c2.write("6. **Rate Limit** | 7. **Data Masking** | 8. **Pen-Test** | 9. **PDP** | 10. **Incident Response**")
 
-    # --- PENUTUP FINAL ---
     st.markdown("<center><small>V-Guard AI Intelligence Admin Portal | ©2026</small></center>", unsafe_allow_html=True)
-
-# --- FUNGSI SELESAI DI SINI, TIDAK ADA LAGI LOGIKA NAVIGASI DI BAWAHNYA ---
+    # --- AKHIR CODING. TIDAK ADA LAGI LOGIKA SETELAH INI ---
