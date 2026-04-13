@@ -3,14 +3,16 @@ import os
 import google.generativeai as genai
 
 # --- PASTIKAN BAGIAN INI BERSIH DARI TYPO ---
+
 try:
-    if "GEMINI_API_KEY" in st.secrets:
+    if "GEMINI_API_KEY" in st.secrets and st.secrets["GEMINI_API_KEY"]:
         genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
         model_vguard = genai.GenerativeModel('gemini-1.5-flash')
+        st.sidebar.success("✅ AI System Ready")
     else:
-        st.warning("⚠️ API Key tidak ditemukan di Variables Railway.")
-except Exception:
-    st.warning("⚠️ Konfigurasi rahasia belum siap.")
+        st.sidebar.warning("⚠️ Mode Offline Aktif")
+except Exception as e:
+    st.sidebar.error(f"⚠️ AI Error: Silakan cek API Key di Railway")
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
