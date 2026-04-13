@@ -1,78 +1,21 @@
 import streamlit as st
-import pandas as pd
-from datetime import datetime
+import os
+import google.generativeai as genai
 
-# Import diletakkan di dalam try-except agar tidak langsung mematikan aplikasi jika gagal
-try:
-    from st_gsheets_connection import GSheetsConnection
-except ModuleNotFoundError:
-    st.error("Sistem sedang menginstal modul... Mohon tunggu 1 menit lalu Refresh halaman.")
-    st.stop()
-
-# Inisialisasi koneksi
-conn = st.connection("gsheets", type=GSheetsConnection)
-
-import time
-from datetime import datetime
-
-# --- 1. KONFIGURASI ENGINE & SECURITY (STRUKTUR ASLI) ---
+# --- 1. KONFIGURASI ENGINE & SECURITY ---
+# --- 1. KEAMANAN TINGKAT TINGGI (API KEY GONE) ---
+# Menggunakan st.secrets: Kunci tidak ditulis di sini, tapi dipanggil dari sistem
 if "GEMINI_API_KEY" in st.secrets:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 else:
+    # Jika Bapak jalankan lokal, sistem akan mencari di file secrets.toml
     st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
 
 model_vguard = genai.GenerativeModel(
     model_name='gemini-1.5-flash',
-    generation_config={"temperature": 0.2, "max_output_tokens": 150},
+    generation_config={"temperature": 0.2, "max_output_tokens": 50},
     system_instruction="Analisa transaksi: ALERT jika fraud, PASS jika aman."
 )
-
-# --- 2. KONFIGURASI HALAMAN (STRUKTUR ASLI) ---
-st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-
-st.markdown("""
-<style>
-    .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
-    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
-    .st-emotion-cache-12w0qpk { background-color: #111827; border: 1px solid #374151; padding: 20px; border-radius: 10px; }
-</style>
-""", unsafe_allow_html=True)
-
-# --- 3. LOGIKA V-GUARD (PENYARING BIAYA API) ---
-def proses_transaksi(total, data_input):
-    if total < 5000000:
-        return "PASS (Auto)", False
-    try:
-        response = model_vguard.generate_content(f"Cek: {data_input}")
-        return response.text, True
-    except:
-        return "Local Analysis: PASS", False
-
-# --- 4. DATA SIMULATION (Database Session untuk Aktivasi) ---
-if "db_klien" not in st.session_state:
-    st.session_state.db_klien = {
-        "admin@vguard.ai": {"nama": "Admin Utama", "paket": "V-ENTERPRISE", "status": "Aktif"}
-    }
-if "client_logged_in" not in st.session_state:
-    st.session_state.client_logged_in = False
-    st.session_state.current_client = None
-
-# --- 5. SIDEBAR NAVIGATION (STRUKTUR ASLI + PENYESUAIAN) ---
-with st.sidebar:
-    st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
-    if os.path.exists("erwin.jpg"):
-        st.image("erwin.jpg", use_container_width=True)
-    st.markdown("<div style='text-align:center;'><p style='color:white; font-weight:bold; margin-bottom:0;'>Erwin Sinaga</p><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
-    st.markdown("---")
-    
-    # Logic Navigasi: Jika klien login, menu berubah ke Dashboard Klien
-    if st.session_state.client_logged_in:
-        menu = st.radio("DASHBOARD KLIEN", ["Ringkasan Integritas", "Fitur Layanan Paket", "Laporan AI Squad", "Log Out Klien"])
-    else:
-        menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "ROI Kerugian Klien", "Portal Klien", "Admin Control Center"])
-
-# --- 6. LOGIKA MENU (INTEGRASI PENUH) ---
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
@@ -91,6 +34,17 @@ def proses_transaksi(total, data_input):
         return "PASS (Auto)", False
     response = model_gemini.generate_content(f"Cek: {data_input}")
     return response.text, True
+
+# --- 4. SIDEBAR NAVIGATION ---
+with st.sidebar:
+    st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
+    if os.path.exists("erwin.jpg"):
+        st.image("erwin.jpg", use_container_width=True)
+    st.markdown("<div style='text-align:center;'><p style='color:white; font-weight:bold; margin-bottom:0;'>Erwin Sinaga</p><p style='color:gray;'>Founder & CEO V-Guard AI</p></div>", unsafe_allow_html=True)
+    st.markdown("---")
+    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "ROI Kerugian Klien", "Portal Klien", "Admin Control Center"])
+
+# --- 5. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
     st.header("Visi & Misi Digitizing Trust, Eliminating Leakage")
@@ -112,17 +66,6 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
-
-elif menu == "ROI Kerugian Klien":
-    st.header("📊 Analisis Potensi Kerugian vs ROI")
-    col_a, col_b = st.columns(2)
-    with col_a:
-        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
-        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
-        loss = omzet * (leak / 100)
-        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
-
-        
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
@@ -140,81 +83,53 @@ elif menu == "Produk & Layanan":
                 st.markdown(f"- {details[3]}")
                 st.info(f"**Pasang:** {details[1]}\n\n**Bulan:** {details[2]}")
                 st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
+                
+    # 2. Tabel Perbandingan Eksekutif
+    st.markdown("---")
+    st.subheader("📊 Tabel Perbandingan Eksekutif")
+    st.markdown(f"""
+    | Fitur Utama | V-LITE | V-PRO | V-SIGHT | V-ENTERPRISE |
+    | :--- | :---: | :---: | :---: | :---: |
+    | **Level Audit AI** | Standar | Advanced | Visual AI | Forensic |
+    | **Integrasi Bank (VCS)** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **Input Excel/PDF** | - | ✅ Ya | ✅ Ya | ✅ Ya |
+    | **CCTV Vision AI** | - | - | ✅ Ya | ✅ Ya |
+    | **Biaya Pemasaran** | 750 rb | 1.5 Jt | 5 Jt | 15 Jt |
+    | **Biaya Langganan** | 375 rb | 850 rb | 3,5 Jt | 10 Jt |
+    """)
 
-import streamlit as st
-import gspread
-from google.oauth2.service_account import Credentials
-from datetime import datetime
+    # 3. Footer Tambahan (Opsional)
+    st.caption("Semua paket sudah termasuk update sistem keamanan secara berkala.")
 
-# --- 1. FUNGSI KONEKSI SPREADSHEET ---
-def sambung_spreadsheet():
-    # Menggunakan library google-auth yang lebih stabil
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    
-    # Mengambil kredensial dari secrets Streamlit (Lebih Aman) atau file JSON
-    try:
-        creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
-    except:
-        # Cadangan jika Bapak masih pakai file lokal .json
-        creds = Credentials.from_service_account_file("vguard_creds.json", scopes=scope)
-        
-    client = gspread.authorize(creds)
-    return client.open("Database_VGuard").sheet1
+elif menu == "ROI Kerugian Klien":
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan (Rp)", value=100000000)
+        leak = st.slider("Estimasi Kebocoran (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        st.error(f"Potensi Kerugian: Rp {loss:,.0f} / bulan")
 
-# --- 2. LOGIKA NAVIGASI PORTAL KLIEN ---
-from st_gsheets_connection import GSheetsConnection
-import pandas as pd
-
-# 1. Inisialisasi Koneksi
-conn = st.connection("gsheets", type=GSheetsConnection)
-
-if menu == "Portal Klien":
+elif menu == "Portal Klien":
     st.header("Portal Klien V-Guard AI")
-    
-    tabs_klien = st.tabs(["📝 Registrasi Baru", "🔑 Login Klien"])
-    
-    with tabs_klien[0]:
-        st.subheader("Form Order Baru")
+    c_reg, c_log = st.columns(2)
+    with c_reg:
+        st.subheader("📝 Form Order Baru")
         with st.container(border=True):
-            nama_p = st.text_input("Nama Pelanggan", key="reg_nama")
-            nama_u = st.text_input("Nama Usaha", key="reg_usaha")
-            pkt_p = st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            
-            if st.button("🚀 Kirim Registrasi"):
-                if nama_p and nama_u:
-                    try:
-                        # Ambil data yang sudah ada
-                        existing_data = conn.read(ttl=0)
-                        
-                        # Buat baris baru dalam DataFrame
-                        new_data = pd.DataFrame([{
-                            "Tanggal": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                            "Nama Pelanggan": nama_p,
-                            "Nama Usaha": nama_u,
-                            "Paket": pkt_p,
-                            "Status": "Menunggu Aktivasi"
-                        }])
-                        
-                        # Gabungkan dan simpan kembali ke Google Sheets
-                        updated_df = pd.concat([existing_data, new_data], ignore_index=True)
-                        conn.update(data=updated_df)
-                        
-                        st.success("✅ Berhasil! Data Anda sudah masuk ke Cloud Spreadsheet.")
-                    except Exception as e:
-                        st.error(f"Koneksi Cloud Gagal: {e}")
-                else:
-                    st.warning("Mohon lengkapi Nama Pelanggan dan Nama Usaha.")
-
-    with tabs_klien[1]:
-        # Logika login seperti yang Bapak buat sebelumnya
-        st.subheader("Akses User Aktif")
-        u_login = st.text_input("Username", key="login_u")
-        p_login = st.text_input("Password", type="password", key="login_p")
-        if st.button("Masuk"):
-            st.info("Fitur verifikasi otomatis sedang disinkronisasi...")
-
-# --- PENUTUP ---
-# Tidak ada kodingan lagi setelah ini sesuai instruksi Bapak.
+            st.text_input("Nama Pelanggan")
+            st.text_input("Nama Usaha")
+            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.text_input("Harga Paket (Rp)")
+            st.file_uploader("Upload KTP")
+            st.button("Kirim Registrasi")
+    with c_log:
+        st.subheader("🔑 Akses User Aktif")
+        with st.container(border=True):
+            st.text_input("Username")
+            pw = st.text_input("Password", type="password")
+            if st.button("Masuk"):
+                if pw == "vguardklien2026": st.success("Selamat Datang!")
+                else: st.error("Password Salah.")
 
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
@@ -341,6 +256,3 @@ elif menu == "Admin Control Center":
 
         st.markdown("---")
         st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
-
-
-
