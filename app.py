@@ -202,72 +202,91 @@ elif menu == "Portal Klien":
                 st.success(f"Terima Kasih Pak/Bu {nama_owner}. Pengajuan untuk {nama_usaha} telah diterima. Kami akan mengirimkan User ID via WhatsApp.")
             
 elif menu == "Admin Control Center":
-    st.header("🔒 Admin Control Center")
+    st.header("🔒 V-Guard Cloud Intelligence Center")
 
-    if "admin_logged_in" not in st.session_state:
-        st.session_state.admin_logged_in = False
+    if st.session_state.admin_logged_in:
+        # --- 1. STATUS AKTIVASI 10 AGEN AI (PLUG N PLAY) ---
+        st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
+        
+        # Baris status agen utama
+        c1, c2, c3, c4 = st.columns(4)
+        with c1: st.success("👁️ The Visionary")
+        with c2: st.success("👂 The Concierge")
+        with c3: st.success("👄 The Growth Hacker")
+        with c4: st.success("🤝 The Liaison")
 
-    if not st.session_state.admin_logged_in:
-        admin_input = st.text_input("Administrator Password", type="password")
-        if admin_input == "w1nbju8282":
-            st.session_state.admin_logged_in = True
-            st.rerun()
-        elif admin_input != "":
-            st.error("Akses Ditolak.")
-    
-    else:
-        # TAMPILAN KHUSUS ADMIN
-        
-        # 1. Status Koneksi AI (Dipindahkan dari Sidebar)
-        if ai_status_msg == "Connected":
-            st.success("✅ AI Connected via Railway")
-        else:
-            st.warning(f"⚠️ Status AI: {ai_status_msg}")
-            
-        st.success("Akses Eksekutif Aktif: Selamat Datang Pak Erwin")
-        
-        # 2. Visi & Misi Lengkap (Internal Only)
-        with st.expander("📖 Lihat Visi & Misi Strategis (Lengkap)", expanded=False):
-            st.markdown("""
-            <div style="text-align: justify; line-height: 1.7; font-size: 15px; color: #d1d5db;">
-            <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital yang berkembang pesat. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman mendalam di industri perbankan dan manajemen aset, kami memahami bahwa setiap celah terkecil dalam sistem operasional merupakan potensi kerugian fatal bagi keberlangsungan sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi sedikit pun.<br><br>
-            Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang secara alami memiliki keterbatasan fisik dan kognitif, melainkan harus dibangun di atas fondasi teknologi AI yang presisi dan tidak memihak. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer tingkat lanjut, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat, terverifikasi, dan disajikan secara real-time.<br><br>
-            Visi besar kami adalah menjadi standar global dalam kampanye "Eliminating Leakage", di mana setiap pemilik bisnis—mulai dari skala UMKM hingga korporasi multinasional—dapat menjalankan operasional mereka dengan ketenangan pikiran total karena mengetahui bahwa setiap Rupiah yang masuk diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak manajemen, melainkan benteng pertahanan terakhir bagi aset berharga dan masa depan investasi Anda.
-            </div>
-            """, unsafe_allow_html=True)
-            
+        c5, c6, c7, c8 = st.columns(4)
+        with c5: st.success("🧠 The Analyst")
+        with c6: st.success("🐕 The Watchdog")
+        with c7: st.success("🛡️ The Sentinel")
+        with c8: st.success("⚖️ The Legalist")
+
+        c9, c10 = st.columns(2)
+        with c9: st.success("💰 The Treasurer")
+        with c10: st.info("🤖 The Core Brain: Ready")
+
+        # --- 2. MONITORING INVOICE & PIUTANG (H-7) ---
         st.divider()
-        st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
+        st.subheader("📅 Billing & Invoice Monitoring (Baru!)")
+        st.write("Melacak invoice yang akan jatuh tempo dalam 7 hari ke depan untuk mencegah kemacetan dana.")
         
-        # Metrik Utama
-        c_api1, c_api2, c_api3 = st.columns(3)
-        with c_api1:
-            st.metric("Anggaran API Bulanan", "Rp 10.000.000")
-        with c_api2:
-            st.metric("Biaya API Terpakai", "Rp 2.000.000", delta="-20% (Optimized)", delta_color="normal")
-        with c_api3:
-            st.metric("Efisiensi Sistem", "88%", delta="Sesuai Target")
-        
-        st.write("**Monitoring Kuota API Cloud**")
-        st.progress(0.20, text="Penggunaan Kuota: 20%")
+        # Simulasi data invoice dari sistem Billing Otomatis
+        invoice_data = {
+            "Customer/Outlet": ["Outlet Sudirman", "Cabang Tangerang", "Resto Central"],
+            "Nilai Tagihan": ["Rp 15.000.000", "Rp 8.200.000", "Rp 12.500.000"],
+            "Jatuh Tempo": ["H-2 (Mendesak)", "H-5", "H-7"],
+            "Status": ["🚨 Kirim Alarm", "⚠️ Reminder Sent", "✅ Scheduled"]
+        }
+        st.table(invoice_data)
+        st.info("Sistem Billing otomatis mengirimkan notifikasi penagihan ke outlet.")
+
+        # --- 3. CLOUD FILTERING GATEKEEPER (THE WATCHDOG) ---
+        st.divider()
+        st.subheader("🛰️ AI Pre-Cloud Gatekeeper")
+        col_stat1, col_stat2, col_stat3 = st.columns(3)
+        col_stat1.metric("Data Traffic", "100%", "Secure")
+        col_stat2.metric("AI Filtering", "0.2ms/trans", "Fast")
+        col_stat3.metric("Alarm Merah", "Active", "WhatsApp Bot")
+
+        with st.expander("🔍 Live Audit Trail (Pre-Filtering Mode)", expanded=True):
+            st.code("""
+            [SYSTEM] API Connected... Data filtering diaktifkan (Plug n Play).
+            [AGENT] The Watchdog: Scanning Transaksi Kasir... [cite: 27]
+            [WARNING] Anomali #9922: Refund Tanpa Struk Terdeteksi! [cite: 4]
+            [ACTION] Menahan upload ke Cloud. Mengirim Alarm ke Owner... [cite: 6]
+            """)
+            st.error("🚨 FRAUD DETECTED: Upaya manipulasi kasir berhasil dicegah sebelum masuk Cloud.")
+
+        # --- 4. ASSET PROTECTION & SAVING ---
+        st.divider()
+        st.subheader("💰 Revenue Optimization (Kalkulator Penyelamatan)")
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.metric("Potensi Kebocoran Diblokir", "Rp 850.000", delta="Kritis", delta_color="inverse")
+        with col_p2:
+            st.metric("Efisiensi Cloud Audit", "99.9%", "No Hardware [cite: 13, 14]")
+
+        # --- 5. PUSAT UNDUHAN & AI STRATEGIST ---
+        st.divider()
+        st.subheader("📁 V-Guard Executive Documentation")
+        d_col1, d_col2 = st.columns(2)
+        with d_col1:
+            st.download_button("📄 Fitur Unggulan V-LITE/V-PRO (Word)", data="Isi File", file_name="Fitur_Unggulan_VGuard.docx")
+        with d_col2:
+            st.download_button("📑 Tech Stack & 10 Agents (PDF)", data="Isi File", file_name="Tech_Stack_VGuard.pdf")
 
         st.divider()
-        
-        # AI Squad Agent Monitoring
-        st.subheader("🤖 V-Guard AI Squad Status")
-        sq1, sq2, sq3, sq4 = st.columns(4)
-        with sq1:
-            st.info("🕵️ **Sentinel**\n\nStatus: Monitoring Fraud")
-        with sq2:
-            st.info("💰 **Auditor**\n\nStatus: VCS Sync Active")
-        with sq3:
-            st.info("📦 **Stocker**\n\nStatus: Visual AI Check")
-        with sq4:
-            st.info("📄 **Invoicer**\n\nStatus: H-7 Ready")
+        st.subheader("🤖 The Core Brain - AI Strategist")
+        user_query = st.text_area("Konsultasi Strategi (Input Instruksi ke Core Brain):")
+        if st.button("Jalankan AI Audit"):
+            if model_vguard and user_query:
+                with st.spinner("10 Agen AI sedang menganalisis data..."):
+                    context = f"Anda adalah Core Brain V-Guard (Gemini). Gunakan perspektif 10 agen AI untuk menjawab Founder Erwin Sinaga: {user_query}"
+                    response = model_vguard.generate_content(context)
+                    st.markdown(response.text)
 
         if st.button("Log Out"):
             st.session_state.admin_logged_in = False
             st.rerun()
-
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
