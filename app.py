@@ -279,8 +279,23 @@ def admin_center_vguard():
     st.markdown("<center><small>V-Guard AI Intelligence Admin Portal | ©2026</small></center>", unsafe_allow_html=True)
 
 # --- LOGIKA PENYEKATAN (SEKAT TOTAL) ---
+# --- LOGIKA NAVIGASI (HANYA INI YANG DIPERLUKAN) ---
+
+if menu == "Visi & Misi":
+    # Kosongkan atau isi dengan konten poster saja
+    st.header("Visi & Misi")
+    st.image("poster_vguard.png", use_container_width=True)
 
 elif menu == "Admin Control Center":
-    # Hanya jika menu ini diklik, fungsi di bawah ini dipanggil
+    # HANYA panggil fungsi Admin di sini
+    # Ini tidak akan menyebar karena berada di baris baru yang terpisah
     admin_center_vguard()
 
+elif menu == "Produk & Layanan":
+    st.header("Produk & Layanan")
+
+elif menu == "ROI Kerugian Klien":
+    st.header("ROI Kerugian Klien")
+
+elif menu == "Portal Klien":
+    st.header("Portal Klien")
