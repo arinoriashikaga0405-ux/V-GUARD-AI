@@ -1,22 +1,27 @@
 import streamlit as st
+import pandas as pd
+from datetime import datetime
 import os
 import google.generativeai as genai
-from datetime import datetime
 
-# --- 1. KONFIGURASI ENGINE & SECURITY ---
+# --- 1. KEAMANAN & KONFIGURASI AI ---
 if "GEMINI_API_KEY" in st.secrets:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 else:
     st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
 
-model_vguard = genai.GenerativeModel(
-    model_name='gemini-1.5-flash',
-    generation_config={"temperature": 0.2, "max_output_tokens": 50},
-    system_instruction="Analisa transaksi: ALERT jika fraud, PASS jika aman."
-)
+# --- 2. KONEKSI GOOGLE SHEETS (DIBUNGKUS AGAR TIDAK ERROR) ---
+try:
+    from st_gsheets_connection import GSheetsConnection
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    koneksi_aktif = True
+except Exception:
+    koneksi_aktif = False
 
-# --- 2. KONFIGURASI HALAMAN ---
+# --- 3. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+
+# (Gunakan sisa kode menu Bapak seperti biasa di bawah ini)
 
 st.markdown("""
 <style>
