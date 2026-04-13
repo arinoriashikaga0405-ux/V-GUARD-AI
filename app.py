@@ -249,11 +249,25 @@ elif menu == "Admin Control Center":
                 st.rerun()
             else:
                 st.error("Access Code Salah!")
+                
+if st.session_state.admin_logged_in:
+    menu_admin = st.sidebar.selectbox("Admin Menu", [
+        "Dashboard Utama", 
+        "Aktivasi Nasabah Baru", 
+        "Monitoring 10 Agents", 
+        "Database Klien"
+    ])
 
     if st.session_state.admin_logged_in:
         # --- 1. STATUS AKTIVASI 10 AGEN AI (PLUG N PLAY) ---
         st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
+    elif menu_admin == "Aktivasi Nasabah Baru":
+        st.header("📋 Antrean Aktivasi V-Guard")
+        st.write("Daftar nasabah yang baru saja melakukan pengajuan via Portal Klien.")
         
+        # Integrasi The Liaison (Penghubung Data)
+        st.info("The Liaison sedang menarik data terbaru dari Database Klien...")
+    
         # Baris status agen utama
         c1, c2, c3, c4 = st.columns(4)
         with c1: st.success("👁️ The Visionary")
