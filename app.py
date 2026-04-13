@@ -225,8 +225,8 @@ elif menu == "Portal Klien":
             setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan V-Guard AI Intelligence.")
 
             if st.button("Kirim Pengajuan Aktivasi"):
-                if setuju_tc:
-                    if nama_owner and nama_usaha:
+               if setuju_tc:
+                   if nama_owner and nama_usaha:
                         # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
                         with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
                             st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
