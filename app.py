@@ -2,11 +2,7 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# --- 1. KONFIGURASI ENGINE & SECURITY ---
-i# GANTI KODE LAMA:
-# if "GEMINI_API_KEY" in st.secrets:
-
-# MENJADI KODE INI:
+# --- PASTIKAN BAGIAN INI BERSIH DARI TYPO ---
 try:
     if "GEMINI_API_KEY" in st.secrets:
         genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
@@ -14,7 +10,7 @@ try:
     else:
         st.warning("⚠️ API Key tidak ditemukan di Variables Railway.")
 except Exception:
-    st.warning("⚠️ Variabel sistem (Secrets) belum dikonfigurasi di Railway.")
+    st.warning("⚠️ Konfigurasi rahasia belum siap.")
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
