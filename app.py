@@ -280,13 +280,7 @@ def admin_center_vguard():
 
 # --- LOGIKA PENYEKATAN (SEKAT TOTAL) ---
 
-if menu == "Visi & Misi":
-    st.header("Visi & Misi")
-    # Hanya isi Visi Misi yang muncul. Admin TIDAK ADA di sini.
 
-elif menu == "Produk & Layanan":
-    st.header("Produk & Layanan")
-    # Hanya isi Produk yang muncul. Admin TIDAK ADA di sini.
 
 # ... menu lainnya ...
 
