@@ -116,24 +116,70 @@ elif menu == "ROI Kerugian Klien":
 
 elif menu == "Portal Klien":
     st.header("🔑 Portal Akses Klien V-Guard")
-    st.info("Fitur ini memungkinkan klien untuk memantau status keamanan bisnis mereka secara mandiri.")
     
-    tab_reg, tab_log = st.tabs(["📝 Registrasi Baru", "🔐 Login Dashboard"])
+    tab_log, tab_reg = st.tabs(["🔐 Login Dashboard", "📝 Registrasi Baru"])
     
-    with tab_reg:
-        st.subheader("Form Order Layanan")
-        with st.container(border=True):
-            st.text_input("Nama Lengkap")
-            st.text_input("Nama Usaha / Perusahaan")
-            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.button("Kirim Pengajuan")
-            
     with tab_log:
-        st.subheader("Masuk ke Sistem")
-        st.text_input("User ID / Email")
-        st.text_input("Password", type="password")
-        st.button("Login")
+        st.subheader("Masuk ke Sistem Monitoring")
+        
+        # Simulasi Database Klien (UserID: Paket)
+        client_db = {
+            "VGUARD-LITE-001": "V-LITE",
+            "VGUARD-PRO-99": "V-PRO",
+            "VGUARD-SIGHT-07": "V-SIGHT",
+            "VGUARD-ENT-MASTER": "V-ENTERPRISE"
+        }
+        
+        col_login1, col_login2 = st.columns(2)
+        with col_login1:
+            user_id = st.text_input("User ID Klien", placeholder="Contoh: VGUARD-PRO-99")
+            password = st.text_input("Password", type="password")
+            btn_login = st.button("Masuk ke Dashboard")
 
+        if btn_login:
+            if user_id in client_db:
+                paket_aktif = client_db[user_id]
+                st.success(f"Selamat Datang! Lisensi Anda: **{paket_aktif}** (Status: Aktif ✅)")
+                
+                st.divider()
+                st.subheader(f"📊 Dashboard Monitoring - {paket_aktif}")
+                
+                # Konten Berdasarkan Paket
+                m1, m2, m3 = st.columns(3)
+                if paket_aktif == "V-LITE":
+                    m1.metric("Status Kasir", "Online")
+                    m2.metric("Fraud Alert Today", "0")
+                    m3.info("Fitur V-LITE: Daily Summary Ready")
+                
+                elif paket_aktif == "V-PRO":
+                    m1.metric("Sync Bank (VCS)", "Active")
+                    m2.metric("Fraud Alert Today", "2 Case", delta="Perlu Cek", delta_color="inverse")
+                    m3.metric("Revenue Protection", "Rp 1.2M")
+                    st.write("**Recent Activities:** Audit PDF Berhasil diunggah.")
+
+                elif paket_aktif == "V-SIGHT":
+                    m1.metric("CCTV AI Status", "Streaming")
+                    m2.metric("Behavior Anomalies", "1", delta="🚨")
+                    m3.metric("Visual Audit", "Match 100%")
+                    st.image("https://via.placeholder.com/600x200?text=CCTV+AI+Visual+Monitoring+Active", use_container_width=True)
+
+                elif paket_aktif == "V-ENTERPRISE":
+                    st.warning("⚠️ High Security Mode: The Core Brain Active")
+                    m1.metric("Forensic Scan", "99.9%")
+                    m2.metric("Network Integrity", "Secure")
+                    m3.metric("Custom SOP Drift", "0%")
+                    st.write("DASHBOARD EKSEKUTIF: Seluruh cabang terpantau aman.")
+            else:
+                st.error("User ID tidak ditemukan atau belum aktif. Silakan hubungi Admin.")
+
+    with tab_reg:
+        st.subheader("Form Order & Aktivasi Layanan")
+        with st.container(border=True):
+            st.text_input("Nama Lengkap / Owner")
+            st.text_input("Nama Usaha (Misal: Kopi Kenangan)")
+            st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.write("Setelah registrasi, tim Admin akan mengirimkan User ID via WhatsApp.")
+            st.button("Kirim Pengajuan Aktivasi")
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
 
