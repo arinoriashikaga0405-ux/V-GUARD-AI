@@ -87,6 +87,41 @@ elif menu == "Produk & Layanan":
                 st.write(details[3])
                 st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
 
+elif menu == "ROI Kerugian Klien":
+    st.header("📊 Analisis Potensi Kerugian vs ROI")
+    st.write("Gunakan kalkulator ini untuk melihat berapa banyak kebocoran yang bisa dihemat oleh V-Guard AI.")
+    
+    col_a, col_b = st.columns(2)
+    with col_a:
+        omzet = st.number_input("Omzet Bulanan Bisnis Anda (Rp)", value=100000000, step=1000000)
+        leak = st.slider("Estimasi Persentase Kebocoran/Fraud (%)", 1, 20, 5)
+        loss = omzet * (leak / 100)
+        
+    with col_b:
+        st.error(f"### Potensi Kerugian: Rp {loss:,.0f} / bulan")
+        st.success(f"### Potensi Penyelamatan AI: Rp {loss * 0.88:,.0f} / bulan")
+        st.caption("Dihitung berdasarkan rata-rata efisiensi sistem V-Guard sebesar 88%.")
+
+elif menu == "Portal Klien":
+    st.header("🔑 Portal Akses Klien V-Guard")
+    st.info("Fitur ini memungkinkan klien untuk memantau status keamanan bisnis mereka secara mandiri.")
+    
+    tab_reg, tab_log = st.tabs(["📝 Registrasi Baru", "🔐 Login Dashboard"])
+    
+    with tab_reg:
+        st.subheader("Form Order Layanan")
+        with st.container(border=True):
+            st.text_input("Nama Lengkap")
+            st.text_input("Nama Usaha / Perusahaan")
+            st.selectbox("Pilih Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            st.button("Kirim Pengajuan")
+            
+    with tab_log:
+        st.subheader("Masuk ke Sistem")
+        st.text_input("User ID / Email")
+        st.text_input("Password", type="password")
+        st.button("Login")
+
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
 
