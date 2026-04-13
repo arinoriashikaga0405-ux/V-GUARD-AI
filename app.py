@@ -257,6 +257,7 @@ def admin_center_vguard():
             new_user = c_a.text_input("Username Klien")
             new_mail = c_a.text_input("Email Bisnis")
             paket = c_b.selectbox("Paket", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            # Pastikan variabel datetime sudah diimport di bagian atas file app.py
             tgl_bayar = c_b.date_input("Tanggal Bayar", value=datetime.now())
             if st.button("🚀 AKTIFKAN & SIMPAN"):
                 st.success(f"Akun {new_user} Aktif!")
@@ -276,26 +277,7 @@ def admin_center_vguard():
         c1.write("1. **E2EE** | 2. **MFA** | 3. **RBAC** | 4. **File Scan** | 5. **Audit Log**")
         c2.write("6. **Rate Limit** | 7. **Data Masking** | 8. **Pen-Test** | 9. **PDP** | 10. **Incident Response**")
 
+    # --- PENUTUP FINAL ---
     st.markdown("<center><small>V-Guard AI Intelligence Admin Portal | ©2026</small></center>", unsafe_allow_html=True)
 
-# --- LOGIKA PENYEKATAN (SEKAT TOTAL) ---
-# --- LOGIKA NAVIGASI (HANYA INI YANG DIPERLUKAN) ---
-
-if menu == "Visi & Misi":
-    # Kosongkan atau isi dengan konten poster saja
-    st.header("Visi & Misi")
-    st.image("poster_vguard.png", use_container_width=True)
-
-elif menu == "Admin Control Center":
-    # HANYA panggil fungsi Admin di sini
-    # Ini tidak akan menyebar karena berada di baris baru yang terpisah
-    admin_center_vguard()
-
-elif menu == "Produk & Layanan":
-    st.header("Produk & Layanan")
-
-elif menu == "ROI Kerugian Klien":
-    st.header("ROI Kerugian Klien")
-
-elif menu == "Portal Klien":
-    st.header("Portal Klien")
+# --- FUNGSI SELESAI DI SINI, TIDAK ADA LAGI LOGIKA NAVIGASI DI BAWAHNYA ---
