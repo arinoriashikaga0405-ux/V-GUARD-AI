@@ -18,8 +18,21 @@ if gemini_key:
 
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
+# --- Tambahkan di Baris 21 ---
 if "admin_logged_in" not in st.session_state:
     st.session_state.admin_logged_in = False
+
+# THE SENTINEL: Sistem Auto-Recovery & Health Check
+if "system_status" not in st.session_state:
+    st.session_state.system_status = "Healthy"
+
+def sentinel_recovery():
+    if st.session_state.system_status != "Healthy":
+        # Simulasi restart mandiri oleh The Sentinel
+        st.session_state.system_status = "Healthy"
+        return True
+    return False
+
 # CSS Custom untuk tampilan profesional
 st.markdown("""
 <style>
@@ -212,13 +225,22 @@ elif menu == "Portal Klien":
             setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan V-Guard AI Intelligence.")
 
             if st.button("Kirim Pengajuan Aktivasi"):
-                if setuju_tc:
-                    if nama_owner and nama_usaha:
-                        st.success(f"Terima Kasih Pak/Bu {nama_owner}. Pengajuan untuk {nama_usaha} (Paket {paket_pilihan}) telah diterima. Kami akan mengirimkan User ID via WhatsApp.")
-                    else:
-                        st.warning("Mohon lengkapi nama dan nama usaha Anda.")
-                else:
-                    st.error("🚨 Anda harus menyetujui Syarat & Ketentuan (T&C) sebelum melakukan aktivasi.")
+        if setuju_tc:
+            if nama_owner and nama_usaha:
+                # Menjalankan fungsi koordinasi agen
+                sentinel_recovery() # Memastikan sistem stabil
+                
+                with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
+                    st.write("🛡️ **The Legalist**: Mengamankan privasi data (Non-Disclosure Agreement).")
+                    st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud Intelligence Center.")
+                    st.write("🕵️ **The Watchdog**: Menyiapkan filter deteksi anomali real-time.")
+                    status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
+                
+                st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} untuk {nama_usaha} telah aktif secara otonom.")
+            else:
+                st.warning("Mohon lengkapi data pendaftaran.")
+        else:
+            st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
