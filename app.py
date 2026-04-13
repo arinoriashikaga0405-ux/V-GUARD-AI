@@ -222,6 +222,15 @@ elif menu == "Portal Klien":
             
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
+    if not st.session_state.admin_logged_in:
+        st.subheader("🔐 Admin Authentication")
+        admin_password = st.text_input("Masukkan Access Code:", type="password")
+        if st.button("Buka Intelligence Center"):
+            if admin_password == "w1nbju8282":
+                st.session_state.admin_logged_in = True
+                st.rerun()
+            else:
+                st.error("Access Code Salah!")
 
     if st.session_state.admin_logged_in:
         # --- 1. STATUS AKTIVASI 10 AGEN AI (PLUG N PLAY) ---
