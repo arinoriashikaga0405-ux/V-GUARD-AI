@@ -226,7 +226,7 @@ elif menu == "Portal Klien":
 
        
         # --- PROSES AKTIVASI OLEH ELITE AI SQUAD ---
-      if st.button("Kirim Pengajuan Aktivasi"):
+    if st.button("Kirim Pengajuan Aktivasi"):
         if setuju_tc:
             if nama_owner and nama_usaha:
                 # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
