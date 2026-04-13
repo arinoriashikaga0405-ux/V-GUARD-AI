@@ -278,26 +278,3 @@ def admin_center_vguard():
 
     st.markdown("<center><small>V-Guard AI Intelligence Admin Portal | ©2026</small></center>", unsafe_allow_html=True)
 
-# --- 2. SISTEM NAVIGASI UTAMA (PENTING!) ---
-with st.sidebar:
-    st.title("🛡️ V-Guard AI")
-    # Menu pilihan
-    menu = st.radio("NAVIGASI UTAMA", 
-                    ["Visi & Misi", "Produk & Layanan", "ROI Kerugian Klien", "Portal Klien", "Admin Control Center"])
-
-# --- 3. EKSEKUSI MENU (SEKAT KETAT) ---
-if menu == "Visi & Misi":
-    st.header("Visi & Misi")
-    st.write("Target: Zero Leakage, High Integrity.")
-
-elif menu == "Produk & Layanan":
-    st.header("Produk & Layanan")
-    st.write("Integrasi: MindBridge, DataRobot, Alteryx.")
-
-elif menu == "ROI Kerugian Klien":
-    st.header("ROI Kerugian Klien")
-
-elif menu == "Portal Klien":
-    st.header("Portal Klien")
-
-
