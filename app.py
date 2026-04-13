@@ -300,6 +300,4 @@ elif menu == "ROI Kerugian Klien":
 elif menu == "Portal Klien":
     st.header("Portal Klien")
 
-elif menu == "Admin Control Center":
-    # DI SINI KITA PANGGIL FUNGSI ADMINNYA
-    admin_center_vguard()
+
