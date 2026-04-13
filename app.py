@@ -261,17 +261,11 @@ if st.session_state.admin_logged_in:
         "Database Klien"
     ])
 
+    # --- MENU 1: DASHBOARD UTAMA ---
     if menu_admin == "Dashboard Utama":
-        # --- 1. STATUS AKTIVASI 10 AGEN AI (PLUG N PLAY) ---
         st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
-    elif menu_admin == "Aktivasi Nasabah Baru":
-        st.header("📋 Antrean Aktivasi V-Guard")
-        st.write("Daftar nasabah yang baru saja melakukan pengajuan via Portal Klien.")
         
-        # Integrasi The Liaison (Penghubung Data)
-        st.info("The Liaison sedang menarik data terbaru dari Database Klien...")
-    
-        # Baris status agen utama
+        # Baris status agen utama (Pindahkan ke sini agar muncul di Dashboard)
         c1, c2, c3, c4 = st.columns(4)
         with c1: st.success("👁️ The Visionary")
         with c2: st.success("👂 The Concierge")
@@ -288,6 +282,16 @@ if st.session_state.admin_logged_in:
         with c9: st.success("💰 The Treasurer")
         with c10: st.info("🤖 The Core Brain: Ready")
 
+    # --- MENU 2: AKTIVASI NASABAH BARU ---
+    elif menu_admin == "Aktivasi Nasabah Baru":
+        st.header("📋 Antrean Aktivasi V-Guard")
+        st.write("Daftar nasabah yang baru saja melakukan pengajuan via Portal Klien.")
+        st.info("The Liaison sedang menarik data terbaru dari Database Klien...")
+
+    # --- MENU 3: MONITORING (Contoh Billing) ---
+    elif menu_admin == "Monitoring 10 Agents":
+        st.subheader("📊 Billing & Invoice Monitoring (Baru!)")
+        # (Pindahkan kode invoice data ke sini)
         # --- 2. MONITORING INVOICE & PIUTANG (H-7) ---
         st.divider()
         st.subheader("📅 Billing & Invoice Monitoring (Baru!)")
