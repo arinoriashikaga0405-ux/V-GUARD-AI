@@ -1,14 +1,15 @@
-import streamlit as st
-import pandas as pd
-from datetime import datetime
 import os
-import google.generativeai as genai
 
-# --- 1. KEAMANAN & KONFIGURASI AI ---
-if "GEMINI_API_KEY" in st.secrets:
-    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-else:
-    st.warning("⚠️ API Key belum dikonfigurasi di Secrets.")
+# GANTI bagian 'API Key Security' Anda (Baris 20-33) dengan ini:
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY")
+WA_TOKEN = os.environ.get("WA_TOKEN") or st.secrets.get("WA_TOKEN")
+WA_PHONE_ID = os.environ.get("WA_PHONE_ID") or st.secrets.get("WA_PHONE_ID")
+
+if not GEMINI_API_KEY:
+    st.error("❌ ERROR: GEMINI_API_KEY tidak ditemukan di Variables Railway.")
+    st.stop()
+
+genai.configure(api_key=GEMINI_API_KEY)
 
 # --- 2. KONEKSI GOOGLE SHEETS (DIBUNGKUS AGAR TIDAK ERROR) ---
 try:
