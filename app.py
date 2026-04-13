@@ -280,10 +280,6 @@ def admin_center_vguard():
 
 # --- LOGIKA PENYEKATAN (SEKAT TOTAL) ---
 
-
-
-# ... menu lainnya ...
-
 elif menu == "Admin Control Center":
     # Hanya jika menu ini diklik, fungsi di bawah ini dipanggil
     admin_center_vguard()
