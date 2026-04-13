@@ -2,22 +2,20 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# --- 1. PENGATURAN AI & KEAMANAN (JALUR STABIL) ---
+# --- 1. PENGATURAN AI & KEAMANAN (LOGIKA INTERNAL) ---
 # Mengambil API Key langsung dari sistem Railway (Environment Variables)
 gemini_key = os.environ.get("GEMINI_API_KEY")
+ai_status_msg = "Mode Offline"
+model_vguard = None
 
 if gemini_key:
     try:
         genai.configure(api_key=gemini_key)
         model_vguard = genai.GenerativeModel('gemini-1.5-flash')
-        st.sidebar.success("✅ AI Connected via Railway")
+        ai_status_msg = "Connected"
     except Exception:
-        st.sidebar.warning("⚠️ Koneksi AI Tertunda")
-        model_vguard = None
-else:
-    # Website tidak akan merah/error lagi, hanya muncul info di sidebar
-    st.sidebar.info("📡 Mode Offline: Menunggu Sinkronisasi")
-    model_vguard = None
+        ai_status_msg = "Error Connection"
+
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
@@ -52,23 +50,22 @@ with st.sidebar:
 # --- 4. LOGIKA MENU ---
 
 if menu == "Visi & Misi":
-    st.header("Visi & Misi: Digitizing Trust, Eliminating Leakage")
+    st.header("🛡️ V-Guard AI Intelligence")
     
-    # Layout Kolom untuk Foto dan Deskripsi (250+ kata)
     col_img, col_txt = st.columns([1, 2])
     
     with col_img:
         if os.path.exists("erwin.jpg"):
             st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
-        else:
-            st.info("File erwin.jpg tidak ditemukan.")
 
     with col_txt:
+        st.subheader("Digitizing Trust, Eliminating Leakage")
         st.markdown("""
         <div style="text-align: justify; line-height: 1.7; font-size: 16px; color: #d1d5db;">
-        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital yang berkembang pesat. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman mendalam di industri perbankan dan manajemen aset, kami memahami bahwa setiap celah terkecil dalam sistem operasional merupakan potensi kerugian fatal bagi keberlangsungan sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi sedikit pun.<br><br>
-        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang secara alami memiliki keterbatasan fisik dan kognitif, melainkan harus dibangun di atas fondasi teknologi AI yang presisi dan tidak memihak. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer tingkat lanjut, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat, terverifikasi, dan disajikan secara real-time.<br><br>
-        Visi besar kami adalah menjadi standar global dalam kampanye "Eliminating Leakage", di mana setiap pemilik bisnis—mulai dari skala UMKM hingga korporasi multinasional—dapat menjalankan operasional mereka dengan ketenangan pikiran total karena mengetahui bahwa setiap Rupiah yang masuk diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak manajemen, melainkan benteng pertahanan terakhir bagi aset berharga dan masa depan investasi Anda. Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi yang melampaui standar audit konvensional yang ada saat ini. Kami berkomitmen untuk memastikan bahwa investasi Anda terlindungi dari segala bentuk anomali yang merugikan.
+        Selamat datang di <b>V-Guard AI Intelligence</b>. Kami adalah mitra strategis Anda dalam menjaga integritas finansial dan keamanan aset melalui teknologi kecerdasan buatan terapan.<br><br>
+        Di era digital saat ini, transparansi dan akurasi adalah kunci keberlanjutan bisnis. Ekosistem kami hadir untuk memastikan setiap rupiah investasi Anda terlindungi dari risiko anomali dan kebocoran operasional.
+        <br><br>
+        <i>Silakan gunakan menu navigasi untuk mempelajari layanan kami atau menghitung potensi efisiensi bisnis Anda.</i>
         </div>
         """, unsafe_allow_html=True)
 
@@ -143,12 +140,30 @@ elif menu == "Admin Control Center":
             st.error("Akses Ditolak.")
     
     else:
-        # Dashboard Dashboard Khusus Admin
+        # TAMPILAN KHUSUS ADMIN
+        
+        # 1. Status Koneksi AI (Dipindahkan dari Sidebar)
+        if ai_status_msg == "Connected":
+            st.success("✅ AI Connected via Railway")
+        else:
+            st.warning(f"⚠️ Status AI: {ai_status_msg}")
+            
         st.success("Akses Eksekutif Aktif: Selamat Datang Pak Erwin")
         
+        # 2. Visi & Misi Lengkap (Internal Only)
+        with st.expander("📖 Lihat Visi & Misi Strategis (Lengkap)", expanded=False):
+            st.markdown("""
+            <div style="text-align: justify; line-height: 1.7; font-size: 15px; color: #d1d5db;">
+            <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital yang berkembang pesat. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman mendalam di industri perbankan dan manajemen aset, kami memahami bahwa setiap celah terkecil dalam sistem operasional merupakan potensi kerugian fatal bagi keberlangsungan sebuah bisnis. Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja secara otonom 24 jam nonstop tanpa kompromi sedikit pun.<br><br>
+            Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang secara alami memiliki keterbatasan fisik dan kognitif, melainkan harus dibangun di atas fondasi teknologi AI yang presisi dan tidak memihak. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer tingkat lanjut, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat, terverifikasi, dan disajikan secara real-time.<br><br>
+            Visi besar kami adalah menjadi standar global dalam kampanye "Eliminating Leakage", di mana setiap pemilik bisnis—mulai dari skala UMKM hingga korporasi multinasional—dapat menjalankan operasional mereka dengan ketenangan pikiran total karena mengetahui bahwa setiap Rupiah yang masuk diawasi oleh kecerdasan buatan yang tak kenal lelah. V-Guard bukan sekadar perangkat lunak manajemen, melainkan benteng pertahanan terakhir bagi aset berharga dan masa depan investasi Anda.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        st.divider()
         st.markdown("### 📊 Ringkasan Eksekutif & AI Squad")
         
-        # Metrik Utama (Sesuai SOP)
+        # Metrik Utama
         c_api1, c_api2, c_api3 = st.columns(3)
         with c_api1:
             st.metric("Anggaran API Bulanan", "Rp 10.000.000")
@@ -157,7 +172,6 @@ elif menu == "Admin Control Center":
         with c_api3:
             st.metric("Efisiensi Sistem", "88%", delta="Sesuai Target")
         
-        # Progress Bar Kuota API 20%
         st.write("**Monitoring Kuota API Cloud**")
         st.progress(0.20, text="Penggunaan Kuota: 20%")
 
