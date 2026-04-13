@@ -219,11 +219,6 @@ elif menu == "Portal Klien":
                 else:
                     st.error("🚨 Anda harus menyetujui Syarat & Ketentuan (T&C) sebelum melakukan aktivasi.")
             
-            st.write("---")
-            if st.button("Kirim Pengajuan Aktivasi"):
-                # Di sini Bapak bisa menambahkan fungsi kirim email atau notifikasi ke Sheets jika ingin otomatis
-                st.success(f"Terima Kasih Pak/Bu {nama_owner}. Pengajuan untuk {nama_usaha} telah diterima. Kami akan mengirimkan User ID via WhatsApp.")
-            
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
 
