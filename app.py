@@ -2,24 +2,22 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# --- 1. PENGATURAN AI & KEAMANAN (VERSI FIX) ---
-# Menggunakan st.secrets.get() agar aplikasi tidak crash jika key tidak ada
-gemini_key = st.secrets.get("GEMINI_API_KEY")
+# --- 1. PENGATURAN AI & KEAMANAN (JALUR STABIL) ---
+# Mengambil API Key langsung dari sistem Railway (Environment Variables)
+gemini_key = os.environ.get("GEMINI_API_KEY")
 
 if gemini_key:
     try:
         genai.configure(api_key=gemini_key)
         model_vguard = genai.GenerativeModel('gemini-1.5-flash')
-        st.sidebar.success("✅ V-Guard AI System Ready")
-    except Exception as e:
-        # Menampilkan pesan error teknis hanya di sidebar agar tidak merusak tampilan utama
-        st.sidebar.warning(f"⚠️ Koneksi AI Tertunda: {str(e)}")
-        model_vguard = None 
+        st.sidebar.success("✅ AI Connected via Railway")
+    except Exception:
+        st.sidebar.warning("⚠️ Koneksi AI Tertunda")
+        model_vguard = None
 else:
-    # Jika variabel belum ada di Railway, sistem tetap jalan dalam mode offline
-    st.sidebar.info("📡 Mode Offline: Menunggu Sinkronisasi API")
+    # Website tidak akan merah/error lagi, hanya muncul info di sidebar
+    st.sidebar.info("📡 Mode Offline: Menunggu Sinkronisasi")
     model_vguard = None
-
 # --- 2. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
 
