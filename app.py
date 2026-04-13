@@ -194,9 +194,12 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # --- 1. DEFINISI FUNGSI ADMIN (Kode Bapak) ---
-def admin_center_vguard():
-    # Judul ini hanya akan muncul di dalam menu Admin
-    st.header("🔒 Admin Control Center - V-Guard AI Intelligence")
+if menu == "Admin Control Center":
+    admin_center_vguard()
+
+elif menu == "Visi & Misi":
+    st.header("Visi & Misi")
+    # Panggil konten Visi Misi Bapak di sini
 
     # --- SECURITY LAYER ---
     if "admin_logged_in" not in st.session_state:
