@@ -195,11 +195,7 @@ if menu == "Portal Klien":
             st.session_state.client_logged_in = False
             st.rerun()
 
-# --- 3. FUNGSI ADMIN (SEBAGAI PENUTUP) ---
-def admin_center_vguard():
-    # ... isi fungsi admin bapak ...
-    # (Berhenti di Tab 4 Keamanan, tidak ada kodingan lagi setelahnya)
-    pass
+
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
 
