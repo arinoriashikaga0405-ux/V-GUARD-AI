@@ -117,69 +117,90 @@ elif menu == "ROI Kerugian Klien":
 elif menu == "Portal Klien":
     st.header("🔑 Portal Akses Klien V-Guard")
     
+    # --- KONEKSI GOOGLE SHEETS ---
+    from streamlit_gsheets import GSheetsConnection
+    
+    # Inisialisasi koneksi
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    
+    # Membaca data dari Spreadsheet Bapak
+    url_sheets = "https://docs.google.com/spreadsheets/d/17OJpYRGTWdQ0ZldSxp-3HdyW4AN_RKuJkCWVpYbtNE8/edit?usp=sharing"
+    
+    try:
+        # Mengambil data terbaru dari Sheets
+        df_clients = conn.read(spreadsheet=url_sheets, ttl="0") 
+    except Exception:
+        st.error("Gagal sinkronisasi dengan database pusat.")
+        df_clients = None
+
     tab_log, tab_reg = st.tabs(["🔐 Login Dashboard", "📝 Registrasi Baru"])
     
     with tab_log:
         st.subheader("Masuk ke Sistem Monitoring")
         
-        # Simulasi Database Klien (UserID: Paket)
-        client_db = {
-            "VGUARD-LITE-001": "V-LITE",
-            "VGUARD-PRO-99": "V-PRO",
-            "VGUARD-SIGHT-07": "V-SIGHT",
-            "VGUARD-ENT-MASTER": "V-ENTERPRISE"
-        }
-        
         col_login1, col_login2 = st.columns(2)
         with col_login1:
-            user_id = st.text_input("User ID Klien", placeholder="Contoh: VGUARD-PRO-99")
-            password = st.text_input("Password", type="password")
+            user_id_input = st.text_input("User ID Klien", placeholder="Contoh: VGUARD-PRO-99")
+            # Password bisa disamakan atau ditarik dari kolom lain di Sheets jika Bapak mau
+            password = st.text_input("Password", type="password") 
             btn_login = st.button("Masuk ke Dashboard")
 
-        if btn_login:
-            if user_id in client_db:
-                paket_aktif = client_db[user_id]
-                st.success(f"Selamat Datang! Lisensi Anda: **{paket_aktif}** (Status: Aktif ✅)")
-                
-                st.divider()
-                st.subheader(f"📊 Dashboard Monitoring - {paket_aktif}")
-                
-                # Konten Berdasarkan Paket
-                m1, m2, m3 = st.columns(3)
-                if paket_aktif == "V-LITE":
-                    m1.metric("Status Kasir", "Online")
-                    m2.metric("Fraud Alert Today", "0")
-                    m3.info("Fitur V-LITE: Daily Summary Ready")
-                
-                elif paket_aktif == "V-PRO":
-                    m1.metric("Sync Bank (VCS)", "Active")
-                    m2.metric("Fraud Alert Today", "2 Case", delta="Perlu Cek", delta_color="inverse")
-                    m3.metric("Revenue Protection", "Rp 1.2M")
-                    st.write("**Recent Activities:** Audit PDF Berhasil diunggah.")
+        if btn_login and df_clients is not None:
+            # Cek apakah User ID ada di kolom 'UserID' spreadsheet
+            if user_id_input in df_clients['UserID'].values:
+                # Ambil data spesifik klien tersebut
+                client_info = df_clients[df_clients['UserID'] == user_id_input].iloc[0]
+                paket_aktif = client_info['Paket']
+                status_klien = client_info['Status']
 
-                elif paket_aktif == "V-SIGHT":
-                    m1.metric("CCTV AI Status", "Streaming")
-                    m2.metric("Behavior Anomalies", "1", delta="🚨")
-                    m3.metric("Visual Audit", "Match 100%")
-                    st.image("https://via.placeholder.com/600x200?text=CCTV+AI+Visual+Monitoring+Active", use_container_width=True)
+                if status_klien == "Aktif":
+                    st.success(f"Selamat Datang! Lisensi Anda: **{paket_aktif}** (Status: Aktif ✅)")
+                    st.divider()
+                    st.subheader(f"📊 Dashboard Monitoring - {paket_aktif}")
+                    
+                    # LOGIKA TAMPILAN DINAMIS BERDASARKAN PAKET DI SHEETS
+                    m1, m2, m3 = st.columns(3)
+                    
+                    if paket_aktif == "V-LITE":
+                        m1.metric("Status Kasir", "Online")
+                        m2.metric("Fraud Alert Today", "0")
+                        m3.info("Fitur V-LITE: Daily Summary Ready")
+                    
+                    elif paket_aktif == "V-PRO":
+                        m1.metric("Sync Bank (VCS)", "Active")
+                        m2.metric("Fraud Alert Today", "2 Case", delta="Perlu Cek", delta_color="inverse")
+                        m3.metric("Revenue Protection", "Rp 1.2M")
+                        st.write("**Recent Activities:** Audit PDF Berhasil diunggah.")
 
-                elif paket_aktif == "V-ENTERPRISE":
-                    st.warning("⚠️ High Security Mode: The Core Brain Active")
-                    m1.metric("Forensic Scan", "99.9%")
-                    m2.metric("Network Integrity", "Secure")
-                    m3.metric("Custom SOP Drift", "0%")
-                    st.write("DASHBOARD EKSEKUTIF: Seluruh cabang terpantau aman.")
+                    elif paket_aktif == "V-SIGHT":
+                        m1.metric("CCTV AI Status", "Streaming")
+                        m2.metric("Behavior Anomalies", "1", delta="🚨")
+                        m3.metric("Visual Audit", "Match 100%")
+                        st.image("https://via.placeholder.com/600x200?text=CCTV+AI+Visual+Monitoring+Active", use_container_width=True)
+
+                    elif paket_aktif == "V-ENTERPRISE":
+                        st.warning("⚠️ High Security Mode: The Core Brain Active")
+                        m1.metric("Forensic Scan", "99.9%")
+                        m2.metric("Network Integrity", "Secure")
+                        m3.metric("Custom SOP Drift", "0%")
+                        st.write("DASHBOARD EKSEKUTIF: Seluruh cabang terpantau aman.")
+                else:
+                    st.error("Akun Anda sedang ditangguhkan. Silakan hubungi Admin.")
             else:
-                st.error("User ID tidak ditemukan atau belum aktif. Silakan hubungi Admin.")
+                st.error("User ID tidak ditemukan. Pastikan ID sudah benar atau hubungi Admin.")
 
     with tab_reg:
         st.subheader("Form Order & Aktivasi Layanan")
         with st.container(border=True):
-            st.text_input("Nama Lengkap / Owner")
-            st.text_input("Nama Usaha (Misal: Kopi Kenangan)")
-            st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-            st.write("Setelah registrasi, tim Admin akan mengirimkan User ID via WhatsApp.")
-            st.button("Kirim Pengajuan Aktivasi")
+            nama_owner = st.text_input("Nama Lengkap / Owner")
+            nama_usaha = st.text_input("Nama Usaha")
+            paket_pilihan = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+            
+            st.write("---")
+            if st.button("Kirim Pengajuan Aktivasi"):
+                # Di sini Bapak bisa menambahkan fungsi kirim email atau notifikasi ke Sheets jika ingin otomatis
+                st.success(f"Terima Kasih Pak/Bu {nama_owner}. Pengajuan untuk {nama_usaha} telah diterima. Kami akan mengirimkan User ID via WhatsApp.")
+            
 elif menu == "Admin Control Center":
     st.header("🔒 Admin Control Center")
 
