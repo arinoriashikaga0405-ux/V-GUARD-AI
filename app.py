@@ -373,100 +373,44 @@ with tab_reg:
             with c10: st.info("🤖 The Core Brain: Ready")
                 
          elif menu_admin == "Aktivasi Nasabah Baru":
-              st.header("📋 Antrean Aktivasi V-Guard")
-              st.info("Menunggu pendaftaran baru dari Portal Klien...")
-
-    # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
-    if 'db_umum' in st.session_state and st.session_state.db_umum:
-        import pandas as pd
-        df_realtime = pd.DataFrame(st.session_state.db_umum)
-        
-        st.subheader("🚀 Daftar Pendaftar Baru")
-        st.table(df_realtime)
-
-        st.markdown("---")
-        k_pil = st.selectbox("Pilih Klien untuk Proses Penagihan", df_realtime["Nama Klien"].tolist())
-        
-        # Ambil data spesifik klien yang dipilih
-        d_sel = df_realtime[df_realtime["Nama Klien"] == k_pil].iloc[0]
-        
-        # Pemetaan Harga Akurat
-        h_map = {
-            "V-LITE": "750rb + 350rb/bln", 
-            "V-PRO": "1.5jt + 850rb/bln", 
-            "V-SIGHT": "7.5jt + 3.5jt/bln", 
-            "V-ENTERPRISE": "15jt + 10jt/bln"
-        }
-        nom = h_map.get(d_sel["Produk"], "750.000")
-
-        # Pesan Penagihan Profesional
-        msg = (
-            f"Halo {k_pil}, Invoice Aktivasi V-Guard ({d_sel['Produk']}) Anda sudah siap.\n\n"
-            f"Total Investasi: {nom}\n"
-            f"Transfer ke BCA: 3450074658\n"
-            f"Atas Nama: Erwin Sinaga\n\n"
-            f"Silakan kirim bukti transfer ke sini untuk aktivasi Sentinel."
-        )
-        
-        import urllib.parse
-        st.link_button(f"💰 Kirim Tagihan ke {k_pil}", 
-                       f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
-    else:
-        # Tampilan jika antrean masih kosong
-        st.warning("Belum ada pendaftaran baru saat ini.")
+            st.header("📋 Antrean Aktivasi V-Guard")
             
-           
-                # Baris 321 (Dulu error, sekarang kita panggil datanya)
-                df_klien = get_data_from_google()
-        
-                # Tampilkan tabelnya
-                st.table(df_klien)
+            # CEK DATA REVENUE (Klien Umum dari Portal)
+            if 'db_umum' in st.session_state and st.session_state.db_umum:
+                import pandas as pd
+                df_real = pd.DataFrame(st.session_state.db_umum)
+                st.subheader("🚀 Pendaftar Baru (Real-Time)")
+                st.table(df_real)
+                
                 st.markdown("---")
-                st.subheader("⚡ Action Center: Verifikasi & Penagihan")
+                k_pil = st.selectbox("Pilih Klien untuk Ditagih", df_real["Nama Klien"].tolist())
+                d_sel = df_real[df_real["Nama Klien"] == k_pil].iloc[0]
                 
-                klien_pilihan = st.selectbox("Pilih Klien untuk Proses Aktivasi", df_klien["Nama Klien"].tolist())
-                
-                # Mengambil data produk klien yang dipilih
-                produk_klien = str(df_klien[df_klien["Nama Klien"] == klien_pilihan]["Produk"].values[0])
-                
-                # Logika Harga Berdasarkan Screenshot Portfolio
-                if "V-LITE" in produk_klien:
-                    pasang, bulan = "Rp 750.000", "Rp 350.000"
-                elif "V-PRO" in produk_klien:
-                    pasang, bulan = "Rp 1.500.000", "Rp 850.000"
-                elif "V-SIGHT" in produk_klien:
-                    pasang, bulan = "Rp 7.500.000", "Rp 3.500.000"
-                elif "V-ENTERPRISE" in produk_klien:
-                    pasang, bulan = "Rp 15.000.000", "Rp 10.000.000"
-                else:
-                    pasang, bulan = "N/A", "N/A"
+                # Pemetaan Harga V-Guard
+                h_map = {
+                    "V-LITE": "750rb + 350rb/bln", 
+                    "V-PRO": "1.5jt + 850rb/bln", 
+                    "V-SIGHT": "7.5jt + 3.5jt/bln", 
+                    "V-ENTERPRISE": "15jt + 10jt/bln"
+                }
+                nom = h_map.get(d_sel["Produk"], "750.000")
 
-                total_bayar = f"{pasang} (Pasang) + {bulan} (Bulan Pertama)"
-                
-                # Pesan WA dengan Rekening BCA Bapak & Rincian Harga
-                pesan_wa = (
-                    f"Halo {klien_pilihan}, Pengajuan V-Guard Anda ({produk_klien}) telah disetujui.\n\n"
-                    f"Rincian Biaya Aktivasi:\n"
-                    f"- Biaya Pasang: {pasang}\n"
-                    f"- Biaya Bulanan: {bulan}\n"
-                    f"Total yang harus ditransfer: {total_bayar}\n\n"
-                    f"Pembayaran via BCA: 3450074658\n"
-                    f"Atas Nama: Erwin Sinaga\n\n"
-                    f"Setelah transfer, klik link ini untuk aktivasi: https://v-guard-ai.streamlit.app/aktivasi"
+                msg = (
+                    f"Halo {k_pil}, Invoice Aktivasi V-Guard ({d_sel['Produk']}) Anda sudah siap.\n\n"
+                    f"Total Investasi: {nom}\n"
+                    f"Transfer ke BCA: 3450074658 (Erwin Sinaga)\n\n"
+                    f"Kirim bukti transfer ke sini untuk aktivasi unit AI Anda."
                 )
                 
                 import urllib.parse
-                pesan_encoded = urllib.parse.quote(pesan_wa)
-                
-                st.link_button(f"📩 Kirim Tagihan {produk_klien} ke {klien_pilihan}", 
-                               f"https://wa.me/628123456789?text={pesan_encoded}")
-                # --- SELESAI TEMPEL ---
-            except Exception as e:
-                st.error("⚠️ Koneksi ke Database Klien terhambat.")
-                st.info("The Liaison: Sedang melakukan sinkronisasi ulang...")
+                st.link_button(f"💰 Kirim Invoice ke {k_pil}", 
+                               f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
+            else:
+                st.info("💡 Belum ada antrean pendaftaran baru dari Portal Klien.")
 
         elif menu_admin == "Monitoring 10 Agents":
-            st.subheader("📊 Billing & Invoice Monitoring (Baru!)")
+            st.header("🔍 Real-Time Monitoring (Elite Agents)")
+            # Sisa kode monitoring Bapak di sini...
             st.divider()
             
             # Data Invoice
