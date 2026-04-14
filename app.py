@@ -400,7 +400,7 @@ elif menu == "Admin Control Center":
             else:
                 st.info("💡 Belum ada antrean pendaftaran baru dari Portal Klien.")
 
-        elif menu_admin == "Monitoring 10 Agents":
+    elif menu_admin == "Monitoring 10 Agents":
             st.header("🔍 Real-Time Monitoring")
             st.write("Sistem monitoring sedang standby.")
             
