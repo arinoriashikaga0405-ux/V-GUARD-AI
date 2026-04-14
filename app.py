@@ -281,7 +281,6 @@ with tab_reg:
         else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
-    # --- Baris 335 ---
     elif menu_admin == "Aktivasi Nasabah Baru":
         st.header("📋 Antrean Aktivasi V-Guard")
         st.info("Menunggu pendaftaran baru dari Portal Klien...")
@@ -373,10 +372,9 @@ with tab_reg:
             with c9: st.success("💰 The Treasurer")
             with c10: st.info("🤖 The Core Brain: Ready")
 
-        # --- Baris 335 ---
-elif menu_admin == "Aktivasi Nasabah Baru":
-    st.header("📋 Antrean Aktivasi V-Guard")
-    st.info("Menunggu pendaftaran baru dari Portal Klien...")
+          elif menu_admin == "Aktivasi Nasabah Baru":
+              st.header("📋 Antrean Aktivasi V-Guard")
+              st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
     # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
     if 'db_umum' in st.session_state and st.session_state.db_umum:
