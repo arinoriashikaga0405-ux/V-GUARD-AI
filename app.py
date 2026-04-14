@@ -33,24 +33,23 @@ def sentinel_recovery():
         return True
     return False
     def get_data_from_google():
+        try:
+            # Mencoba koneksi asli ke Google Sheets
+            from streamlit_gsheets import GSheetsConnection
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            df = conn.read(ttl="1m")
+            return df
+        except Exception:
+            # JIKA GAGAL: Tampilkan Data Simulasi V-LITE & V-PRO
+            import pandas as pd
+            data_simulasi = {
+                "Nama Klien": ["Timotius Mardjuki", "Outlet Sudirman", "Resto Central", "Cabang Tangerang"],
+                "Produk": ["V-PRO (10 Agents)", "V-LITE (Standard)", "V-PRO (10 Agents)", "V-LITE (Standard)"],
+                "Status": ["✅ Terverifikasi", "⚠️ Pending Payment", "🛡️ Audit Watchdog", "✅ Aktif"],
+                "Nilai Kontrak": ["Rp 10.000.000", "Rp 5.000.000", "Rp 12.500.000", "Rp 5.000.000"]
+            }
+            return pd.DataFrame(data_simulasi)
     
-    try:
-        # Mencoba koneksi asli ke Google Sheets
-        from streamlit_gsheets import GSheetsConnection
-        conn = st.connection("gsheets", type=GSheetsConnection)
-        df = conn.read(ttl="1m")
-        return df
-    except Exception:
-        # JIKA GAGAL: Tampilkan Data Simulasi V-LITE & V-PRO
-        import pandas as pd
-        data_simulasi = {
-            "Nama Klien": ["Timotius Mardjuki", "Outlet Sudirman", "Resto Central", "Cabang Tangerang"],
-            "Produk": ["V-PRO (10 Agents)", "V-LITE (Standard)", "V-PRO (10 Agents)", "V-LITE (Standard)"],
-            "Status": ["✅ Terverifikasi", "⚠️ Pending Payment", "🛡️ Audit Watchdog", "✅ Aktif"],
-            "Nilai Kontrak": ["Rp 10.000.000", "Rp 5.000.000", "Rp 12.500.000", "Rp 5.000.000"]
-        }
-        return pd.DataFrame(data_simulasi)
-
 
 
 
