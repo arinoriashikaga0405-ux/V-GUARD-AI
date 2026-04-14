@@ -253,7 +253,7 @@ elif menu == "Admin Control Center":
             else:
                 st.error("Access Code Salah!")
                 
-     if st.session_state.admin_logged_in:
+    if st.session_state.admin_logged_in:
         menu_admin = st.sidebar.selectbox("Admin Menu", [
             "Dashboard Utama", 
             "Aktivasi Nasabah Baru", 
