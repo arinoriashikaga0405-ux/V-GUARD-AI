@@ -357,7 +357,7 @@ elif menu == "Admin Control Center":
 
         # LOGIKA TAMPILAN BERDASARKAN MENU ADMIN YANG DIPILIH
         # --- LOGIKA TAMPILAN BERDASARKAN MENU ADMIN ---
-       if menu_admin == "Dashboard Utama":
+    if menu_admin == "Dashboard Utama":
             st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
             c1, c2, c3, c4 = st.columns(4)
             with c1: st.success("👁️ The Visionary")
