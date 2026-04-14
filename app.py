@@ -371,8 +371,7 @@ with tab_reg:
             c9, c10 = st.columns(2)
             with c9: st.success("💰 The Treasurer")
             with c10: st.info("🤖 The Core Brain: Ready")
-
-          elif menu_admin == "Aktivasi Nasabah Baru":
+         elif menu_admin == "Aktivasi Nasabah Baru":
               st.header("📋 Antrean Aktivasi V-Guard")
               st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
