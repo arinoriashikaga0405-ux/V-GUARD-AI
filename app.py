@@ -281,7 +281,7 @@ elif menu == "Portal Klien":
         else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
-    elif menu_admin == "Aktivasi Nasabah Baru":
+  
         st.header("📋 Antrean Aktivasi V-Guard")
         st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
