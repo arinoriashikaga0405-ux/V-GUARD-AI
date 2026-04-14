@@ -325,8 +325,12 @@ elif menu == "Portal Klien":
         st.warning("Belum ada pendaftaran baru saat ini.")
     
     # 1. CEK STATUS LOGIN
-    if not st.session_state.admin_logged_in:
-        st.subheader("🔐 Admin Authentication")
+    elif menu == "Admin Control Center":
+    st.header("🔐 V-Guard Intelligence Center")
+
+    # 1. CEK STATUS LOGIN
+    if not st.session_state.get('admin_logged_in', False):
+        st.subheader("🔑 Admin Authentication")
         admin_password = st.text_input("Masukkan Access Code:", type="password")
         if st.button("Buka Intelligence Center"):
             if admin_password == "w1nbju8282":
