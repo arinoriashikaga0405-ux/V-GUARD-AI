@@ -331,6 +331,46 @@ elif menu == "Admin Control Center":
         
                 # Tampilkan tabelnya
                 st.table(df_klien)
+                st.markdown("---")
+                st.subheader("⚡ Action Center: Verifikasi & Penagihan")
+                
+                klien_pilihan = st.selectbox("Pilih Klien untuk Proses Aktivasi", df_klien["Nama Klien"].tolist())
+                
+                # Mengambil data produk klien yang dipilih
+                produk_klien = str(df_klien[df_klien["Nama Klien"] == klien_pilihan]["Produk"].values[0])
+                
+                # Logika Harga Berdasarkan Screenshot Portfolio
+                if "V-LITE" in produk_klien:
+                    pasang, bulan = "Rp 750.000", "Rp 350.000"
+                elif "V-PRO" in produk_klien:
+                    pasang, bulan = "Rp 1.500.000", "Rp 850.000"
+                elif "V-SIGHT" in produk_klien:
+                    pasang, bulan = "Rp 7.500.000", "Rp 3.500.000"
+                elif "V-ENTERPRISE" in produk_klien:
+                    pasang, bulan = "Rp 15.000.000", "Rp 10.000.000"
+                else:
+                    pasang, bulan = "N/A", "N/A"
+
+                total_bayar = f"{pasang} (Pasang) + {bulan} (Bulan Pertama)"
+                
+                # Pesan WA dengan Rekening BCA Bapak & Rincian Harga
+                pesan_wa = (
+                    f"Halo {klien_pilihan}, Pengajuan V-Guard Anda ({produk_klien}) telah disetujui.\n\n"
+                    f"Rincian Biaya Aktivasi:\n"
+                    f"- Biaya Pasang: {pasang}\n"
+                    f"- Biaya Bulanan: {bulan}\n"
+                    f"Total yang harus ditransfer: {total_bayar}\n\n"
+                    f"Pembayaran via BCA: 3450074658\n"
+                    f"Atas Nama: Erwin Sinaga\n\n"
+                    f"Setelah transfer, klik link ini untuk aktivasi: https://v-guard-ai.streamlit.app/aktivasi"
+                )
+                
+                import urllib.parse
+                pesan_encoded = urllib.parse.quote(pesan_wa)
+                
+                st.link_button(f"📩 Kirim Tagihan {produk_klien} ke {klien_pilihan}", 
+                               f"https://wa.me/628123456789?text={pesan_encoded}")
+                # --- SELESAI TEMPEL ---
             except Exception as e:
                 st.error("⚠️ Koneksi ke Database Klien terhambat.")
                 st.info("The Liaison: Sedang melakukan sinkronisasi ulang...")
