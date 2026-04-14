@@ -352,28 +352,49 @@ with tab_reg:
                 st.rerun()
 
         # LOGIKA TAMPILAN BERDASARKAN MENU ADMIN YANG DIPILIH
+        # --- LOGIKA TAMPILAN BERDASARKAN MENU ADMIN ---
         if menu_admin == "Dashboard Utama":
             st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
-            
-            # Menampilkan 10 Agen dalam kolom yang rapi
             c1, c2, c3, c4 = st.columns(4)
             with c1: st.success("👁️ The Visionary")
-            with c2: st.success("👂 The Concierge")
+            with c2: st.success("📦 The Concierge")
             with c3: st.success("👄 The Growth Hacker")
             with c4: st.success("🤝 The Liaison")
 
-            c5, c6, c7, c8 = st.columns(4)
-            with c5: st.success("🧠 The Analyst")
-            with c6: st.success("🐕 The Watchdog")
-            with c7: st.success("🛡️ The Sentinel")
-            with c8: st.success("⚖️ The Legalist")
-
-            c9, c10 = st.columns(2)
-            with c9: st.success("💰 The Treasurer")
-            with c10: st.info("🤖 The Core Brain: Ready")
-                
-         elif menu_admin == "Aktivasi Nasabah Baru":
+        elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
+            
+            # CEK DATA DARI PORTAL KLIEN
+            if 'db_umum' in st.session_state and st.session_state.db_umum:
+                import pandas as pd
+                df_real = pd.DataFrame(st.session_state.db_umum)
+                st.subheader("🚀 Pendaftar Baru (Real-Time)")
+                st.table(df_real)
+                
+                st.markdown("---")
+                k_pil = st.selectbox("Pilih Klien untuk Ditagih", df_real["Nama Klien"].tolist())
+                d_sel = df_real[df_real["Nama Klien"] == k_pil].iloc[0]
+                
+                h_map = {
+                    "V-LITE": "750rb + 350rb/bln", 
+                    "V-PRO": "1.5jt + 850rb/bln", 
+                    "V-SIGHT": "7.5jt + 3.5jt/bln", 
+                    "V-ENTERPRISE": "15jt + 10jt/bln"
+                }
+                nom = h_map.get(d_sel["Produk"], "750.000")
+
+                import urllib.parse
+                msg = (f"Halo {k_pil}, Invoice V-Guard {d_sel['Produk']} Anda siap.\n"
+                       f"Total: {nom}\nBCA: 3450074658 (Erwin Sinaga)")
+                
+                st.link_button(f"💰 Kirim Invoice ke {k_pil}", 
+                               f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
+            else:
+                st.info("💡 Belum ada antrean pendaftaran baru dari Portal Klien.")
+
+        elif menu_admin == "Monitoring 10 Agents":
+            st.header("🔍 Real-Time Monitoring")
+            st.write("Sistem monitoring sedang standby.")
             
             # CEK DATA REVENUE (Klien Umum dari Portal)
             if 'db_umum' in st.session_state and st.session_state.db_umum:
