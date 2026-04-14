@@ -281,7 +281,7 @@ with tab_reg:
         else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
-elif menu == "Admin Control Center":
+    elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
     
     # 1. CEK STATUS LOGIN
