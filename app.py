@@ -224,7 +224,7 @@ elif menu == "Portal Klien":
         st.subheader("Form Order & Aktivasi Layanan")
         # --- Baris 223 & 224 tetap ---
     with tab_reg:
-    st.subheader("Form Order & Aktivasi Layanan")
+        st.subheader("Form Order & Aktivasi Layanan")
     
     # GANTI Baris 225 ke bawah dengan ini:
     with st.form("pendaftaran_umum"):
