@@ -319,7 +319,7 @@ elif menu == "Admin Control Center":
                 def get_data_from_google():
                     import pandas as pd
                     data_simulasi = {
-                        "Nama Klien": ["Timotius Mardjuki", "Elen Mardjuki", "Outlet Sudirman"],
+                        "Nama Klien": ["Timotius Mardjuki", "Elen ", "Outlet Sudirman"],
                         "Produk": ["V-PRO (10 Agents)", "V-PRO (Premium)", "V-LITE"],
                         "Status": ["✅ Terverifikasi", "🛡️ Audit AI", "✅ Aktif"]
                     }
