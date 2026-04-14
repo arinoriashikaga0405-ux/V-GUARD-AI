@@ -49,9 +49,6 @@ def sentinel_recovery():
                 "Nilai Kontrak": ["Rp 10.000.000", "Rp 5.000.000", "Rp 12.500.000", "Rp 5.000.000"]
             }
             return pd.DataFrame(data_simulasi)
-    
-
-
 
 # CSS Custom untuk tampilan profesional
 st.markdown("""
