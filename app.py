@@ -295,7 +295,20 @@ elif menu == "Admin Control Center":
         elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
             st.write("Daftar nasabah yang baru saja melakukan pengajuan via Portal Klien.")
-            st.info("The Liaison sedang menarik data terbaru dari Database Klien...")
+            
+            # --- PROSES PENARIKAN DATA REAL-TIME ---
+            try:
+                # Memanggil fungsi yang sudah Bapak buat untuk baca Google Sheets
+                df_klien = get_data_from_google() 
+                
+                if df_klien is not None and not df_klien.empty:
+                    st.success(f"✅ Berhasil menarik {len(df_klien)} data pengajuan terbaru.")
+                    st.dataframe(df_klien, use_container_width=True) # Menampilkan tabel data klien
+                else:
+                    st.info("ℹ️ Belum ada pengajuan baru di database.")
+            except Exception as e:
+                st.error("⚠️ Koneksi ke Database Klien terhambat.")
+                st.info("The Liaison: Sedang melakukan sinkronisasi ulang...")
 
         elif menu_admin == "Monitoring 10 Agents":
             st.subheader("📊 Billing & Invoice Monitoring (Baru!)")
