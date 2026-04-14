@@ -225,6 +225,8 @@ elif menu == "Portal Klien":
         with st.container(border=True):
             nama_owner = st.text_input("Nama Lengkap / Owner")
             nama_usaha = st.text_input("Nama Usaha")
+            no_hp = st.text_input("Nomor WhatsApp (Aktif)", placeholder="Contoh: 0812xxxx")
+            upload_ktp = st.file_uploader("Upload Foto KTP (Verifikasi Sentinel)", type=['png', 'jpg', 'jpeg'])
             paket_pilihan = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
 
     # --- Masukkan di baris 199 (di atas tombol Kirim Pengajuan) ---
