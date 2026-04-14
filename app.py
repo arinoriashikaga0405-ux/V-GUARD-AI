@@ -253,34 +253,34 @@ elif menu == "Admin Control Center":
             else:
                 st.error("Access Code Salah!")
                 
-if st.session_state.admin_logged_in:
-    menu_admin = st.sidebar.selectbox("Admin Menu", [
-        "Dashboard Utama", 
-        "Aktivasi Nasabah Baru", 
-        "Monitoring 10 Agents", 
-        "Database Klien"
-    ])
-
-    # --- MENU 1: DASHBOARD UTAMA ---
-    elif menu_admin == "Dashboard Utama":
-        st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
-        
-        # Baris status agen utama (Pindahkan ke sini agar muncul di Dashboard)
-        c1, c2, c3, c4 = st.columns(4)
-        with c1: st.success("👁️ The Visionary")
-        with c2: st.success("👂 The Concierge")
-        with c3: st.success("👄 The Growth Hacker")
-        with c4: st.success("🤝 The Liaison")
-
-        c5, c6, c7, c8 = st.columns(4)
-        with c5: st.success("🧠 The Analyst")
-        with c6: st.success("🐕 The Watchdog")
-        with c7: st.success("🛡️ The Sentinel")
-        with c8: st.success("⚖️ The Legalist")
-
-        c9, c10 = st.columns(2)
-        with c9: st.success("💰 The Treasurer")
-        with c10: st.info("🤖 The Core Brain: Ready")
+    if st.session_state.admin_logged_in:
+        menu_admin = st.sidebar.selectbox("Admin Menu", [
+            "Dashboard Utama", 
+            "Aktivasi Nasabah Baru", 
+            "Monitoring 10 Agents", 
+            "Database Klien"
+        ])
+    
+        # --- MENU 1: DASHBOARD UTAMA ---
+        if menu_admin == "Dashboard Utama":
+            st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
+            
+            # Baris status agen utama (Pindahkan ke sini agar muncul di Dashboard)
+            c1, c2, c3, c4 = st.columns(4)
+            with c1: st.success("👁️ The Visionary")
+            with c2: st.success("👂 The Concierge")
+            with c3: st.success("👄 The Growth Hacker")
+            with c4: st.success("🤝 The Liaison")
+    
+            c5, c6, c7, c8 = st.columns(4)
+            with c5: st.success("🧠 The Analyst")
+            with c6: st.success("🐕 The Watchdog")
+            with c7: st.success("🛡️ The Sentinel")
+            with c8: st.success("⚖️ The Legalist")
+    
+            c9, c10 = st.columns(2)
+            with c9: st.success("💰 The Treasurer")
+            with c10: st.info("🤖 The Core Brain: Ready")
 
     # --- MENU 2: AKTIVASI NASABAH BARU ---
     elif menu_admin == "Aktivasi Nasabah Baru":
