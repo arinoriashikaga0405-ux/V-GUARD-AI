@@ -357,29 +357,29 @@ elif menu == "Admin Control Center":
 
         # LOGIKA TAMPILAN BERDASARKAN MENU ADMIN YANG DIPILIH
         # --- LOGIKA TAMPILAN BERDASARKAN MENU ADMIN ---
-    if menu_admin == "Dashboard Utama":
+    # --- KODE RAPIH START (BARIS 360 - SELESAI) ---
+        if menu_admin == "Dashboard Utama":
             st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
             c1, c2, c3, c4 = st.columns(4)
             with c1: st.success("👁️ The Visionary")
             with c2: st.success("📦 The Concierge")
-            # ... (lanjutkan sukses agen lainnya)
+            with c3: st.success("👄 The Growth Hacker")
+            with c4: st.success("🤝 The Liaison")
+            st.info("💡 6 agen lainnya sedang dalam mode background monitoring.")
 
-    elif menu_admin == "Aktivasi Nasabah Baru":
+        elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
-            if 'db_umum' in st.session_state and st.session_state.db_umum:
-                import pandas as pd
-                st.table(pd.DataFrame(st.session_state.db_umum))
-            else:
-                st.info("Belum ada antrean baru.")
             
-            # CEK DATA DARI PORTAL KLIEN
             if 'db_umum' in st.session_state and st.session_state.db_umum:
                 import pandas as pd
+                import urllib.parse
+                
                 df_real = pd.DataFrame(st.session_state.db_umum)
                 st.subheader("🚀 Pendaftar Baru (Real-Time)")
                 st.table(df_real)
                 
                 st.markdown("---")
+                st.subheader("💰 Generator Invoice WhatsApp")
                 k_pil = st.selectbox("Pilih Klien untuk Ditagih", df_real["Nama Klien"].tolist())
                 d_sel = df_real[df_real["Nama Klien"] == k_pil].iloc[0]
                 
@@ -391,58 +391,21 @@ elif menu == "Admin Control Center":
                 }
                 nom = h_map.get(d_sel["Produk"], "750.000")
 
-                import urllib.parse
-                msg = (f"Halo {k_pil}, Invoice V-Guard {d_sel['Produk']} Anda siap.\n"
-                       f"Total: {nom}\nBCA: 3450074658 (Erwin Sinaga)")
+                msg = (f"Halo {k_pil}, Invoice V-Guard {d_sel['Produk']} Anda siap.\n\n"
+                       f"Total Investasi: {nom}\n"
+                       f"Transfer ke BCA: 3450074658 (Erwin Sinaga)\n\n"
+                       f"Kirim bukti transfer ke sini untuk aktivasi unit AI Anda.")
                 
-                st.link_button(f"💰 Kirim Invoice ke {k_pil}", 
-                               f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
-            else:
-                st.info("💡 Belum ada antrean pendaftaran baru dari Portal Klien.")
-
-      elif menu_admin == "Monitoring 10 Agents":
-            st.header("🔍 Real-Time Monitoring")
-            st.write("Sistem monitoring sedang standby.")
-            
-            # CEK DATA REVENUE (Klien Umum dari Portal)
-            if 'db_umum' in st.session_state and st.session_state.db_umum:
-                import pandas as pd
-                df_real = pd.DataFrame(st.session_state.db_umum)
-                st.subheader("🚀 Pendaftar Baru (Real-Time)")
-                st.table(df_real)
-                
-                st.markdown("---")
-                k_pil = st.selectbox("Pilih Klien untuk Ditagih", df_real["Nama Klien"].tolist())
-                d_sel = df_real[df_real["Nama Klien"] == k_pil].iloc[0]
-                
-                # Pemetaan Harga V-Guard
-                h_map = {
-                    "V-LITE": "750rb + 350rb/bln", 
-                    "V-PRO": "1.5jt + 850rb/bln", 
-                    "V-SIGHT": "7.5jt + 3.5jt/bln", 
-                    "V-ENTERPRISE": "15jt + 10jt/bln"
-                }
-                nom = h_map.get(d_sel["Produk"], "750.000")
-
-                msg = (
-                    f"Halo {k_pil}, Invoice Aktivasi V-Guard ({d_sel['Produk']}) Anda sudah siap.\n\n"
-                    f"Total Investasi: {nom}\n"
-                    f"Transfer ke BCA: 3450074658 (Erwin Sinaga)\n\n"
-                    f"Kirim bukti transfer ke sini untuk aktivasi unit AI Anda."
-                )
-                
-                import urllib.parse
-                st.link_button(f"💰 Kirim Invoice ke {k_pil}", 
+                st.link_button(f"📲 Kirim Invoice ke {k_pil}", 
                                f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
             else:
                 st.info("💡 Belum ada antrean pendaftaran baru dari Portal Klien.")
 
         elif menu_admin == "Monitoring 10 Agents":
             st.header("🔍 Real-Time Monitoring (Elite Agents)")
-            # Sisa kode monitoring Bapak di sini...
-            st.divider()
             
-            # Data Invoice
+            # 1. Status Finansial (Invoice Data)
+            st.subheader("📑 Status Tagihan Client")
             invoice_data = {
                 "Customer/Outlet": ["Outlet Sudirman", "Cabang Tangerang", "Resto Central"],
                 "Nilai Tagihan": ["Rp 15.000.000", "Rp 8.200.000", "Rp 12.500.000"],
@@ -451,7 +414,7 @@ elif menu == "Admin Control Center":
             }
             st.table(invoice_data)
             
-            # Gatekeeper & Audit Trail
+            # 2. Gatekeeper & Audit Trail
             st.divider()
             st.subheader("🛰️ AI Pre-Cloud Gatekeeper")
             col_stat1, col_stat2, col_stat3 = st.columns(3)
@@ -463,15 +426,19 @@ elif menu == "Admin Control Center":
                 st.code("[SYSTEM] API Connected...\n[AGENT] The Watchdog: Scanning...\n[WARNING] Anomali #9922 Terdeteksi!")
                 st.error("🚨 FRAUD DETECTED: Upaya manipulasi dicegah!")
 
-            # Core Brain Interaction
+            # 3. Core Brain Interaction
             st.divider()
             st.subheader("🤖 The Core Brain - AI Strategist")
-            user_query = st.text_area("Konsultasi Strategi (Input Instruksi):")
+            user_query = st.text_area("Konsultasi Strategi (Input Instruksi):", key="admin_query")
             if st.button("Jalankan AI Audit"):
-                if model_vguard and user_query:
+                if 'model_vguard' in globals() and user_query:
                     with st.spinner("Menganalisis..."):
-                        context = f"Anda adalah Core Brain V-Guard. Jawab Founder Erwin Sinaga: {user_query}"
+                        context = f"Anda adalah Core Brain V-Guard. Jawab Founder Erwin Sinaga secara taktis: {user_query}"
                         response = model_vguard.generate_content(context)
                         st.markdown(response.text)
+                else:
+                    st.warning("Pastikan API Key sudah terpasang di rahasia Streamlit.")
+
+# --- FOOTER (MENTOK KIRI) ---
 st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
+st.markdown("<center><small>V-Guard AI Intelligence Center | Founder Edition ©2026</small></center>", unsafe_allow_html=True)
