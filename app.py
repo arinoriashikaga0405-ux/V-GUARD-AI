@@ -222,26 +222,47 @@ elif menu == "Portal Klien":
 
     with tab_reg:
         st.subheader("Form Order & Aktivasi Layanan")
-        with st.container(border=True):
-            nama_owner = st.text_input("Nama Lengkap / Owner")
-            nama_usaha = st.text_input("Nama Usaha")
-            no_hp = st.text_input("Nomor WhatsApp (Aktif)", placeholder="Contoh: 0812xxxx")
-            upload_ktp = st.file_uploader("Upload Foto KTP (Verifikasi Sentinel)", type=['png', 'jpg', 'jpeg'])
-            paket_pilihan = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
-
-    # --- Masukkan di baris 199 (di atas tombol Kirim Pengajuan) ---
-            with st.expander("📄 Baca Syarat & Ketentuan (Terms & Conditions)"):
-                st.markdown("""
-                ### TERMS & CONDITIONS (T&C) – V-GUARD AI SYSTEMS
-                **1. Ruang Lingkup Layanan:** Sistem audit otonom berbasis Cloud via API (V-LITE & V-PRO).
-                **2. Keamanan Data:** Data terenkripsi dan tidak dibocorkan ke pihak ketiga (End-to-End Encryption).
-                **3. Mekanisme Alarm:** Notifikasi dikirim otomatis jika ada indikasi fraud (The Watchdog).
-                **4. Pembayaran:** Aktivasi dimulai setelah biaya diverifikasi (Activation Fee & Monthly).
-                **5. Tanggung Jawab:** V-Guard adalah alat bantu deteksi dengan akurasi tinggi (99.9%).
-                """)
-
-            # Checkbox Persetujuan
-            setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan V-Guard AI Intelligence.")
+        # --- Baris 223 & 224 tetap ---
+with tab_reg:
+    st.subheader("Form Order & Aktivasi Layanan")
+    
+    # GANTI Baris 225 ke bawah dengan ini:
+    with st.form("pendaftaran_umum"):
+        nama_klien = st.text_input("Nama Lengkap / Owner")
+        nama_usaha = st.text_input("Nama Usaha")
+        no_hp = st.text_input("Nomor WhatsApp (Aktif)", placeholder="Contoh: 62812xxxx")
+        upload_ktp = st.file_uploader("Upload Foto KTP (Verifikasi Sentinel)", type=['png', 'jpg', 'jpeg'])
+        produk = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
+        
+        # Masukkan Syarat & Ketentuan di dalam form agar lebih rapi
+        with st.expander("📄 Baca Syarat & Ketentuan (T&C)"):
+            st.markdown("""
+            ### TERMS & CONDITIONS (T&C) - V-GUARD AI SYSTEMS
+            **1. Pembayaran:** Aktivasi dimulai setelah biaya diverifikasi (Activation Fee & Monthly).
+            **2. Keamanan Data:** Data terenkripsi dan tidak dibocorkan ke pihak ketiga.
+            """)
+        
+        setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan.")
+        
+        # Tombol Submit di dalam Form
+        submit = st.form_submit_button("🚀 Daftar Sekarang & Dapatkan Akses AI")
+        
+        if submit:
+            if setuju_tc and nama_klien and no_hp:
+                # Inisialisasi memori pendaftar umum jika belum ada
+                if 'db_umum' not in st.session_state:
+                    st.session_state.db_umum = []
+                
+                # Simpan data klien umum ke memori (agar muncul di dashboard admin)
+                st.session_state.db_umum.append({
+                    "Nama Klien": nama_klien,
+                    "Produk": produk,
+                    "Status": "🛡️ Menunggu Pembayaran",
+                    "WhatsApp": no_hp
+                })
+                st.success(f"Pendaftaran Berhasil! Invoice dikirim ke {no_hp}. Mohon tunggu verifikasi Admin.")
+            else:
+                st.error("Mohon isi semua data dan setujui Syarat & Ketentuan.")
 
        
         # --- PROSES AKTIVASI OLEH ELITE AI SQUAD ---
