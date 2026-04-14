@@ -262,7 +262,7 @@ if st.session_state.admin_logged_in:
     ])
 
     # --- MENU 1: DASHBOARD UTAMA ---
-    if menu_admin == "Dashboard Utama":
+    elif menu_admin == "Dashboard Utama":
         st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
         
         # Baris status agen utama (Pindahkan ke sini agar muncul di Dashboard)
