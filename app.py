@@ -364,7 +364,7 @@ elif menu == "Admin Control Center":
             with c2: st.success("📦 The Concierge")
             # ... (lanjutkan sukses agen lainnya)
 
-      elif menu_admin == "Aktivasi Nasabah Baru":
+    elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
             if 'db_umum' in st.session_state and st.session_state.db_umum:
                 import pandas as pd
