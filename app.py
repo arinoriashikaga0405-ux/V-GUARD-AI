@@ -341,13 +341,13 @@ elif menu == "Portal Klien":
     
     # 2. JIKA SUDAH LOGIN, TAMPILKAN KONTEN KHUSUS ADMIN
     else:
-        # Gunakan 'with' agar semua menu admin terkunci di dalam sidebar saat halaman ini aktif
         with st.sidebar:
             st.markdown("---")
+            # DEFINISIKAN menu_admin DI SINI AGAR TIDAK ERROR 'NOT DEFINED'
             menu_admin = st.selectbox("Admin Menu", [
-                "Dashboard Utama", 
-                "Aktivasi Nasabah Baru", 
-                "Monitoring 10 Agents", 
+                "Dashboard Utama",
+                "Aktivasi Nasabah Baru",
+                "Monitoring 10 Agents",
                 "Database Klien"
             ])
             
@@ -357,16 +357,20 @@ elif menu == "Portal Klien":
 
         # LOGIKA TAMPILAN BERDASARKAN MENU ADMIN YANG DIPILIH
         # --- LOGIKA TAMPILAN BERDASARKAN MENU ADMIN ---
-        if menu_admin == "Dashboard Utama":
+       if menu_admin == "Dashboard Utama":
             st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
             c1, c2, c3, c4 = st.columns(4)
             with c1: st.success("👁️ The Visionary")
             with c2: st.success("📦 The Concierge")
-            with c3: st.success("👄 The Growth Hacker")
-            with c4: st.success("🤝 The Liaison")
+            # ... (lanjutkan sukses agen lainnya)
 
         elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
+            if 'db_umum' in st.session_state and st.session_state.db_umum:
+                import pandas as pd
+                st.table(pd.DataFrame(st.session_state.db_umum))
+            else:
+                st.info("Belum ada antrean baru.")
             
             # CEK DATA DARI PORTAL KLIEN
             if 'db_umum' in st.session_state and st.session_state.db_umum:
