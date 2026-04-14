@@ -243,6 +243,8 @@ elif menu == "Portal Klien":
             
 elif menu == "Admin Control Center":
     st.header("🔒 V-Guard Cloud Intelligence Center")
+    
+    # 1. CEK STATUS LOGIN
     if not st.session_state.admin_logged_in:
         st.subheader("🔐 Admin Authentication")
         admin_password = st.text_input("Masukkan Access Code:", type="password")
@@ -252,108 +254,83 @@ elif menu == "Admin Control Center":
                 st.rerun()
             else:
                 st.error("Access Code Salah!")
-                
-    if st.session_state.admin_logged_in:
-        menu_admin = st.sidebar.selectbox("Admin Menu", [
-            "Dashboard Utama", 
-            "Aktivasi Nasabah Baru", 
-            "Monitoring 10 Agents", 
-            "Database Klien"
-        ])
     
-        # --- MENU 1: DASHBOARD UTAMA ---
-    if st.session_state.admin_logged_in and menu_admin == "Dashboard Utama":
+    # 2. JIKA SUDAH LOGIN, TAMPILKAN KONTEN KHUSUS ADMIN
+    else:
+        # Gunakan 'with' agar semua menu admin terkunci di dalam sidebar saat halaman ini aktif
+        with st.sidebar:
+            st.markdown("---")
+            menu_admin = st.selectbox("Admin Menu", [
+                "Dashboard Utama", 
+                "Aktivasi Nasabah Baru", 
+                "Monitoring 10 Agents", 
+                "Database Klien"
+            ])
+            
+            if st.button("Log Out"):
+                st.session_state.admin_logged_in = False
+                st.rerun()
+
+        # LOGIKA TAMPILAN BERDASARKAN MENU ADMIN YANG DIPILIH
+        if menu_admin == "Dashboard Utama":
             st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
             
-            # Baris status agen utama (Pindahkan ke sini agar muncul di Dashboard)
+            # Menampilkan 10 Agen dalam kolom yang rapi
             c1, c2, c3, c4 = st.columns(4)
             with c1: st.success("👁️ The Visionary")
             with c2: st.success("👂 The Concierge")
             with c3: st.success("👄 The Growth Hacker")
             with c4: st.success("🤝 The Liaison")
-    
+
             c5, c6, c7, c8 = st.columns(4)
             with c5: st.success("🧠 The Analyst")
             with c6: st.success("🐕 The Watchdog")
             with c7: st.success("🛡️ The Sentinel")
             with c8: st.success("⚖️ The Legalist")
-    
+
             c9, c10 = st.columns(2)
             with c9: st.success("💰 The Treasurer")
             with c10: st.info("🤖 The Core Brain: Ready")
 
-    # --- MENU 2: AKTIVASI NASABAH BARU ---
-    elif menu_admin == "Aktivasi Nasabah Baru":
-        st.header("📋 Antrean Aktivasi V-Guard")
-        st.write("Daftar nasabah yang baru saja melakukan pengajuan via Portal Klien.")
-        st.info("The Liaison sedang menarik data terbaru dari Database Klien...")
+        elif menu_admin == "Aktivasi Nasabah Baru":
+            st.header("📋 Antrean Aktivasi V-Guard")
+            st.write("Daftar nasabah yang baru saja melakukan pengajuan via Portal Klien.")
+            st.info("The Liaison sedang menarik data terbaru dari Database Klien...")
 
-    # --- MENU 3: MONITORING (Contoh Billing) ---
-    elif menu_admin == "Monitoring 10 Agents":
-        st.subheader("📊 Billing & Invoice Monitoring (Baru!)")
-        # (Pindahkan kode invoice data ke sini)
-        # --- 2. MONITORING INVOICE & PIUTANG (H-7) ---
-        st.divider()
-        st.subheader("📅 Billing & Invoice Monitoring (Baru!)")
-        st.write("Melacak invoice yang akan jatuh tempo dalam 7 hari ke depan untuk mencegah kemacetan dana.")
-        
-        # Simulasi data invoice dari sistem Billing Otomatis
-        invoice_data = {
-            "Customer/Outlet": ["Outlet Sudirman", "Cabang Tangerang", "Resto Central"],
-            "Nilai Tagihan": ["Rp 15.000.000", "Rp 8.200.000", "Rp 12.500.000"],
-            "Jatuh Tempo": ["H-2 (Mendesak)", "H-5", "H-7"],
-            "Status": ["🚨 Kirim Alarm", "⚠️ Reminder Sent", "✅ Scheduled"]
-        }
-        st.table(invoice_data)
-        st.info("Sistem Billing otomatis mengirimkan notifikasi penagihan ke outlet.")
+        elif menu_admin == "Monitoring 10 Agents":
+            st.subheader("📊 Billing & Invoice Monitoring (Baru!)")
+            st.divider()
+            
+            # Data Invoice
+            invoice_data = {
+                "Customer/Outlet": ["Outlet Sudirman", "Cabang Tangerang", "Resto Central"],
+                "Nilai Tagihan": ["Rp 15.000.000", "Rp 8.200.000", "Rp 12.500.000"],
+                "Jatuh Tempo": ["H-2 (Mendesak)", "H-5", "H-7"],
+                "Status": ["🚨 Kirim Alarm", "⚠️ Reminder Sent", "✅ Scheduled"]
+            }
+            st.table(invoice_data)
+            
+            # Gatekeeper & Audit Trail
+            st.divider()
+            st.subheader("🛰️ AI Pre-Cloud Gatekeeper")
+            col_stat1, col_stat2, col_stat3 = st.columns(3)
+            col_stat1.metric("Data Traffic", "100%", "Secure")
+            col_stat2.metric("AI Filtering", "0.2ms/trans", "Fast")
+            col_stat3.metric("Alarm Merah", "Active", "WhatsApp Bot")
 
-        # --- 3. CLOUD FILTERING GATEKEEPER (THE WATCHDOG) ---
-        st.divider()
-        st.subheader("🛰️ AI Pre-Cloud Gatekeeper")
-        col_stat1, col_stat2, col_stat3 = st.columns(3)
-        col_stat1.metric("Data Traffic", "100%", "Secure")
-        col_stat2.metric("AI Filtering", "0.2ms/trans", "Fast")
-        col_stat3.metric("Alarm Merah", "Active", "WhatsApp Bot")
+            with st.expander("🔍 Live Audit Trail (Pre-Filtering Mode)", expanded=True):
+                st.code("[SYSTEM] API Connected...\n[AGENT] The Watchdog: Scanning...\n[WARNING] Anomali #9922 Terdeteksi!")
+                st.error("🚨 FRAUD DETECTED: Upaya manipulasi dicegah!")
 
-        with st.expander("🔍 Live Audit Trail (Pre-Filtering Mode)", expanded=True):
-            st.code("""
-            [SYSTEM] API Connected... Data filtering diaktifkan (Plug n Play).
-            [AGENT] The Watchdog: Scanning Transaksi Kasir... [cite: 27]
-            [WARNING] Anomali #9922: Refund Tanpa Struk Terdeteksi! [cite: 4]
-            [ACTION] Menahan upload ke Cloud. Mengirim Alarm ke Owner... [cite: 6]
-            """)
-            st.error("🚨 FRAUD DETECTED: Upaya manipulasi kasir berhasil dicegah sebelum masuk Cloud.")
-
-        # --- 4. ASSET PROTECTION & SAVING ---
-        st.divider()
-        st.subheader("💰 Revenue Optimization (Kalkulator Penyelamatan)")
-        col_p1, col_p2 = st.columns(2)
-        with col_p1:
-            st.metric("Potensi Kebocoran Diblokir", "Rp 850.000", delta="Kritis", delta_color="inverse")
-        with col_p2:
-            st.metric("Efisiensi Cloud Audit", "99.9%", "No Hardware [cite: 13, 14]")
-
-        # --- 5. PUSAT UNDUHAN & AI STRATEGIST ---
-        st.divider()
-        st.subheader("📁 V-Guard Executive Documentation")
-        d_col1, d_col2 = st.columns(2)
-        with d_col1:
-            st.download_button("📄 Fitur Unggulan V-LITE/V-PRO (Word)", data="Isi File", file_name="Fitur_Unggulan_VGuard.docx")
-        with d_col2:
-            st.download_button("📑 Tech Stack & 10 Agents (PDF)", data="Isi File", file_name="Tech_Stack_VGuard.pdf")
-
-        st.divider()
-        st.subheader("🤖 The Core Brain - AI Strategist")
-        user_query = st.text_area("Konsultasi Strategi (Input Instruksi ke Core Brain):")
-        if st.button("Jalankan AI Audit"):
-            if model_vguard and user_query:
-                with st.spinner("10 Agen AI sedang menganalisis data..."):
-                    context = f"Anda adalah Core Brain V-Guard (Gemini). Gunakan perspektif 10 agen AI untuk menjawab Founder Erwin Sinaga: {user_query}"
-                    response = model_vguard.generate_content(context)
-                    st.markdown(response.text)
-
-        if st.button("Log Out"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
+            # Core Brain Interaction
+            st.divider()
+            st.subheader("🤖 The Core Brain - AI Strategist")
+            user_query = st.text_area("Konsultasi Strategi (Input Instruksi):")
+            if st.button("Jalankan AI Audit"):
+                if model_vguard and user_query:
+                    with st.spinner("Menganalisis..."):
+                        context = f"Anda adalah Core Brain V-Guard. Jawab Founder Erwin Sinaga: {user_query}"
+                        response = model_vguard.generate_content(context)
+                        st.markdown(response.text)
 st.markdown("---")
 st.markdown("<center><small>V-Guard AI Intelligence | ©2026</small></center>", unsafe_allow_html=True)
