@@ -281,8 +281,49 @@ with tab_reg:
         else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
-    elif menu == "Admin Control Center":
-    st.header("🔒 V-Guard Cloud Intelligence Center")
+    # --- Baris 335 ---
+elif menu_admin == "Aktivasi Nasabah Baru":
+    st.header("📋 Antrean Aktivasi V-Guard")
+    st.info("Menunggu pendaftaran baru dari Portal Klien...")
+
+    # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
+    if 'db_umum' in st.session_state and st.session_state.db_umum:
+        import pandas as pd
+        df_realtime = pd.DataFrame(st.session_state.db_umum)
+        
+        st.subheader("🚀 Daftar Pendaftar Baru")
+        st.table(df_realtime)
+
+        st.markdown("---")
+        k_pil = st.selectbox("Pilih Klien untuk Proses Penagihan", df_realtime["Nama Klien"].tolist())
+        
+        # Ambil data spesifik klien yang dipilih
+        d_sel = df_realtime[df_realtime["Nama Klien"] == k_pil].iloc[0]
+        
+        # Pemetaan Harga Akurat
+        h_map = {
+            "V-LITE": "750rb + 350rb/bln", 
+            "V-PRO": "1.5jt + 850rb/bln", 
+            "V-SIGHT": "7.5jt + 3.5jt/bln", 
+            "V-ENTERPRISE": "15jt + 10jt/bln"
+        }
+        nom = h_map.get(d_sel["Produk"], "750.000")
+
+        # Pesan Penagihan Profesional
+        msg = (
+            f"Halo {k_pil}, Invoice Aktivasi V-Guard ({d_sel['Produk']}) Anda sudah siap.\n\n"
+            f"Total Investasi: {nom}\n"
+            f"Transfer ke BCA: 3450074658\n"
+            f"Atas Nama: Erwin Sinaga\n\n"
+            f"Silakan kirim bukti transfer ke sini untuk aktivasi Sentinel."
+        )
+        
+        import urllib.parse
+        st.link_button(f"💰 Kirim Tagihan ke {k_pil}", 
+                       f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
+    else:
+        # Tampilan jika antrean masih kosong
+        st.warning("Belum ada pendaftaran baru saat ini.")
     
     # 1. CEK STATUS LOGIN
     if not st.session_state.admin_logged_in:
