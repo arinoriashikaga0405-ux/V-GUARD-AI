@@ -316,7 +316,7 @@ elif menu == "Admin Control Center":
             # --- PROSES PENARIKAN DATA REAL-TIME ---
             try:
                 # Memanggil fungsi yang sudah Bapak buat untuk baca Google Sheets
-                def get_data_from_google():)
+                def get_data_from_google():
                 
                 if df_klien is not None and not df_klien.empty:
                     st.success(f"✅ Berhasil menarik {len(df_klien)} data pengajuan terbaru.")
