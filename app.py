@@ -288,6 +288,7 @@ data_baru = pd.DataFrame([{
 
 # Ambil data lama, gabungkan dengan data baru, lalu simpan kembali
 # --- PROSES SIMPAN DATA ---
+# --- PROSES AKTIVASI ---
 if tnc_setuju:  # Level 1: Cek Syarat & Ketentuan
     if nama_owner and nama_usaha:  # Level 2: Cek Kelengkapan Nama
         try:
@@ -305,38 +306,25 @@ if tnc_setuju:  # Level 1: Cek Syarat & Ketentuan
                 st.session_state.db_umum = []
             st.session_state.db_umum.append(data_baru.to_dict('records')[0])
             
-            st.success(f"Aktivasi Berhasil! Selamat bergabung Pak {nama_owner}.")
+            st.success(f"✅ Aktivasi Berhasil! Selamat bergabung Pak {nama_owner}.")
+            st.balloons()
             st.rerun()
             
         except Exception as e:
             st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
     else:
-        # Menutup Level 2
-        st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
+        st.warning("⚠️ Mohon lengkapi data pendaftaran (Nama & Usaha).")
 else:
-    # Menutup Level 1
     st.error("🚨 Mohon setujui T&C terlebih dahulu.")
-     
-# --- Bagian Dashboard ---
+
+# --- TAMPILAN DASHBOARD (Pindahkan ke luar blok IF) ---
 st.divider()
 st.header("📋 Antrean Aktivasi V-Guard")
-st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
-if nama_owner and nama_usaha:
-            try:
-                # Proses simpan data
-                existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
-                updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
-                conn.update(worksheet="Pendaftaran", data=updated_df)
-                
-                # Feedback sukses
-                st.success(f"✅ Data {nama_owner} Berhasil!")
-                st.rerun()
-            except Exception as e:
-                st.error(f"Koneksi Gagal: {e}")
-        else:
-            st.warning("Data belum lengkap!")
-
+if 'db_umum' in st.session_state and st.session_state.db_umum:
+    st.table(st.session_state.db_umum)
+else:
+    st.info("Menunggu pendaftaran baru dari Portal Klien...")
 # --- BARIS 349: HARUS SEJAJAR DENGAN 'if menu == "Portal Klien":' ---
 elif menu == "Admin Control Center":
     st.title("🛡️ Admin Control Center")
