@@ -204,55 +204,78 @@ elif menu == "Portal Klien":
     tab_log, tab_reg = st.tabs(["🔐 Login Dashboard", "📝 Registrasi Baru"])
     
     # --- TAB LOGIN ---
+    # --- TAB LOGIN ---
     with tab_log:
-        st.subheader("Masuk ke Sistem Monitoring")
+        st.subheader("🔐 Masuk ke Sistem Monitoring")
         
         col_login1, col_login2 = st.columns(2)
         with col_login1:
             user_id_input = st.text_input("User ID Klien", placeholder="Contoh: VGUARD-PRO-99")
             password = st.text_input("Password", type="password") 
-            btn_login = st.button("Masuk ke Dashboard")
+            btn_login = st.button("Masuk ke Dashboard", type="primary")
 
         if btn_login and df_clients is not None:
+            # Pastikan kolom UserID ada di Google Sheets Bapak
             if user_id_input in df_clients['UserID'].values:
                 client_info = df_clients[df_clients['UserID'] == user_id_input].iloc[0]
                 paket_aktif = client_info['Paket']
                 status_klien = client_info['Status']
+                nama_klien_login = client_info['Nama Klien']
 
                 if status_klien == "Aktif":
-                    st.success(f"Selamat Datang! Lisensi Anda: **{paket_aktif}** (Status: Aktif ✅)")
+                    st.success(f"Selamat Datang, Pak {nama_klien_login}! Lisensi **{paket_aktif}** Anda Aktif ✅")
                     st.divider()
+                    
+                    # --- LOGIKA LINK DASHBOARD SESUAI PAKET ---
+                    # Ganti link di bawah ini dengan link dashboard asli Bapak nantinya
+                    link_map = {
+                        "V-LITE": "https://vguard-ai.railway.app/lite-vision",
+                        "V-PRO": "https://vguard-ai.railway.app/pro-audit",
+                        "V-SIGHT": "https://vguard-ai.railway.app/sight-live",
+                        "V-ENTERPRISE": "https://vguard-ai.railway.app/enterprise-core"
+                    }
+                    url_tujuan = link_map.get(paket_aktif, "#")
+
                     st.subheader(f"📊 Dashboard Monitoring - {paket_aktif}")
                     
+                    # Tampilan Tombol Akses Utama
+                    st.info(f"Klik tombol di bawah untuk membuka panel kontrol {paket_aktif} Anda.")
+                    st.link_button(f"🚀 Buka Panel {paket_aktif}", url_tujuan, use_container_width=True)
+                    
+                    st.divider()
+                    
+                    # Preview Metrik Sesuai Paket
                     m1, m2, m3 = st.columns(3)
                     
                     if paket_aktif == "V-LITE":
                         m1.metric("Status Kasir", "Online")
-                        m2.metric("Fraud Alert Today", "0")
-                        m3.info("Fitur V-LITE: Daily Summary Ready")
+                        m2.metric("Fraud Alert", "0")
+                        m3.info("Mode: Daily Summary")
                     
                     elif paket_aktif == "V-PRO":
-                        m1.metric("Sync Bank (VCS)", "Active")
-                        m2.metric("Fraud Alert Today", "2 Case", delta="Perlu Cek", delta_color="inverse")
-                        m3.metric("Revenue Protection", "Rp 1.2M")
-                        st.write("**Recent Activities:** Audit PDF Berhasil diunggah.")
+                        m1.metric("VCS Sync", "Active")
+                        m2.metric("Audit Status", "Clear")
+                        m3.metric("Protected Rev.", "Rp 1.2M")
+                        st.write("**Activity:** Audit laporan PDF harian telah siap.")
 
                     elif paket_aktif == "V-SIGHT":
-                        m1.metric("CCTV AI Status", "Streaming")
-                        m2.metric("Behavior Anomalies", "1", delta="🚨")
-                        m3.metric("Visual Audit", "Match 100%")
+                        m1.metric("CCTV AI", "Streaming")
+                        m2.metric("Anomali", "0", delta="Normal")
+                        m3.metric("Visual Audit", "100%")
                         st.image("https://via.placeholder.com/600x200?text=CCTV+AI+Visual+Monitoring+Active", use_container_width=True)
 
                     elif paket_aktif == "V-ENTERPRISE":
                         st.warning("⚠️ High Security Mode: The Core Brain Active")
                         m1.metric("Forensic Scan", "99.9%")
-                        m2.metric("Network Integrity", "Secure")
-                        m3.metric("Custom SOP Drift", "0%")
-                        st.write("DASHBOARD EKSEKUTIF: Seluruh cabang terpantau aman.")
+                        m2.metric("Integrity", "Secure")
+                        m3.metric("Drift Analysis", "0%")
+                        st.write("DASHBOARD EKSEKUTIF: Akses penuh ke seluruh cabang.")
+
                 else:
-                    st.error("Akun Anda sedang ditangguhkan. Silakan hubungi Admin.")
+                    st.error("⚠️ Akun Anda ditemukan namun belum AKTIF. Silakan selesaikan pembayaran atau hubungi Admin.")
+                    st.link_button("📲 Hubungi Admin untuk Aktivasi", "https://wa.me/6282122190885")
             else:
-                st.error("User ID tidak ditemukan. Pastikan ID sudah benar atau hubungi Admin.")
+                st.error("❌ User ID tidak ditemukan. Pastikan Anda sudah terdaftar dan mendapatkan User ID dari Admin.")
 
     # --- TAB REGISTRASI ---
     with tab_reg:
