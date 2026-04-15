@@ -323,7 +323,7 @@ st.header("📋 Antrean Aktivasi V-Guard")
 st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
     # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
-iif nama_owner and nama_usaha:
+if nama_owner and nama_usaha:
         try:
             # 1. Simpan ke Google Sheets
             existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
