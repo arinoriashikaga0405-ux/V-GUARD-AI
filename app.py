@@ -362,7 +362,7 @@ else:
         st.warning("Belum ada pendaftaran baru saat ini.")
     
     # 1. CEK STATUS LOGIN
-elif menu == "Admin Control Center":
+ elif menu == "Admin Control Center":
     st.header("🔐 V-Guard Intelligence Center")
 
     # 1. CEK STATUS LOGIN
