@@ -294,35 +294,32 @@ try:
             # 1. Mengambil data lama dari Google Sheets
             existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
             
-            # 2. Menggabungkan data pendaftar baru (data_baru) ke tabel lama
+            # 2. Menggabungkan data pendaftar baru
             updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
             
-            # 3. Mengunggah kembali tabel yang sudah terupdate ke Google Sheets
+            # 3. Mengunggah kembali ke Google Sheets
             conn.update(worksheet="Pendaftaran", data=updated_df)
             
-            # 4. Memasukkan data ke tampilan Dashboard (Session State) secara instan
+            # 4. Update Dashboard secara instan
             if 'db_umum' not in st.session_state:
                 st.session_state.db_umum = []
-            
-            # Mengubah format data_baru agar bisa dibaca oleh Dashboard
             st.session_state.db_umum.append(data_baru.to_dict('records')[0])
             
-            # Menampilkan pesan sukses dan refresh halaman
             st.success(f"Aktivasi Berhasil! Selamat bergabung Pak {nama_owner}.")
             st.rerun()
             
         except Exception as e:
             st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
-                
-            st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
-             else:
-                st.warning("Mohon lengkapi data pendaftaran.")
-             else:
-            st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
-  
-        st.header("📋 Antrean Aktivasi V-Guard")
-        st.info("Menunggu pendaftaran baru dari Portal Klien...")
+    else:
+        st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
+else:
+    st.error("🚨 Mohon setujui T&C terlebih dahulu.")
+
+# --- Bagian Dashboard ---
+st.divider()
+st.header("📋 Antrean Aktivasi V-Guard")
+st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
     # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
     if 'db_umum' in st.session_state and st.session_state.db_umum:
