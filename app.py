@@ -220,19 +220,21 @@ if menu == "Visi & Misi":
     with col_txt:
         st.markdown("""
         <div style="text-align:justify; line-height:1.8; font-size:16px; color:#d1d5db;">
-        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital
-        yang berkembang pesat. Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari
-        satu dekade di industri perbankan dan manajemen aset, kami memahami bahwa celah terkecil dalam
-        sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis. Misi utama kami adalah
-        mendigitalisasi kepercayaan (<i>Digital Trust</i>) melalui pembuktian matematis dan audit cerdas
-        yang bekerja secara otonom 24 jam nonstop tanpa kompromi sedikit pun.<br><br>
-        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang
-        memiliki keterbatasan, melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui
-        ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), visi komputer, dan deteksi
-        anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan.<br><br>
-        Visi kami adalah menjadi standar global dalam "<b>Eliminating Leakage</b>", di mana setiap pemilik
-        bisnis, mulai dari UMKM hingga korporasi besar, dapat menjalankan operasional mereka dengan tenang
-        karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah.
+        <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital yang berkembang pesat. 
+        Sebagai entitas yang dipimpin oleh profesional dengan pengalaman lebih dari satu dekade di industri perbankan dan manajemen aset, 
+        kami memahami bahwa celah terkecil dalam sistem operasional adalah potensi kerugian fatal bagi sebuah bisnis. 
+        Misi utama kami adalah mendigitalisasi kepercayaan (Digital Trust) melalui pembuktian matematis dan audit cerdas yang bekerja 
+        secara otonom 24 jam nonstop tanpa kompromi sedikit pun.<br><br>
+        Kami percaya bahwa kejujuran sistem tidak boleh hanya bergantung pada pengawasan manusia yang memiliki keterbatasan, 
+        melainkan harus dibangun di atas fondasi teknologi AI yang presisi. Melalui ekosistem V-Guard, kami mengintegrasikan analisis data perbankan (VCS), 
+        visi komputer, dan deteksi anomali prediktif untuk menciptakan lingkungan bisnis yang bersih dari segala bentuk kecurangan (Fraud). 
+        Strategi kami adalah memberikan transparansi mutlak kepada pemilik bisnis melalui laporan yang akurat dan real-time.<br><br>
+        Visi kami adalah menjadi standar global dalam "<b>Eliminating Leakage</b>", di mana setiap pemilik bisnis, mulai dari UMKM hingga korporasi besar, 
+        dapat menjalankan operasional mereka dengan tenang karena setiap Rupiah diawasi oleh kecerdasan buatan yang tak kenal lelah. 
+        V-Guard bukan sekadar perangkat lunak, melainkan benteng pertahanan terakhir bagi aset dan masa depan investasi Anda. 
+        Kami hadir untuk mengeliminasi kebocoran, mengoptimalkan profitabilitas, dan menjaga warisan bisnis Anda tetap utuh melalui inovasi teknologi 
+        yang melampaui standar audit konvensional saat ini.
+
         </div>
         """, unsafe_allow_html=True)
 
