@@ -341,7 +341,7 @@ if nama_owner and nama_usaha:
         except Exception as e:
             st.error(f"Gagal simpan: {e}")
             
-    else:
+else:
         st.warning("⚠️ Mohon lengkapi data pendaftaran.")
     # --- END: BLOK PENDAFTARAN ---
 
