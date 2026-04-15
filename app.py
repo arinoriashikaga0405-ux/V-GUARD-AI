@@ -422,27 +422,62 @@ elif menu == "Admin Control Center":
                     st.subheader("✅ 2. Validasi Bayar")
                     st.write(f"Konfirmasi aktivasi untuk **{k_pil}**")
                     
-                    # TOMBOL AKTIVASI (Ini yang Bapak cari)
-                    if st.button(f"Aktifkan Sentinel {k_pil}", type="primary"):
-                        try:
-                            # 1. Update di Google Sheets (Menambah kolom Status)
-                            # (Asumsi kita tambah baris baru di sheet 'Data_Aktif')
-                            data_aktif = d_sel.to_frame().T
-                            data_aktif['Status'] = "AKTIF"
-                            data_aktif['Tgl_Aktivasi'] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M")
-                            
-                            conn.update(worksheet="Pendaftaran_Aktif", data=data_aktif) # Pastikan sheet ini ada
-                            
-                            st.success(f"🚀 Sentinel AI untuk {k_pil} TELAH AKTIF!")
-                            st.balloons()
-                            
-                            # Opsi: Hapus dari antrean sementara
-                            # st.session_state.db_umum.remove(d_sel.to_dict())
-                            
-                        except Exception as e:
-                            st.error(f"Gagal aktivasi: {e}")
-            else:
-                st.info("Antrean kosong.")
+                    # --- DI DALAM TOMBOL AKTIFKAN ADMIN ---
+if st.button(f"Aktifkan Sentinel {k_pil}", type="primary"):
+    try:
+        # 1. GENERATE USER ID & PASSWORD OTOMATIS
+        import random
+        import string
+        
+        # Contoh ID: VGD-LITE-882 (Vanguard + Nama Paket + Angka Acak)
+        random_num = ''.join(random.choices(string.digits, k=3))
+        new_userid = f"VGD-{d_sel['Produk']}-{random_num}"
+        # Password standar (bisa diganti nanti)
+        new_password = f"vguard{random_num}" 
+
+        # 2. MAPPING LINK DASHBOARD
+        link_map = {
+            "V-LITE": "https://vguard-ai.railway.app/lite",
+            "V-PRO": "https://vguard-ai.railway.app/pro",
+            "V-SIGHT": "https://vguard-ai.railway.app/sight",
+            "V-ENTERPRISE": "https://vguard-ai.railway.app/enterprise"
+        }
+        url_tujuan = link_map.get(d_sel["Produk"], "#")
+
+        # 3. KIRIM DATA KE GOOGLE SHEETS (TAB PENDAFTARAN_AKTIF)
+        data_final = pd.DataFrame([{
+            "UserID": new_userid,
+            "Password": new_password,
+            "Nama Klien": k_pil,
+            "Paket": d_sel["Produk"],
+            "Status": "Aktif",
+            "Link": url_tujuan
+        }])
+        
+        conn.update(worksheet="Pendaftaran_Aktif", data=data_final)
+
+        # 4. SUSUN PESAN WHATSAPP YANG LENGKAP
+        pesan_wa = (
+            f"🛡️ *AKTIVASI V-GUARD BERHASIL* 🛡️\n\n"
+            f"Halo Pak *{k_pil}*,\n"
+            f"Sentinel AI Anda untuk paket *{d_sel['Produk']}* telah AKTIF.\n\n"
+            f"🔑 *DATA AKSES LOGIN:*\n"
+            f"- *User ID:* `{new_userid}`\n"
+            f"- *Password:* `{new_password}`\n\n"
+            f"🌐 *LINK DASHBOARD:* \n{url_tujuan}\n\n"
+            f"Silakan simpan data ini untuk masuk ke Portal Klien. Selamat menggunakan teknologi V-Guard!"
+        )
+
+        import urllib.parse
+        link_kirim_wa = f"https://wa.me/6282122190885?text={urllib.parse.quote(pesan_wa)}"
+
+        st.success("✅ Database Terupdate & ID Terbuat!")
+        st.code(f"User ID: {new_userid} | Pass: {new_password}")
+        st.link_button("📲 Kirim Data Login ke WhatsApp", link_kirim_wa)
+        st.balloons()
+
+    except Exception as e:
+        st.error(f"Gagal generate ID: {e}")
                 
         elif menu_admin == "Monitoring 10 Agents":
             st.header("🔍 Real-Time Monitoring (Elite Agents)")
