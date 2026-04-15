@@ -323,33 +323,26 @@ st.header("📋 Antrean Aktivasi V-Guard")
 st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
     # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
-if nama_owner and nama_usaha:
-        try:
-            # 1. Simpan ke Google Sheets
-            existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
-            updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
-            conn.update(worksheet="Pendaftaran", data=updated_df)
-            
-            # 2. Update Session State
-            if 'db_umum' not in st.session_state:
-                st.session_state.db_umum = []
-            st.session_state.db_umum.append(data_baru.to_dict('records')[0])
-            
-            st.success(f"✅ Berhasil! Selamat bergabung Pak {nama_owner}.")
-            st.rerun()
-            
-        except Exception as e:
-            st.error(f"Gagal simpan: {e}")
-            
-else:
-        st.warning("⚠️ Mohon lengkapi data pendaftaran.")
-    # --- END: BLOK PENDAFTARAN ---
+# --- PROSES SIMPAN (PASTIKAN MASUK 2 TAB DARI KIRI) ---
+        if nama_owner and nama_usaha:
+            try:
+                # Proses simpan data
+                existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
+                updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
+                conn.update(worksheet="Pendaftaran", data=updated_df)
+                
+                # Feedback sukses
+                st.success(f"✅ Data {nama_owner} Berhasil!")
+                st.rerun()
+            except Exception as e:
+                st.error(f"Koneksi Gagal: {e}")
+        else:
+            st.warning("Data belum lengkap!")
 
-# --- BARIS 348: PINDAH KE MENU BERIKUTNYA ---
+# --- BARIS 349: HARUS SEJAJAR DENGAN 'if menu == "Portal Klien":' ---
 elif menu == "Admin Control Center":
     st.title("🛡️ Admin Control Center")
-    # Lanjutkan sisa kodingan Admin di bawah sini...
-    st.header("🔐 V-Guard Intelligence Center")
+    st.info("Halaman Khusus Founder & Admin")
 
     # 1. CEK STATUS LOGIN
     if not st.session_state.get('admin_logged_in', False):
