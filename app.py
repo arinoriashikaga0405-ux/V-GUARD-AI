@@ -343,7 +343,7 @@ if nama_owner and nama_usaha:
 else:
         st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
 
-# --- BATAS AKHIR MENU PORTAL KLIEN ---
+# --- BATAS AKHIR MENU PORTAL KLIEN -
 
 elif menu == "Admin Control Center":
     st.title("🛡️ Admin Control Center")
