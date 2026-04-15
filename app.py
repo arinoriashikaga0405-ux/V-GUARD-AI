@@ -315,9 +315,9 @@ try:
             st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
                 
             st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
-        else:
+             else:
                 st.warning("Mohon lengkapi data pendaftaran.")
-            else:
+             else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
   
