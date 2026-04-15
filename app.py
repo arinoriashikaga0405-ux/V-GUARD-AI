@@ -335,16 +335,17 @@ if nama_owner and nama_usaha:
                 st.session_state.db_umum = []
             st.session_state.db_umum.append(data_baru.to_dict('records')[0])
             
-            st.success(f"Aktivasi Berhasil! Selamat bergabung Pak {nama_owner}.")
+            st.success(f"✅ Berhasil! Selamat bergabung Pak {nama_owner}.")
             st.rerun()
             
         except Exception as e:
             st.error(f"Gagal simpan: {e}")
-else:
-        st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
+            
+    else:
+        st.warning("⚠️ Mohon lengkapi data pendaftaran.")
+    # --- END: BLOK PENDAFTARAN ---
 
-# --- BATAS AKHIR MENU PORTAL KLIEN -
-
+# --- BARIS 348: PINDAH KE MENU BERIKUTNYA ---
 elif menu == "Admin Control Center":
     st.title("🛡️ Admin Control Center")
     # Lanjutkan sisa kodingan Admin di bawah sini...
