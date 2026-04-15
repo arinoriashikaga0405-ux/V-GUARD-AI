@@ -311,7 +311,7 @@ try:
         except Exception as e:
             st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
             
-    else:
+            else:
         st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
 else:
     st.error("🚨 Mohon setujui T&C terlebih dahulu.")
