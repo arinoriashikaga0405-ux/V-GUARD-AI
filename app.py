@@ -322,9 +322,7 @@ st.divider()
 st.header("📋 Antrean Aktivasi V-Guard")
 st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
-    # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
-# --- PROSES SIMPAN (PASTIKAN MASUK 2 TAB DARI KIRI) ---
-        if nama_owner and nama_usaha:
+if nama_owner and nama_usaha:
             try:
                 # Proses simpan data
                 existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
