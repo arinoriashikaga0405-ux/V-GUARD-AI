@@ -357,7 +357,7 @@ st.info("Menunggu pendaftaran baru dari Portal Klien...")
         import urllib.parse
         st.link_button(f"💰 Kirim Tagihan ke {k_pil}", 
                        f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
-    else:
+else:
         # Tampilan jika antrean masih kosong
         st.warning("Belum ada pendaftaran baru saat ini.")
     
