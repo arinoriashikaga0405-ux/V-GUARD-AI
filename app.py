@@ -287,7 +287,9 @@ data_baru = pd.DataFrame([{
 }])
 
 # Ambil data lama, gabungkan dengan data baru, lalu simpan kembali
-if nama_owner and nama_usaha:
+# --- PROSES SIMPAN DATA ---
+if tnc_setuju:  # Level 1: Cek Syarat & Ketentuan
+    if nama_owner and nama_usaha:  # Level 2: Cek Kelengkapan Nama
         try:
             # 1. Mengambil data lama
             existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
@@ -308,10 +310,13 @@ if nama_owner and nama_usaha:
             
         except Exception as e:
             st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
- else:
+    else:
+        # Menutup Level 2
         st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
- else:
+else:
+    # Menutup Level 1
     st.error("🚨 Mohon setujui T&C terlebih dahulu.")
+     
 # --- Bagian Dashboard ---
 st.divider()
 st.header("📋 Antrean Aktivasi V-Guard")
