@@ -286,9 +286,6 @@ data_baru = pd.DataFrame([{
     "Nilai Kontrak": "Proses Audit"
 }])
 
-# Ambil data lama, gabungkan dengan data baru, lalu simpan kembali
-# --- PROSES SIMPAN DATA ---
-# --- PROSES AKTIVASI ---
 if tnc_setuju:  # Level 1: Cek Syarat & Ketentuan
     if nama_owner and nama_usaha:  # Level 2: Cek Kelengkapan Nama
         try:
