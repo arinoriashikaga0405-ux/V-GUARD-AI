@@ -368,61 +368,59 @@ elif menu == "Admin Control Center":
         elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
             
-            # 1. Cek apakah ada data di Antrean
             if 'db_umum' in st.session_state and st.session_state.db_umum:
                 df_real = pd.DataFrame(st.session_state.db_umum)
                 st.subheader("🚀 Pendaftar Baru (Real-Time)")
                 st.dataframe(df_real, use_container_width=True)
                 
                 st.markdown("---")
-                st.subheader("💰 Generator Invoice WhatsApp")
                 
-                # 2. Pilihan Klien dari daftar
-                k_pil = st.selectbox("Pilih Klien untuk Ditagih", df_real["Nama Klien"].tolist())
+                # --- BAGIAN PROSES ---
+                col_inv, col_act = st.columns(2)
+                
+                k_pil = st.selectbox("Pilih Klien untuk Diproses", df_real["Nama Klien"].tolist())
                 d_sel = df_real[df_real["Nama Klien"] == k_pil].iloc[0]
                 
-                # 3. Mapping Harga Produk
-                h_map = {
-                    "V-LITE": "Rp 750.000 (pasang) + Rp 350.000/bln", 
-                    "V-PRO": "Rp 1.500.000 (pasang) + Rp 850.000/bln", 
-                    "V-SIGHT": "Rp 7.500.000 (pasang) + Rp 3.500.000/bln", 
-                    "V-ENTERPRISE": "Rp 15.000.000 (pasang) + Rp 10.000.000/bln"
-                }
-                nom = h_map.get(d_sel["Produk"], "Rp 750.000")
+                with col_inv:
+                    st.subheader("💰 1. Kirim Tagihan")
+                    h_map = {
+                        "V-LITE": "Rp 750.000", "V-PRO": "Rp 1.500.000", 
+                        "V-SIGHT": "Rp 7.500.000", "V-ENTERPRISE": "Rp 15.000.000"
+                    }
+                    nom = h_map.get(d_sel["Produk"], "Rp 750.000")
+                    
+                    # Logika WA
+                    import urllib.parse
+                    inv_text = f"🛡️ *INVOICE V-GUARD*\nYth. *{k_pil}*\nTotal: {nom}\nTransfer ke BCA 3450074658 a.n Erwin Sinaga."
+                    link_wa = f"https://wa.me/6282122190885?text={urllib.parse.quote(inv_text)}"
+                    st.link_button("📲 Kirim via WhatsApp", link_wa)
 
-                # 4. Menyusun Teks Invoice
-                # Kita gunakan format f-string agar rapi
-                inv_text = (
-                    f"🛡️ *INVOICE V-GUARD AI*\n"
-                    f"----------------------------\n"
-                    f"Yth. Pak *{k_pil}*\n"
-                    f"Unit: {d_sel['Nama Usaha']}\n"
-                    f"Produk: *{d_sel['Produk']}*\n\n"
-                    f"💰 *Estimasi Biaya:*\n"
-                    f"{nom}\n\n"
-                    f"📌 *Instruksi Aktivasi:*\n"
-                    f"Silakan lakukan transfer ke:\n"
-                    f"🏦 *BCA 3450074658*\n"
-                    f"a.n. *Erwin Sinaga*\n\n"
-                    f"Kirim bukti transfer ke chat ini untuk aktivasi Sentinel AI Anda. Terima kasih! 🚀"
-                )
-                
-                # 5. Membuat Link WhatsApp (wa.me)
-                import urllib.parse
-                inv_aman = urllib.parse.quote(inv_text)
-                link_wa = f"https://wa.me/6282122190885?text={inv_aman}"
-                
-                # 6. Tampilan Preview & Tombol
-                with st.expander("👁️ Lihat Preview Invoice"):
-                    st.code(inv_text, language=None)
-                
-                st.link_button("📲 Kirim Invoice via WhatsApp", link_wa, type="primary")
-                
+                with col_act:
+                    st.subheader("✅ 2. Validasi Bayar")
+                    st.write(f"Konfirmasi aktivasi untuk **{k_pil}**")
+                    
+                    # TOMBOL AKTIVASI (Ini yang Bapak cari)
+                    if st.button(f"Aktifkan Sentinel {k_pil}", type="primary"):
+                        try:
+                            # 1. Update di Google Sheets (Menambah kolom Status)
+                            # (Asumsi kita tambah baris baru di sheet 'Data_Aktif')
+                            data_aktif = d_sel.to_frame().T
+                            data_aktif['Status'] = "AKTIF"
+                            data_aktif['Tgl_Aktivasi'] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M")
+                            
+                            conn.update(worksheet="Pendaftaran_Aktif", data=data_aktif) # Pastikan sheet ini ada
+                            
+                            st.success(f"🚀 Sentinel AI untuk {k_pil} TELAH AKTIF!")
+                            st.balloons()
+                            
+                            # Opsi: Hapus dari antrean sementara
+                            # st.session_state.db_umum.remove(d_sel.to_dict())
+                            
+                        except Exception as e:
+                            st.error(f"Gagal aktivasi: {e}")
             else:
-                # Jika antrean kosong
-                st.info("Belum ada pendaftaran baru dari Portal Klien.")
-                if st.button("🔄 Refresh Data"):
-                    st.rerun()
+                st.info("Antrean kosong.")
+                
         elif menu_admin == "Monitoring 10 Agents":
             st.header("🔍 Real-Time Monitoring (Elite Agents)")
             
