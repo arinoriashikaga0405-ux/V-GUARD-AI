@@ -287,9 +287,7 @@ data_baru = pd.DataFrame([{
 }])
 
 # Ambil data lama, gabungkan dengan data baru, lalu simpan kembali
-try:
-    # --- LANJUTAN KODE UNTUK SIMPAN DATA (MULAI DARI SINI) ---
-        
+if nama_owner and nama_usaha:
         try:
             # 1. Mengambil data lama dari Google Sheets
             existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
@@ -310,8 +308,7 @@ try:
             
         except Exception as e:
             st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
-            
-            else:
+    else:
         st.warning("Mohon lengkapi data pendaftaran (Nama & Usaha).")
 else:
     st.error("🚨 Mohon setujui T&C terlebih dahulu.")
