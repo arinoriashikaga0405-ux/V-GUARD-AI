@@ -317,7 +317,7 @@ try:
             st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
         else:
                 st.warning("Mohon lengkapi data pendaftaran.")
-        else:
+            else:
             st.error("🚨 Mohon setujui T&C terlebih dahulu.")
             
   
