@@ -272,6 +272,47 @@ elif menu == "Portal Klien":
                     st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
                     st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
                     status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
+                    from streamlit_gsheets import GSheetsConnection
+import pandas as pd
+
+# Inisialisasi koneksi
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+# Menyiapkan data baru dalam format tabel
+data_baru = pd.DataFrame([{
+    "Nama Klien": nama_owner,
+    "Produk": paket_pilihan,
+    "Status": "⏳ Menunggu Verifikasi",
+    "Nilai Kontrak": "Proses Audit"
+}])
+
+# Ambil data lama, gabungkan dengan data baru, lalu simpan kembali
+try:
+    # --- LANJUTAN KODE UNTUK SIMPAN DATA (MULAI DARI SINI) ---
+        
+        try:
+            # 1. Mengambil data lama dari Google Sheets
+            existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
+            
+            # 2. Menggabungkan data pendaftar baru (data_baru) ke tabel lama
+            updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
+            
+            # 3. Mengunggah kembali tabel yang sudah terupdate ke Google Sheets
+            conn.update(worksheet="Pendaftaran", data=updated_df)
+            
+            # 4. Memasukkan data ke tampilan Dashboard (Session State) secara instan
+            if 'db_umum' not in st.session_state:
+                st.session_state.db_umum = []
+            
+            # Mengubah format data_baru agar bisa dibaca oleh Dashboard
+            st.session_state.db_umum.append(data_baru.to_dict('records')[0])
+            
+            # Menampilkan pesan sukses dan refresh halaman
+            st.success(f"Aktivasi Berhasil! Selamat bergabung Pak {nama_owner}.")
+            st.rerun()
+            
+        except Exception as e:
+            st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
                 
                 st.success(f"Terima Kasih Pak {nama_owner}. Paket {paket_pilihan} Aktif.")
             else:
