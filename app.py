@@ -323,7 +323,7 @@ st.header("📋 Antrean Aktivasi V-Guard")
 st.info("Menunggu pendaftaran baru dari Portal Klien...")
 
     # HANYA MENAMPILKAN PENDAFTAR UMUM (REVENUE REAL)
-if 'db_umum' in st.session_state and st.session_state.db_umum:
+ if 'db_umum' in st.session_state and st.session_state.db_umum:
         import pandas as pd
         df_realtime = pd.DataFrame(st.session_state.db_umum)
         
