@@ -1,9 +1,12 @@
 import streamlit as st
 import os
 import google.generativeai as genai
+import pandas as pd
+import urllib.parse
 
-# --- 1. PENGATURAN AI & KEAMANAN (LOGIKA INTERNAL) ---
-# Mengambil API Key langsung dari sistem Railway (Environment Variables)
+# ============================================================================
+# 1. PENGATURAN AI & KEAMANAN (LOGIKA INTERNAL)
+# ============================================================================
 gemini_key = os.environ.get("GEMINI_API_KEY")
 ai_status_msg = "Mode Offline"
 model_vguard = None
@@ -16,51 +19,79 @@ if gemini_key:
     except Exception:
         ai_status_msg = "Error Connection"
 
-# --- 2. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="V-Guard AI Intelligence", page_icon="🛡️", layout="wide")
-# --- Tambahkan di Baris 21 ---
+# ============================================================================
+# 2. KONFIGURASI HALAMAN
+# ============================================================================
+st.set_page_config(
+    page_title="V-Guard AI Intelligence", 
+    page_icon="🛡️", 
+    layout="wide"
+)
+
+# Inisialisasi session state
 if "admin_logged_in" not in st.session_state:
     st.session_state.admin_logged_in = False
 
-# THE SENTINEL: Sistem Auto-Recovery & Health Check
 if "system_status" not in st.session_state:
     st.session_state.system_status = "Healthy"
 
+if 'db_umum' not in st.session_state:
+    st.session_state.db_umum = []
+
+# ============================================================================
+# 3. FUNGSI HELPER
+# ============================================================================
 def sentinel_recovery():
+    """THE SENTINEL: Sistem Auto-Recovery & Health Check"""
     if st.session_state.system_status != "Healthy":
-        # Simulasi restart mandiri oleh The Sentinel
         st.session_state.system_status = "Healthy"
         return True
     return False
-    def get_data_from_google():
-        try:
-            # Mencoba koneksi asli ke Google Sheets
-            from streamlit_gsheets import GSheetsConnection
-            conn = st.connection("gsheets", type=GSheetsConnection)
-            df = conn.read(ttl="1m")
-            return df
-        except Exception:
-            # JIKA GAGAL: Tampilkan Data Simulasi V-LITE & V-PRO
-            import pandas as pd
-            data_simulasi = {
-                "Nama Klien": ["Timotius Mardjuki", "Outlet Sudirman", "Resto Central", "Cabang Tangerang"],
-                "Produk": ["V-PRO (10 Agents)", "V-LITE (Standard)", "V-PRO (10 Agents)", "V-LITE (Standard)"],
-                "Status": ["✅ Terverifikasi", "⚠️ Pending Payment", "🛡️ Audit Watchdog", "✅ Aktif"],
-                "Nilai Kontrak": ["Rp 10.000.000", "Rp 5.000.000", "Rp 12.500.000", "Rp 5.000.000"]
-            }
-            return pd.DataFrame(data_simulasi)
 
-# CSS Custom untuk tampilan profesional
+def get_data_from_google():
+    """Mengambil data dari Google Sheets atau simulasi jika gagal"""
+    try:
+        from streamlit_gsheets import GSheetsConnection
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df = conn.read(ttl="1m")
+        return df
+    except Exception:
+        # JIKA GAGAL: Tampilkan Data Simulasi V-LITE & V-PRO
+        data_simulasi = {
+            "Nama Klien": ["Timotius Mardjuki", "Outlet Sudirman", "Resto Central", "Cabang Tangerang"],
+            "Produk": ["V-PRO (10 Agents)", "V-LITE (Standard)", "V-PRO (10 Agents)", "V-LITE (Standard)"],
+            "Status": ["✅ Terverifikasi", "⚠️ Pending Payment", "🛡️ Audit Watchdog", "✅ Aktif"],
+            "Nilai Kontrak": ["Rp 10.000.000", "Rp 5.000.000", "Rp 12.500.000", "Rp 5.000.000"]
+        }
+        return pd.DataFrame(data_simulasi)
+
+# ============================================================================
+# 4. CSS CUSTOM
+# ============================================================================
 st.markdown("""
 <style>
     .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #238636; color: white !important; font-weight: bold; height: 45px; }
-    .stTextInput>div>div>input { background-color: #1e293b; color: white; }
-    .reportview-container .main .block-container { padding-top: 2rem; }
+    .stButton>button { 
+        width: 100%; 
+        border-radius: 5px; 
+        background-color: #238636; 
+        color: white !important; 
+        font-weight: bold; 
+        height: 45px; 
+    }
+    .stTextInput>div>div>input { 
+        background-color: #1e293b; 
+        color: white; 
+    }
+    .reportview-container .main .block-container { 
+        padding-top: 2rem; 
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. SIDEBAR NAVIGATION ---
+# ============================================================================
+# 5. SIDEBAR NAVIGATION
+# ============================================================================
 with st.sidebar:
     st.markdown("<h2 style='text-align:center;'>🛡️ V-Guard AI</h2>", unsafe_allow_html=True)
     
@@ -76,10 +107,16 @@ with st.sidebar:
     """, unsafe_allow_html=True)
     
     st.markdown("---")
-    menu = st.radio("NAVIGASI UTAMA", ["Visi & Misi", "Produk & Layanan", "ROI Kerugian Klien", "Portal Klien", "Admin Control Center"])
+    menu = st.radio(
+        "NAVIGASI UTAMA", 
+        ["Visi & Misi", "Produk & Layanan", "ROI Kerugian Klien", "Portal Klien", "Admin Control Center"]
+    )
 
-# --- 4. LOGIKA MENU ---
+# ============================================================================
+# 6. LOGIKA MENU UTAMA
+# ============================================================================
 
+# --- MENU: VISI & MISI ---
 if menu == "Visi & Misi":
     st.header("🛡️ Visi & Misi: Digitizing Trust")
     col_img, col_txt = st.columns([1, 2])
@@ -89,7 +126,6 @@ if menu == "Visi & Misi":
             st.image("erwin.jpg", caption="Erwin Sinaga - Founder & CEO", use_container_width=True)
     
     with col_txt:
-        # TEKS UTUH TANPA POTONGAN
         st.markdown(f"""
         <div style="text-align: justify; line-height: 1.8; font-size: 16px; color: #d1d5db;">
         <b>V-Guard AI Intelligence</b> lahir dari urgensi integritas finansial di era transformasi digital yang berkembang pesat. 
@@ -109,6 +145,7 @@ if menu == "Visi & Misi":
         </div>
         """, unsafe_allow_html=True)
 
+# --- MENU: PRODUK & LAYANAN ---
 elif menu == "Produk & Layanan":
     st.header("🛡️ Portfolio Layanan V-Guard AI Intelligence")
     wa_number = "6282122190885"
@@ -128,8 +165,12 @@ elif menu == "Produk & Layanan":
                 st.write(f"**Target:** {details[0]}")
                 st.info(f"Pasang: {details[1]}\n\nBulan: {details[2]}")
                 st.write(details[3])
-                st.link_button(f"Pilih {name}", f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI.")
+                st.link_button(
+                    f"Pilih {name}", 
+                    f"https://wa.me/{wa_number}?text=Halo%20Pak%20Erwin,%20saya%20tertarik%20dengan%20paket%20*{name}*%20V-Guard%20AI."
+                )
 
+# --- MENU: ROI KERUGIAN KLIEN ---
 elif menu == "ROI Kerugian Klien":
     st.header("📊 Analisis Potensi Kerugian vs ROI")
     st.write("Gunakan kalkulator ini untuk melihat berapa banyak kebocoran yang bisa dihemat oleh V-Guard AI.")
@@ -145,41 +186,35 @@ elif menu == "ROI Kerugian Klien":
         st.success(f"### Potensi Penyelamatan AI: Rp {loss * 0.88:,.0f} / bulan")
         st.caption("Dihitung berdasarkan rata-rata efisiensi sistem V-Guard sebesar 88%.")
 
+# --- MENU: PORTAL KLIEN ---
 elif menu == "Portal Klien":
     st.header("🔑 Portal Akses Klien V-Guard")
     
-    # --- KONEKSI GOOGLE SHEETS ---
-    from streamlit_gsheets import GSheetsConnection
-    
-    # Inisialisasi koneksi
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    
-    # Membaca data dari Spreadsheet Bapak
+    # Koneksi Google Sheets
     url_sheets = "https://docs.google.com/spreadsheets/d/17OJpYRGTWdQ0ZldSxp-3HdyW4AN_RKuJkCWVpYbtNE8/edit?usp=sharing"
+    df_clients = None
     
     try:
-        # Mengambil data terbaru dari Sheets
+        from streamlit_gsheets import GSheetsConnection
+        conn = st.connection("gsheets", type=GSheetsConnection)
         df_clients = conn.read(spreadsheet=url_sheets, ttl="0") 
     except Exception:
         st.error("Gagal sinkronisasi dengan database pusat.")
-        df_clients = None
 
     tab_log, tab_reg = st.tabs(["🔐 Login Dashboard", "📝 Registrasi Baru"])
     
+    # --- TAB LOGIN ---
     with tab_log:
         st.subheader("Masuk ke Sistem Monitoring")
         
         col_login1, col_login2 = st.columns(2)
         with col_login1:
             user_id_input = st.text_input("User ID Klien", placeholder="Contoh: VGUARD-PRO-99")
-            # Password bisa disamakan atau ditarik dari kolom lain di Sheets jika Bapak mau
             password = st.text_input("Password", type="password") 
             btn_login = st.button("Masuk ke Dashboard")
 
         if btn_login and df_clients is not None:
-            # Cek apakah User ID ada di kolom 'UserID' spreadsheet
             if user_id_input in df_clients['UserID'].values:
-                # Ambil data spesifik klien tersebut
                 client_info = df_clients[df_clients['UserID'] == user_id_input].iloc[0]
                 paket_aktif = client_info['Paket']
                 status_klien = client_info['Status']
@@ -189,7 +224,6 @@ elif menu == "Portal Klien":
                     st.divider()
                     st.subheader(f"📊 Dashboard Monitoring - {paket_aktif}")
                     
-                    # LOGIKA TAMPILAN DINAMIS BERDASARKAN PAKET DI SHEETS
                     m1, m2, m3 = st.columns(3)
                     
                     if paket_aktif == "V-LITE":
@@ -220,115 +254,70 @@ elif menu == "Portal Klien":
             else:
                 st.error("User ID tidak ditemukan. Pastikan ID sudah benar atau hubungi Admin.")
 
+    # --- TAB REGISTRASI ---
     with tab_reg:
         st.subheader("Form Order & Aktivasi Layanan")
-        # --- Baris 223 & 224 tetap ---
-    
-    # GANTI Baris 225 ke bawah dengan ini:
-    with st.form("pendaftaran_umum"):
-        nama_klien = st.text_input("Nama Lengkap / Owner")
-        nama_usaha = st.text_input("Nama Usaha")
-        no_hp = st.text_input("Nomor WhatsApp (Aktif)", placeholder="Contoh: 62812xxxx")
-        upload_ktp = st.file_uploader("Upload Foto KTP (Verifikasi Sentinel)", type=['png', 'jpg', 'jpeg'])
-        produk = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
         
-        # Masukkan Syarat & Ketentuan di dalam form agar lebih rapi
-        with st.expander("📄 Baca Syarat & Ketentuan (T&C)"):
-            st.markdown("""
-            ### TERMS & CONDITIONS (T&C) - V-GUARD AI SYSTEMS
-            **1. Pembayaran:** Aktivasi dimulai setelah biaya diverifikasi (Activation Fee & Monthly).
-            **2. Keamanan Data:** Data terenkripsi dan tidak dibocorkan ke pihak ketiga.
-            """)
-        
-        setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan.")
-        
-        # Tombol Submit di dalam Form
-        submit = st.form_submit_button("🚀 Daftar Sekarang & Dapatkan Akses AI")
-        
-        if submit:
-            if setuju_tc and nama_klien and no_hp:
-                # Inisialisasi memori pendaftar umum jika belum ada
-                if 'db_umum' not in st.session_state:
-                    st.session_state.db_umum = []
-                
-                # Simpan data klien umum ke memori (agar muncul di dashboard admin)
-                st.session_state.db_umum.append({
-                    "Nama Klien": nama_klien,
-                    "Produk": produk,
-                    "Status": "🛡️ Menunggu Pembayaran",
-                    "WhatsApp": no_hp
-                })
-                st.success(f"Pendaftaran Berhasil! Invoice dikirim ke {no_hp}. Mohon tunggu verifikasi Admin.")
-            else:
-                st.error("Mohon isi semua data dan setujui Syarat & Ketentuan.")
-
-       
-        # --- PROSES AKTIVASI OLEH ELITE AI SQUAD ---
-    if st.button("Kirim Pengajuan Aktivasi"):
-        if setuju_tc:
-            if nama_owner and nama_usaha:
-                # Menjalankan fungsi koordinasi agen (The Sentinel & The Legalist)
-                with st.status("V-Guard AI Squad sedang memproses...", expanded=True) as status:
-                    st.write("🛡️ **The Legalist**: Mengamankan privasi data.")
-                    st.write("🤝 **The Liaison**: Menghubungkan API ke Cloud.")
-                    status.update(label="Aktivasi Berhasil!", state="complete", expanded=False)
-                    from streamlit_gsheets import GSheetsConnection
-import pandas as pd
-
-# Inisialisasi koneksi
-conn = st.connection("gsheets", type=GSheetsConnection)
-
-# Menyiapkan data baru dalam format tabel
-data_baru = pd.DataFrame([{
-    "Nama Klien": nama_owner,
-    "Produk": paket_pilihan,
-    "Status": "⏳ Menunggu Verifikasi",
-    "Nilai Kontrak": "Proses Audit"
-}])
-
-if tnc_setuju:  # Level 1: Cek Syarat & Ketentuan
-    if nama_owner and nama_usaha:  # Level 2: Cek Kelengkapan Nama
-        try:
-            # 1. Mengambil data lama
-            existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
+        with st.form("pendaftaran_umum"):
+            nama_klien = st.text_input("Nama Lengkap / Owner")
+            nama_usaha = st.text_input("Nama Usaha")
+            no_hp = st.text_input("Nomor WhatsApp (Aktif)", placeholder="Contoh: 62812xxxx")
+            upload_ktp = st.file_uploader("Upload Foto KTP (Verifikasi Sentinel)", type=['png', 'jpg', 'jpeg'])
+            produk = st.selectbox("Pilih Paket Aktivasi", ["V-LITE", "V-PRO", "V-SIGHT", "V-ENTERPRISE"])
             
-            # 2. Menggabungkan data pendaftar baru
-            updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
+            with st.expander("📄 Baca Syarat & Ketentuan (T&C)"):
+                st.markdown("""
+                ### TERMS & CONDITIONS (T&C) - V-GUARD AI SYSTEMS
+                **1. Pembayaran:** Aktivasi dimulai setelah biaya diverifikasi (Activation Fee & Monthly).  
+                **2. Keamanan Data:** Data terenkripsi dan tidak dibocorkan ke pihak ketiga.  
+                **3. Refund Policy:** Tidak ada refund setelah aktivasi sistem.  
+                **4. Support:** Technical support tersedia 24/7 via WhatsApp.
+                """)
             
-            # 3. Mengunggah kembali ke Google Sheets
-            conn.update(worksheet="Pendaftaran", data=updated_df)
+            setuju_tc = st.checkbox("Saya telah membaca dan menyetujui Syarat & Ketentuan.")
+            submit = st.form_submit_button("🚀 Daftar Sekarang & Dapatkan Akses AI")
             
-            # 4. Update Dashboard secara instan
-            if 'db_umum' not in st.session_state:
-                st.session_state.db_umum = []
-            st.session_state.db_umum.append(data_baru.to_dict('records')[0])
-            
-            st.success(f"✅ Aktivasi Berhasil! Selamat bergabung Pak {nama_owner}.")
-            st.balloons()
-            st.rerun()
-            
-        except Exception as e:
-            st.error(f"Sistem gagal terhubung ke Google Sheets: {e}")
-    else:
-        st.warning("⚠️ Mohon lengkapi data pendaftaran (Nama & Usaha).")
-else:
-    st.error("🚨 Mohon setujui T&C terlebih dahulu.")
+            if submit:
+                if setuju_tc and nama_klien and no_hp:
+                    # Simpan data klien ke session state
+                    st.session_state.db_umum.append({
+                        "Nama Klien": nama_klien,
+                        "Produk": produk,
+                        "Status": "🛡️ Menunggu Pembayaran",
+                        "WhatsApp": no_hp,
+                        "Nama Usaha": nama_usaha
+                    })
+                    
+                    # Simpan ke Google Sheets (jika koneksi tersedia)
+                    try:
+                        from streamlit_gsheets import GSheetsConnection
+                        conn = st.connection("gsheets", type=GSheetsConnection)
+                        
+                        data_baru = pd.DataFrame([{
+                            "Nama Klien": nama_klien,
+                            "Produk": produk,
+                            "Status": "⏳ Menunggu Verifikasi",
+                            "Nilai Kontrak": "Proses Audit"
+                        }])
+                        
+                        existing_data = conn.read(worksheet="Pendaftaran", ttl=0)
+                        updated_df = pd.concat([existing_data, data_baru], ignore_index=True)
+                        conn.update(worksheet="Pendaftaran", data=updated_df)
+                    except Exception as e:
+                        st.warning(f"Data tersimpan lokal, sinkronisasi otomatis akan dilakukan: {e}")
+                    
+                    st.success(f"✅ Pendaftaran Berhasil! Invoice akan dikirim ke {no_hp}. Mohon tunggu verifikasi Admin.")
+                    st.balloons()
+                else:
+                    st.error("❌ Mohon isi semua data dan setujui Syarat & Ketentuan.")
 
-# --- TAMPILAN DASHBOARD (Pindahkan ke luar blok IF) ---
-st.divider()
-st.header("📋 Antrean Aktivasi V-Guard")
-
-if 'db_umum' in st.session_state and st.session_state.db_umum:
-    st.table(st.session_state.db_umum)
-else:
-    st.info("Menunggu pendaftaran baru dari Portal Klien...")
-# --- BARIS 349: HARUS SEJAJAR DENGAN 'if menu == "Portal Klien":' ---
+# --- MENU: ADMIN CONTROL CENTER ---
 elif menu == "Admin Control Center":
     st.title("🛡️ Admin Control Center")
     st.info("Halaman Khusus Founder & Admin")
 
-    # 1. CEK STATUS LOGIN
-    if not st.session_state.get('admin_logged_in', False):
+    # Cek status login
+    if not st.session_state.admin_logged_in:
         st.subheader("🔑 Admin Authentication")
         admin_password = st.text_input("Masukkan Access Code:", type="password")
         if st.button("Buka Intelligence Center"):
@@ -336,13 +325,12 @@ elif menu == "Admin Control Center":
                 st.session_state.admin_logged_in = True
                 st.rerun()
             else:
-                st.error("Access Code Salah!")
+                st.error("❌ Access Code Salah!")
     
-    # 2. JIKA SUDAH LOGIN, TAMPILKAN KONTEN KHUSUS ADMIN
     else:
+        # Sidebar menu untuk admin
         with st.sidebar:
             st.markdown("---")
-            # DEFINISIKAN menu_admin DI SINI AGAR TIDAK ERROR 'NOT DEFINED'
             menu_admin = st.selectbox("Admin Menu", [
                 "Dashboard Utama",
                 "Aktivasi Nasabah Baru",
@@ -350,32 +338,39 @@ elif menu == "Admin Control Center":
                 "Database Klien"
             ])
             
-            if st.button("Log Out"):
+            if st.button("🚪 Log Out"):
                 st.session_state.admin_logged_in = False
                 st.rerun()
 
-        # LOGIKA TAMPILAN BERDASARKAN MENU ADMIN YANG DIPILIH
-        # --- LOGIKA TAMPILAN BERDASARKAN MENU ADMIN ---
-    # --- KODE RAPIH START (BARIS 360 - SELESAI) ---
+        # --- SUB MENU ADMIN ---
         if menu_admin == "Dashboard Utama":
             st.subheader("🛡️ Elite AI Squad Activation (10 Agents)")
             c1, c2, c3, c4 = st.columns(4)
-            with c1: st.success("👁️ The Visionary")
-            with c2: st.success("📦 The Concierge")
-            with c3: st.success("👄 The Growth Hacker")
-            with c4: st.success("🤝 The Liaison")
+            with c1: 
+                st.success("👁️ The Visionary")
+            with c2: 
+                st.success("📦 The Concierge")
+            with c3: 
+                st.success("👄 The Growth Hacker")
+            with c4: 
+                st.success("🤝 The Liaison")
             st.info("💡 6 agen lainnya sedang dalam mode background monitoring.")
+            
+            # Metrics overview
+            st.divider()
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("Total Klien", len(st.session_state.db_umum))
+            m2.metric("Pendapatan Bulan Ini", "Rp 45.2 Juta")
+            m3.metric("System Uptime", "99.8%")
+            m4.metric("AI Status", ai_status_msg)
 
         elif menu_admin == "Aktivasi Nasabah Baru":
             st.header("📋 Antrean Aktivasi V-Guard")
             
-            if 'db_umum' in st.session_state and st.session_state.db_umum:
-                import pandas as pd
-                import urllib.parse
-                
+            if st.session_state.db_umum:
                 df_real = pd.DataFrame(st.session_state.db_umum)
                 st.subheader("🚀 Pendaftar Baru (Real-Time)")
-                st.table(df_real)
+                st.dataframe(df_real, use_container_width=True)
                 
                 st.markdown("---")
                 st.subheader("💰 Generator Invoice WhatsApp")
@@ -383,27 +378,36 @@ elif menu == "Admin Control Center":
                 d_sel = df_real[df_real["Nama Klien"] == k_pil].iloc[0]
                 
                 h_map = {
-                    "V-LITE": "750rb + 350rb/bln", 
-                    "V-PRO": "1.5jt + 850rb/bln", 
-                    "V-SIGHT": "7.5jt + 3.5jt/bln", 
-                    "V-ENTERPRISE": "15jt + 10jt/bln"
+                    "V-LITE": "Rp 750.000 (pasang) + Rp 350.000/bln", 
+                    "V-PRO": "Rp 1.500.000 (pasang) + Rp 850.000/bln", 
+                    "V-SIGHT": "Rp 7.500.000 (pasang) + Rp 3.500.000/bln", 
+                    "V-ENTERPRISE": "Rp 15.000.000 (pasang) + Rp 10.000.000/bln"
                 }
-                nom = h_map.get(d_sel["Produk"], "750.000")
+                nom = h_map.get(d_sel["Produk"], "Rp 750.000")
 
-                msg = (f"Halo {k_pil}, Invoice V-Guard {d_sel['Produk']} Anda siap.\n\n"
-                       f"Total Investasi: {nom}\n"
-                       f"Transfer ke BCA: 3450074658 (Erwin Sinaga)\n\n"
-                       f"Kirim bukti transfer ke sini untuk aktivasi unit AI Anda.")
+                msg = (
+                    f"Halo {k_pil},\n\n"
+                    f"Invoice V-Guard {d_sel['Produk']} Anda siap.\n\n"
+                    f"📦 Paket: {d_sel['Produk']}\n"
+                    f"💰 Total Investasi: {nom}\n\n"
+                    f"Transfer ke:\n"
+                    f"BCA: 3450074658\n"
+                    f"a.n. Erwin Sinaga\n\n"
+                    f"Kirim bukti transfer ke sini untuk aktivasi unit AI Anda.\n\n"
+                    f"Terima kasih! 🛡️"
+                )
                 
-                st.link_button(f"📲 Kirim Invoice ke {k_pil}", 
-                               f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}")
+                st.link_button(
+                    f"📲 Kirim Invoice ke {k_pil}", 
+                    f"https://wa.me/{d_sel['WhatsApp']}?text={urllib.parse.quote(msg)}"
+                )
             else:
                 st.info("💡 Belum ada antrean pendaftaran baru dari Portal Klien.")
 
         elif menu_admin == "Monitoring 10 Agents":
             st.header("🔍 Real-Time Monitoring (Elite Agents)")
             
-            # 1. Status Finansial (Invoice Data)
+            # 1. Status Finansial
             st.subheader("📑 Status Tagihan Client")
             invoice_data = {
                 "Customer/Outlet": ["Outlet Sudirman", "Cabang Tangerang", "Resto Central"],
@@ -422,7 +426,13 @@ elif menu == "Admin Control Center":
             col_stat3.metric("Alarm Merah", "Active", "WhatsApp Bot")
 
             with st.expander("🔍 Live Audit Trail (Pre-Filtering Mode)", expanded=True):
-                st.code("[SYSTEM] API Connected...\n[AGENT] The Watchdog: Scanning...\n[WARNING] Anomali #9922 Terdeteksi!")
+                st.code(
+                    "[SYSTEM] API Connected...\n"
+                    "[AGENT] The Watchdog: Scanning...\n"
+                    "[WARNING] Anomali #9922 Terdeteksi!\n"
+                    "[ACTION] Pre-filter activated\n"
+                    "[STATUS] Threat neutralized"
+                )
                 st.error("🚨 FRAUD DETECTED: Upaya manipulasi dicegah!")
 
             # 3. Core Brain Interaction
@@ -430,14 +440,41 @@ elif menu == "Admin Control Center":
             st.subheader("🤖 The Core Brain - AI Strategist")
             user_query = st.text_area("Konsultasi Strategi (Input Instruksi):", key="admin_query")
             if st.button("Jalankan AI Audit"):
-                if 'model_vguard' in globals() and user_query:
-                    with st.spinner("Menganalisis..."):
-                        context = f"Anda adalah Core Brain V-Guard. Jawab Founder Erwin Sinaga secara taktis: {user_query}"
-                        response = model_vguard.generate_content(context)
-                        st.markdown(response.text)
+                if model_vguard and user_query:
+                    with st.spinner("🧠 Menganalisis..."):
+                        try:
+                            context = f"Anda adalah Core Brain V-Guard. Jawab Founder Erwin Sinaga secara taktis: {user_query}"
+                            response = model_vguard.generate_content(context)
+                            st.markdown("### 🤖 Respon AI:")
+                            st.markdown(response.text)
+                        except Exception as e:
+                            st.error(f"Error AI: {e}")
                 else:
-                    st.warning("Pastikan API Key sudah terpasang di rahasia Streamlit.")
+                    st.warning("⚠️ Pastikan API Key sudah terpasang atau masukkan query.")
 
-# --- FOOTER (MENTOK KIRI) ---
+        elif menu_admin == "Database Klien":
+            st.header("🗄️ Database Klien V-Guard")
+            
+            if st.session_state.db_umum:
+                df_db = pd.DataFrame(st.session_state.db_umum)
+                st.dataframe(df_db, use_container_width=True)
+                
+                # Export option
+                csv = df_db.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Download Database (CSV)",
+                    data=csv,
+                    file_name="vguard_clients.csv",
+                    mime="text/csv"
+                )
+            else:
+                st.info("Database masih kosong. Belum ada klien terdaftar.")
+
+# ============================================================================
+# 7. FOOTER
+# ============================================================================
 st.markdown("---")
-st.markdown("<center><small>V-Guard AI Intelligence Center | Founder Edition ©2026</small></center>", unsafe_allow_html=True)
+st.markdown(
+    "<center><small>V-Guard AI Intelligence Center | Founder Edition ©2026</small></center>", 
+    unsafe_allow_html=True
+)
